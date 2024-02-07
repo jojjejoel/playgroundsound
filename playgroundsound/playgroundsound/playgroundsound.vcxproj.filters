@@ -13,15 +13,113 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Wwise">
+      <UniqueIdentifier>{cfec5866-c030-4c55-9e5d-efece0929ec5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseSource\AkDefaultIOHookBlocking.cpp">
+      <Filter>Source Files\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseSource\AkDefaultIOHookDeferred.cpp">
+      <Filter>Source Files\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseSource\AkDefaultLowLevelIODispatcher.cpp">
+      <Filter>Source Files\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseSource\AkFileLocationBase.cpp">
+      <Filter>Source Files\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseSource\AkFilePackage.cpp">
+      <Filter>Source Files\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseSource\AkFilePackageLUT.cpp">
+      <Filter>Source Files\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseSource\AkGeneratedSoundBanksResolver.cpp">
+      <Filter>Source Files\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseSource\AkJobWorkerMgr.cpp">
+      <Filter>Source Files\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseSource\AkMultipleFileLocation.cpp">
+      <Filter>Source Files\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseSource\AkPlatformProfilerHooks.cpp">
+      <Filter>Source Files\Wwise</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseSource\stdafx.cpp">
+      <Filter>Source Files\Wwise</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rcamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WwiseWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkDefaultLowLevelIODispatcher.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkFileHelpers.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkFileHelpersBase.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkFileLocationBase.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkFilePackage.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkFilePackageLowLevelIO.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkFilePackageLowLevelIOBlocking.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkFilePackageLowLevelIODeferred.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkFilePackageLUT.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkGeneratedSoundBanksResolver.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkJobWorkerMgr.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkMultipleFileLocation.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\AkPlatformProfilerHooks.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseSource\stdafx.h">
+      <Filter>Source Files\Wwise</Filter>
+    </ClInclude>
+    <ClInclude Include="RaylibWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="WwiseSource\AkFilePackageLowLevelIO.inl">
+      <Filter>Source Files\Wwise</Filter>
+    </None>
   </ItemGroup>
 </Project>
