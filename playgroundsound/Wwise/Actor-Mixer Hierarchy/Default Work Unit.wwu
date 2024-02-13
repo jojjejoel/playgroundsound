@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{8E08C725-5B07-4F01-8DB8-A6B9F7AFCA86}" SchemaVersion="110">
+	<AudioObjects>
+		<WorkUnit Name="Default Work Unit" ID="{8E08C725-5B07-4F01-8DB8-A6B9F7AFCA86}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="Test" ID="{55572D41-B7A1-4985-BDB2-681E7F86BDDE}" ShortID="307156047">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6A5DCAA1-2786-4828-8A57-8E1B8EA4E0DF}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E530EF8-93C1-4F22-BB88-506C86B93025}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="SFCK Energy Wave 04" ID="{B0007BB6-6B09-4933-9EA6-013DD8EB6055}">
+							<Language>SFX</Language>
+							<AudioFile>SFCK Energy Wave 04.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="305270942"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="SFCK Energy Wave 04" ID="{B0007BB6-6B09-4933-9EA6-013DD8EB6055}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
+	</AudioObjects>
+</WwiseDocument>

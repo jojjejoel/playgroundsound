@@ -1,0 +1,6 @@
+Event	ID	Name			Wwise Object Path	Notes
+	3187507146	Play_Test			\Default Work Unit\Play_Test	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	305270942	Test	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\SFCK Energy Wave 04_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Test		6168672
+
