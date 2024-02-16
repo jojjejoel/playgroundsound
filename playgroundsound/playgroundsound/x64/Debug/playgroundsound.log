@@ -1,4 +1,6 @@
 ﻿  Main.cpp
+x64\Debug\RayLibMaze.obj : warning LNK4042: object specified more than once; extras ignored
+     Creating library C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\x64\Debug\playgroundsound.lib and object C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\x64\Debug\playgroundsound.exp
   playgroundsound.vcxproj -> C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\x64\Debug\playgroundsound.exe
   'pwsh.exe' is not recognized as an internal or external command,
   operable program or batch file.

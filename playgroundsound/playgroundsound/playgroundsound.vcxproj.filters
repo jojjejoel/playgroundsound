@@ -16,12 +16,15 @@
     <Filter Include="Source Files\Wwise">
       <UniqueIdentifier>{cfec5866-c030-4c55-9e5d-efece0929ec5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\RayLib">
+      <UniqueIdentifier>{c5cef327-da22-4444-80d4-3a0d10627798}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WwiseWrapper.cpp">
+    <ClCompile Include="WwiseAPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\AkDefaultIOHookBlocking.cpp">
@@ -57,12 +60,18 @@
     <ClCompile Include="WwiseSource\stdafx.cpp">
       <Filter>Source Files\Wwise</Filter>
     </ClCompile>
+    <ClCompile Include="RayLibMaze.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RayLibMaze.cpp">
+      <Filter>Source Files\RayLib</Filter>
+    </ClCompile>
+    <ClCompile Include="RayLibTopDown.cpp">
+      <Filter>Source Files\RayLib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="rcamera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WwiseWrapper.h">
+    <ClInclude Include="WwiseAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h">
@@ -113,7 +122,7 @@
     <ClInclude Include="WwiseSource\stdafx.h">
       <Filter>Source Files\Wwise</Filter>
     </ClInclude>
-    <ClInclude Include="RaylibWrapper.h">
+    <ClInclude Include="RayLibTopDown.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -102,9 +102,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;GRAPHICS_API_OPENGL_33;PLATFORM_DESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\Audiokinetic\Wwise 2022.1.3.8179\SDK\include;D:\Audiokinetic\Wwise 2022.1.3.8179\SDK\samples\SoundEngine\Win32;C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\GeneratedSoundBanks;C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\WwiseSource;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\raylib\raylib\src;D:\Audiokinetic\Wwise 2022.1.3.8179\SDK\include;D:\Audiokinetic\Wwise 2022.1.3.8179\SDK\samples\SoundEngine\Win32;C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\GeneratedSoundBanks;C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\WwiseSource;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,6 +131,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="RayLibMaze.cpp" />
+    <ClCompile Include="RayLibMaze.h" />
+    <ClCompile Include="RayLibTopDown.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookBlocking.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookDeferred.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultLowLevelIODispatcher.cpp" />
@@ -142,11 +145,10 @@
     <ClCompile Include="WwiseSource\AkMultipleFileLocation.cpp" />
     <ClCompile Include="WwiseSource\AkPlatformProfilerHooks.cpp" />
     <ClCompile Include="WwiseSource\stdafx.cpp" />
-    <ClCompile Include="WwiseWrapper.cpp" />
+    <ClCompile Include="WwiseAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RaylibWrapper.h" />
-    <ClInclude Include="rcamera.h" />
+    <ClInclude Include="RayLibTopDown.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h" />
     <ClInclude Include="WwiseSource\AkDefaultLowLevelIODispatcher.h" />
@@ -163,7 +165,7 @@
     <ClInclude Include="WwiseSource\AkMultipleFileLocation.h" />
     <ClInclude Include="WwiseSource\AkPlatformProfilerHooks.h" />
     <ClInclude Include="WwiseSource\stdafx.h" />
-    <ClInclude Include="WwiseWrapper.h" />
+    <ClInclude Include="WwiseAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="WwiseSource\AkFilePackageLowLevelIO.inl" />
