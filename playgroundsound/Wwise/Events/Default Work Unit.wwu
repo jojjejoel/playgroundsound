@@ -3,7 +3,7 @@
 	<Events>
 		<WorkUnit Name="Default Work Unit" ID="{CC45DA19-C521-4450-A12E-057D523989D8}" PersistMode="Standalone">
 			<ChildrenList>
-				<Event Name="Play_Test" ID="{DDA9C1CC-8691-45CE-83AE-ECA323AED650}">
+				<Event Name="Good_Old_Days" ID="{DDA9C1CC-8691-45CE-83AE-ECA323AED650}">
 					<ChildrenList>
 						<Action Name="" ID="{0F197402-7D26-4FBB-A587-7C02D6C5888E}" ShortID="319692682">
 							<ReferenceList>

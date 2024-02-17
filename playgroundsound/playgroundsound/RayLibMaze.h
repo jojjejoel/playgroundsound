@@ -11,13 +11,28 @@
 *
 ********************************************************************************************/
 
-#include "raylib.h"
-
-#include <stdlib.h>           // Required for: free()
-
+#include <memory>
+#include "GameObject.h"
+class Camera3D;
+class Vector3;
+class Texture;
+class Model;
+class Color;
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
 class RaylibMaze {
-public: int Run();
+public:
+	int Run();
+	void Init();
+	void DeInit();
+	const std::shared_ptr<GameObject> GetCameraGameObject();
+private:
+	Color* mapPixels;
+	std::shared_ptr<Camera3D> camera;
+	std::shared_ptr<GameObject> cameraGameObject;
+	std::shared_ptr<Vector3> mapPosition;
+	std::shared_ptr<Texture> cubicmap;
+	std::shared_ptr<Model> model;
+	std::shared_ptr<Texture> texture;
 };

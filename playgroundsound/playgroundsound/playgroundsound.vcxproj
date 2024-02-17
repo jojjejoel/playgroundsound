@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="RayLibMaze.cpp" />
     <ClCompile Include="RayLibMaze.h" />
@@ -148,6 +149,7 @@
     <ClCompile Include="WwiseAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="RayLibTopDown.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h" />

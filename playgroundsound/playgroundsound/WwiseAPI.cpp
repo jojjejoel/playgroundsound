@@ -8,25 +8,18 @@
 //// Streaming
 #include <AK/SoundEngine/Common/IAkStreamMgr.h>
 #include <AK/Tools/Common/AkPlatformFuncs.h>
-#include <AkFilePackageLowLevelIOBlocking.h>
-
 
 //// File packaging
 #include "AkFilePackage.h"
 #include "AkFilePackageLUT.h"
 
+// Communication
+#include "AK/Comm/AkCommunication.h"
 
-#include "Wwise_IDs.h"
 
-#define BANKNAME_INIT L"Init.bnk"
-#define BANKNAME_MAIN L"Main.bnk"
 
 bool WwiseAPI::Init()
 {
-
-
-	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
-
 	AkMemSettings memSettings;
 	AK::MemoryMgr::GetDefaultSettings(memSettings);
 
@@ -70,6 +63,7 @@ bool WwiseAPI::Init()
 	AkInitSettings initSettings;
 	AkPlatformInitSettings platformInitSettings;
 	AK::SoundEngine::GetDefaultInitSettings(initSettings);
+	
 	AK::SoundEngine::GetDefaultPlatformInitSettings(platformInitSettings);
 	if (AK::SoundEngine::Init(&initSettings, &platformInitSettings) == AK_Success)
 	{
@@ -85,59 +79,75 @@ bool WwiseAPI::Init()
 	g_lowLevelIO.SetBasePath(AKTEXT("C:\\Users\\Joel.Schultz\\Documents\\GitHub\\playgroundsound\\playgroundsound\\Wwise\\GeneratedSoundBanks\\Windows"));
 	AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
 
-	AkBankID initBankID;
-	LoadBank(BANKNAME_INIT, initBankID);
-	if (initBankID == AK_INVALID_BANK_ID)
+#ifndef AK_OPTIMIZED
+
+	AkCommSettings commSettings;
+	AK::Comm::GetDefaultInitSettings(commSettings);
+	if (AK::Comm::Init(commSettings) != AK_Success)
 	{
-		Log(L"Failed to load init bank");
+		Log(L"Communication Init failed.");
 	}
 
-	AkBankID mainBankID;
-	LoadBank(BANKNAME_MAIN, mainBankID);
-	if (initBankID == AK_INVALID_BANK_ID)
-	{
-		Log(L"Failed to load main bank");
-	}
+#endif // !AK_OPTIMIZED
 
-
-	AkGameObjectID gameObjectIDTest = 1;
-	AkGameObjectID listenerGameObject = 2;
-
-	if (AK::SoundEngine::RegisterGameObj(gameObjectIDTest, "Test") == AK_Success)
-	{
-		std::cout << "GameObject registered" << std::endl;
-	}
-
-	if (AK::SoundEngine::RegisterGameObj(listenerGameObject, "Test") == AK_Success)
-	{
-		std::cout << "GameObject registered" << std::endl;
-	}
-
-	if (AK::SoundEngine::AddDefaultListener(listenerGameObject) == AK_Success)
-	{
-		std::cout << "Listener added" << std::endl;
-	}
-
-	AkPlayingID playingID = AK::SoundEngine::PostEvent(AK::EVENTS::PLAY_TEST, gameObjectIDTest);
-	if (playingID == AK_Success)
-	{
-		std::cout << "Posted event!" << std::endl;
-	}
-	else
-	{
-		std::cout << "Post event FAILED" << std::endl;
-	}
-	int a = 0;
-	AK::SoundEngine::RenderAudio();
 
 	return true;
 }
 
-void WwiseAPI::LoadBank(const wchar_t* bankName, AkBankID& bankID)
+void WwiseAPI::DeInit()
 {
-	AK::SoundEngine::LoadBank(bankName, bankID);
+	AK::SoundEngine::Term();
+	g_lowLevelIO.Term();
+	if (AK::IAkStreamMgr::Get())
+	{
+		AK::IAkStreamMgr::Get()->Destroy();
+	}
+	AK::Comm::Term();
+	AK::MemoryMgr::Term();
+}
+
+AKRESULT WwiseAPI::LoadBank(const AkUniqueID& bankID)
+{
+	return AK::SoundEngine::LoadBank(bankID);
+}
+
+void WwiseAPI::RenderAudio()
+{
+	AK::SoundEngine::RenderAudio();
 }
 
 void WwiseAPI::Log(const wchar_t* logMsg) {
 	std::cout << logMsg << std::endl;
+}
+
+AKRESULT WwiseAPI::RegisterGameObject(const AkGameObjectID& gameObjectID, const char* gameObjectName)
+{
+	return AK::SoundEngine::RegisterGameObj(gameObjectID, gameObjectName);
+}
+
+AKRESULT WwiseAPI::AddListener(const AkGameObjectID& gameObjectID, const char* gameObjectName) {
+	RegisterGameObject(gameObjectID, gameObjectName);
+	AK::SoundEngine::AddDefaultListener(gameObjectID);
+	return AK_Success;
+}
+
+AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID, const char* gameObjectName)
+{
+	RegisterGameObject(gameObjectID, gameObjectName);
+	return AK::SoundEngine::PostEvent(eventID, gameObjectID);
+}
+
+AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const GameObject& gameObject)
+{
+	AkSoundPosition soundPosition;
+	AkVector64 positionVector = { gameObject.position.x, gameObject.position.y ,gameObject.position.z };
+	GoVector3 forwardNormalized = gameObject.GetNormalizedForward();
+	GoVector3 upNormalized = gameObject.GetNormalizedUp();
+	/*AkVector orientationFront = { forwardNormalized.x, forwardNormalized.y, forwardNormalized.z};
+	AkVector orientationTop = { upNormalized.x, upNormalized.y, upNormalized.z };*/
+	AkVector orientationFront = { 1,0,0 };
+	AkVector orientationTop = { 0,1,0 };
+	soundPosition.Set(positionVector, orientationFront, orientationTop);
+
+	return AK::SoundEngine::SetPosition(akGameObjectID, soundPosition);
 }

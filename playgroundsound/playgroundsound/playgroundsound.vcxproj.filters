@@ -13,11 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Wwise">
-      <UniqueIdentifier>{cfec5866-c030-4c55-9e5d-efece0929ec5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\RayLib">
       <UniqueIdentifier>{c5cef327-da22-4444-80d4-3a0d10627798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Wwise">
+      <UniqueIdentifier>{cfec5866-c030-4c55-9e5d-efece0929ec5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -28,37 +28,37 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\AkDefaultIOHookBlocking.cpp">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\AkDefaultIOHookDeferred.cpp">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\AkDefaultLowLevelIODispatcher.cpp">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\AkFileLocationBase.cpp">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\AkFilePackage.cpp">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\AkFilePackageLUT.cpp">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\AkGeneratedSoundBanksResolver.cpp">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\AkJobWorkerMgr.cpp">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\AkMultipleFileLocation.cpp">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\AkPlatformProfilerHooks.cpp">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
     <ClCompile Include="WwiseSource\stdafx.cpp">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
     <ClCompile Include="RayLibMaze.h">
       <Filter>Header Files</Filter>
@@ -69,66 +69,72 @@
     <ClCompile Include="RayLibTopDown.cpp">
       <Filter>Source Files\RayLib</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WwiseAPI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkDefaultLowLevelIODispatcher.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkFileHelpers.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkFileHelpersBase.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkFileLocationBase.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkFilePackage.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkFilePackageLowLevelIO.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkFilePackageLowLevelIOBlocking.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkFilePackageLowLevelIODeferred.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkFilePackageLUT.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkGeneratedSoundBanksResolver.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkJobWorkerMgr.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkMultipleFileLocation.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\AkPlatformProfilerHooks.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="WwiseSource\stdafx.h">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
     <ClInclude Include="RayLibTopDown.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="WwiseSource\AkFilePackageLowLevelIO.inl">
-      <Filter>Source Files\Wwise</Filter>
+      <Filter>Resource Files\Wwise</Filter>
     </None>
   </ItemGroup>
 </Project>

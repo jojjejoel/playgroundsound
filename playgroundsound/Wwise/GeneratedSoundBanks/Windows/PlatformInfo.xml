@@ -21,12 +21,12 @@
 		<GenerateMetadataJSON>false</GenerateMetadataJSON>
 		<GenerateAllBanksMetadata>true</GenerateAllBanksMetadata>
 		<GeneratePerBankMetadata>false</GeneratePerBankMetadata>
-		<UseSoundBankNames>true</UseSoundBankNames>
+		<UseSoundBankNames>false</UseSoundBankNames>
 		<AllowExceedingMaxSize>false</AllowExceedingMaxSize>
 		<MaxAttenuationInfo>true</MaxAttenuationInfo>
 		<EstimatedDurationInfo>true</EstimatedDurationInfo>
 		<PrintObjectGuid>true</PrintObjectGuid>
 		<PrintObjectPath>true</PrintObjectPath>
 	</Settings>
-	<FileHash>{292A14B8-4900-42C6-D613-DE3D58BF5290}</FileHash>
+	<FileHash>{B63A1F51-C596-5916-D8D5-EED2120A6DBB}</FileHash>
 </PlatformInfo>
