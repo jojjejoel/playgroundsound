@@ -137,7 +137,7 @@
 				</AcousticTexture>
 			</AcousticTextures>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{78986E74-7B11-F55C-9F77-7B8E878288B7}">
+		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{A19A7F76-1AA0-08F5-3B93-E30A97BF9C73}">
 			<ObjectPath>\SoundBanks\Default Work Unit\Main</ObjectPath>
 			<ShortName>Main</ShortName>
 			<Path>3161908922.bnk</Path>
@@ -148,7 +148,7 @@
 				</File>
 			</Media>
 			<Events>
-				<Event Id="2578592186" Name="Good_Old_Days" ObjectPath="\Events\Default Work Unit\Good_Old_Days" GUID="{DDA9C1CC-8691-45CE-83AE-ECA323AED650}" MaxAttenuation="100" DurationType="OneShot" DurationMin="245.11765" DurationMax="245.11765">
+				<Event Id="2578592186" Name="Good_Old_Days" ObjectPath="\Events\Default Work Unit\Good_Old_Days" GUID="{DDA9C1CC-8691-45CE-83AE-ECA323AED650}" MaxAttenuation="15" DurationType="OneShot" DurationMin="245.11765" DurationMax="245.11765">
 					<MediaRefs>
 						<MediaRef Id="317113129"/>
 					</MediaRefs>
@@ -156,5 +156,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{0499C047-DD3E-0877-9B48-F68FAB74FBF9}</FileHash>
+	<FileHash>{830FF1DA-B7BD-8B05-0F09-551D651932E1}</FileHash>
 </SoundBanksInfo>

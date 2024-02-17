@@ -4,6 +4,8 @@
 
 #include "GameObject.h"
 
+#include <string>
+
 class WwiseAPI
 {
 public:
@@ -18,7 +20,7 @@ public:
 
 private:
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
-	void Log(const wchar_t* logMsg);
+	void Log(const std::string& logMsg);
 	AKRESULT RegisterGameObject(const AkGameObjectID& gameObjectID, const char* gameObjectName);
 };
 

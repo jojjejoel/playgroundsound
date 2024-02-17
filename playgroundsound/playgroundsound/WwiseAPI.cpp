@@ -85,7 +85,7 @@ bool WwiseAPI::Init()
 	AK::Comm::GetDefaultInitSettings(commSettings);
 	if (AK::Comm::Init(commSettings) != AK_Success)
 	{
-		Log(L"Communication Init failed.");
+		Log("Communication Init failed.");
 	}
 
 #endif // !AK_OPTIMIZED
@@ -116,7 +116,7 @@ void WwiseAPI::RenderAudio()
 	AK::SoundEngine::RenderAudio();
 }
 
-void WwiseAPI::Log(const wchar_t* logMsg) {
+void WwiseAPI::Log(const std::string& logMsg) {
 	std::cout << logMsg << std::endl;
 }
 
@@ -143,11 +143,20 @@ AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const 
 	AkVector64 positionVector = { gameObject.position.x, gameObject.position.y ,gameObject.position.z };
 	GoVector3 forwardNormalized = gameObject.GetNormalizedForward();
 	GoVector3 upNormalized = gameObject.GetNormalizedUp();
-	/*AkVector orientationFront = { forwardNormalized.x, forwardNormalized.y, forwardNormalized.z};
-	AkVector orientationTop = { upNormalized.x, upNormalized.y, upNormalized.z };*/
-	AkVector orientationFront = { 1,0,0 };
-	AkVector orientationTop = { 0,1,0 };
+	AkVector orientationFront = { forwardNormalized.x, forwardNormalized.y, forwardNormalized.z};
+	AkVector orientationTop = { upNormalized.x, upNormalized.y, upNormalized.z };
+	/*AkVector orientationFront = { 1,0,0 };
+	AkVector orientationTop = { 0,1,0 };*/
 	soundPosition.Set(positionVector, orientationFront, orientationTop);
 
-	return AK::SoundEngine::SetPosition(akGameObjectID, soundPosition);
+	AKRESULT result = AK::SoundEngine::SetPosition(akGameObjectID, soundPosition);
+	if (result == AK_Success)
+	{
+		Log("Position set. Forward: {" + std::to_string(forwardNormalized.x) + ", " + std::to_string(forwardNormalized.y) + ", " + std::to_string(forwardNormalized.z) + " }");
+	}
+	else
+	{
+		Log("Failed to set position. Forward: {" + std::to_string(forwardNormalized.x) + ", " + std::to_string(forwardNormalized.y) + ", " + std::to_string(forwardNormalized.z) + " }");
+	}
+	return result;
 }

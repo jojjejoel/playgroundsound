@@ -72,6 +72,9 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RayLibThirdPerson.cpp">
+      <Filter>Source Files\RayLib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WwiseAPI.h">
@@ -129,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RayLibThirdPerson.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

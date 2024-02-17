@@ -21,8 +21,14 @@
 
 int RaylibMaze::Run()
 {
-	
-
+	if (IsKeyPressed(KEY_F))
+	{
+		DisableCursor();
+	}
+	if (IsKeyPressed(KEY_G))
+	{
+		EnableCursor();
+	}
 	// Main game loop
 	
 		// Update
@@ -31,9 +37,14 @@ int RaylibMaze::Run()
 
 		UpdateCamera(camera.get(), CAMERA_FIRST_PERSON);
 		cameraGameObject->position = { camera->position.x, camera->position.y, camera->position.z };
-		cameraGameObject->forward = { camera->target.x, camera->target.y, camera->target.z };
-		cameraGameObject->up = { camera->up.x, camera->up.y, camera->up.z };
-
+		//cameraGameObject->forward = { camera->target.x, camera->target.y, camera->target.z };
+		//cameraGameObject->up = { camera->up.x, camera->up.y, camera->up.z };
+		//camera->target = { 0,0,0 };
+		//camera->up = { 0,0,0 };
+		Matrix matrix =	GetCameraMatrix(*camera);
+		cameraGameObject->up = { matrix.m1, -matrix.m5, matrix.m9 };
+		cameraGameObject->forward = {-matrix.m2, matrix.m6, -matrix.m10 };
+		
 		// Check player collision (we simplify to 2D collision detection)
 		Vector2 playerPos = { camera->position.x, camera->position.z };
 		float playerRadius = 0.1f;  // Collision radius (player is modelled as a cilinder for collision)
@@ -111,8 +122,8 @@ void RaylibMaze::Init()
 	cameraGameObject->position = { 0.2f, 0.4f, 0.2f };
 	camera->target = { 0.185f, 0.4f, 0.0f };    // Camera looking at point
 	cameraGameObject->forward = { 0.185f, 0.4f, 0.0f };
-	camera->up = { 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-	cameraGameObject->up = { 0.0f, 1.0f, 0.0f };
+	camera->up = { 0.0f, -1.0f, 0.0f };          // Camera up vector (rotation towards target)
+	cameraGameObject->up = { 0.0f, -1.0f, 0.0f };
 	camera->fovy = 45.0f;                                // Camera field-of-view Y
 	camera->projection = CAMERA_PERSPECTIVE;             // Camera projection type
 	Vector3 position = { 0.0f, 0.0f, 0.0f };            // Set model position
@@ -136,7 +147,7 @@ void RaylibMaze::Init()
 	mapPosition = std::make_shared<Vector3>();
 	*mapPosition = {-16.0f, 0.0f, -8.0f};  // Set model position
 
-	DisableCursor();                // Limit cursor to relative movement inside the window
+	//DisableCursor();                // Limit cursor to relative movement inside the window
 
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 	//--------------------------------------------------------------------------------------

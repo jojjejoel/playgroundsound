@@ -134,6 +134,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="RayLibMaze.cpp" />
     <ClCompile Include="RayLibMaze.h" />
+    <ClCompile Include="RayLibThirdPerson.cpp" />
     <ClCompile Include="RayLibTopDown.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookBlocking.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookDeferred.cpp" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="RayLibThirdPerson.h" />
     <ClInclude Include="RayLibTopDown.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h" />

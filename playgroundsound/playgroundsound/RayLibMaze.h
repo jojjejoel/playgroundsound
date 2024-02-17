@@ -18,9 +18,7 @@ class Vector3;
 class Texture;
 class Model;
 class Color;
-//------------------------------------------------------------------------------------
-// Program main entry point
-//------------------------------------------------------------------------------------
+
 class RaylibMaze {
 public:
 	int Run();
