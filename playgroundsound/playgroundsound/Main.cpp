@@ -1,12 +1,13 @@
 #include <iostream>
 //#include "RayLibTopDown.h"
+#include "RayLibThirdPerson.h"
 #include "RayLibMaze.h"
 #include "WwiseAPI.h"
 #include "Wwise_IDs.h"
 int main()
 {
-    RaylibMaze rayLibMaze;
-    rayLibMaze.Init();
+    RayLibThirdPerson rayLibThird;
+    rayLibThird.Init();
 
     WwiseAPI wwiseAPI;
     wwiseAPI.Init();
@@ -30,11 +31,11 @@ int main()
     int a = 1;
     while (a > 0)  
     {
-        rayLibMaze.Run();
-        wwiseAPI.UpdateGameObject(listenerGameObject, *rayLibMaze.GetCameraGameObject());
+        rayLibThird.Run();
+        wwiseAPI.UpdateGameObject(listenerGameObject, *rayLibThird.GetCameraGameObject());
         wwiseAPI.RenderAudio();
     }
-    rayLibMaze.DeInit();
+    rayLibThird.DeInit();
 
     
     /*RayLibTopDown rayLibTopDown;

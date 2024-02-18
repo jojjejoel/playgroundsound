@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+
+*.pdb
+*.validationcache
+*.idb
+*.tlog
+*.log
+*.ipch
+*.db
+*.vsidx
+*.suo
+*.ilk

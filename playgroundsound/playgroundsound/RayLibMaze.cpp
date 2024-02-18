@@ -37,10 +37,6 @@ int RaylibMaze::Run()
 
 		UpdateCamera(camera.get(), CAMERA_FIRST_PERSON);
 		cameraGameObject->position = { camera->position.x, camera->position.y, camera->position.z };
-		//cameraGameObject->forward = { camera->target.x, camera->target.y, camera->target.z };
-		//cameraGameObject->up = { camera->up.x, camera->up.y, camera->up.z };
-		//camera->target = { 0,0,0 };
-		//camera->up = { 0,0,0 };
 		Matrix matrix =	GetCameraMatrix(*camera);
 		cameraGameObject->up = { matrix.m1, -matrix.m5, matrix.m9 };
 		cameraGameObject->forward = {-matrix.m2, matrix.m6, -matrix.m10 };
@@ -117,15 +113,17 @@ void RaylibMaze::Init()
 
 	// Define the camera to look into our 3d world
 	camera = std::make_shared<Camera>();
-	cameraGameObject = std::make_shared<GameObject>();
 	camera->position = { 0.2f, 0.4f, 0.2f };    // Camera position
-	cameraGameObject->position = { 0.2f, 0.4f, 0.2f };
 	camera->target = { 0.185f, 0.4f, 0.0f };    // Camera looking at point
-	cameraGameObject->forward = { 0.185f, 0.4f, 0.0f };
 	camera->up = { 0.0f, -1.0f, 0.0f };          // Camera up vector (rotation towards target)
-	cameraGameObject->up = { 0.0f, -1.0f, 0.0f };
 	camera->fovy = 45.0f;                                // Camera field-of-view Y
 	camera->projection = CAMERA_PERSPECTIVE;             // Camera projection type
+
+	cameraGameObject = std::make_shared<GameObject>();
+	cameraGameObject->position = { 0.2f, 0.4f, 0.2f };
+	cameraGameObject->forward = { 0.185f, 0.4f, 0.0f };
+	cameraGameObject->up = { 0.0f, -1.0f, 0.0f };
+
 	Vector3 position = { 0.0f, 0.0f, 0.0f };            // Set model position
 
 	Image imMap = LoadImage("resources/cubicmap.png");      // Load cubicmap image (RAM)
@@ -147,7 +145,6 @@ void RaylibMaze::Init()
 	mapPosition = std::make_shared<Vector3>();
 	*mapPosition = {-16.0f, 0.0f, -8.0f};  // Set model position
 
-	//DisableCursor();                // Limit cursor to relative movement inside the window
 
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 	//--------------------------------------------------------------------------------------
