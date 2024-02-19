@@ -18,7 +18,7 @@ public:
 	AkPlayingID PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID, std::string_view gameObjectName);
 	AKRESULT UpdateGameObject(const AkGameObjectID& gameObjectID, const GameObject& gameObject);
 
-	AKRESULT UpdateStaticObject();
+	AKRESULT SetStaticObject(const GameObject& gameObject);
 
 
 private:

@@ -4,6 +4,7 @@
 #include <memory>
 #include "GameObject.h"
 #include <vector>
+
 struct Camera3D;
 struct Vector3;
 struct Texture;
@@ -24,11 +25,14 @@ public:
     void DeInit();
     const std::shared_ptr<GameObject> GetCameraGameObject();
     const std::shared_ptr<GameObject> GetPlayerGameObject();
+    const std::shared_ptr<GameObject> GetWallGameObject();
     BoundingBox CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const;
 private:
     std::shared_ptr<Camera3D> camera;
     std::shared_ptr<GameObject> cameraGameObject;
     std::shared_ptr<GameObject> playerGameObject;
+
+    std::shared_ptr<GameObject> wallGameObject;
 
     std::vector<std::shared_ptr<Model>> models;
 

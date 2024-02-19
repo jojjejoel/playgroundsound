@@ -190,7 +190,7 @@ void RayLibThirdPerson::Init()
     // Define the camera to look into our 3d world (position, target, up vector)
     camera = std::make_shared<Camera3D>();
     camera->position = { 0.0f, 2.0f, 4.0f };    // Camera position
-    camera->target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
+    camera->target = { 0.0f, .0f, 0.0f };      // Camera looking at point
     camera->up = { 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera->fovy = 60.0f;                                // Camera field-of-view Y
     camera->projection = CAMERA_PERSPECTIVE;             // Camera projection type
@@ -203,12 +203,31 @@ void RayLibThirdPerson::Init()
     playerGameObject = std::make_shared<GameObject>();
 
     cameraMode = CAMERA_THIRD_PERSON;
-
+    
     std::shared_ptr<Model> model = std::make_shared<Model>();
-    *model = LoadModelFromMesh(GenMeshCube(2, 2, 2));
+    *model = LoadModelFromMesh(GenMeshPlane(2, 8, 10,10));
     model->transform.m12 = 3;
     model->transform.m13 = 0;
     model->transform.m14 = 3;
+
+    model->transform.m0 = 0;
+
+    model->transform.m4 = -1;
+    model->transform.m1 = 1;
+    model->transform.m5 = 0;
+    //model->meshes[0].triangleCount
+    wallGameObject = std::make_shared<GameObject>();
+
+    
+    for (size_t i = 0; i < model->meshes[0].vertexCount; i++)
+    {
+        Playground::Vertex vertex;
+        float* vertices = model->meshes[0].vertices;
+        vertex.x = vertices[i];
+        vertex.y = vertices[i + 1];
+        vertex.z = vertices[i + 2];
+        wallGameObject->mesh.vertices.push_back(vertex);
+    }
 
     ///*model*/->transform.
     models.push_back(model);
@@ -231,6 +250,11 @@ const std::shared_ptr<GameObject> RayLibThirdPerson::GetCameraGameObject()
 const std::shared_ptr<GameObject> RayLibThirdPerson::GetPlayerGameObject()
 {
     return playerGameObject;
+}
+
+const std::shared_ptr<GameObject> RayLibThirdPerson::GetWallGameObject()
+{
+    return wallGameObject;
 }
 
 BoundingBox RayLibThirdPerson::CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const {

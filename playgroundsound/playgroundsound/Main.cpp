@@ -26,7 +26,7 @@ int main()
     wwiseAPI.PostEvent(AK::EVENTS::GOOD_OLD_DAYS, musicObjectID, "Test");
     
     
-
+    wwiseAPI.SetStaticObject(*rayLibThird.GetWallGameObject());
 
     
     int a = 1;

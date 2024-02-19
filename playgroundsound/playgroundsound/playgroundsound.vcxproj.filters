@@ -75,6 +75,9 @@
     <ClCompile Include="RayLibThirdPerson.cpp">
       <Filter>Source Files\RayLib</Filter>
     </ClCompile>
+    <ClCompile Include="Mesh.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WwiseAPI.h">

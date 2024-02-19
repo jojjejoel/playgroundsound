@@ -97,7 +97,7 @@ AKRESULT WwiseAPI::AddListener(const AkGameObjectID& listenerID, std::string_vie
 	RegisterGameObject(distanceProbeID, distanceProbeName);
 	AK::SoundEngine::AddDefaultListener(listenerID);
 	//AK::SoundEngine::liste
-	//AK::SoundEngine::SetDistanceProbe(listenerID, distanceProbeID);
+	AK::SoundEngine::SetDistanceProbe(listenerID, distanceProbeID);
 	AK::SpatialAudio::RegisterListener(listenerID);
 	return AK_Success;
 }
@@ -128,12 +128,23 @@ AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const 
 	return result;
 }
 
-//AKRESULT WwiseAPI::UpdateStaticObject() {
-//	AkGeometrySetID geometryID = 100;
-//	AkGeometryParams geometryParams;
-//	geometryParams;
-//	////AK::SpatialAudio::SetGeometry(geometryID,)
-//	//AkRoomParams roomParams;
-//	//roomParams.
-//	//AK::SpatialAudio::SetRoom
-//}
+AKRESULT WwiseAPI::SetStaticObject(const GameObject& gameObject) {
+	AkGeometrySetID geometryID = 100;
+	AkRoomParams paramsRoom;
+	AkRoomID roomID = 200;
+	// Let's orient our rooms towards the top of the screen. 
+	paramsRoom.Front.X = 0.f;
+	paramsRoom.Front.Y = 0.f;
+	paramsRoom.Front.Z = 1.f;
+	paramsRoom.Up.X = 0.f;
+	paramsRoom.Up.Y = 1.f;
+	paramsRoom.Up.Z = 0.f;
+	paramsRoom.TransmissionLoss = 0.9f;	// Let's have a bit of sound transmitted through walls when all portals are closed.
+	paramsRoom.RoomGameObj_KeepRegistered = true;	// We intend to use the room's game object to post events (see documentation of AkRoomParams::RoomGameObj_KeepRegistered).
+	paramsRoom.RoomGameObj_AuxSendLevelToSelf = 0.25f;	// Since we will be playing an ambience ("Play_Ambience_Quad", below), on this room's game object, we here route some of it to the room's auxiliary bus to add some of its reverb.
+	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Room");
+	paramsRoom.GeometryInstanceID = geometryID;
+
+	AK::SpatialAudio::SetRoom(roomID, paramsRoom, "Room Object");
+	return AK_Success;
+}
