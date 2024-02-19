@@ -15,8 +15,9 @@
 
 #include "raylib.h"
 #include "rcamera.h"
+#include <string>
 
-#define MAX_COLUMNS 20
+#define MAX_COLUMNS 10
 
 
 void RayLibThirdPerson::Run()
@@ -29,72 +30,59 @@ void RayLibThirdPerson::Run()
     {
         EnableCursor();
     }
-    // Main game loop
-    // 
-        // Update
-        //----------------------------------------------------------------------------------
-        // Switch camera mode
-        if (IsKeyPressed(KEY_ONE))
-        {
-            cameraMode = CAMERA_FREE;
-            camera->up = { 0.0f, 1.0f, 0.0f }; // Reset roll
-        }
-
-        if (IsKeyPressed(KEY_TWO))
-        {
-            cameraMode = CAMERA_FIRST_PERSON;
-            camera->up = { 0.0f, 1.0f, 0.0f }; // Reset roll
-        }
-
-        if (IsKeyPressed(KEY_THREE))
-        {
-            cameraMode = CAMERA_THIRD_PERSON;
-            camera->up = { 0.0f, 1.0f, 0.0f }; // Reset roll
-        }
-
-        if (IsKeyPressed(KEY_FOUR))
-        {
-            cameraMode = CAMERA_ORBITAL;
-            camera->up = { 0.0f, 1.0f, 0.0f }; // Reset roll
-        }
-
-        // Switch camera projection
-        if (IsKeyPressed(KEY_P))
-        {
-            if (camera->projection == CAMERA_PERSPECTIVE)
-            {
-                // Create isometric view
-                cameraMode = CAMERA_THIRD_PERSON;
-                // Note: The target distance is related to the render distance in the orthographic projection
-                camera->position = { 0.0f, 2.0f, -100.0f };
-                camera->target = { 0.0f, 2.0f, 0.0f };
-                camera->up = { 0.0f, 1.0f, 0.0f };
-                camera->projection = CAMERA_ORTHOGRAPHIC;
-                camera->fovy = 20.0f; // near plane width in CAMERA_ORTHOGRAPHIC
-                CameraYaw(camera.get(), -135 * DEG2RAD, true);
-                CameraPitch(camera.get(), -45 * DEG2RAD, true, true, false);
-            }
-            else if (camera->projection == CAMERA_ORTHOGRAPHIC)
-            {
-                // Reset to default view
-                cameraMode = CAMERA_THIRD_PERSON;
-                camera->position = { 0.0f, 2.0f, 10.0f };
-                camera->target = { 0.0f, 2.0f, 0.0f };
-                camera->up = { 0.0f, 1.0f, 0.0f };
-                camera->projection = CAMERA_PERSPECTIVE;
-                camera->fovy = 60.0f;
-            }
-        }
-
-        // Update camera computes movement internally depending on the camera mode
-        // Some default standard keyboard/mouse inputs are hardcoded to simplify use
-        // For advance camera controls, it's reecommended to compute camera movement manually
+        
         UpdateCamera(camera.get(), cameraMode);                  // Update camera
 
-        cameraGameObject->position = { camera->target.x, camera->target.y, camera->target.z };
+        //cameraGameObject->position = { camera->target.x, camera->target.y, camera->target.z };
+        cameraGameObject->position = { camera->position.x, camera->position.y, camera->position.z };
+        playerGameObject->position = { camera->target.x, camera->target.y, camera->target.z };
         Matrix matrix = GetCameraMatrix(*camera);
-        cameraGameObject->up = { matrix.m1, -matrix.m5, matrix.m9 };
-        cameraGameObject->forward = { -matrix.m2, matrix.m6, -matrix.m10 };
+
+    if (IsKeyPressed(KEY_U))
+    {
+        upX *= -1.0f;
+    }
+    if (IsKeyPressed(KEY_I))
+    {
+        upY *= -1.0f;
+    }
+    if (IsKeyPressed(KEY_O))
+    {
+        upZ *= -1.0f;
+    }
+    if (IsKeyPressed(KEY_J))
+    {
+        forwardX *= -1.0f;
+    }
+    if (IsKeyPressed(KEY_K))
+    {
+        forwardY *= -1.0f;
+    }
+    if (IsKeyPressed(KEY_L))
+    {
+        forwardZ *= -1.0f;
+    }
+
+    if (IsKeyPressed(KEY_H))
+    {
+        leftHand = !leftHand;
+    }
+
+    if (leftHand)
+    {
+        cameraGameObject->up = { matrix.m1 * upX, matrix.m5 * upY, matrix.m9 * upZ };
+        cameraGameObject->forward = { matrix.m2 * forwardX, matrix.m6 * forwardY, matrix.m10 * forwardZ };
+
+    }
+    else
+    {
+        cameraGameObject->up = { matrix.m1 * upX, matrix.m10 * upY, matrix.m6 * upZ };
+        cameraGameObject->forward = { matrix.m2 * forwardX, matrix.m9 * forwardY, matrix.m15 * forwardZ };
+    }
+
+        playerGameObject->up = {0, 1, 0 };
+        playerGameObject->forward = { 0, 0, 1 };
+
        
         // Draw
         //----------------------------------------------------------------------------------
@@ -109,18 +97,33 @@ void RayLibThirdPerson::Run()
         DrawCube({ 16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, LIME);      // Draw a green wall
         DrawCube({ 0.0f, 2.5f, 16.0f }, 32.0f, 5.0f, 1.0f, GOLD);      // Draw a yellow wall
 
+        DrawCube({ 0.0f, 0.0f, 0.0f }, 2, 2, 2, GOLD);      // Draw a yellow wall
+
+        RayCollision collision = CheckCollisions();
+        if (collision.hit)
+        {
+            DrawLine3D(camera->target, collision.point, RED);
+        }
+        else
+        {
+            DrawLine3D(camera->target, {0,1,0}, GREEN);
+        }
+
+
         // Draw some cubes around
         for (int i = 0; i < MAX_COLUMNS; i++)
         {
             DrawCube(*positions[i], 2.0f, heights[i], 2.0f, *colors[i]);
-            DrawCubeWires(*positions[i], 2.0f, heights[i], 2.0f, MAROON);
+            //DrawCubeWires(*positions[i], 2.0f, heights[i], 2.0f, MAROON);
+            DrawBoundingBox(*boundingBoxes[i], BLACK);
         }
 
         // Draw player cube
         if (cameraMode == CAMERA_THIRD_PERSON)
         {
             DrawCube(camera->target, 0.5f, 0.5f, 0.5f, PURPLE);
-            DrawCubeWires(camera->target, 0.5f, 0.5f, 0.5f, DARKPURPLE);
+            //DrawCubeWires(camera->target, 0.5f, 0.5f, 0.5f, DARKPURPLE);
+            //DrawLine3D(camera->target, Vector3{ camera->target.x,camera->target.y + 5,camera->target.z }, { 255,0,0,255 });
         }
 
         EndMode3D();
@@ -133,8 +136,11 @@ void RayLibThirdPerson::Run()
         DrawText("- Move keys: W, A, S, D, Space, Left-Ctrl", 15, 30, 10, BLACK);
         DrawText("- Look around: arrow keys or mouse", 15, 45, 10, BLACK);
         DrawText("- Camera mode keys: 1, 2, 3, 4", 15, 60, 10, BLACK);
-        DrawText("- Zoom keys: num-plus, num-minus or mouse scroll", 15, 75, 10, BLACK);
-        DrawText("- Camera projection key: P", 15, 90, 10, BLACK);
+
+        std::string upVector = "Up: { X " + std::to_string(upX) + ", Y " + std::to_string(upY) + ", Z " + std::to_string(upZ) + "}";
+        std::string forwardVector = "Forward: { X " + std::to_string(forwardX) + ", Y " + std::to_string(forwardY) + ", Z " + std::to_string(forwardZ) + "}";
+        DrawText(upVector.c_str(), 15, 75, 10, BLACK);
+        DrawText(forwardVector.c_str(), 15, 90, 10, BLACK);
 
         DrawRectangle(600, 5, 195, 100, Fade(SKYBLUE, 0.5f));
         DrawRectangleLines(600, 5, 195, 100, BLUE);
@@ -154,8 +160,49 @@ void RayLibThirdPerson::Run()
         //----------------------------------------------------------------------------------
 }
 
+RayCollision RayLibThirdPerson::CheckCollisions()
+{
+    std::vector<RayCollision> collisions;
+    for (const auto& box : boundingBoxes)
+    {
+        Ray ray;
+        ray.position = camera->target;
+        Vector3 dir;
+        dir.x = 0 - camera->target.x;
+        dir.y = 0 - camera->target.y;
+        dir.z = 0 - camera->target.z;
+        ray.direction = dir;
+        RayCollision collision = GetRayCollisionBox(ray, *box);
+        if (collision.hit)
+        {
+            collisions.push_back(collision);
+        }
+    }
+
+    if (collisions.size() > 0)
+    {
+        RayCollision shortestDistanceCollision = collisions[0];
+        for (size_t i = 1; i < collisions.size(); i++)
+        {
+            if (collisions[i].distance < shortestDistanceCollision.distance)
+            {
+                shortestDistanceCollision = collisions[i];
+            }
+        }
+        return shortestDistanceCollision;
+    }
+    else
+    {
+         RayCollision rayCollision;
+         rayCollision.hit = false;
+         return rayCollision;
+    }
+}
+
 void RayLibThirdPerson::Init()
 {
+   
+
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
@@ -176,8 +223,9 @@ void RayLibThirdPerson::Init()
     cameraGameObject->forward = { 0.185f, 0.4f, 0.0f };
     cameraGameObject->up = { 0.0f, -1.0f, 0.0f };
 
+    playerGameObject = std::make_shared<GameObject>();
 
-    cameraMode = CAMERA_FIRST_PERSON;
+    cameraMode = CAMERA_THIRD_PERSON;
 
     for (size_t i = 0; i < MAX_COLUMNS; i++)
     {
@@ -187,6 +235,7 @@ void RayLibThirdPerson::Init()
     {
         std::shared_ptr<Vector3> position = std::make_shared<Vector3>();
         positions.push_back(position);
+
     }
     for (size_t i = 0; i < MAX_COLUMNS; i++)
     {
@@ -195,7 +244,7 @@ void RayLibThirdPerson::Init()
     }
     for (int i = 0; i < MAX_COLUMNS; i++)
     {
-        heights[i] = (float)GetRandomValue(1, 12);
+        heights[i] = 8;
         std::shared_ptr<Vector3> position = std::make_shared<Vector3>();
         position->x = (float)GetRandomValue(-15, 15);
         position->y = heights[i] / 2.0f;
@@ -207,22 +256,53 @@ void RayLibThirdPerson::Init()
         color->b = 30;
         color->a = 255;
         colors[i] = color;
+
+
+        std::shared_ptr<BoundingBox> box = std::make_shared<BoundingBox>();
+        box->min.x = CalculateBoundingBox(*position, 2, 8, 1).min.x;
+        box->min.y = CalculateBoundingBox(*position, 2, 8, 1).min.y;
+        box->min.z = CalculateBoundingBox(*position, 2, 8, 1).min.z;
+        box->max.x = CalculateBoundingBox(*position, 2, 8, 1).max.x;
+        box->max.y = CalculateBoundingBox(*position, 2, 8, 1).max.y;
+        box->max.z = CalculateBoundingBox(*position, 2, 8, 1).max.z;
+        boundingBoxes.push_back(box);
     }
 
-    SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
+    SetTargetFPS(60);
 
 }
 
 void RayLibThirdPerson::DeInit()
 {
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+    CloseWindow();
 }
 
 const std::shared_ptr<GameObject> RayLibThirdPerson::GetCameraGameObject()
 {
     return cameraGameObject;
+}
+
+const std::shared_ptr<GameObject> RayLibThirdPerson::GetPlayerGameObject()
+{
+    return playerGameObject;
+}
+
+BoundingBox RayLibThirdPerson::CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const {
+    BoundingBox boundingBox;
+
+    float halfWidth = width / 2.0f;
+    float halfHeight = height / 2.0f;
+    float halfLength = length / 2.0f;
+
+    // Calculate minimum vertex
+    boundingBox.min.x = center.x - halfWidth;
+    boundingBox.min.y = center.y - halfHeight;
+    boundingBox.min.z = center.z - halfLength;
+
+    // Calculate maximum vertex
+    boundingBox.max.x = center.x + halfWidth;
+    boundingBox.max.y = center.y + halfHeight;
+    boundingBox.max.z = center.z + halfLength;
+
+    return boundingBox;
 }

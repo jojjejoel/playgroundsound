@@ -13,7 +13,7 @@ public:
 	void DeInit();
 	AKRESULT LoadBank(const AkUniqueID& bankID);
 	void RenderAudio();
-	AKRESULT AddListener(const AkGameObjectID& gameObjectID, const char* gameObjectName);
+	AKRESULT AddListener(const AkGameObjectID& listenerID, const std::string& listenerGameObjectName, const AkGameObjectID& distanceProbeID);
 	AkPlayingID PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID, const char* gameObjectName);
 	AKRESULT UpdateGameObject(const AkGameObjectID& gameObjectID, const GameObject& gameObject);
 
@@ -21,6 +21,6 @@ public:
 private:
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 	void Log(const std::string& logMsg);
-	AKRESULT RegisterGameObject(const AkGameObjectID& gameObjectID, const char* gameObjectName);
+	AKRESULT RegisterGameObject(const AkGameObjectID& gameObjectID, const std::string& gameObjectName);
 };
 

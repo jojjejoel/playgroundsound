@@ -13,11 +13,11 @@
 
 #include <memory>
 #include "GameObject.h"
-class Camera3D;
-class Vector3;
-class Texture;
-class Model;
-class Color;
+struct Camera3D;
+struct Vector3;
+struct Texture;
+struct Model;
+struct Color;
 
 class RaylibMaze {
 public:

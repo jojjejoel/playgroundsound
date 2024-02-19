@@ -17,12 +17,13 @@ int main()
 	wwiseAPI.LoadBank(AK::BANKS::MAIN);
 
 
-	AkGameObjectID gameObjectIDTest = 1;
-	AkGameObjectID listenerGameObject = 2;
+	AkGameObjectID musicObjectID = 1;
+	AkGameObjectID listenerObjectID = 2;
+    AkGameObjectID distanceProbeObjectID = 3;
 
-	wwiseAPI.AddListener(listenerGameObject, "Listener");
+	wwiseAPI.AddListener(listenerObjectID, "ListenerObject", distanceProbeObjectID);
 
-    wwiseAPI.PostEvent(AK::EVENTS::GOOD_OLD_DAYS, gameObjectIDTest, "Test");
+    wwiseAPI.PostEvent(AK::EVENTS::GOOD_OLD_DAYS, musicObjectID, "Test");
     
     
 
@@ -32,7 +33,8 @@ int main()
     while (a > 0)  
     {
         rayLibThird.Run();
-        wwiseAPI.UpdateGameObject(listenerGameObject, *rayLibThird.GetCameraGameObject());
+        wwiseAPI.UpdateGameObject(listenerObjectID, *rayLibThird.GetCameraGameObject());
+        wwiseAPI.UpdateGameObject(distanceProbeObjectID, *rayLibThird.GetPlayerGameObject());
         wwiseAPI.RenderAudio();
     }
     rayLibThird.DeInit();

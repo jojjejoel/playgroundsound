@@ -120,14 +120,16 @@ void WwiseAPI::Log(const std::string& logMsg) {
 	std::cout << logMsg << std::endl;
 }
 
-AKRESULT WwiseAPI::RegisterGameObject(const AkGameObjectID& gameObjectID, const char* gameObjectName)
+AKRESULT WwiseAPI::RegisterGameObject(const AkGameObjectID& gameObjectID, const std::string& gameObjectName)
 {
-	return AK::SoundEngine::RegisterGameObj(gameObjectID, gameObjectName);
+	return AK::SoundEngine::RegisterGameObj(gameObjectID, gameObjectName.c_str());
 }
 
-AKRESULT WwiseAPI::AddListener(const AkGameObjectID& gameObjectID, const char* gameObjectName) {
-	RegisterGameObject(gameObjectID, gameObjectName);
-	AK::SoundEngine::AddDefaultListener(gameObjectID);
+AKRESULT WwiseAPI::AddListener(const AkGameObjectID& listenerID, const std::string& listenerGameObjectName, const AkGameObjectID& distanceProbeID) {
+	RegisterGameObject(listenerID, listenerGameObjectName);
+	RegisterGameObject(distanceProbeID, listenerGameObjectName + "_DistanceProbe");
+	AK::SoundEngine::AddDefaultListener(listenerID);
+	AK::SoundEngine::SetDistanceProbe(listenerID, distanceProbeID);
 	return AK_Success;
 }
 
@@ -139,24 +141,21 @@ AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID&
 
 AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const GameObject& gameObject)
 {
-	AkSoundPosition soundPosition;
-	AkVector64 positionVector = { gameObject.position.x, gameObject.position.y ,gameObject.position.z };
+	AkListenerPosition soundPosition;
+	AkVector positionVector = { gameObject.position.x, gameObject.position.y ,-gameObject.position.z };
 	GoVector3 forwardNormalized = gameObject.GetNormalizedForward();
 	GoVector3 upNormalized = gameObject.GetNormalizedUp();
 	AkVector orientationFront = { forwardNormalized.x, forwardNormalized.y, forwardNormalized.z};
 	AkVector orientationTop = { upNormalized.x, upNormalized.y, upNormalized.z };
-	/*AkVector orientationFront = { 1,0,0 };
-	AkVector orientationTop = { 0,1,0 };*/
+	AkTransform transform;
+	transform.Set(positionVector, orientationFront, orientationTop);
 	soundPosition.Set(positionVector, orientationFront, orientationTop);
-
+	
 	AKRESULT result = AK::SoundEngine::SetPosition(akGameObjectID, soundPosition);
-	if (result == AK_Success)
-	{
-		Log("Position set. Forward: {" + std::to_string(forwardNormalized.x) + ", " + std::to_string(forwardNormalized.y) + ", " + std::to_string(forwardNormalized.z) + " }");
-	}
-	else
+	if (result != AK_Success)
 	{
 		Log("Failed to set position. Forward: {" + std::to_string(forwardNormalized.x) + ", " + std::to_string(forwardNormalized.y) + ", " + std::to_string(forwardNormalized.z) + " }");
 	}
+
 	return result;
 }
