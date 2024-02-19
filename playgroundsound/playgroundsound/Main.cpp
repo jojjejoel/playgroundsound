@@ -21,7 +21,7 @@ int main()
 	AkGameObjectID listenerObjectID = 2;
     AkGameObjectID distanceProbeObjectID = 3;
 
-	wwiseAPI.AddListener(listenerObjectID, "ListenerObject", distanceProbeObjectID);
+	wwiseAPI.AddListener(listenerObjectID, "ListenerObject", distanceProbeObjectID, "ListenerObject_DistanceProbe");
 
     wwiseAPI.PostEvent(AK::EVENTS::GOOD_OLD_DAYS, musicObjectID, "Test");
     

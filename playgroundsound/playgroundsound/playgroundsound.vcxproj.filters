@@ -137,6 +137,9 @@
     <ClInclude Include="RayLibThirdPerson.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RayLibObject.h">
+      <Filter>Source Files\RayLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="WwiseSource\AkFilePackageLowLevelIO.inl">

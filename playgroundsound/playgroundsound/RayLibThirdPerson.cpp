@@ -17,8 +17,6 @@
 #include "rcamera.h"
 #include <string>
 
-#define MAX_COLUMNS 10
-
 
 void RayLibThirdPerson::Run()
 {
@@ -63,22 +61,15 @@ void RayLibThirdPerson::Run()
         forwardZ *= -1.0f;
     }
 
-    if (IsKeyPressed(KEY_H))
-    {
-        leftHand = !leftHand;
-    }
-
-    if (leftHand)
-    {
         cameraGameObject->up = { matrix.m1 * upX, matrix.m5 * upY, matrix.m9 * upZ };
         cameraGameObject->forward = { matrix.m2 * forwardX, matrix.m6 * forwardY, matrix.m10 * forwardZ };
 
-    }
-    else
+    
+    /*else
     {
         cameraGameObject->up = { matrix.m1 * upX, matrix.m10 * upY, matrix.m6 * upZ };
         cameraGameObject->forward = { matrix.m2 * forwardX, matrix.m9 * forwardY, matrix.m15 * forwardZ };
-    }
+    }*/
 
         playerGameObject->up = {0, 1, 0 };
         playerGameObject->forward = { 0, 0, 1 };
@@ -97,7 +88,6 @@ void RayLibThirdPerson::Run()
         DrawCube({ 16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, LIME);      // Draw a green wall
         DrawCube({ 0.0f, 2.5f, 16.0f }, 32.0f, 5.0f, 1.0f, GOLD);      // Draw a yellow wall
 
-        DrawCube({ 0.0f, 0.0f, 0.0f }, 2, 2, 2, GOLD);      // Draw a yellow wall
 
         RayCollision collision = CheckCollisions();
         if (collision.hit)
@@ -110,12 +100,9 @@ void RayLibThirdPerson::Run()
         }
 
 
-        // Draw some cubes around
-        for (int i = 0; i < MAX_COLUMNS; i++)
+        for (const auto& model : models)
         {
-            DrawCube(*positions[i], 2.0f, heights[i], 2.0f, *colors[i]);
-            //DrawCubeWires(*positions[i], 2.0f, heights[i], 2.0f, MAROON);
-            DrawBoundingBox(*boundingBoxes[i], BLACK);
+            DrawModel(*model, { 0,model->transform.m7,0 }, 1, { 255,255,255,255 });
         }
 
         // Draw player cube
@@ -135,7 +122,6 @@ void RayLibThirdPerson::Run()
         DrawText("Camera controls:", 15, 15, 10, BLACK);
         DrawText("- Move keys: W, A, S, D, Space, Left-Ctrl", 15, 30, 10, BLACK);
         DrawText("- Look around: arrow keys or mouse", 15, 45, 10, BLACK);
-        DrawText("- Camera mode keys: 1, 2, 3, 4", 15, 60, 10, BLACK);
 
         std::string upVector = "Up: { X " + std::to_string(upX) + ", Y " + std::to_string(upY) + ", Z " + std::to_string(upZ) + "}";
         std::string forwardVector = "Forward: { X " + std::to_string(forwardX) + ", Y " + std::to_string(forwardY) + ", Z " + std::to_string(forwardZ) + "}";
@@ -145,16 +131,7 @@ void RayLibThirdPerson::Run()
         DrawRectangle(600, 5, 195, 100, Fade(SKYBLUE, 0.5f));
         DrawRectangleLines(600, 5, 195, 100, BLUE);
 
-        DrawText("Camera status:", 610, 15, 10, BLACK);
-        DrawText(TextFormat("- Mode: %s", (cameraMode == CAMERA_FREE) ? "FREE" :
-            (cameraMode == CAMERA_FIRST_PERSON) ? "FIRST_PERSON" :
-            (cameraMode == CAMERA_THIRD_PERSON) ? "THIRD_PERSON" :
-            (cameraMode == CAMERA_ORBITAL) ? "ORBITAL" : "CUSTOM"), 610, 30, 10, BLACK);
-        DrawText(TextFormat("- Projection: %s", (camera->projection == CAMERA_PERSPECTIVE) ? "PERSPECTIVE" :
-            (camera->projection == CAMERA_ORTHOGRAPHIC) ? "ORTHOGRAPHIC" : "CUSTOM"), 610, 45, 10, BLACK);
-        DrawText(TextFormat("- Position: (%06.3f, %06.3f, %06.3f)", camera->position.x, camera->position.y, camera->position.z), 610, 60, 10, BLACK);
-        DrawText(TextFormat("- Target: (%06.3f, %06.3f, %06.3f)", camera->target.x, camera->target.y, camera->target.z), 610, 75, 10, BLACK);
-        DrawText(TextFormat("- Up: (%06.3f, %06.3f, %06.3f)", camera->up.x, camera->up.y, camera->up.z), 610, 90, 10, BLACK);
+      
 
         EndDrawing();
         //----------------------------------------------------------------------------------
@@ -163,7 +140,7 @@ void RayLibThirdPerson::Run()
 RayCollision RayLibThirdPerson::CheckCollisions()
 {
     std::vector<RayCollision> collisions;
-    for (const auto& box : boundingBoxes)
+    for (const auto& model : models)
     {
         Ray ray;
         ray.position = camera->target;
@@ -172,7 +149,7 @@ RayCollision RayLibThirdPerson::CheckCollisions()
         dir.y = 0 - camera->target.y;
         dir.z = 0 - camera->target.z;
         ray.direction = dir;
-        RayCollision collision = GetRayCollisionBox(ray, *box);
+        RayCollision collision = GetRayCollisionBox(ray, GetModelBoundingBox(*model));
         if (collision.hit)
         {
             collisions.push_back(collision);
@@ -208,12 +185,12 @@ void RayLibThirdPerson::Init()
     const int screenWidth = 800;
     const int screenHeight = 450;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - 3d camera first person");
+    InitWindow(screenWidth, screenHeight, "PlaygroundSound");
 
     // Define the camera to look into our 3d world (position, target, up vector)
     camera = std::make_shared<Camera3D>();
     camera->position = { 0.0f, 2.0f, 4.0f };    // Camera position
-    camera->target = { 0.0f, 2.0f, 0.0f };      // Camera looking at point
+    camera->target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
     camera->up = { 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera->fovy = 60.0f;                                // Camera field-of-view Y
     camera->projection = CAMERA_PERSPECTIVE;             // Camera projection type
@@ -227,46 +204,15 @@ void RayLibThirdPerson::Init()
 
     cameraMode = CAMERA_THIRD_PERSON;
 
-    for (size_t i = 0; i < MAX_COLUMNS; i++)
-    {
-        heights.push_back({ 0 });
-    }
-    for (size_t i = 0; i < MAX_COLUMNS; i++)
-    {
-        std::shared_ptr<Vector3> position = std::make_shared<Vector3>();
-        positions.push_back(position);
+    std::shared_ptr<Model> model = std::make_shared<Model>();
+    *model = LoadModelFromMesh(GenMeshCube(2, 2, 2));
+    model->transform.m12 = 3;
+    model->transform.m13 = 0;
+    model->transform.m14 = 3;
 
-    }
-    for (size_t i = 0; i < MAX_COLUMNS; i++)
-    {
-        std::shared_ptr<Color> color = std::make_shared<Color>();
-        colors.push_back(color);
-    }
-    for (int i = 0; i < MAX_COLUMNS; i++)
-    {
-        heights[i] = 8;
-        std::shared_ptr<Vector3> position = std::make_shared<Vector3>();
-        position->x = (float)GetRandomValue(-15, 15);
-        position->y = heights[i] / 2.0f;
-        position->z = (float)GetRandomValue(-15, 15);
-        positions[i] = position;
-        std::shared_ptr<Color> color = std::make_shared<Color>();
-        color->r = static_cast<unsigned char>(GetRandomValue(20, 255));
-        color->g = static_cast<unsigned char>(GetRandomValue(10, 55));
-        color->b = 30;
-        color->a = 255;
-        colors[i] = color;
+    ///*model*/->transform.
+    models.push_back(model);
 
-
-        std::shared_ptr<BoundingBox> box = std::make_shared<BoundingBox>();
-        box->min.x = CalculateBoundingBox(*position, 2, 8, 1).min.x;
-        box->min.y = CalculateBoundingBox(*position, 2, 8, 1).min.y;
-        box->min.z = CalculateBoundingBox(*position, 2, 8, 1).min.z;
-        box->max.x = CalculateBoundingBox(*position, 2, 8, 1).max.x;
-        box->max.y = CalculateBoundingBox(*position, 2, 8, 1).max.y;
-        box->max.z = CalculateBoundingBox(*position, 2, 8, 1).max.z;
-        boundingBoxes.push_back(box);
-    }
 
     SetTargetFPS(60);
 

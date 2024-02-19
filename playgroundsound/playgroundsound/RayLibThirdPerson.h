@@ -11,6 +11,9 @@ struct Model;
 struct Color;
 struct BoundingBox;
 struct RayCollision;
+struct Mesh;
+struct Model;
+
 
 
 class RayLibThirdPerson {
@@ -26,9 +29,8 @@ private:
     std::shared_ptr<Camera3D> camera;
     std::shared_ptr<GameObject> cameraGameObject;
     std::shared_ptr<GameObject> playerGameObject;
-    std::vector<std::shared_ptr<Vector3>> positions;
-    std::vector<float> heights;
-    std::vector<std::shared_ptr<Color>> colors;
+
+    std::vector<std::shared_ptr<Model>> models;
 
     std::vector<std::shared_ptr<BoundingBox>> boundingBoxes;
     int cameraMode;

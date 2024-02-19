@@ -16,48 +16,24 @@
 // Communication
 #include "AK/Comm/AkCommunication.h"
 
-
+#include "AK/SpatialAudio/Common/AkSpatialAudio.h"
 
 bool WwiseAPI::Init()
 {
 	AkMemSettings memSettings;
 	AK::MemoryMgr::GetDefaultSettings(memSettings);
-
-	if (AK::MemoryMgr::Init(&memSettings) == AK_Success)
-	{
-		std::cout << "Memory Manager initialized" << std::endl;
-	}
-	else
-	{
-		std::cout << "Memory Manager failed to initialize" << std::endl;
-		return false;
-	}
+	AK::MemoryMgr::Init(&memSettings);
 
 	AkStreamMgrSettings streamSettings;
 	AK::StreamMgr::GetDefaultSettings(streamSettings);
 
-	if (!AK::StreamMgr::Create(streamSettings))
-	{
-		std::cout << "Could not create the Streaming Manager" << std::endl;
-	}
-	else
-	{
-		std::cout << "Streaming Manager created!" << std::endl;
-	}
+	AK::StreamMgr::Create(streamSettings);
 
 
 	AkDeviceSettings deviceSettings;
 	AK::StreamMgr::GetDefaultDeviceSettings(deviceSettings);
 
-	if (g_lowLevelIO.Init(deviceSettings) == AK_Success)
-	{
-		std::cout << "Created the streaming device and low level I/O system!" << std::endl;
-	}
-	else
-	{
-		std::cout << "Could not create streaming device and low level I/O system!" << std::endl;
-		return false;
-	}
+	g_lowLevelIO.Init(deviceSettings);
 
 
 	AkInitSettings initSettings;
@@ -65,28 +41,19 @@ bool WwiseAPI::Init()
 	AK::SoundEngine::GetDefaultInitSettings(initSettings);
 	
 	AK::SoundEngine::GetDefaultPlatformInitSettings(platformInitSettings);
-	if (AK::SoundEngine::Init(&initSettings, &platformInitSettings) == AK_Success)
-	{
-		std::cout << "Sound engine initialized!" << std::endl;
-	}
-	else
-	{
-		std::cout << "Could not initialize sound engine!" << std::endl;
-		return false;
-	}
+	AK::SoundEngine::Init(&initSettings, &platformInitSettings);
 
+	AkSpatialAudioInitSettings spatialAudioInitSettings;
+	AK::SpatialAudio::Init(spatialAudioInitSettings);
 
-	g_lowLevelIO.SetBasePath(AKTEXT("C:\\Users\\Joel.Schultz\\Documents\\GitHub\\playgroundsound\\playgroundsound\\Wwise\\GeneratedSoundBanks\\Windows"));
+	g_lowLevelIO.SetBasePath(AKTEXT("..\\Wwise\\GeneratedSoundBanks\\Windows"));
 	AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
 
 #ifndef AK_OPTIMIZED
 
 	AkCommSettings commSettings;
 	AK::Comm::GetDefaultInitSettings(commSettings);
-	if (AK::Comm::Init(commSettings) != AK_Success)
-	{
-		Log("Communication Init failed.");
-	}
+	AK::Comm::Init(commSettings);
 
 #endif // !AK_OPTIMIZED
 
@@ -116,24 +83,26 @@ void WwiseAPI::RenderAudio()
 	AK::SoundEngine::RenderAudio();
 }
 
-void WwiseAPI::Log(const std::string& logMsg) {
+void WwiseAPI::Log(std::string_view logMsg) {
 	std::cout << logMsg << std::endl;
 }
 
-AKRESULT WwiseAPI::RegisterGameObject(const AkGameObjectID& gameObjectID, const std::string& gameObjectName)
+AKRESULT WwiseAPI::RegisterGameObject(const AkGameObjectID& gameObjectID, std::string_view gameObjectName)
 {
-	return AK::SoundEngine::RegisterGameObj(gameObjectID, gameObjectName.c_str());
+	return AK::SoundEngine::RegisterGameObj(gameObjectID, gameObjectName.data());
 }
 
-AKRESULT WwiseAPI::AddListener(const AkGameObjectID& listenerID, const std::string& listenerGameObjectName, const AkGameObjectID& distanceProbeID) {
-	RegisterGameObject(listenerID, listenerGameObjectName);
-	RegisterGameObject(distanceProbeID, listenerGameObjectName + "_DistanceProbe");
+AKRESULT WwiseAPI::AddListener(const AkGameObjectID& listenerID, std::string_view listenerName, const AkGameObjectID& distanceProbeID, std::string_view distanceProbeName) {
+	RegisterGameObject(listenerID, listenerName);
+	RegisterGameObject(distanceProbeID, distanceProbeName);
 	AK::SoundEngine::AddDefaultListener(listenerID);
-	AK::SoundEngine::SetDistanceProbe(listenerID, distanceProbeID);
+	//AK::SoundEngine::liste
+	//AK::SoundEngine::SetDistanceProbe(listenerID, distanceProbeID);
+	AK::SpatialAudio::RegisterListener(listenerID);
 	return AK_Success;
 }
 
-AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID, const char* gameObjectName)
+AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID, std::string_view gameObjectName)
 {
 	RegisterGameObject(gameObjectID, gameObjectName);
 	return AK::SoundEngine::PostEvent(eventID, gameObjectID);
@@ -156,6 +125,15 @@ AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const 
 	{
 		Log("Failed to set position. Forward: {" + std::to_string(forwardNormalized.x) + ", " + std::to_string(forwardNormalized.y) + ", " + std::to_string(forwardNormalized.z) + " }");
 	}
-
 	return result;
 }
+
+//AKRESULT WwiseAPI::UpdateStaticObject() {
+//	AkGeometrySetID geometryID = 100;
+//	AkGeometryParams geometryParams;
+//	geometryParams;
+//	////AK::SpatialAudio::SetGeometry(geometryID,)
+//	//AkRoomParams roomParams;
+//	//roomParams.
+//	//AK::SpatialAudio::SetRoom
+//}
