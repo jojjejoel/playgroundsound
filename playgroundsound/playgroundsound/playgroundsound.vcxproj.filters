@@ -143,6 +143,9 @@
     <ClInclude Include="RayLibObject.h">
       <Filter>Source Files\RayLib</Filter>
     </ClInclude>
+    <ClInclude Include="DiffractionPath.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="WwiseSource\AkFilePackageLowLevelIO.inl">

@@ -152,6 +152,7 @@
     <ClCompile Include="WwiseAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DiffractionPath.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="RayLibObject.h" />
     <ClInclude Include="RayLibThirdPerson.h" />

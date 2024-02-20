@@ -16,7 +16,8 @@
 #include "raylib.h"
 #include "rcamera.h"
 #include <string>
-
+#include "raymath.h"
+#include <math.h>
 
 void RayLibThirdPerson::Run()
 {
@@ -29,54 +30,20 @@ void RayLibThirdPerson::Run()
         EnableCursor();
     }
         
-        UpdateCamera(camera.get(), cameraMode);                  // Update camera
-
-        //cameraGameObject->position = { camera->target.x, camera->target.y, camera->target.z };
-        cameraGameObject->position = { camera->position.x, camera->position.y, camera->position.z };
-        playerGameObject->position = { camera->target.x, camera->target.y, camera->target.z };
+        UpdateCamera(camera.get(), cameraMode);                 
+        cameraGameObject->SetPosition({camera->position.x, camera->position.y, camera->position.z});
+        playerGameObject->SetPosition({camera->target.x, camera->target.y, camera->target.z});
         Matrix matrix = GetCameraMatrix(*camera);
 
-    if (IsKeyPressed(KEY_U))
-    {
-        upX *= -1.0f;
-    }
-    if (IsKeyPressed(KEY_I))
-    {
-        upY *= -1.0f;
-    }
-    if (IsKeyPressed(KEY_O))
-    {
-        upZ *= -1.0f;
-    }
-    if (IsKeyPressed(KEY_J))
-    {
-        forwardX *= -1.0f;
-    }
-    if (IsKeyPressed(KEY_K))
-    {
-        forwardY *= -1.0f;
-    }
-    if (IsKeyPressed(KEY_L))
-    {
-        forwardZ *= -1.0f;
-    }
 
-        cameraGameObject->up = { matrix.m1 * upX, matrix.m5 * upY, matrix.m9 * upZ };
-        cameraGameObject->forward = { matrix.m2 * forwardX, matrix.m6 * forwardY, matrix.m10 * forwardZ };
+        cameraGameObject->SetUp({matrix.m1 * upX, matrix.m5 * upY, matrix.m9 * upZ});
+        cameraGameObject->SetForward({matrix.m2 * forwardX, matrix.m6 * forwardY, matrix.m10 * forwardZ});
 
-    
-    /*else
-    {
-        cameraGameObject->up = { matrix.m1 * upX, matrix.m10 * upY, matrix.m6 * upZ };
-        cameraGameObject->forward = { matrix.m2 * forwardX, matrix.m9 * forwardY, matrix.m15 * forwardZ };
-    }*/
 
-        playerGameObject->up = {0, 1, 0 };
-        playerGameObject->forward = { 0, 0, 1 };
+        playerGameObject->SetUp({0, 1, 0});
+        playerGameObject->SetForward({0, 0, 1});
 
        
-        // Draw
-        //----------------------------------------------------------------------------------
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
@@ -89,7 +56,7 @@ void RayLibThirdPerson::Run()
         DrawCube({ 0.0f, 2.5f, 16.0f }, 32.0f, 5.0f, 1.0f, GOLD);      // Draw a yellow wall
 
 
-        RayCollision collision = CheckCollisions();
+        /*RayCollision collision = CheckCollisions();
         if (collision.hit)
         {
             DrawLine3D(camera->target, collision.point, RED);
@@ -97,8 +64,29 @@ void RayLibThirdPerson::Run()
         else
         {
             DrawLine3D(camera->target, {0,1,0}, GREEN);
+        }*/
+
+        for (size_t i = 0; i < diffractionPaths.size(); i++)
+        {
+            DiffractionPath diffractionPath = diffractionPaths[i];
+
+            int numNodes = diffractionPath.nodeCount;
+
+            if (numNodes > 0)
+            {
+                Vector3 nodePos = { diffractionPath.nodes[0].x, diffractionPath.nodes[0].y, diffractionPath.nodes[0].z };
+                Vector3 emitterPos = { diffractionPath.emitterPos.x, diffractionPath.emitterPos.y, diffractionPath.emitterPos.z };
+                
+                Color color = { Lerp(0, 255, diffractionPath.diffraction), Lerp(255, 0, diffractionPath.diffraction), 0, 255 };
+
+                DrawSphereWires(nodePos, 0.2f, 10, 10, color);
+                
+                DrawLine3D(camera->target, nodePos, color);
+            }
         }
 
+        DrawLine3D(camera->target, {0,0,0}, GREEN);
+        DrawSphereWires({0,0,0}, 0.5f, 10, 10, GREEN);
 
         for (const auto& model : models)
         {
@@ -110,7 +98,6 @@ void RayLibThirdPerson::Run()
         {
             DrawCube(camera->target, 0.5f, 0.5f, 0.5f, PURPLE);
             //DrawCubeWires(camera->target, 0.5f, 0.5f, 0.5f, DARKPURPLE);
-            //DrawLine3D(camera->target, Vector3{ camera->target.x,camera->target.y + 5,camera->target.z }, { 255,0,0,255 });
         }
 
         EndMode3D();
@@ -134,7 +121,6 @@ void RayLibThirdPerson::Run()
       
 
         EndDrawing();
-        //----------------------------------------------------------------------------------
 }
 
 RayCollision RayLibThirdPerson::CheckCollisions()
@@ -176,6 +162,10 @@ RayCollision RayLibThirdPerson::CheckCollisions()
     }
 }
 
+void RayLibThirdPerson::SetDiffractionPaths(const std::vector<DiffractionPath> in_diffractionPaths) {
+    diffractionPaths = in_diffractionPaths;
+}
+
 void RayLibThirdPerson::Init()
 {
    
@@ -196,45 +186,64 @@ void RayLibThirdPerson::Init()
     camera->projection = CAMERA_PERSPECTIVE;             // Camera projection type
 
     cameraGameObject = std::make_shared<GameObject>();
-    cameraGameObject->position = { 0.2f, 0.4f, 0.2f };
-    cameraGameObject->forward = { 0.185f, 0.4f, 0.0f };
-    cameraGameObject->up = { 0.0f, -1.0f, 0.0f };
+    cameraGameObject->SetPosition({0.2f, 0.4f, 0.2f});
+    cameraGameObject->SetForward({0.185f, 0.4f, 0.0f});
+    cameraGameObject->SetUp({0.0f, -1.0f, 0.0f});
 
     playerGameObject = std::make_shared<GameObject>();
 
     cameraMode = CAMERA_THIRD_PERSON;
     
-    std::shared_ptr<Model> model = std::make_shared<Model>();
-    *model = LoadModelFromMesh(GenMeshPlane(2, 8, 10,10));
-    model->transform.m12 = 3;
-    model->transform.m13 = 0;
-    model->transform.m14 = 3;
+    GoTransform transform;
+    transform.position = { 4,0,3 };
+    AddObject(transform);
 
-    model->transform.m0 = 0;
-
-    model->transform.m4 = -1;
-    model->transform.m1 = 1;
-    model->transform.m5 = 0;
-    //model->meshes[0].triangleCount
-    wallGameObject = std::make_shared<GameObject>();
-
-    
-    for (size_t i = 0; i < model->meshes[0].vertexCount; i++)
-    {
-        Playground::Vertex vertex;
-        float* vertices = model->meshes[0].vertices;
-        vertex.x = vertices[i];
-        vertex.y = vertices[i + 1];
-        vertex.z = vertices[i + 2];
-        wallGameObject->mesh.vertices.push_back(vertex);
-    }
-
-    ///*model*/->transform.
-    models.push_back(model);
+    transform.position = { -4,0,-3 };
+    AddObject(transform);
 
 
     SetTargetFPS(60);
 
+}
+
+void RayLibThirdPerson::AddObject(const GoTransform& transform)
+{
+    std::shared_ptr<Model> model = std::make_shared<Model>();
+    *model = LoadModelFromMesh(GenMeshCube(2, 50, 15));
+    model->transform.m12 = transform.position.x;
+    model->transform.m13 = transform.position.y;
+    model->transform.m14 = transform.position.z;
+    
+
+    std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
+
+
+    for (size_t i = 0, v = 0; i < model->meshes[0].vertexCount; i++, v += 3)
+    {
+        Playground::Vertex vertex;
+        float* vertices = model->meshes[0].vertices;
+        Vector3 vector3;
+        vector3.x = vertices[v];
+        vector3.y = vertices[v + 1];
+        vector3.z = vertices[v + 2];
+        vector3 = Vector3Transform(vector3, model->transform);
+
+        vertex.x = vector3.x;
+        vertex.y = vector3.y;
+        vertex.z = -vector3.z;
+        gameObject->mesh.vertices.push_back(vertex);
+    }
+
+    for (size_t i = 0, v = 0; i < model->meshes[0].triangleCount; i++, v += 3)
+    {
+        Triangle triangle;
+        triangle.point0 = model->meshes[0].indices[v];
+        triangle.point1 = model->meshes[0].indices[v + 1];
+        triangle.point2 = model->meshes[0].indices[v + 2];
+        gameObject->triangles.push_back(triangle);
+    }
+    soundBlockingObjects.push_back(gameObject);
+    models.push_back(model);
 }
 
 void RayLibThirdPerson::DeInit()
@@ -252,9 +261,9 @@ const std::shared_ptr<GameObject> RayLibThirdPerson::GetPlayerGameObject()
     return playerGameObject;
 }
 
-const std::shared_ptr<GameObject> RayLibThirdPerson::GetWallGameObject()
+const std::vector<std::shared_ptr<GameObject>>& RayLibThirdPerson::GetSoundBlockingObjects()
 {
-    return wallGameObject;
+    return soundBlockingObjects;
 }
 
 BoundingBox RayLibThirdPerson::CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const {

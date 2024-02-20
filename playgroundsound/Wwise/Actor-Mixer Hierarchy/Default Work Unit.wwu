@@ -6,6 +6,7 @@
 				<Sound Name="Test" ID="{55572D41-B7A1-4985-BDB2-681E7F86BDDE}" ShortID="307156047">
 					<PropertyList>
 						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="EnableDiffraction" Type="bool" Value="True"/>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Attenuation">
@@ -37,20 +38,6 @@
 					<PositioningInfo>
 						<Position Name="" ID="{6B010665-1664-447C-A086-AF7C110C19AD}"/>
 					</PositioningInfo>
-					<ObjectLists>
-						<ObjectList Name="RTPC">
-							<Reference>
-								<Local>
-									<RTPC Name="" ID="{346DA8FF-4CCD-4CFD-B4BE-618037F308DA}" ShortID="900015846">
-										<PropertyList>
-											<Property Name="PropertyName" Type="string" Value="Lowpass"/>
-										</PropertyList>
-										<ReferenceList/>
-									</RTPC>
-								</Local>
-							</Reference>
-						</ObjectList>
-					</ObjectLists>
 					<ActiveSourceList>
 						<ActiveSource Name="Good Old Days" ID="{3194D792-FFCD-4081-BFCE-3509174EAD9B}" Platform="Linked"/>
 					</ActiveSourceList>

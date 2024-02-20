@@ -1,6 +1,7 @@
 
 
 
+#include "DiffractionPath.h"
 #include <memory>
 #include "GameObject.h"
 #include <vector>
@@ -21,18 +22,20 @@ class RayLibThirdPerson {
 public:
     void Run();
     RayCollision CheckCollisions();
+    void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();
+    void AddObject(const GoTransform& transform);
     void DeInit();
     const std::shared_ptr<GameObject> GetCameraGameObject();
     const std::shared_ptr<GameObject> GetPlayerGameObject();
-    const std::shared_ptr<GameObject> GetWallGameObject();
+    const std::vector<std::shared_ptr<GameObject>>& GetSoundBlockingObjects();
     BoundingBox CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const;
 private:
     std::shared_ptr<Camera3D> camera;
     std::shared_ptr<GameObject> cameraGameObject;
     std::shared_ptr<GameObject> playerGameObject;
 
-    std::shared_ptr<GameObject> wallGameObject;
+    std::vector<std::shared_ptr<GameObject>> soundBlockingObjects;
 
     std::vector<std::shared_ptr<Model>> models;
 
@@ -48,4 +51,6 @@ private:
     float forwardZ = 1.0f;
 
     bool leftHand = true;
+
+    std::vector<DiffractionPath> diffractionPaths;
 };

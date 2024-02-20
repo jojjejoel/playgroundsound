@@ -1,13 +1,54 @@
 #include "GameObject.h"
 
+const GoTransform& GameObject::GetTransform() const
+{
+    return transform;
+}
+
+void GameObject::SetTransform(const GoTransform& in_transform)
+{
+    transform = in_transform;
+}
+
+
+void GameObject::SetPosition(const GoVector3& in_position)
+{
+    transform.position = in_position;
+}
+
+void GameObject::SetForward(const GoVector3& in_forward)
+{
+    transform.forward = in_forward;
+}
+
+void GameObject::SetUp(const GoVector3& in_up)
+{
+    transform.up = in_up;
+}
+
+const GoVector3& GameObject::GetPosition() const
+{
+    return transform.position;
+}
+
+const GoVector3& GameObject::GetUp() const
+{
+    return transform.up;
+}
+
+const GoVector3& GameObject::GetForward() const
+{
+   return  transform.forward;
+}
+
 GoVector3 GameObject::GetNormalizedForward() const
 {
-    return GetNormalized(forward.x, forward.y, forward.z);
+    return GetNormalized(transform.forward.x, transform.forward.y, transform.forward.z);
 }
 
 GoVector3 GameObject::GetNormalizedUp() const
 {
-    return GetNormalized(up.x, up.y, up.z);
+    return GetNormalized(transform.up.x, transform.up.y, transform.up.z);
 }
 
 GoVector3 GameObject::GetNormalized(float x, float y, float z) const

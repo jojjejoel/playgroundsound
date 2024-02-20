@@ -18,6 +18,7 @@
 
 #include "AK/SpatialAudio/Common/AkSpatialAudio.h"
 
+
 bool WwiseAPI::Init()
 {
 	AkMemSettings memSettings;
@@ -83,20 +84,85 @@ void WwiseAPI::RenderAudio()
 	AK::SoundEngine::RenderAudio();
 }
 
+std::vector<DiffractionPath> WwiseAPI::GetDiffraction(const AkGameObjectID& gameObjectID) {
+	AkVector64 emitterPos;
+	AkVector64 listenerPos;
+	AkDiffractionPathInfo akDiffractionPaths[8];
+	AkUInt32 numberOfPaths = 8;
+	AK::SpatialAudio::QueryDiffractionPaths(gameObjectID, 0, listenerPos, emitterPos, akDiffractionPaths, numberOfPaths);
+
+	
+	int numLines = 0;
+
+	std::vector<DiffractionPath> diffractionPaths;
+
+	for (AkUInt32 path = 0; path < numberOfPaths; path++)
+	{
+		DiffractionPath diffractionPath;
+		AkDiffractionPathInfo akDiffractionPath = akDiffractionPaths[path];
+		for (size_t i = 0; i < akDiffractionPath.kMaxNodes; i++)
+		{
+			diffractionPath.nodes[i].x = akDiffractionPath.nodes[i].X;
+			diffractionPath.nodes[i].y = akDiffractionPath.nodes[i].Y;
+			diffractionPath.nodes[i].z = -akDiffractionPath.nodes[i].Z;
+		}
+		diffractionPath.emitterPos.x = akDiffractionPath.emitterPos.X;
+		diffractionPath.emitterPos.y = akDiffractionPath.emitterPos.Y;
+		diffractionPath.emitterPos.z = akDiffractionPath.emitterPos.Z;
+		for (size_t i = 0; i < akDiffractionPath.kMaxNodes; i++)
+		{
+			diffractionPath.angles[i] = akDiffractionPath.angles[i];
+		}
+		for (size_t i = 0; i < akDiffractionPath.kMaxNodes; i++)
+		{
+
+		diffractionPath.portals[i] = akDiffractionPath.portals[i];
+		}
+		for (size_t i = 0; i < akDiffractionPath.kMaxNodes; i++)
+		{
+
+			diffractionPath.rooms[i] = akDiffractionPath.rooms[i];
+		}
+		diffractionPath.virtualPos.forward.x = -akDiffractionPath.virtualPos.OrientationFront().X;
+		diffractionPath.virtualPos.forward.y = -akDiffractionPath.virtualPos.OrientationFront().Y;
+		diffractionPath.virtualPos.forward.z = akDiffractionPath.virtualPos.OrientationFront().Z;
+		diffractionPath.virtualPos.up.x = akDiffractionPath.virtualPos.OrientationTop().X;
+		diffractionPath.virtualPos.up.y = akDiffractionPath.virtualPos.OrientationTop().Y;
+		diffractionPath.virtualPos.up.z = -akDiffractionPath.virtualPos.OrientationTop().Z;
+		diffractionPath.virtualPos.position.x = akDiffractionPath.virtualPos.Position().X;
+		diffractionPath.virtualPos.position.y = akDiffractionPath.virtualPos.Position().Y;
+		diffractionPath.virtualPos.position.z = -akDiffractionPath.virtualPos.Position().Z;
+		diffractionPath.nodeCount = akDiffractionPath.nodeCount;
+		diffractionPath.diffraction = akDiffractionPath.diffraction;
+		diffractionPath.totLength = akDiffractionPath.totLength;
+		diffractionPath.obstructionValue = akDiffractionPath.obstructionValue;
+		diffractionPaths.push_back(diffractionPath);
+	}
+	return diffractionPaths;
+		
+}
+
+
 void WwiseAPI::Log(std::string_view logMsg) {
 	std::cout << logMsg << std::endl;
 }
 
 AKRESULT WwiseAPI::RegisterGameObject(const AkGameObjectID& gameObjectID, std::string_view gameObjectName)
 {
+	akGameObjects.push_back(gameObjectID);
 	return AK::SoundEngine::RegisterGameObj(gameObjectID, gameObjectName.data());
 }
 
-AKRESULT WwiseAPI::AddListener(const AkGameObjectID& listenerID, std::string_view listenerName, const AkGameObjectID& distanceProbeID, std::string_view distanceProbeName) {
+AKRESULT WwiseAPI::AddListener(const AkGameObjectID& listenerID, const AkGameObjectID& emitterID, std::string_view listenerName, const AkGameObjectID& distanceProbeID, std::string_view distanceProbeName) {
 	RegisterGameObject(listenerID, listenerName);
 	RegisterGameObject(distanceProbeID, distanceProbeName);
-	AK::SoundEngine::AddDefaultListener(listenerID);
-	//AK::SoundEngine::liste
+
+	static const int kNumLstnrsForEm = 1;
+	static const AkGameObjectID aLstnrsForEmitter[kNumLstnrsForEm] = { listenerID };
+	AK::SoundEngine::SetListeners(emitterID, aLstnrsForEmitter, kNumLstnrsForEm);
+	AK::SoundEngine::SetListeners(listenerID, aLstnrsForEmitter, kNumLstnrsForEm);
+
+
 	AK::SoundEngine::SetDistanceProbe(listenerID, distanceProbeID);
 	AK::SpatialAudio::RegisterListener(listenerID);
 	return AK_Success;
@@ -111,7 +177,7 @@ AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID&
 AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const GameObject& gameObject)
 {
 	AkListenerPosition soundPosition;
-	AkVector positionVector = { gameObject.position.x, gameObject.position.y ,-gameObject.position.z };
+	AkVector positionVector = { gameObject.GetPosition().x, gameObject.GetPosition().y ,-gameObject.GetPosition().z};
 	GoVector3 forwardNormalized = gameObject.GetNormalizedForward();
 	GoVector3 upNormalized = gameObject.GetNormalizedUp();
 	AkVector orientationFront = { forwardNormalized.x, forwardNormalized.y, forwardNormalized.z};
@@ -128,7 +194,7 @@ AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const 
 	return result;
 }
 
-AKRESULT WwiseAPI::SetStaticObject(const GameObject& gameObject) {
+AKRESULT WwiseAPI::AddRoom(const GameObject& gameObject) {
 	AkGeometrySetID geometryID = 100;
 	AkRoomParams paramsRoom;
 	AkRoomID roomID = 200;
@@ -146,5 +212,67 @@ AKRESULT WwiseAPI::SetStaticObject(const GameObject& gameObject) {
 	paramsRoom.GeometryInstanceID = geometryID;
 
 	AK::SpatialAudio::SetRoom(roomID, paramsRoom, "Room Object");
+	return AK_Success;
+}
+
+AKRESULT WwiseAPI::AddGeometry(const std::vector<std::shared_ptr<GameObject>>& gameObjects) {
+
+	int idIncrease = 0;
+	for (const auto& gameObject : gameObjects)
+	{
+		AkGeometrySetID geometrySetID = 100 + idIncrease;
+		AkGeometrySetID geometrySetInstanceID = 200 + idIncrease;
+		AkGeometryParams geom;
+		geom.NumVertices = gameObject->mesh.vertices.size();
+		std::vector<AkVertex> vertices;
+		for (size_t i = 0; i < geom.NumVertices; i++)
+		{
+			AkVertex vertex;
+			vertex.X = gameObject->mesh.vertices[i].x;
+			vertex.Y = gameObject->mesh.vertices[i].y;
+			vertex.Z = gameObject->mesh.vertices[i].z;
+			vertices.push_back(vertex);
+		}
+
+		geom.Vertices = vertices.data();
+
+		geom.NumSurfaces = 2;
+		AkAcousticSurface surfaces[2];
+		AkPlacementNew(&surfaces[0]) AkAcousticSurface();
+		surfaces[0].strName = "Outside";
+		surfaces[0].textureID = AK::SoundEngine::GetIDFromString("Brick");
+		surfaces[0].transmissionLoss = 0.9f;
+		AkPlacementNew(&surfaces[1]) AkAcousticSurface();
+		surfaces[1].strName = "Inside";
+		surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
+		surfaces[1].transmissionLoss = 0.9f;
+		geom.Surfaces = surfaces;
+
+		geom.NumTriangles = gameObject->triangles.size();
+
+		std::vector<AkTriangle> akTriangles;
+
+		for (size_t i = 0; i < geom.NumTriangles; i++)
+		{
+			AkTriangle akTriangle;
+			akTriangle.point0 = gameObject->triangles[i].point0;
+			akTriangle.point1 = gameObject->triangles[i].point1;
+			akTriangle.point2 = gameObject->triangles[i].point2;
+			akTriangles.push_back(akTriangle);
+		}
+
+		geom.Triangles = akTriangles.data();
+
+		geom.EnableDiffraction = true;
+		geom.EnableDiffractionOnBoundaryEdges = true;
+		geom.EnableTriangles = true;
+
+		AK::SpatialAudio::SetGeometry(geometrySetID, geom);
+		AkGeometryInstanceParams instanceParams;
+		instanceParams.GeometrySetID = geometrySetID;
+		AK::SpatialAudio::SetGeometryInstance(geometrySetInstanceID, instanceParams);
+		idIncrease++;
+	}
+	
 	return AK_Success;
 }
