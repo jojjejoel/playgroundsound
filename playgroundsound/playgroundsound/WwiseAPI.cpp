@@ -19,6 +19,12 @@
 #include "AK/SpatialAudio/Common/AkSpatialAudio.h"
 
 
+const AkRoomID ROOM = 200;
+const AkPortalID PORTAL0 = 300;
+const AkPortalID PORTAL1 = 301;
+const AkGeometrySetID GEOMETRY_ROOM = 400;
+const AkGeometrySetID GEOMETRY_ROOM_INSTANCE = 401;
+
 bool WwiseAPI::Init()
 {
 	AkMemSettings memSettings;
@@ -81,7 +87,7 @@ AKRESULT WwiseAPI::LoadBank(const AkUniqueID& bankID)
 
 void WwiseAPI::RenderAudio()
 {
-	AK::SoundEngine::RenderAudio();
+	 AK::SoundEngine::RenderAudio();
 }
 
 std::vector<DiffractionPath> WwiseAPI::GetDiffraction(const AkGameObjectID& gameObjectID) {
@@ -177,7 +183,7 @@ AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID&
 AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const GameObject& gameObject)
 {
 	AkListenerPosition soundPosition;
-	AkVector positionVector = { gameObject.GetPosition().x, gameObject.GetPosition().y ,-gameObject.GetPosition().z};
+	AkVector positionVector = { gameObject.GetPosition().x, gameObject.GetPosition().y ,gameObject.GetPosition().z};
 	GoVector3 forwardNormalized = gameObject.GetNormalizedForward();
 	GoVector3 upNormalized = gameObject.GetNormalizedUp();
 	AkVector orientationFront = { forwardNormalized.x, forwardNormalized.y, forwardNormalized.z};
@@ -194,14 +200,15 @@ AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const 
 	return result;
 }
 
-AKRESULT WwiseAPI::AddRoom(const GameObject& gameObject) {
-	AkGeometrySetID geometryID = 100;
+
+AKRESULT WwiseAPI::AddRoom() {
+	AKRESULT result;
+
 	AkRoomParams paramsRoom;
-	AkRoomID roomID = 200;
 	// Let's orient our rooms towards the top of the screen. 
-	paramsRoom.Front.X = 0.f;
+	paramsRoom.Front.X = 1.f;
 	paramsRoom.Front.Y = 0.f;
-	paramsRoom.Front.Z = 1.f;
+	paramsRoom.Front.Z = 0.f;
 	paramsRoom.Up.X = 0.f;
 	paramsRoom.Up.Y = 1.f;
 	paramsRoom.Up.Z = 0.f;
@@ -209,19 +216,95 @@ AKRESULT WwiseAPI::AddRoom(const GameObject& gameObject) {
 	paramsRoom.RoomGameObj_KeepRegistered = true;	// We intend to use the room's game object to post events (see documentation of AkRoomParams::RoomGameObj_KeepRegistered).
 	paramsRoom.RoomGameObj_AuxSendLevelToSelf = 0.25f;	// Since we will be playing an ambience ("Play_Ambience_Quad", below), on this room's game object, we here route some of it to the room's auxiliary bus to add some of its reverb.
 	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Room");
-	paramsRoom.GeometryInstanceID = geometryID;
+	paramsRoom.GeometryInstanceID = GEOMETRY_ROOM_INSTANCE;	// We associate the geometry to the room in order to compute the room spread. 
+	// If the geometry is not found (in "Portals Demo"), the room bounding box is calculated from the portals combined extent.
 
-	AK::SpatialAudio::SetRoom(roomID, paramsRoom, "Room Object");
+	result = AK::SpatialAudio::SetRoom(ROOM, paramsRoom, "Room Object");
+
+	// Also register "outside". Outside is already created automatically, but we want to give it a name, and set its aux send (reverb)
+	paramsRoom.Front.X = 0.f;
+	paramsRoom.Front.Y = 1.f;
+	paramsRoom.Front.Z = 0.f;
+	paramsRoom.Up.X = 0.f;
+	paramsRoom.Up.Y = 1.f;
+	paramsRoom.Up.Z = 0.f;
+
+	paramsRoom.TransmissionLoss = 0.f;
+	paramsRoom.RoomGameObj_KeepRegistered = false;
+	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Outside");
+	paramsRoom.GeometryInstanceID = AkGeometryInstanceID(); // Invalid ID - no geometry for outside.
+	result = AK::SpatialAudio::SetRoom(AK::SpatialAudio::kOutdoorRoomID, paramsRoom, "Outside Object");
 	return AK_Success;
 }
 
-AKRESULT WwiseAPI::AddGeometry(const std::vector<std::shared_ptr<GameObject>>& gameObjects) {
+AKRESULT WwiseAPI::AddPortals(const GameObject& gameObject1, const GameObject& gameObject2) {
+	AKRESULT result;
+	//
+	// Register portals to SpatialAudio.
+	//
 
-	int idIncrease = 0;
-	for (const auto& gameObject : gameObjects)
-	{
-		AkGeometrySetID geometrySetID = 100 + idIncrease;
-		AkGeometrySetID geometrySetInstanceID = 200 + idIncrease;
+	AkPortalParams paramsPortal;
+
+	//
+	// Portal 0 (ROOM->Outside, like an horizontal tube, on the top right)
+	//
+	GoVector3 position = gameObject1.GetPosition();
+	paramsPortal.Transform.SetPosition(position.x, position.y, position.z);
+	// Points to the right.
+	// Up vector: This is a 2D game with Y pointing towards the player, and so should the local Y.
+	GoVector3 forward = gameObject1.GetForward();
+	GoVector3 up = gameObject1.GetUp();
+	paramsPortal.Transform.SetOrientation({ -forward.x, -forward.y, forward.z }, {up.x, up.y, -up.z});
+	// Portal extent. Defines the dimensions of the portal relative to its center; all components must be positive numbers. The local X and Y dimensions (side and top) are used in diffraction calculations, 
+	// whereas the Z dimension (front) defines a depth value which is used to implement smooth transitions between rooms. It is recommended that users experiment with different portal depths to find a value 
+	// that results in appropriately smooth transitions between rooms.
+	// Important: divide height and width by 2, because Extent expresses dimensions relative to the center (like a radius).
+	paramsPortal.Extent.halfWidth = gameObject1.GetTransform().scale.x / 2.f;	
+	paramsPortal.Extent.halfHeight = gameObject1.GetTransform().scale.y / 2.f;	
+	paramsPortal.Extent.halfDepth = gameObject1.GetTransform().scale.z / 2.f;	
+	// Whether or not the portal is active/enabled. For example, this parameter may be used to simulate open/closed doors.
+	paramsPortal.bEnabled = true;	// Open if bit 0 of our portal open state m_portalsOpen is set.
+	// ID of the room that the portal connects to, in the direction of the Front vector.
+	paramsPortal.FrontRoom = AK::SpatialAudio::kOutdoorRoomID;
+	// ID of room that that portal connects, in the direction opposite to the Front vector. 
+	paramsPortal.BackRoom = ROOM;
+
+	result = AK::SpatialAudio::SetPortal(PORTAL0, paramsPortal, "Portal ROOM->Outside, horizontal");
+
+
+	//
+	// Portal 1 (Outside->ROOM, like a wide vertical tube, bottom-left).
+	//
+
+	GoVector3 position2 = gameObject2.GetPosition();
+	paramsPortal.Transform.SetPosition(position2.x, position2.y, position2.z);
+	// Points up towards ROOM.
+	// Up vector: This is a 2D game with Y pointing towards the player, and so should the local Y.
+	GoVector3 forward2 = gameObject2.GetForward();
+	GoVector3 up2 = gameObject2.GetUp();
+	paramsPortal.Transform.SetOrientation({ -forward2.x, -forward2.y, forward2.z }, { up2.x, up2.y, -up2.z });
+	// Portal extent. Defines the dimensions of the portal relative to its center; all components must be positive numbers. The local X and Y dimensions (side and top) are used in diffraction calculations, 
+	// whereas the Z dimension (front) defines a depth value which is used to implement smooth transitions between rooms. It is recommended that users experiment with different portal depths to find a value 
+	// that results in appropriately smooth transitions between rooms.
+	// Important: divide width and height by 2, because Extent expresses dimensions relative to the center (like a radius).
+	paramsPortal.Extent.halfWidth = gameObject2.GetTransform().scale.x / 2.f;
+	paramsPortal.Extent.halfHeight = gameObject2.GetTransform().scale.y / 2.f;
+	paramsPortal.Extent.halfDepth = gameObject2.GetTransform().scale.z / 2.f;
+	/// Whether or not the portal is active/enabled. For example, this parameter may be used to simulate open/closed doors.
+	paramsPortal.bEnabled = true;	// Open if bit 1 of our portal open state m_portalsOpen is set.
+	// ID of the room that the portal connects to, in the direction of the Front vector.
+	paramsPortal.FrontRoom = ROOM;
+	// ID of room that that portal connects, in the direction opposite to the Front vector. 
+	paramsPortal.BackRoom = AK::SpatialAudio::kOutdoorRoomID;
+
+	result = AK::SpatialAudio::SetPortal(PORTAL1, paramsPortal, "Outside->ROOM, vertical");
+	return AK_Success;
+}
+
+AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<GameObject>& gameObject) {
+	AKRESULT result;
+	//for (const auto& gameObject : gameObjects)
+	//{
 		AkGeometryParams geom;
 		geom.NumVertices = gameObject->mesh.vertices.size();
 		std::vector<AkVertex> vertices;
@@ -267,12 +350,12 @@ AKRESULT WwiseAPI::AddGeometry(const std::vector<std::shared_ptr<GameObject>>& g
 		geom.EnableDiffractionOnBoundaryEdges = true;
 		geom.EnableTriangles = true;
 
-		AK::SpatialAudio::SetGeometry(geometrySetID, geom);
+		result = AK::SpatialAudio::SetGeometry(GEOMETRY_ROOM, geom);
 		AkGeometryInstanceParams instanceParams;
-		instanceParams.GeometrySetID = geometrySetID;
-		AK::SpatialAudio::SetGeometryInstance(geometrySetInstanceID, instanceParams);
-		idIncrease++;
-	}
+		instanceParams.GeometrySetID = GEOMETRY_ROOM;
+		instanceParams.RoomID = ROOM;
+		result = AK::SpatialAudio::SetGeometryInstance(GEOMETRY_ROOM_INSTANCE, instanceParams);
+	//}
 	
 	return AK_Success;
 }

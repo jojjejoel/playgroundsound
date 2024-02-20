@@ -21,9 +21,11 @@ public:
 	AkPlayingID PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID, std::string_view gameObjectName);
 	AKRESULT UpdateGameObject(const AkGameObjectID& gameObjectID, const GameObject& gameObject);
 
-	AKRESULT AddGeometry(const std::vector<std::shared_ptr<GameObject>>& gameObjects);
+	AKRESULT AddGeometry(const std::shared_ptr<GameObject>& gameObjects);
 
-	AKRESULT AddRoom(const GameObject& gameObject);
+	AKRESULT AddRoom();
+
+	AKRESULT AddPortals(const GameObject& gameObject, const GameObject& gameObject2);
 
 
 private:

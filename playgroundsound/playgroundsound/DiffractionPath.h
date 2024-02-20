@@ -2,7 +2,7 @@
 #include "GameObject.h"
 struct DiffractionPath {
 	/// Defines the maximum number of nodes that a user can retrieve information about.  Longer paths will be truncated. 
-	static const int kMaxNodes = 8;
+	static const int kMaxNodes = 4;
 
 	/// Diffraction points along the path. nodes[0] is the point closest to the listener; nodes[numNodes-1] is the point closest to the emitter. 
 	/// Neither the emitter position nor the listener position are represented in this array.

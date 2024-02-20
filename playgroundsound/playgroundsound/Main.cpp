@@ -25,8 +25,11 @@ int main()
     wwiseAPI.PostEvent(AK::EVENTS::GOOD_OLD_DAYS, musicObjectID, "Test");
 	wwiseAPI.AddListener(listenerObjectID, musicObjectID, "ListenerObject", distanceProbeObjectID, "ListenerObject_DistanceProbe");
     
-    
-    wwiseAPI.AddGeometry(rayLibThird.GetSoundBlockingObjects());
+    wwiseAPI.RenderAudio();
+    wwiseAPI.AddGeometry(rayLibThird.GetSoundBlockingObjects()[0]);
+
+    wwiseAPI.AddRoom();
+    //wwiseAPI.AddPortals(*rayLibThird.GetSoundBlockingObjects()[1], *rayLibThird.GetSoundBlockingObjects()[2]);
 
     
     int a = 1;
@@ -39,13 +42,6 @@ int main()
         wwiseAPI.RenderAudio();
     }
     rayLibThird.DeInit();
-
-    
-    /*RayLibTopDown rayLibTopDown;
-   rayLibTopDown.Run();*/
-
-
-    //std::cin >> a;
 
 
     std::cout << "Program terminated" << std::endl;

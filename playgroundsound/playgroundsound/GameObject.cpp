@@ -26,6 +26,11 @@ void GameObject::SetUp(const GoVector3& in_up)
     transform.up = in_up;
 }
 
+void GameObject::SetScale(const GoVector3& in_scale)
+{
+    transform.scale = in_scale;
+}
+
 const GoVector3& GameObject::GetPosition() const
 {
     return transform.position;
@@ -39,6 +44,11 @@ const GoVector3& GameObject::GetUp() const
 const GoVector3& GameObject::GetForward() const
 {
    return  transform.forward;
+}
+
+const GoVector3& GameObject::GetScale() const
+{
+    return  transform.scale;
 }
 
 GoVector3 GameObject::GetNormalizedForward() const

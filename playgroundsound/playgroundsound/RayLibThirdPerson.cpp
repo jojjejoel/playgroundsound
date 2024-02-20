@@ -31,13 +31,17 @@ void RayLibThirdPerson::Run()
     }
         
         UpdateCamera(camera.get(), cameraMode);                 
-        cameraGameObject->SetPosition({camera->position.x, camera->position.y, camera->position.z});
-        playerGameObject->SetPosition({camera->target.x, camera->target.y, camera->target.z});
+        cameraGameObject->SetPosition({camera->position.x, camera->position.y, -camera->position.z});
+        playerGameObject->SetPosition({camera->target.x, camera->target.y, -camera->target.z});
         Matrix matrix = GetCameraMatrix(*camera);
 
 
         cameraGameObject->SetUp({matrix.m1 * upX, matrix.m5 * upY, matrix.m9 * upZ});
         cameraGameObject->SetForward({matrix.m2 * forwardX, matrix.m6 * forwardY, matrix.m10 * forwardZ});
+
+
+
+        playerGameObject->SetScale({ 0.5f, 0.5f, 0.5f });
 
 
         playerGameObject->SetUp({0, 1, 0});
@@ -55,16 +59,6 @@ void RayLibThirdPerson::Run()
         DrawCube({ 16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, LIME);      // Draw a green wall
         DrawCube({ 0.0f, 2.5f, 16.0f }, 32.0f, 5.0f, 1.0f, GOLD);      // Draw a yellow wall
 
-
-        /*RayCollision collision = CheckCollisions();
-        if (collision.hit)
-        {
-            DrawLine3D(camera->target, collision.point, RED);
-        }
-        else
-        {
-            DrawLine3D(camera->target, {0,1,0}, GREEN);
-        }*/
 
         for (size_t i = 0; i < diffractionPaths.size(); i++)
         {
@@ -90,13 +84,13 @@ void RayLibThirdPerson::Run()
 
         for (const auto& model : models)
         {
-            DrawModel(*model, { 0,model->transform.m7,0 }, 1, { 255,255,255,255 });
+            DrawModelWires(*model, { 0,0,0 }, 1, { 255,255,255,255 });
         }
 
         // Draw player cube
         if (cameraMode == CAMERA_THIRD_PERSON)
         {
-            DrawCube(camera->target, 0.5f, 0.5f, 0.5f, PURPLE);
+            DrawCube(camera->target, playerGameObject->GetScale().x, playerGameObject->GetScale().y, playerGameObject->GetScale().z, PURPLE);
             //DrawCubeWires(camera->target, 0.5f, 0.5f, 0.5f, DARKPURPLE);
         }
 
@@ -195,29 +189,41 @@ void RayLibThirdPerson::Init()
     cameraMode = CAMERA_THIRD_PERSON;
     
     GoTransform transform;
-    transform.position = { 4,0,3 };
+    transform.position = { 0,0,0 };
+    transform.scale = { 10,10,10 };
     AddObject(transform);
 
-    transform.position = { -4,0,-3 };
+    transform.position = { 5,0,0 };
+    transform.scale = { 1,4,3 };
+    AddObject(transform);
+
+    transform.position = { 0,0,5 };
+    transform.scale = { 1,4,3 };
     AddObject(transform);
 
 
     SetTargetFPS(60);
-
 }
 
 void RayLibThirdPerson::AddObject(const GoTransform& transform)
 {
     std::shared_ptr<Model> model = std::make_shared<Model>();
-    *model = LoadModelFromMesh(GenMeshCube(2, 50, 15));
+    *model = LoadModelFromMesh(GenMeshCube(transform.scale.x, transform.scale.y, transform.scale.z));
     model->transform.m12 = transform.position.x;
     model->transform.m13 = transform.position.y;
     model->transform.m14 = transform.position.z;
     
+   /* model->transform.m1 = transform.up.x;
+        model->transform.m5 = transform.up.y;
+        model->transform.m9 = transform.up.z;
+
+        model->transform.m2 = transform.forward.x;
+        model->transform.m6 = transform.forward.y;
+        model->transform.m9 = transform.forward.z;*/
 
     std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 
-
+    gameObject->SetTransform(transform);
     for (size_t i = 0, v = 0; i < model->meshes[0].vertexCount; i++, v += 3)
     {
         Playground::Vertex vertex;

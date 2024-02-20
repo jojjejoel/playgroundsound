@@ -23,10 +23,13 @@ public:
 	const GoVector3& GetPosition() const;
 	const GoVector3& GetUp() const;
 	const GoVector3& GetForward() const;
+	const GoVector3& GetScale() const;
 	void SetTransform(const GoTransform& transform);
 	void SetPosition(const GoVector3& position);
 	void SetForward(const GoVector3& in_position);
 	void SetUp(const GoVector3& in_position);
+
+	void SetScale(const GoVector3& in_scale);
 
     GoVector3 GetNormalizedForward() const;
     GoVector3 GetNormalizedUp() const;
