@@ -38,7 +38,7 @@
 				<Property Name="MonitoringManager\GameObjectFilter\GameObjectFiltersEnable" Type="bool" Value="True"/>
 				<Property Name="MonitoringManager\GameObjectFilter\x64_GameObjectFilters" Type="string" Value=""/>
 				<Property Name="ObjectTabPanel\x64_CurrentObjects_{031E1E2C-DC25-4332-80C3-FFCC371AC803}" Type="string" Value="ewA4ADUAMQBGADMANAA1ADAALQA0AEQANAAxAC0ANAA0ADIAMQAtADgAOQBGADEALQA3ADcAMQA4ADMANQBFAEEAQQAxADgAMgB9AAAAAAE="/>
-				<Property Name="ObjectTabPanel\x64_CurrentObjects_{BE4A86B2-EEC2-4DF0-9087-1676B338CABB}" Type="string" Value="ewAxADEAQgA1ADUAQgAxADEALQBEAEUAOAAyAC0ANAA2AEIAQQAtADgAMgA0AEUALQA0AEYANgA5ADUARAAxAEEAMQAwAEIARQB9AAAAAQJ7ADEAQwA5ADQANgAyAEIAOQAtADAAMwBCADUALQA0ADEANAA0AC0AOQA2ADIANQAtADMAQgBGADEARgAxADMAQgAxAEYARQBCAH0AAAAAAg=="/>
+				<Property Name="ObjectTabPanel\x64_CurrentObjects_{BE4A86B2-EEC2-4DF0-9087-1676B338CABB}" Type="string" Value="ewAxADEAQgA1ADUAQgAxADEALQBEAEUAOAAyAC0ANAA2AEIAQQAtADgAMgA0AEUALQA0AEYANgA5ADUARAAxAEEAMQAwAEIARQB9AAAAAQJ7ADUANQA1ADcAMgBEADQAMQAtAEIANwBBADEALQA0ADkAOAA1AC0AQgBEAEIAMgAtADYAOAAxAEUANwBGADgANgBCAEQARABFAH0AAAAAAg=="/>
 				<Property Name="OverrideCacheFolder\Active" Type="bool" Value="False"/>
 				<Property Name="OverrideCacheFolder\Path" Type="string" Value=".cache"/>
 				<Property Name="OverrideOriginalFolder\Active" Type="bool" Value="False"/>
@@ -106,6 +106,7 @@
 						<Value Platform="Windows"></Value>
 					</ValueList>
 				</Property>
+				<Property Name="SoundEngine\BusMapping\{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" Type="string" Value=""/>
 			</PropertyList>
 		</UserProjectSettings>
 	</UserProjectSettingsInfo>
