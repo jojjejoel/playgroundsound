@@ -17,9 +17,12 @@ public:
 	AKRESULT LoadBank(const AkUniqueID& bankID);
 	void RenderAudio();
 	std::vector<DiffractionPath> GetDiffraction(const AkGameObjectID& gameObjectID);
-	AKRESULT AddListener(const AkGameObjectID& listenerID, const AkGameObjectID& emitterID, std::string_view listenerGameObjectName, const AkGameObjectID& distanceProbeID, std::string_view distanceProbeName);
-	AkPlayingID PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID, std::string_view gameObjectName);
-	AKRESULT UpdateGameObject(const AkGameObjectID& gameObjectID, const GameObject& gameObject);
+	AKRESULT AddListener();
+	AkPlayingID PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID);
+	AKRESULT UpdateListenerGO(const GameObject& listenerGameObject);
+	AKRESULT UpdateDistanceProbeGO(const GameObject& distanceProbeGameObject);
+
+	AKRESULT UpdateEmitterGO(const GameObject& emitterGameObject);
 
 	AKRESULT AddGeometry(const std::shared_ptr<GameObject>& gameObjects);
 
@@ -27,11 +30,13 @@ public:
 
 	AKRESULT AddPortals(const GameObject& gameObject, const GameObject& gameObject2);
 
+	AKRESULT SetPlayerIsInRoom(const bool& isInRoom);
 
 private:
+	AKRESULT RegisterGameObject(const AkGameObjectID& gameObjectID, std::string_view gameObjectName);
+	AKRESULT UpdateGameObject(const AkGameObjectID& gameObjectID, const GameObject& gameObject);
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 	void Log(std::string_view logMsg);
-	AKRESULT RegisterGameObject(const AkGameObjectID& gameObjectID, std::string_view gameObjectName);
 
 	std::vector<AkGameObjectID> akGameObjects;
 };

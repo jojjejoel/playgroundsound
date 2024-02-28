@@ -46,8 +46,9 @@ void RayLibThirdPerson::Run()
 
         playerGameObject->SetUp({0, 1, 0});
         playerGameObject->SetForward({0, 0, 1});
+        
 
-       
+
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
@@ -64,27 +65,41 @@ void RayLibThirdPerson::Run()
         {
             DiffractionPath diffractionPath = diffractionPaths[i];
 
+                Color color = { Lerp(0, 255, diffractionPath.diffraction), Lerp(255, 0, diffractionPath.diffraction), 0, 255 };
             int numNodes = diffractionPath.nodeCount;
-
             if (numNodes > 0)
             {
                 Vector3 nodePos = { diffractionPath.nodes[0].x, diffractionPath.nodes[0].y, diffractionPath.nodes[0].z };
-                Vector3 emitterPos = { diffractionPath.emitterPos.x, diffractionPath.emitterPos.y, diffractionPath.emitterPos.z };
-                
-                Color color = { Lerp(0, 255, diffractionPath.diffraction), Lerp(255, 0, diffractionPath.diffraction), 0, 255 };
+                DrawLine3D(nodePos, camera->target, color);
+
+            }
+            for (size_t i = 1; i < numNodes; i++)
+            {
+                Vector3 nodePos = { diffractionPath.nodes[i].x, diffractionPath.nodes[i].y, diffractionPath.nodes[i].z };
+                Vector3 emitterPos = { diffractionPath.nodes[i-1].x, diffractionPath.nodes[i-1].y, diffractionPath.nodes[i-1].z };
+
 
                 DrawSphereWires(nodePos, 0.2f, 10, 10, color);
-                
-                DrawLine3D(camera->target, nodePos, color);
+
+                DrawLine3D(emitterPos, nodePos, color);
             }
         }
 
-        DrawLine3D(camera->target, {0,0,0}, GREEN);
+        //DrawLine3D(camera->target, {0,0,0}, GREEN);
         DrawSphereWires({0,0,0}, 0.5f, 10, 10, GREEN);
 
-        for (const auto& model : models)
+        for (size_t i = 0; i < models.size(); i++)
         {
-            DrawModelWires(*model, { 0,0,0 }, 1, { 255,255,255,255 });
+            Color color;
+            if (i == 0)
+            {
+                color = { 255,255,255,255 };
+            }
+            else
+            {
+                color = { 0,255,255,255 };
+            }
+            DrawModelWires(*models[i], {0,0,0}, 1, color);
         }
 
         // Draw player cube
@@ -193,13 +208,17 @@ void RayLibThirdPerson::Init()
     transform.scale = { 10,10,10 };
     AddObject(transform);
 
-    transform.position = { 5,0,0 };
-    transform.scale = { 1,4,3 };
+    transform.position = { 0,0,5 };
+    transform.scale = { 1,1,1 };
+    transform.forward = { 0,0,1 };
+    transform.up = { 0,1,0 };
     AddObject(transform);
 
-    transform.position = { 0,0,5 };
-    transform.scale = { 1,4,3 };
-    AddObject(transform);
+   /* transform.position = { 0,0,0 };
+    transform.scale = { 1,1,1 };
+    transform.forward = { 0,0,1 };
+    transform.up = { 0,1,0 };
+    AddObject(transform);*/
 
 
     SetTargetFPS(60);
@@ -248,6 +267,7 @@ void RayLibThirdPerson::AddObject(const GoTransform& transform)
         triangle.point2 = model->meshes[0].indices[v + 2];
         gameObject->triangles.push_back(triangle);
     }
+    
     soundBlockingObjects.push_back(gameObject);
     models.push_back(model);
 }
@@ -290,4 +310,14 @@ BoundingBox RayLibThirdPerson::CalculateBoundingBox(const Vector3& center, const
     boundingBox.max.z = center.z + halfLength;
 
     return boundingBox;
+}
+
+bool RayLibThirdPerson::IsPlayerInRoom()
+{
+    GameObject roomGameObject = *soundBlockingObjects[0];
+    BoundingBox boxRoom = CalculateBoundingBox({ roomGameObject.GetPosition().x, roomGameObject.GetPosition().y, roomGameObject.GetPosition().z },
+        roomGameObject.GetScale().x, roomGameObject.GetScale().y, roomGameObject.GetScale().z);
+    BoundingBox boxPlayer = CalculateBoundingBox({ cameraGameObject->GetPosition().x, cameraGameObject->GetPosition().y, cameraGameObject->GetPosition().z },
+        cameraGameObject->GetScale().x, cameraGameObject->GetScale().y, cameraGameObject->GetScale().z);
+     return CheckCollisionBoxes(boxRoom, boxPlayer);
 }

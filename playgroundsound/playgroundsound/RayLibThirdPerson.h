@@ -30,6 +30,7 @@ public:
     const std::shared_ptr<GameObject> GetPlayerGameObject();
     const std::vector<std::shared_ptr<GameObject>>& GetSoundBlockingObjects();
     BoundingBox CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const;
+    bool IsPlayerInRoom();
 private:
     std::shared_ptr<Camera3D> camera;
     std::shared_ptr<GameObject> cameraGameObject;

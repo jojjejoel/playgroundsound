@@ -17,28 +17,30 @@ int main()
 	wwiseAPI.LoadBank(AK::BANKS::MAIN);
 
 
-	AkGameObjectID musicObjectID = 1;
-	AkGameObjectID listenerObjectID = 2;
-    AkGameObjectID distanceProbeObjectID = 3;
 
-
-    wwiseAPI.PostEvent(AK::EVENTS::GOOD_OLD_DAYS, musicObjectID, "Test");
-	wwiseAPI.AddListener(listenerObjectID, musicObjectID, "ListenerObject", distanceProbeObjectID, "ListenerObject_DistanceProbe");
+	wwiseAPI.AddListener();
     
-    wwiseAPI.RenderAudio();
     wwiseAPI.AddGeometry(rayLibThird.GetSoundBlockingObjects()[0]);
 
     wwiseAPI.AddRoom();
-    //wwiseAPI.AddPortals(*rayLibThird.GetSoundBlockingObjects()[1], *rayLibThird.GetSoundBlockingObjects()[2]);
-
+    wwiseAPI.AddPortals(*rayLibThird.GetSoundBlockingObjects()[1], *rayLibThird.GetSoundBlockingObjects()[1]);
+    wwiseAPI.RenderAudio();
+    wwiseAPI.PostEvent(AK::EVENTS::GOOD_OLD_DAYS, 1);
+    GameObject emitterGO;
+    emitterGO.SetForward({ 0,0,1 });
+    emitterGO.SetUp({ 0,1,0 });
+    emitterGO.SetScale({ 1,1,1 });
+    emitterGO.SetPosition({ 2,1,2 });
     
-    int a = 1;
-    while (a > 0)  
+    int a = 0;
+    while (a >= 0)  
     {
         rayLibThird.Run();
-        wwiseAPI.UpdateGameObject(listenerObjectID, *rayLibThird.GetCameraGameObject());
-        wwiseAPI.UpdateGameObject(distanceProbeObjectID, *rayLibThird.GetPlayerGameObject());
-        rayLibThird.SetDiffractionPaths(wwiseAPI.GetDiffraction(musicObjectID));
+        wwiseAPI.UpdateListenerGO(*rayLibThird.GetCameraGameObject());
+        wwiseAPI.UpdateDistanceProbeGO(*rayLibThird.GetPlayerGameObject());
+        wwiseAPI.UpdateEmitterGO(emitterGO);
+        wwiseAPI.SetPlayerIsInRoom(rayLibThird.IsPlayerInRoom());
+        rayLibThird.SetDiffractionPaths(wwiseAPI.GetDiffraction(1));
         wwiseAPI.RenderAudio();
     }
     rayLibThird.DeInit();
