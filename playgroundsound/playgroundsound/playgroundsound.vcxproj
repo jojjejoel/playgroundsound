@@ -138,6 +138,7 @@
     <ClCompile Include="RayLibMaze.h" />
     <ClCompile Include="RayLibThirdPerson.cpp" />
     <ClCompile Include="RayLibTopDown.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookBlocking.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookDeferred.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultLowLevelIODispatcher.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="RayLibObject.h" />
     <ClInclude Include="RayLibThirdPerson.h" />
     <ClInclude Include="RayLibTopDown.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h" />
     <ClInclude Include="WwiseSource\AkDefaultLowLevelIODispatcher.h" />

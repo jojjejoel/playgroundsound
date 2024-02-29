@@ -205,11 +205,11 @@ void RayLibThirdPerson::Init()
     
     GoTransform transform;
     transform.position = { 0,0,0 };
-    transform.scale = { 10,10,10 };
+    transform.scale = { 20,10,10 };
     AddObject(transform);
 
     transform.position = { 0,0,5 };
-    transform.scale = { 1,1,1 };
+    transform.scale = { 3,3,3 };
     transform.forward = { 0,0,1 };
     transform.up = { 0,1,0 };
     AddObject(transform);

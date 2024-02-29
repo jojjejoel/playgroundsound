@@ -180,9 +180,9 @@ AKRESULT WwiseAPI::AddListener() {
 	//AK::SoundEngine::AddDefaultListener(listenerObjectID);
 	AK::SoundEngine::SetListeners(musicObjectID, aLstnrsForEmitter, kNumLstnrsForEm);
 	//AK::SoundEngine::SetListeners(listenerObjectID, aLstnrsForEmitter, kNumLstnrsForEm);
-	//AK::SoundEngine::SetListeners(ROOM, aLstnrsForEmitter, kNumLstnrsForEm);
-	//AK::SoundEngine::SetListeners(AK::SpatialAudio::kOutdoorRoomID, aLstnrsForEmitter, kNumLstnrsForEm);
-	//AK::SoundEngine::SetListeners(distanceProbeObjectID, aLstnrsForEmitter, kNumLstnrsForEm);
+	AK::SoundEngine::SetListeners(ROOM, aLstnrsForEmitter, kNumLstnrsForEm);
+	AK::SoundEngine::SetListeners(AK::SpatialAudio::kOutdoorRoomID, aLstnrsForEmitter, kNumLstnrsForEm);
+	AK::SoundEngine::SetListeners(distanceProbeObjectID, aLstnrsForEmitter, kNumLstnrsForEm);
 
 	//AK::SpatialAudio::SetGameObjectInRoom(listenerObjectID, AK::SpatialAudio::kOutdoorRoomID);
 	AK::SoundEngine::SetDistanceProbe(listenerObjectID, distanceProbeObjectID);
@@ -309,11 +309,11 @@ AKRESULT WwiseAPI::AddPortals(const GameObject& gameObject1, const GameObject& g
 	AkPortalParams paramsPortal;
 
 	GoVector3 position = gameObject1.GetPosition();
-	paramsPortal.Transform.SetPosition(position.x, position.y, position.z);
+	paramsPortal.Transform.SetPosition(position.x, position.y, -position.z);
 
 	GoVector3 forward = gameObject1.GetNormalizedForward();
 	GoVector3 up = gameObject1.GetNormalizedUp();
-	paramsPortal.Transform.SetOrientation({ forward.x, forward.y, forward.z }, {up.x, up.y, up.z});
+	paramsPortal.Transform.SetOrientation({ forward.x, forward.y, -forward.z }, {up.x, up.y, up.z});
 	// Portal extent. Defines the dimensions of the portal relative to its center; all components must be positive numbers. The local X and Y dimensions (side and top) are used in diffraction calculations, 
 	// whereas the Z dimension (front) defines a depth value which is used to implement smooth transitions between rooms. It is recommended that users experiment with different portal depths to find a value 
 	// that results in appropriately smooth transitions between rooms.
@@ -329,7 +329,7 @@ AKRESULT WwiseAPI::AddPortals(const GameObject& gameObject1, const GameObject& g
 	// ID of room that that portal connects, in the direction opposite to the Front vector. 
 	paramsPortal.BackRoom = ROOM;
 
-	result = AK::SpatialAudio::SetPortal(PORTAL0, paramsPortal, "Portal ROOM->Outside, horizontal");
+	result = AK::SpatialAudio::SetPortal(PORTAL0, paramsPortal, "Portal One");
 
 
 	//

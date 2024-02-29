@@ -36,10 +36,11 @@ int main()
     while (a >= 0)  
     {
         rayLibThird.Run();
-        wwiseAPI.UpdateListenerGO(*rayLibThird.GetCameraGameObject());
+        //wwiseAPI.UpdateListenerGO(*rayLibThird.GetCameraGameObject());
+        wwiseAPI.UpdateListenerGO(*rayLibThird.GetPlayerGameObject());
         wwiseAPI.UpdateDistanceProbeGO(*rayLibThird.GetPlayerGameObject());
         wwiseAPI.UpdateEmitterGO(emitterGO);
-        wwiseAPI.SetPlayerIsInRoom(rayLibThird.IsPlayerInRoom());
+        //wwiseAPI.SetPlayerIsInRoom(rayLibThird.IsPlayerInRoom());
         rayLibThird.SetDiffractionPaths(wwiseAPI.GetDiffraction(1));
         wwiseAPI.RenderAudio();
     }

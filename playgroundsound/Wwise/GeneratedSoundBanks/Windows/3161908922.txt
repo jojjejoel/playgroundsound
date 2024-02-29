@@ -2,5 +2,5 @@ Event	ID	Name			Wwise Object Path	Notes
 	2578592186	Good_Old_Days			\Default Work Unit\Good_Old_Days	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	317113129	Test	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\Good Old Days_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\Test		47062684
+	317113129	Test	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\Good Old Days_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Test		47062684
 
