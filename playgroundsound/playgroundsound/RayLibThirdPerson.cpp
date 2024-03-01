@@ -100,7 +100,8 @@ void RayLibThirdPerson::Run()
 
         DrawSphereWires({0,0,0}, 0.5f, 10, 10, GREEN);
 
-        for (size_t i = 0; i < models.size(); i++)
+        DrawModel(*models[0], camera->target, 1, WHITE);
+        for (size_t i = 1; i < models.size(); i++)
         {
             Color color;
             if (i == 0)
@@ -111,13 +112,8 @@ void RayLibThirdPerson::Run()
             {
                 color = { 0,255,255,255 };
             }
-            DrawModel(*models[i], {0,0,0}, 1, color);
-        }
-
-        // Draw player cube
-        if (cameraMode == CAMERA_THIRD_PERSON)
-        {
-            DrawCube(camera->target, playerGameObject->GetScale().x, playerGameObject->GetScale().y, playerGameObject->GetScale().z, PURPLE);
+            Vector3 pos = { models[i]->transform.m12, models[i]->transform.m13,models[i]->transform.m13 };
+            DrawModel(*models[i], pos, 1, WHITE);
         }
 
         EndMode3D();
@@ -172,7 +168,7 @@ void RayLibThirdPerson::SetDiffractionPaths(const std::vector<DiffractionPath> i
 
 void RayLibThirdPerson::Init()
 {
-   
+    
 
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -196,7 +192,16 @@ void RayLibThirdPerson::Init()
 
     playerGameObject = std::make_shared<GameObject>();
 
-    cameraMode = CAMERA_THIRD_PERSON;
+    Model model = LoadModel("Resources/Models/truck_green.obj");
+    
+   /*
+    model.meshMaterial = model.materials;
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture;*/
+
+   
+
+    std::shared_ptr<Model> modelPtr = std::make_shared<Model>(model);
+    models.push_back(modelPtr);
     
     GoTransform transform;
     transform.position = { 0,0,0 };
