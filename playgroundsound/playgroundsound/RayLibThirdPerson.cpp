@@ -111,7 +111,7 @@ void RayLibThirdPerson::Run()
             {
                 color = { 0,255,255,255 };
             }
-            DrawModelWires(*models[i], {0,0,0}, 1, color);
+            DrawModel(*models[i], {0,0,0}, 1, color);
         }
 
         // Draw player cube
