@@ -22,12 +22,14 @@ int main()
     
     //wwiseAPI.AddGeometry(rayLibThird.GetSoundBlockingObjects()[0]);
     wwiseAPI.AddGeometry(rayLibThird.GetWalls()[0], 0);
+
+    wwiseAPI.AddRoomGeometry(rayLibThird.GetSoundBlockingObjects()[0]);
    /* wwiseAPI.AddGeometry(rayLibThird.GetWalls()[1], 0);
     wwiseAPI.AddGeometry(rayLibThird.GetWalls()[2], 0);
     wwiseAPI.AddGeometry(rayLibThird.GetWalls()[3], 0);*/
 
-    //wwiseAPI.AddRoom();
-    //wwiseAPI.AddPortals(*rayLibThird.GetSoundBlockingObjects()[1], *rayLibThird.GetSoundBlockingObjects()[1]);
+    wwiseAPI.AddRoom();
+    wwiseAPI.AddPortals(*rayLibThird.GetSoundBlockingObjects()[1], *rayLibThird.GetSoundBlockingObjects()[1]);
     wwiseAPI.RenderAudio();
     wwiseAPI.PostEvent(AK::EVENTS::GOOD_OLD_DAYS, 1);
     GameObject emitterGO;
@@ -44,7 +46,7 @@ int main()
         wwiseAPI.UpdateListenerGO(*rayLibThird.GetCameraGameObject());
         wwiseAPI.UpdateDistanceProbeGO(*rayLibThird.GetPlayerGameObject());
         wwiseAPI.UpdateEmitterGO(emitterGO);
-        //wwiseAPI.SetPlayerIsInRoom(rayLibThird.IsPlayerInRoom());
+        wwiseAPI.SetPlayerIsInRoom(rayLibThird.IsPlayerInRoom());
         rayLibThird.SetDiffractionPaths(wwiseAPI.GetDiffraction(1));
         wwiseAPI.RenderAudio();
     }

@@ -98,7 +98,6 @@ void RayLibThirdPerson::Run()
             
         }
 
-        //DrawLine3D(camera->target, {0,0,0}, GREEN);
         DrawSphereWires({0,0,0}, 0.5f, 10, 10, GREEN);
 
         for (size_t i = 0; i < models.size(); i++)
@@ -119,26 +118,9 @@ void RayLibThirdPerson::Run()
         if (cameraMode == CAMERA_THIRD_PERSON)
         {
             DrawCube(camera->target, playerGameObject->GetScale().x, playerGameObject->GetScale().y, playerGameObject->GetScale().z, PURPLE);
-            //DrawCubeWires(camera->target, 0.5f, 0.5f, 0.5f, DARKPURPLE);
         }
 
         EndMode3D();
-
-        // Draw info boxes
-        DrawRectangle(5, 5, 330, 100, Fade(SKYBLUE, 0.5f));
-        DrawRectangleLines(5, 5, 330, 100, BLUE);
-
-        DrawText("Camera controls:", 15, 15, 10, BLACK);
-        DrawText("- Move keys: W, A, S, D, Space, Left-Ctrl", 15, 30, 10, BLACK);
-        DrawText("- Look around: arrow keys or mouse", 15, 45, 10, BLACK);
-
-        std::string upVector = "Up: { X " + std::to_string(upX) + ", Y " + std::to_string(upY) + ", Z " + std::to_string(upZ) + "}";
-        std::string forwardVector = "Forward: { X " + std::to_string(forwardX) + ", Y " + std::to_string(forwardY) + ", Z " + std::to_string(forwardZ) + "}";
-        DrawText(upVector.c_str(), 15, 75, 10, BLACK);
-        DrawText(forwardVector.c_str(), 15, 90, 10, BLACK);
-
-        DrawRectangle(600, 5, 195, 100, Fade(SKYBLUE, 0.5f));
-        DrawRectangleLines(600, 5, 195, 100, BLUE);
 
       
 

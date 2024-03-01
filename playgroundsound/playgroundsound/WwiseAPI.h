@@ -27,6 +27,8 @@ public:
 
 	AKRESULT AddGeometry(const std::shared_ptr<GameObject>& gameObject, int wallIndex);
 
+	AKRESULT AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject);
+
 	AKRESULT AddRoom();
 
 	AKRESULT AddPortals(const GameObject& gameObject, const GameObject& gameObject2);
