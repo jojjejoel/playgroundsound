@@ -61,28 +61,41 @@ void RayLibThirdPerson::Run()
         DrawCube({ 0.0f, 2.5f, 16.0f }, 32.0f, 5.0f, 1.0f, GOLD);      // Draw a yellow wall
 
 
-        for (size_t i = 0; i < diffractionPaths.size(); i++)
+        for (int pathIndex = 0; pathIndex < diffractionPaths.size(); pathIndex++)
         {
-            DiffractionPath diffractionPath = diffractionPaths[i];
+
+            DiffractionPath diffractionPath = diffractionPaths[pathIndex];
 
                 Color color = { Lerp(0, 255, diffractionPath.diffraction), Lerp(255, 0, diffractionPath.diffraction), 0, 255 };
             int numNodes = diffractionPath.nodeCount;
             if (numNodes > 0)
             {
-                Vector3 nodePos = { diffractionPath.nodes[0].x, diffractionPath.nodes[0].y, diffractionPath.nodes[0].z };
-                DrawLine3D(nodePos, camera->target, color);
+                Vector3 firstNodePos = { diffractionPath.nodes[0].x, diffractionPath.nodes[0].y, diffractionPath.nodes[0].z };
+                DrawLine3D(firstNodePos, camera->target, color);
+                DrawSphereWires(firstNodePos, 0.2f, 10, 10, color);
 
-            }
-            for (size_t i = 1; i < numNodes; i++)
+            for (int nodeIndex = 1; nodeIndex < numNodes; nodeIndex++)
             {
-                Vector3 nodePos = { diffractionPath.nodes[i].x, diffractionPath.nodes[i].y, diffractionPath.nodes[i].z };
-                Vector3 emitterPos = { diffractionPath.nodes[i-1].x, diffractionPath.nodes[i-1].y, diffractionPath.nodes[i-1].z };
+                Vector3 nodePos = { diffractionPath.nodes[nodeIndex].x, diffractionPath.nodes[nodeIndex].y, diffractionPath.nodes[nodeIndex].z };
+                Vector3 emitterPos = { diffractionPath.nodes[nodeIndex -1].x, diffractionPath.nodes[nodeIndex -1].y, diffractionPath.nodes[nodeIndex -1].z };
 
 
                 DrawSphereWires(nodePos, 0.2f, 10, 10, color);
 
                 DrawLine3D(emitterPos, nodePos, color);
             }
+            Vector3 emitterPos = { diffractionPath.emitterPos.x, diffractionPath.emitterPos.y, diffractionPath.emitterPos.z };
+            Vector3 nodePos = { diffractionPath.nodes[numNodes -1].x, diffractionPath.nodes[numNodes - 1].y, diffractionPath.nodes[numNodes - 1].z };
+            DrawLine3D(emitterPos, nodePos, color);
+            }
+            else
+            {
+                Vector3 startLinePos = { diffractionPath.emitterPos.x, diffractionPath.emitterPos.y, diffractionPath.emitterPos.z };
+                Vector3 endLinePos = { camera->target };
+                DrawLine3D(startLinePos, endLinePos, color);
+            }
+
+            
         }
 
         //DrawLine3D(camera->target, {0,0,0}, GREEN);
@@ -205,7 +218,7 @@ void RayLibThirdPerson::Init()
     
     GoTransform transform;
     transform.position = { 0,0,0 };
-    transform.scale = { 20,10,10 };
+    transform.scale = { 10,10,10 };
     AddObject(transform);
 
     transform.position = { 0,0,5 };
@@ -214,11 +227,30 @@ void RayLibThirdPerson::Init()
     transform.up = { 0,1,0 };
     AddObject(transform);
 
-   /* transform.position = { 0,0,0 };
-    transform.scale = { 1,1,1 };
+   
+    transform.position = { 0,0,0 };
+    transform.scale = { 10,10,1 };
     transform.forward = { 0,0,1 };
     transform.up = { 0,1,0 };
-    AddObject(transform);*/
+    AddWall(transform, 0);
+
+   /* transform.position = { 0,0,-5 };
+    transform.scale = { 10,10,1 };
+    transform.forward = { 0,0,1 };
+    transform.up = { 0,1,0 };
+    AddWall(transform, -1.5708f);
+
+    transform.position = { 5,0,0 };
+    transform.scale = { 10,10,1 };
+    transform.forward = { 0,0,1 };
+    transform.up = { 0,1,0 };
+    AddWall(transform,0);
+
+    transform.position = { -5,0,0 };
+    transform.scale = { 10,10,1 };
+    transform.forward = { 0,0,1 };
+    transform.up = { 0,1,0 };
+    AddWall(transform, 3.14159f);*/
 
 
     SetTargetFPS(60);
@@ -272,6 +304,49 @@ void RayLibThirdPerson::AddObject(const GoTransform& transform)
     models.push_back(model);
 }
 
+void RayLibThirdPerson::AddWall(const GoTransform& transform, float radians)
+{
+    std::shared_ptr<Model> model = std::make_shared<Model>();
+    *model = LoadModelFromMesh(GenMeshPlane(transform.scale.x, transform.scale.y, 10,10));
+    model->transform.m12 = transform.position.x;
+    model->transform.m13 = transform.position.y;
+    model->transform.m14 = transform.position.z;
+    model->transform = MatrixMultiply(MatrixRotateZ(1.5708f), model->transform);
+    model->transform = MatrixMultiply(MatrixRotateX(radians), model->transform);
+    //model->transform
+
+    std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
+
+    gameObject->SetTransform(transform);
+    for (size_t i = 0, v = 0; i < model->meshes[0].vertexCount; i++, v += 3)
+    {
+        Playground::Vertex vertex;
+        float* vertices = model->meshes[0].vertices;
+        Vector3 vector3;
+        vector3.x = vertices[v];
+        vector3.y = vertices[v + 1];
+        vector3.z = vertices[v + 2];
+        vector3 = Vector3Transform(vector3, model->transform);
+
+        vertex.x = vector3.x;
+        vertex.y = vector3.y;
+        vertex.z = -vector3.z;
+        gameObject->mesh.vertices.push_back(vertex);
+    }
+
+    for (size_t i = 0, v = 0; i < model->meshes[0].triangleCount; i++, v += 3)
+    {
+        Triangle triangle;
+        triangle.point0 = model->meshes[0].indices[v];
+        triangle.point1 = model->meshes[0].indices[v + 1];
+        triangle.point2 = model->meshes[0].indices[v + 2];
+        gameObject->triangles.push_back(triangle);
+    }
+
+    roomWalls.push_back(gameObject);
+    //models.push_back(model);
+}
+
 void RayLibThirdPerson::DeInit()
 {
     CloseWindow();
@@ -290,6 +365,11 @@ const std::shared_ptr<GameObject> RayLibThirdPerson::GetPlayerGameObject()
 const std::vector<std::shared_ptr<GameObject>>& RayLibThirdPerson::GetSoundBlockingObjects()
 {
     return soundBlockingObjects;
+}
+
+const std::vector<std::shared_ptr<GameObject>>& RayLibThirdPerson::GetWalls()
+{
+    return roomWalls;
 }
 
 BoundingBox RayLibThirdPerson::CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const {

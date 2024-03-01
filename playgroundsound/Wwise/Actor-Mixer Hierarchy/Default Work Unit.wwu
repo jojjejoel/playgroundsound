@@ -5,7 +5,7 @@
 			<ChildrenList>
 				<Sound Name="Test" ID="{55572D41-B7A1-4985-BDB2-681E7F86BDDE}" ShortID="307156047">
 					<PropertyList>
-						<Property Name="3DSpatialization" Type="int16" Value="2"/>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
 						<Property Name="EnableDiffraction" Type="bool" Value="True"/>
 						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 					</PropertyList>

@@ -25,10 +25,12 @@ public:
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();
     void AddObject(const GoTransform& transform);
+    void AddWall(const GoTransform& transform, float radians);
     void DeInit();
     const std::shared_ptr<GameObject> GetCameraGameObject();
     const std::shared_ptr<GameObject> GetPlayerGameObject();
     const std::vector<std::shared_ptr<GameObject>>& GetSoundBlockingObjects();
+    const std::vector<std::shared_ptr<GameObject>>& GetWalls();
     BoundingBox CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const;
     bool IsPlayerInRoom();
 private:
@@ -41,6 +43,9 @@ private:
     std::vector<std::shared_ptr<Model>> models;
 
     std::vector<std::shared_ptr<BoundingBox>> boundingBoxes;
+
+    std::vector<std::shared_ptr<GameObject>> roomWalls;
+
     int cameraMode;
 
     float upX = 1.0f;

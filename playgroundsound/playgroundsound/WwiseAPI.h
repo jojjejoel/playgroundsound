@@ -8,6 +8,7 @@
 #include "DiffractionPath.h"
 #include <string>
 #include <memory>
+#include <vector>
 
 class WwiseAPI
 {
@@ -24,7 +25,7 @@ public:
 
 	AKRESULT UpdateEmitterGO(const GameObject& emitterGameObject);
 
-	AKRESULT AddGeometry(const std::shared_ptr<GameObject>& gameObjects);
+	AKRESULT AddGeometry(const std::shared_ptr<GameObject>& gameObject, int wallIndex);
 
 	AKRESULT AddRoom();
 
