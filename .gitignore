@@ -401,3 +401,4 @@ playgroundsound/playgroundsound/x64/Debug/playgroundsound.log
 playgroundsound/.vs/playgroundsound/v17/Browse.VC.db
 playgroundsound/.vs/playgroundsound/v17/.suo
 *.ipch
+*.prof
