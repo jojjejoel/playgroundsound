@@ -13,6 +13,7 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID CAR_ENGINE_LOOP = 4193220423U;
         static const AkUniqueID GOOD_OLD_DAYS = 2578592186U;
     } // namespace EVENTS
 
@@ -26,6 +27,12 @@ namespace AK
     {
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
     } // namespace BUSSES
+
+    namespace AUX_BUSSES
+    {
+        static const AkUniqueID INSIDE = 3553349781U;
+        static const AkUniqueID OUTSIDE = 438105790U;
+    } // namespace AUX_BUSSES
 
     namespace AUDIO_DEVICES
     {

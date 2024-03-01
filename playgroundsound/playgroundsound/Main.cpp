@@ -1,7 +1,5 @@
 #include <iostream>
-//#include "RayLibTopDown.h"
 #include "RayLibThirdPerson.h"
-#include "RayLibMaze.h"
 #include "WwiseAPI.h"
 #include "Wwise_IDs.h"
 int main()
@@ -21,7 +19,7 @@ int main()
 	wwiseAPI.AddListener();
     
     //wwiseAPI.AddGeometry(rayLibThird.GetSoundBlockingObjects()[0]);
-    wwiseAPI.AddGeometry(rayLibThird.GetWalls()[0], 0);
+    wwiseAPI.AddGeometry(rayLibThird.GetWalls()[0]);
 
     wwiseAPI.AddRoomGeometry(rayLibThird.GetSoundBlockingObjects()[0]);
    /* wwiseAPI.AddGeometry(rayLibThird.GetWalls()[1], 0);

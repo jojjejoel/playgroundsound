@@ -17,6 +17,14 @@ Game Parameter	ID	Name			Wwise Object Path	Notes
 Audio Bus	ID	Name			Wwise Object Path	Notes
 	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
 
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	438105790	Outside			\Default Work Unit\Master Audio Bus\Outside	
+	3553349781	Inside			\Default Work Unit\Master Audio Bus\Inside	
+
+Effect plug-ins	ID	Name	Type				Notes
+	391298311	Room_Small (Custom)	Wwise RoomVerb			
+	712540528	Have_U_Ever_Been_Outside (Custom)	Wwise RoomVerb			
+
 Audio Devices	ID	Name	Type				Notes
 	2317455096	No_Output	No Output			
 	3859886410	System	System			

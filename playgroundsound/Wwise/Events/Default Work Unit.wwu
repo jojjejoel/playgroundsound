@@ -14,6 +14,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Car_Engine_Loop" ID="{B526007C-BA47-440B-A1DD-2E62D9ADD10D}">
+					<ChildrenList>
+						<Action Name="" ID="{1D6747D8-B9D7-4F45-85B2-7159A3C7AC7D}" ShortID="999691230">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Car_Engine_Loop" ID="{7914FD28-C8DF-44E6-A58A-21FBEDA96A48}" WorkUnitID="{8E08C725-5B07-4F01-8DB8-A6B9F7AFCA86}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

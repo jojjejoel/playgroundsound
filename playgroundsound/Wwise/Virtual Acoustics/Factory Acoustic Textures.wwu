@@ -37,9 +37,10 @@
 						<AcousticTexture Name="Brick" ID="{B086A5A9-F204-4C53-A838-BDB18B18F6D6}">
 							<PropertyList>
 								<Property Name="AbsorptionHigh" Type="Real32" Value="35"/>
-								<Property Name="AbsorptionLow" Type="Real32" Value="12"/>
+								<Property Name="AbsorptionLow" Type="Real32" Value="21"/>
 								<Property Name="AbsorptionMidHigh" Type="Real32" Value="23"/>
 								<Property Name="AbsorptionMidLow" Type="Real32" Value="18"/>
+								<Property Name="AbsorptionOffset" Type="Real32" Value="-100"/>
 								<Property Name="Color" Type="int16" Value="8"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
@@ -71,6 +72,7 @@
 								<Property Name="AbsorptionLow" Type="Real32" Value="2"/>
 								<Property Name="AbsorptionMidHigh" Type="Real32" Value="2"/>
 								<Property Name="AbsorptionMidLow" Type="Real32" Value="2"/>
+								<Property Name="AbsorptionOffset" Type="Real32" Value="-100"/>
 								<Property Name="Color" Type="int16" Value="15"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>

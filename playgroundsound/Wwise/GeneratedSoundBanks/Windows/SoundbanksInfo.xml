@@ -9,11 +9,15 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{739C6C44-A363-143E-EEB1-DC218FB44BA0}">
+		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{77BA2718-0EB5-756E-FD15-58613D6A312A}">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>1355168291.bnk</Path>
 			<Plugins>
+				<Custom>
+					<Plugin Id="391298311" Name="Room_Small (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Inside\Room_Small (Custom)" GUID="{88C04A42-5E03-4C6E-8E88-E4947023CC95}" LibName="Wwise RoomVerb" LibId="7733251"/>
+					<Plugin Id="712540528" Name="Have_U_Ever_Been_Outside (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Outside\Have_U_Ever_Been_Outside (Custom)" GUID="{E218C04A-0788-4A22-95A4-BAB5D7A7027C}" LibName="Wwise RoomVerb" LibId="7733251"/>
+				</Custom>
 				<AudioDevices>
 					<Plugin Id="2317455096" Name="No_Output" ObjectPath="\Audio Devices\Default Work Unit\No_Output" GUID="{CF140AB8-FCD7-461E-A794-917F81640FB9}" LibName="No Output" LibId="11862023"/>
 					<Plugin Id="3859886410" Name="System" ObjectPath="\Audio Devices\Default Work Unit\System" GUID="{1C9462B9-03B5-4144-9625-3BF1F13B1FEB}" LibName="System" LibId="11403271"/>
@@ -22,13 +26,29 @@
 			<Busses>
 				<Bus Id="3803692087" Name="Master Audio Bus" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus" GUID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"/>
 			</Busses>
+			<AuxBusses>
+				<AuxBus Id="438105790" Name="Outside" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Outside" GUID="{ED0A4729-29F3-465D-B36D-72CA1AF04820}">
+					<PluginRefs>
+						<Custom>
+							<PluginRef Id="712540528"/>
+						</Custom>
+					</PluginRefs>
+				</AuxBus>
+				<AuxBus Id="3553349781" Name="Inside" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Inside" GUID="{9CD79DAC-40E9-4551-817D-4B30F346C28C}">
+					<PluginRefs>
+						<Custom>
+							<PluginRef Id="391298311"/>
+						</Custom>
+					</PluginRefs>
+				</AuxBus>
+			</AuxBusses>
 			<AcousticTextures>
 				<AcousticTexture Id="504532776" Name="Brick" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Brick" GUID="{B086A5A9-F204-4C53-A838-BDB18B18F6D6}">
 					<Properties>
-						<Property Name="AbsorptionLow" Type="Real32" Value="12"/>
-						<Property Name="AbsorptionMidLow" Type="Real32" Value="18"/>
-						<Property Name="AbsorptionMidHigh" Type="Real32" Value="23"/>
-						<Property Name="AbsorptionHigh" Type="Real32" Value="35"/>
+						<Property Name="AbsorptionLow" Type="Real32" Value="-79"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="-82"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="-77"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="-65"/>
 					</Properties>
 				</AcousticTexture>
 				<AcousticTexture Id="513139656" Name="Mountain" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Mountain" GUID="{C5933731-001A-4AB4-98DD-9B033A8C8EAB}">
@@ -113,10 +133,10 @@
 				</AcousticTexture>
 				<AcousticTexture Id="3670307564" Name="Drywall" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Drywall" GUID="{68A4E3F4-4C0B-4687-A8B8-A84DB93DBC8F}">
 					<Properties>
-						<Property Name="AbsorptionLow" Type="Real32" Value="2"/>
-						<Property Name="AbsorptionMidLow" Type="Real32" Value="2"/>
-						<Property Name="AbsorptionMidHigh" Type="Real32" Value="2"/>
-						<Property Name="AbsorptionHigh" Type="Real32" Value="2"/>
+						<Property Name="AbsorptionLow" Type="Real32" Value="-98"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="-98"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="-98"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="-98"/>
 					</Properties>
 				</AcousticTexture>
 				<AcousticTexture Id="4168643977" Name="Acoustic_Banner" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Acoustic_Banner" GUID="{2F2D53F2-DACC-408E-8B88-98B1B52A26D6}">
@@ -137,7 +157,7 @@
 				</AcousticTexture>
 			</AcousticTextures>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{1A9073F4-B4D1-2046-F7E3-FB0D2819E504}">
+		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{48C3B90C-CB10-1682-DFBC-423ED68490EF}">
 			<ObjectPath>\SoundBanks\Default Work Unit\Main</ObjectPath>
 			<ShortName>Main</ShortName>
 			<Path>3161908922.bnk</Path>
@@ -146,8 +166,17 @@
 					<ShortName>Good Old Days.wav</ShortName>
 					<CachePath>SFX/Good Old Days_D79FB2B7.wem</CachePath>
 				</File>
+				<File Id="815298708" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Soundly Audio\Vehicles, Car, Hearse V8, Exterior, Engine, Idle, Steady SND0071.wav</ShortName>
+					<CachePath>SFX/Soundly Audio/Vehicles, Car, Hearse V8, Exterior, Engine, Idle, Steady SND0071_D79FB2B7.wem</CachePath>
+				</File>
 			</Media>
 			<Events>
+				<Event Id="4193220423" Name="Car_Engine_Loop" ObjectPath="\Events\Default Work Unit\Car_Engine_Loop" GUID="{B526007C-BA47-440B-A1DD-2E62D9ADD10D}" MaxAttenuation="100" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="815298708"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="2578592186" Name="Good_Old_Days" ObjectPath="\Events\Default Work Unit\Good_Old_Days" GUID="{DDA9C1CC-8691-45CE-83AE-ECA323AED650}" MaxAttenuation="25" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="317113129"/>
@@ -156,5 +185,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{105DD589-9511-49C8-A2E7-A813D95A01E5}</FileHash>
+	<FileHash>{FF4CF9D3-819E-934C-083D-B268D4F7995F}</FileHash>
 </SoundBanksInfo>

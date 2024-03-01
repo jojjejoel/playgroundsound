@@ -17,6 +17,7 @@
 #include "AK/Comm/AkCommunication.h"
 
 #include "AK/SpatialAudio/Common/AkSpatialAudio.h"
+#include "AK/Plugin/AkRoomVerbFXFactory.h"
 
 
 const AkRoomID ROOM = 200;
@@ -30,7 +31,8 @@ const AkGameObjectID listenerObjectID = 2;
 const AkGameObjectID distanceProbeObjectID = 3;
 
 
-const AkGeometrySetID GEOMETRY_WALL = 1000;
+const AkGeometrySetID GEOMETRY_WALL_SIDES = 1000;
+const AkGeometrySetID GEOMETRY_WALL_CEILINGFLOOR = 1001;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_1 = 2000;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_2 = 2001;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_3 = 2002;
@@ -39,7 +41,8 @@ const AkGeometrySetID GEOMETRY_WALL_INSTANCE_5 = 2004;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_6 = 2005;
 
 
-const AkGeometrySetID GEOMETRY_WALL_OUTSIDE = 1001;
+const AkGeometrySetID GEOMETRY_WALL_OUTSIDE_SIDES = 1002;
+const AkGeometrySetID GEOMETRY_WALL_OUTSIDE_CEILINGFLOOR = 1003;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_1 = 2006;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_2 = 2007;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_3 = 2008;
@@ -182,6 +185,7 @@ AKRESULT WwiseAPI::RegisterGameObject(const AkGameObjectID& gameObjectID, std::s
 AKRESULT WwiseAPI::SetPlayerIsInRoom(const bool& isInRoom)
 {
 	AkRoomID currentRoom = isInRoom ? ROOM : AK::SpatialAudio::kOutdoorRoomID;
+	AK::SpatialAudio::SetGameObjectInRoom(distanceProbeObjectID, currentRoom);
 	return AK::SpatialAudio::SetGameObjectInRoom(listenerObjectID, currentRoom);
 }
 
@@ -193,8 +197,8 @@ AKRESULT WwiseAPI::AddListener() {
 
 	static const int kNumLstnrsForEm = 1;
 	static const AkGameObjectID aLstnrsForEmitter[kNumLstnrsForEm] = { listenerObjectID };
-	//AK::SoundEngine::AddDefaultListener(listenerObjectID);
-	AK::SoundEngine::SetListeners(musicObjectID, aLstnrsForEmitter, kNumLstnrsForEm);
+	AK::SoundEngine::AddDefaultListener(listenerObjectID);
+	//AK::SoundEngine::SetListeners(musicObjectID, aLstnrsForEmitter, kNumLstnrsForEm);
 	//AK::SoundEngine::SetListeners(listenerObjectID, aLstnrsForEmitter, kNumLstnrsForEm);
 	//AK::SoundEngine::SetListeners(ROOM, aLstnrsForEmitter, kNumLstnrsForEm);
 	//AK::SoundEngine::SetListeners(AK::SpatialAudio::kOutdoorRoomID, aLstnrsForEmitter, kNumLstnrsForEm);
@@ -202,7 +206,9 @@ AKRESULT WwiseAPI::AddListener() {
 
 	//AK::SpatialAudio::SetGameObjectInRoom(listenerObjectID, AK::SpatialAudio::kOutdoorRoomID);
 	AK::SoundEngine::SetDistanceProbe(listenerObjectID, distanceProbeObjectID);
+
 	AK::SpatialAudio::RegisterListener(listenerObjectID);
+	AK::SoundEngine::PostEvent("Car_Engine_Loop", distanceProbeObjectID);
 	return AK_Success;
 }
 
@@ -253,19 +259,17 @@ AKRESULT WwiseAPI::AddRoom() {
 	AKRESULT result;
 
 	AkRoomParams paramsRoom;
-	// Let's orient our rooms towards the top of the screen. 
 	paramsRoom.Front.X = 0.f;
 	paramsRoom.Front.Y = 0.f;
 	paramsRoom.Front.Z = 1.f;
 	paramsRoom.Up.X = 0.f;
 	paramsRoom.Up.Y = 1.f;
 	paramsRoom.Up.Z = 0.f;
-	paramsRoom.TransmissionLoss = 0.9f;	// Let's have a bit of sound transmitted through walls when all portals are closed.
-	paramsRoom.RoomGameObj_KeepRegistered = true;	// We intend to use the room's game object to post events (see documentation of AkRoomParams::RoomGameObj_KeepRegistered).
-	paramsRoom.RoomGameObj_AuxSendLevelToSelf = 0.25f;	// Since we will be playing an ambience ("Play_Ambience_Quad", below), on this room's game object, we here route some of it to the room's auxiliary bus to add some of its reverb.
+	paramsRoom.TransmissionLoss = 0.5f;	
+	paramsRoom.RoomGameObj_KeepRegistered = true;	
+	paramsRoom.RoomGameObj_AuxSendLevelToSelf = 0.25f;	
 	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Inside");
-	paramsRoom.GeometryInstanceID = GEOMETRY_ROOM_INSTANCE;	// We associate the geometry to the room in order to compute the room spread. 
-	// If the geometry is not found (in "Portals Demo"), the room bounding box is calculated from the portals combined extent.
+	paramsRoom.GeometryInstanceID = GEOMETRY_ROOM_INSTANCE;	
 
 	result = AK::SpatialAudio::SetRoom(ROOM, paramsRoom, "Inside");
 
@@ -296,33 +300,24 @@ AKRESULT WwiseAPI::AddPortals(const GameObject& gameObject1, const GameObject& g
 	GoVector3 forward = gameObject1.GetNormalizedForward();
 	GoVector3 up = gameObject1.GetNormalizedUp();
 	paramsPortal.Transform.SetOrientation({ forward.x, forward.y, -forward.z }, { up.x, up.y, up.z });
-	// Portal extent. Defines the dimensions of the portal relative to its center; all components must be positive numbers. The local X and Y dimensions (side and top) are used in diffraction calculations, 
-	// whereas the Z dimension (front) defines a depth value which is used to implement smooth transitions between rooms. It is recommended that users experiment with different portal depths to find a value 
-	// that results in appropriately smooth transitions between rooms.
-	// Important: divide height and width by 2, because Extent expresses dimensions relative to the center (like a radius).
 	paramsPortal.Extent.halfWidth = gameObject1.GetTransform().scale.x / 2.f;
 	paramsPortal.Extent.halfHeight = gameObject1.GetTransform().scale.y / 2.f;
 	paramsPortal.Extent.halfDepth = gameObject1.GetTransform().scale.z / 2.f;
 
-	// Whether or not the portal is active/enabled. For example, this parameter may be used to simulate open/closed doors.
-	paramsPortal.bEnabled = true;	// Open if bit 0 of our portal open state m_portalsOpen is set.
-	// ID of the room that the portal connects to, in the direction of the Front vector.
+	paramsPortal.bEnabled = true;	
 	paramsPortal.FrontRoom = AK::SpatialAudio::kOutdoorRoomID;
-	// ID of room that that portal connects, in the direction opposite to the Front vector. 
 	paramsPortal.BackRoom = ROOM;
 
 	result = AK::SpatialAudio::SetPortal(PORTAL0, paramsPortal, "Portal One");
 	return AK_Success;
 }
 
-AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<GameObject>& gameObject, int wallIndex) {
+AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<GameObject>& gameObject) {
 	AKRESULT result;
-	/*for (const auto& gameObject : gameObjects)
-	{*/
-	AkGeometryParams geom;
-	geom.NumVertices = gameObject->mesh.vertices.size();
+	AkGeometryParams geomWallsInside;
+	geomWallsInside.NumVertices = gameObject->mesh.vertices.size();
 	std::vector<AkVertex> vertices;
-	for (size_t i = 0; i < geom.NumVertices; i++)
+	for (size_t i = 0; i < geomWallsInside.NumVertices; i++)
 	{
 		AkVertex vertex;
 		vertex.X = gameObject->mesh.vertices[i].x;
@@ -331,24 +326,24 @@ AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<GameObject>& gameObject, in
 		vertices.push_back(vertex);
 	}
 
-	geom.Vertices = vertices.data();
+	geomWallsInside.Vertices = vertices.data();
 
-	geom.NumSurfaces = 2;
+	geomWallsInside.NumSurfaces = 2;
 	AkAcousticSurface surfaces[2];
 	AkPlacementNew(&surfaces[0]) AkAcousticSurface();
 	surfaces[0].strName = "Outside";
 	surfaces[0].textureID = AK::SoundEngine::GetIDFromString("Brick");
-	surfaces[0].transmissionLoss = 0.5f;
+	surfaces[0].transmissionLoss = 1.0f;
 	AkPlacementNew(&surfaces[1]) AkAcousticSurface();
 	surfaces[1].strName = "Inside";
 	surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
-	surfaces[1].transmissionLoss = 0.5f;
-	geom.Surfaces = surfaces;
-	geom.NumTriangles = gameObject->triangles.size();
+	surfaces[1].transmissionLoss = 1.0f;
+	geomWallsInside.Surfaces = surfaces;	
+	geomWallsInside.NumTriangles = gameObject->triangles.size();
 
 	std::vector<AkTriangle> akTriangles;
 
-	for (size_t i = 0; i < geom.NumTriangles; i++)
+	for (size_t i = 0; i < geomWallsInside.NumTriangles; i++)
 	{
 		AkTriangle akTriangle;
 		akTriangle.point0 = gameObject->triangles[i].point0;
@@ -358,84 +353,56 @@ AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<GameObject>& gameObject, in
 		akTriangles.push_back(akTriangle);
 	}
 
-	geom.Triangles = akTriangles.data();
+	geomWallsInside.Triangles = akTriangles.data();
 
-	geom.EnableDiffraction = true;
-	geom.EnableDiffractionOnBoundaryEdges = true;
-	geom.EnableTriangles = true;
+	geomWallsInside.EnableDiffraction = true;
+	geomWallsInside.EnableDiffractionOnBoundaryEdges = true;
+	geomWallsInside.EnableTriangles = true;
 
-	AkGeometrySetID geometryInstanceID;
 	
-	result = AK::SpatialAudio::SetGeometry(GEOMETRY_WALL, geom);
-	//}
+	result = AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_SIDES, geomWallsInside);
 
+	AkGeometryParams geomRoofCeilingInside = geomWallsInside;
+	geomRoofCeilingInside.EnableDiffractionOnBoundaryEdges = false;
+	result = AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_CEILINGFLOOR, geomRoofCeilingInside);
+
+
+	GenerateWalls(gameObject,ROOM,GEOMETRY_WALL_SIDES, GEOMETRY_WALL_CEILINGFLOOR,
+		GEOMETRY_WALL_INSTANCE_1,
+		GEOMETRY_WALL_INSTANCE_2,
+		GEOMETRY_WALL_INSTANCE_3,
+		GEOMETRY_WALL_INSTANCE_4,
+		GEOMETRY_WALL_INSTANCE_5,
+		GEOMETRY_WALL_INSTANCE_6);
+
+	GenerateWalls(gameObject, AK::SpatialAudio::kOutdoorRoomID, GEOMETRY_WALL_SIDES, GEOMETRY_WALL_CEILINGFLOOR,
+		GEOMETRY_WALL_INSTANCE_OUTSIDE_1,
+		GEOMETRY_WALL_INSTANCE_OUTSIDE_2,
+		GEOMETRY_WALL_INSTANCE_OUTSIDE_3,
+		GEOMETRY_WALL_INSTANCE_OUTSIDE_4,
+		GEOMETRY_WALL_INSTANCE_OUTSIDE_5,
+		GEOMETRY_WALL_INSTANCE_OUTSIDE_6);
+
+
+	return AK_Success;
+}
+
+void WwiseAPI::GenerateWalls(const std::shared_ptr<GameObject>& gameObject, const AkRoomID& roomID,
+	const AkGeometrySetID& wallSidesGeometryID,
+	const AkGeometrySetID& wallCeilingFloorGeometryID,
+	const AkGeometryInstanceID& wallInstance1,
+	const AkGeometryInstanceID& wallInstance2,
+	const AkGeometryInstanceID& wallInstance3,
+	const AkGeometryInstanceID& wallInstance4,
+	const AkGeometryInstanceID& wallInstance5,
+	const AkGeometryInstanceID& wallInstance6 )
+{
+	AkGeometrySetID geometryInstanceID;
+	AkGeometrySetID akGeometrySetID;
 	for (size_t i = 0; i < 6; i++)
 	{
 		AkGeometryInstanceParams instanceParams;
-		instanceParams.Scale = { 1.0,1.0,1.0 };
-		AkWorldTransform worldTransform;
-		AkVector topVector = { 0,1,0 };
-		AkVector frontVector = { 0,0,1 };
-		AkVector64 position; 
-		
-		if (i == 0)
-		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_1;
-			position = { gameObject->GetPosition().x, gameObject->GetPosition().y, gameObject->GetPosition().z + 5 };
-			frontVector = { 1,0,0 };
-		}
-		else if (i == 1)
-		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_2;
-			position = { gameObject->GetPosition().x, gameObject->GetPosition().y, gameObject->GetPosition().z - 5 };
-			frontVector = { -1,0,0 };
-
-		}
-		else if (i == 2)
-		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_3;
-			position = { gameObject->GetPosition().x + 5, gameObject->GetPosition().y, gameObject->GetPosition().z };
-			frontVector = { 0,0,1 };
-
-		}
-		else if (i == 3)
-		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_4;
-			position = { gameObject->GetPosition().x - 5, gameObject->GetPosition().y, gameObject->GetPosition().z };
-			frontVector = { 0,0,-1 };
-
-		}
-		else if (i == 4)
-		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_5;
-			position = { gameObject->GetPosition().x, gameObject->GetPosition().y + 5, gameObject->GetPosition().z };
-			frontVector = { 1,0,0 };
-			topVector = { 0,0,1 };
-
-		}
-		else if (i == 5)
-		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_6;
-			position = { gameObject->GetPosition().x, gameObject->GetPosition().y - 5, gameObject->GetPosition().z };
-
-			frontVector = { -1,0,0 };
-			topVector = { 0,0,1 };
-
-		}
-
-		worldTransform.Set(position, frontVector, topVector);
-		instanceParams.PositionAndOrientation = worldTransform;
-		instanceParams.GeometrySetID = GEOMETRY_WALL;
-		instanceParams.RoomID = ROOM;
-
-		result = AK::SpatialAudio::SetGeometryInstance(geometryInstanceID, instanceParams);
-
-	}
-
-	for (size_t i = 0; i < 6; i++)
-	{
-		AkGeometryInstanceParams instanceParams;
-		instanceParams.Scale = { 1.0,1.0,1.0 };
+		instanceParams.Scale = { 1.0001,1.0001,1.0001 };
 		AkWorldTransform worldTransform;
 		AkVector topVector = { 0,1,0 };
 		AkVector frontVector = { 0,0,1 };
@@ -443,59 +410,62 @@ AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<GameObject>& gameObject, in
 
 		if (i == 0)
 		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_OUTSIDE_1;
+			geometryInstanceID = wallInstance1;
+			akGeometrySetID = wallSidesGeometryID;
 			position = { gameObject->GetPosition().x, gameObject->GetPosition().y, gameObject->GetPosition().z + 5 };
-			frontVector = { -1,0,0 };
+			frontVector = { 1,0,0 };
 		}
 		else if (i == 1)
 		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_OUTSIDE_2;
+			geometryInstanceID = wallInstance2;
+			akGeometrySetID = wallSidesGeometryID;
 			position = { gameObject->GetPosition().x, gameObject->GetPosition().y, gameObject->GetPosition().z - 5 };
-			frontVector = { 1,0,0 };
+			frontVector = { -1,0,0 };
 
 		}
 		else if (i == 2)
 		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_OUTSIDE_3;
+			geometryInstanceID = wallInstance3;
+			akGeometrySetID = wallSidesGeometryID;
 			position = { gameObject->GetPosition().x + 5, gameObject->GetPosition().y, gameObject->GetPosition().z };
-			frontVector = { 0,0,-1 };
+			frontVector = { 0,0,1 };
 
 		}
 		else if (i == 3)
 		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_OUTSIDE_4;
+			geometryInstanceID = wallInstance4;
+			akGeometrySetID = wallSidesGeometryID;
 			position = { gameObject->GetPosition().x - 5, gameObject->GetPosition().y, gameObject->GetPosition().z };
-			frontVector = { 0,0,1 };
-
+			frontVector = { 0,0,-1 };
 		}
 		else if (i == 4)
 		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_OUTSIDE_5;
+			geometryInstanceID = wallInstance5;
+			akGeometrySetID = wallCeilingFloorGeometryID;
 			position = { gameObject->GetPosition().x, gameObject->GetPosition().y + 5, gameObject->GetPosition().z };
-			frontVector = { -1,0,0 };
+			frontVector = { 1,0,0 };
 			topVector = { 0,0,1 };
 
 		}
 		else if (i == 5)
 		{
-			geometryInstanceID = GEOMETRY_WALL_INSTANCE_OUTSIDE_6;
+			geometryInstanceID = wallInstance6;
+			akGeometrySetID = wallCeilingFloorGeometryID;
 			position = { gameObject->GetPosition().x, gameObject->GetPosition().y - 5, gameObject->GetPosition().z };
-
-			frontVector = { 1,0,0 };
+			frontVector = { -1,0,0 };
 			topVector = { 0,0,1 };
 
 		}
 
 		worldTransform.Set(position, frontVector, topVector);
-		instanceParams.PositionAndOrientation = worldTransform;
-		instanceParams.GeometrySetID = GEOMETRY_WALL;
-		instanceParams.RoomID = AK::SpatialAudio::kOutdoorRoomID;
 
-		result = AK::SpatialAudio::SetGeometryInstance(geometryInstanceID, instanceParams);
+		instanceParams.PositionAndOrientation = worldTransform;
+		instanceParams.GeometrySetID = akGeometrySetID;
+		instanceParams.RoomID = roomID;
+
+		AK::SpatialAudio::SetGeometryInstance(geometryInstanceID, instanceParams);
 
 	}
-
-	return AK_Success;
 }
 
 AKRESULT WwiseAPI::AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject) {

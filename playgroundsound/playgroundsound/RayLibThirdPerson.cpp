@@ -112,8 +112,8 @@ void RayLibThirdPerson::Run()
             {
                 color = { 0,255,255,255 };
             }
-            Vector3 pos = { models[i]->transform.m12, models[i]->transform.m13,models[i]->transform.m13 };
-            DrawModel(*models[i], pos, 1, WHITE);
+            //Vector3 pos = { models[i]->transform.m12, models[i]->transform.m13,models[i]->transform.m14 };
+            DrawModelWires(*models[i], {0,0,0}, 1, WHITE);
         }
 
         EndMode3D();
@@ -169,7 +169,7 @@ void RayLibThirdPerson::SetDiffractionPaths(const std::vector<DiffractionPath> i
 void RayLibThirdPerson::Init()
 {
     
-
+    cameraMode = CAMERA_THIRD_PERSON;
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
@@ -194,9 +194,6 @@ void RayLibThirdPerson::Init()
 
     Model model = LoadModel("Resources/Models/truck_green.obj");
     
-   /*
-    model.meshMaterial = model.materials;
-    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture;*/
 
    
 
@@ -221,26 +218,7 @@ void RayLibThirdPerson::Init()
     transform.up = { 0,1,0 };
     AddWall(transform, 0);
 
-   /* transform.position = { 0,0,-5 };
-    transform.scale = { 10,10,1 };
-    transform.forward = { 0,0,1 };
-    transform.up = { 0,1,0 };
-    AddWall(transform, -1.5708f);
-
-    transform.position = { 5,0,0 };
-    transform.scale = { 10,10,1 };
-    transform.forward = { 0,0,1 };
-    transform.up = { 0,1,0 };
-    AddWall(transform,0);
-
-    transform.position = { -5,0,0 };
-    transform.scale = { 10,10,1 };
-    transform.forward = { 0,0,1 };
-    transform.up = { 0,1,0 };
-    AddWall(transform, 3.14159f);*/
-
-
-    SetTargetFPS(60);
+    SetTargetFPS(30);
 }
 
 void RayLibThirdPerson::AddObject(const GoTransform& transform)
@@ -300,7 +278,6 @@ void RayLibThirdPerson::AddWall(const GoTransform& transform, float radians)
     model->transform.m14 = transform.position.z;
     model->transform = MatrixMultiply(MatrixRotateZ(1.5708f), model->transform);
     model->transform = MatrixMultiply(MatrixRotateX(radians), model->transform);
-    //model->transform
 
     std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 
@@ -331,7 +308,6 @@ void RayLibThirdPerson::AddWall(const GoTransform& transform, float radians)
     }
 
     roomWalls.push_back(gameObject);
-    //models.push_back(model);
 }
 
 void RayLibThirdPerson::DeInit()

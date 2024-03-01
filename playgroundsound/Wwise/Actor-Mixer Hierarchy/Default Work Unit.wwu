@@ -8,6 +8,7 @@
 						<Property Name="3DSpatialization" Type="int16" Value="1"/>
 						<Property Name="EnableDiffraction" Type="bool" Value="True"/>
 						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="UseGameAuxSends" Type="bool" Value="True"/>
 					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Attenuation">
@@ -41,6 +42,47 @@
 					</PositioningInfo>
 					<ActiveSourceList>
 						<ActiveSource Name="Good Old Days" ID="{3194D792-FFCD-4081-BFCE-3509174EAD9B}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Car_Engine_Loop" ID="{7914FD28-C8DF-44E6-A58A-21FBEDA96A48}" ShortID="10304008">
+					<PropertyList>
+						<Property Name="Soundly:ActiveChannels" Type="string" Value="[]"/>
+						<Property Name="Soundly:FileID" Type="string" Value="SND0071"/>
+						<Property Name="Soundly:FileName" Type="string" Value="https://2-dot-soundly-server.appspot.com/?Type=GetFile&amp;SessionID=1709310934U3w6F72I5J5oSgNjlAq&amp;File=soundlyeu/1426367345Ff4sxqvM_wkFwG/SND0071/L2FwcGhvc3RpbmdfcHJvZC9ibG9icy9BRW5CMlVydWRJQmQzeU9ER0N1bFpMX21lUnU2UEtJcXBMangzZXVSOWI3TnJFYzZfYW9iN3VjTHBMVndFNzdnaXJ5S00xT2dQakhTd1hXWTBLSkZZRHhmVk5LRTBudk5nUS5VeTRURG8tb1lkcXVtYzNj"/>
+						<Property Name="Soundly:HandleStartTime" Type="string" Value="0"/>
+						<Property Name="Soundly:HandleStopTime" Type="string" Value="95.12"/>
+						<Property Name="Soundly:LibraryID" Type="string" Value="1426367345Ff4sxqvM_wkFwG"/>
+						<Property Name="Soundly:LibraryLocation" Type="string" Value="Cloud"/>
+						<Property Name="Soundly:PlaybackSpeed" Type="string" Value="1.0"/>
+						<Property Name="Soundly:ProcessList" Type="string" Value="[]"/>
+						<Property Name="Soundly:RenderedFileBitRate" Type="string" Value="3"/>
+						<Property Name="Soundly:RenderedFilePath" Type="string" Value="C:\Users\Joel.Schultz\Soundly Audio\Vehicles, Car, Hearse V8, Exterior, Engine, Idle, Steady SND0071.wav"/>
+						<Property Name="Soundly:RenderedFileSampleRate" Type="string" Value="96000"/>
+						<Property Name="Soundly:SelectionStartTime" Type="string" Value="0"/>
+						<Property Name="Soundly:SelectionStopTime" Type="string" Value="0"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{6A5DCAA1-2786-4828-8A57-8E1B8EA4E0DF}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9E530EF8-93C1-4F22-BB88-506C86B93025}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Vehicles, Car, Hearse V8, Exterior, Engine, Idle, Steady SND0071" ID="{279E0AA4-842B-4A1A-ABA9-88AEA60F2AC0}">
+							<PropertyList>
+								<Property Name="Soundly:FileIDForAudioSource" Type="string" Value="SND0071"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>Soundly Audio\Vehicles, Car, Hearse V8, Exterior, Engine, Idle, Steady SND0071.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="815298708"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Vehicles, Car, Hearse V8, Exterior, Engine, Idle, Steady SND0071" ID="{279E0AA4-842B-4A1A-ABA9-88AEA60F2AC0}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
 			</ChildrenList>

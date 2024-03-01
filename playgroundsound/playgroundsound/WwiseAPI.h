@@ -25,7 +25,8 @@ public:
 
 	AKRESULT UpdateEmitterGO(const GameObject& emitterGameObject);
 
-	AKRESULT AddGeometry(const std::shared_ptr<GameObject>& gameObject, int wallIndex);
+	AKRESULT AddGeometry(const std::shared_ptr<GameObject>& gameObject);
+
 
 	AKRESULT AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject);
 
@@ -36,6 +37,15 @@ public:
 	AKRESULT SetPlayerIsInRoom(const bool& isInRoom);
 
 private:
+	void GenerateWalls(const std::shared_ptr<GameObject>& gameObject, const AkRoomID& roomID,
+		const AkGeometrySetID& wallSidesGeometryID,
+		const AkGeometrySetID& wallCeilingFloorGeometryID,
+		const AkGeometryInstanceID& wallInstance1,
+		const AkGeometryInstanceID& wallInstance2,
+		const AkGeometryInstanceID& wallInstance3,
+		const AkGeometryInstanceID& wallInstance4,
+		const AkGeometryInstanceID& wallInstance5,
+		const AkGeometryInstanceID& wallInstance6);
 	AKRESULT RegisterGameObject(const AkGameObjectID& gameObjectID, std::string_view gameObjectName);
 	AKRESULT UpdateGameObject(const AkGameObjectID& gameObjectID, const GameObject& gameObject);
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;

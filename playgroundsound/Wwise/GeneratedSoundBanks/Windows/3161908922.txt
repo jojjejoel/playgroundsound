@@ -1,6 +1,8 @@
 Event	ID	Name			Wwise Object Path	Notes
 	2578592186	Good_Old_Days			\Default Work Unit\Good_Old_Days	
+	4193220423	Car_Engine_Loop			\Default Work Unit\Car_Engine_Loop	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	317113129	Test	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\Good Old Days_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Test		47062684
+	815298708	Car_Engine_Loop	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\Soundly Audio\Vehicles, Car, Hearse V8, Exterior, Engine, Idle, Steady SND0071_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Car_Engine_Loop		18263136
 

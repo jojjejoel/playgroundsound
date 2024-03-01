@@ -111,7 +111,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\Audiokinetic\Wwise 2022.1.3.8179\SDK\x64_vc170\Debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>CommunicationCentral.lib;AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;AkAudioInputSource.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>CommunicationCentral.lib;AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;AkAudioInputSource.lib;ws2_32.lib;AkRoomVerbFX.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,10 +134,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.h" />
-    <ClCompile Include="RayLibMaze.cpp" />
-    <ClCompile Include="RayLibMaze.h" />
     <ClCompile Include="RayLibThirdPerson.cpp" />
-    <ClCompile Include="RayLibTopDown.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookBlocking.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookDeferred.cpp" />
@@ -157,7 +154,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="RayLibObject.h" />
     <ClInclude Include="RayLibThirdPerson.h" />
-    <ClInclude Include="RayLibTopDown.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h" />
