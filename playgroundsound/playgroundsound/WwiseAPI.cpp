@@ -372,11 +372,11 @@ AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<GameObject>& gameObject, in
 	AkPlacementNew(&surfaces[0]) AkAcousticSurface();
 	surfaces[0].strName = "Outside";
 	surfaces[0].textureID = AK::SoundEngine::GetIDFromString("Brick");
-	surfaces[0].transmissionLoss = 0.0f;
+	surfaces[0].transmissionLoss = 0.5f;
 	AkPlacementNew(&surfaces[1]) AkAcousticSurface();
 	surfaces[1].strName = "Inside";
 	surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
-	surfaces[1].transmissionLoss = 0.0f;
+	surfaces[1].transmissionLoss = 0.5f;
 	geom.Surfaces = surfaces;
 	geom.NumTriangles = gameObject->triangles.size();
 
@@ -388,6 +388,7 @@ AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<GameObject>& gameObject, in
 		akTriangle.point0 = gameObject->triangles[i].point0;
 		akTriangle.point1 = gameObject->triangles[i].point1;
 		akTriangle.point2 = gameObject->triangles[i].point2;
+		akTriangle.surface = 0;
 		akTriangles.push_back(akTriangle);
 	}
 
