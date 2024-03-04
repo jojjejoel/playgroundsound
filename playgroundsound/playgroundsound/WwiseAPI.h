@@ -1,6 +1,7 @@
 #pragma once
 #include <AK/SoundEngine/Common/AkTypes.h>
 #include <AkFilePackageLowLevelIOBlocking.h>
+#include <AK/SoundEngine/Common/AkCallback.h>
 
 #include "AK/SpatialAudio/Common/AkSpatialAudioTypes.h"
 #include "GameObject.h"
@@ -16,7 +17,7 @@ public:
 	bool Init();
 	void DeInit();
 	AKRESULT LoadBank(const AkUniqueID& bankID);
-	const float GetRTPCGlobal(const AkUniqueID& rtpcID);
+	float GetRTPCGlobal(const AkUniqueID& rtpcID);
 	void RenderAudio();
 	std::vector<DiffractionPath> GetDiffraction(const AkGameObjectID& gameObjectID);
 	AKRESULT AddListener();
@@ -31,7 +32,7 @@ public:
 
 	AKRESULT AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject);
 
-	void MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo);
+	static void MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo);
 
 	AKRESULT AddRoom();
 
@@ -56,6 +57,6 @@ private:
 
 	std::vector<AkGameObjectID> akGameObjects;
 
-	float musicVolume = 0;
+
 };
 

@@ -66,6 +66,7 @@ const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_4 = 2009;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_5 = 2010;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_6 = 2011;
 
+static float musicVolume;
 bool WwiseAPI::Init()
 {
 	AkMemSettings memSettings;
@@ -129,9 +130,9 @@ AKRESULT WwiseAPI::LoadBank(const AkUniqueID& bankID)
 	return AK::SoundEngine::LoadBank(bankID);
 }
 
-const float WwiseAPI::GetRTPCGlobal(const AkUniqueID& rtpcID) {
+float WwiseAPI::GetRTPCGlobal(const AkUniqueID& rtpcID) {
 
-	AkRtpcValue rtpcValue;
+	/*AkRtpcValue rtpcValue;
 	AK::SoundEngine::Query::RTPCValue_type valueType = AK::SoundEngine::Query::RTPCValue_Global;
 	AKRESULT result = AK::SoundEngine::Query::GetRTPCValue(AK::GAME_PARAMETERS::MUSIC_VOLUME, AK_INVALID_GAME_OBJECT, AK_INVALID_PLAYING_ID, rtpcValue, valueType);
 
@@ -139,12 +140,13 @@ const float WwiseAPI::GetRTPCGlobal(const AkUniqueID& rtpcID) {
 	float maxRTPCValue = 0;
 
 	float normalizedValue = (rtpcValue - (minRTPCValue)) / (maxRTPCValue - (minRTPCValue));
-	return normalizedValue;
+	return normalizedValue;*/
+	return max(0, musicVolume);
 }
 
 void WwiseAPI::RenderAudio()
 {
-	musicVolume -= 0.0001f;
+	musicVolume -= 0.2f;
 	std::cout << musicVolume << std::endl;
 	AK::SoundEngine::RenderAudio();
 }
@@ -240,7 +242,7 @@ AKRESULT WwiseAPI::AddListener() {
 AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID)
 {
 	AK::SpatialAudio::SetGameObjectInRoom(gameObjectID, ROOM);
-	return AK::SoundEngine::PostEvent(eventID, gameObjectID);
+	return AK::SoundEngine::PostEvent(eventID, gameObjectID, AK_MusicSyncBeat, &WwiseAPI::MusicCallback, nullptr);
 }
 
 AKRESULT WwiseAPI::UpdateListenerGO(const GameObject& listenerGameObject)

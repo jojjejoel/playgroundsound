@@ -9,17 +9,15 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{5FABF593-DD51-A883-B466-134F3F9108B7}">
+		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{A908DC36-3939-60CA-D047-2D14F90385F4}">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>1355168291.bnk</Path>
 			<Plugins>
 				<Custom>
 					<Plugin Id="1165088" Name="Meter (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Meter\Meter (Custom)" GUID="{DF588E63-B991-4C1A-A401-6ED3CE18091F}" LibName="Wwise Meter" LibId="8454147"/>
-					<Plugin Id="496505172" Name="Gain (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Meter\Gain (Custom)" GUID="{709907D0-E222-4686-89B8-AB5D7A893D03}" LibName="Wwise Gain" LibId="9109507"/>
 					<Plugin Id="723820213" Name="Hall_Large (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Outside\Hall_Large (Custom)" GUID="{3F70C479-A1F2-4C51-94C8-BDF11477873C}" LibName="Wwise RoomVerb" LibId="7733251"/>
 					<Plugin Id="879621981" Name="Inside_My_Head (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Inside\Inside_My_Head (Custom)" GUID="{C43F5868-FCCF-439B-9E86-997497F74CF2}" LibName="Wwise RoomVerb" LibId="7733251"/>
-					<Plugin Id="949325981" Name="Meter (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music\Meter (Custom)" GUID="{34EE57D6-684D-4DA1-BB53-A322C0A07915}" LibName="Wwise Meter" LibId="8454147"/>
 				</Custom>
 				<ShareSets>
 					<Plugin Id="3604890626" Name="High_Pass_60Hz" ObjectPath="\Effects\Factory Effects\Parametric EQ\High Pass Filters\High_Pass_60Hz" GUID="{F9627628-0B10-4272-BC30-D4C20423CB38}" LibName="Wwise Parametric EQ" LibId="6881283"/>
@@ -32,11 +30,9 @@
 			<Busses>
 				<Bus Id="3803692087" Name="Master Audio Bus" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus" GUID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"/>
 				<Bus Id="3991942870" Name="Music" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music" GUID="{2A977794-D127-4563-BB40-53EED77C0268}">
-					<PluginRefs>
-						<Custom>
-							<PluginRef Id="949325981"/>
-						</Custom>
-					</PluginRefs>
+					<AuxBusRefs>
+						<AuxBusRef Id="1413777708" Name="Music_Meter" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Meter" GUID="{44EBD574-5253-4FC7-884F-DDF9382B0A8F}"/>
+					</AuxBusRefs>
 				</Bus>
 			</Busses>
 			<AuxBusses>
@@ -51,7 +47,6 @@
 					<PluginRefs>
 						<Custom>
 							<PluginRef Id="1165088"/>
-							<PluginRef Id="496505172"/>
 						</Custom>
 						<ShareSets>
 							<PluginRef Id="3604890626"/>
@@ -184,7 +179,7 @@
 				</AcousticTexture>
 			</AcousticTextures>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{F477FAF8-4420-D950-83A6-6F2CA2B81905}">
+		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{9F2C29BA-0772-E610-9741-C3E9B03652B2}">
 			<ObjectPath>\SoundBanks\Default Work Unit\Main</ObjectPath>
 			<ShortName>Main</ShortName>
 			<Path>3161908922.bnk</Path>
@@ -337,7 +332,7 @@
 						<MediaRef Id="815298708"/>
 					</MediaRefs>
 				</Event>
-				<Event Id="1345584937" Name="Energy" ObjectPath="\Events\Default Work Unit\Energy" GUID="{8B38FA5A-E064-4B81-90EB-D9B7B97C2B4D}" DurationType="Infinite">
+				<Event Id="1345584937" Name="Energy" ObjectPath="\Events\Default Work Unit\Energy" GUID="{8B38FA5A-E064-4B81-90EB-D9B7B97C2B4D}" MaxAttenuation="25" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="11675263"/>
 						<MediaRef Id="26270849"/>
@@ -389,5 +384,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{540E90D0-97FC-4335-D5B6-29538764C058}</FileHash>
+	<FileHash>{6AB7E625-4176-7F58-70FE-41CC742FDCF7}</FileHash>
 </SoundBanksInfo>
