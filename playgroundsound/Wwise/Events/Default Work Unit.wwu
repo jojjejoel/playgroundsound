@@ -8,7 +8,21 @@
 						<Action Name="" ID="{0F197402-7D26-4FBB-A587-7C02D6C5888E}" ShortID="319692682">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Test" ID="{55572D41-B7A1-4985-BDB2-681E7F86BDDE}" WorkUnitID="{8E08C725-5B07-4F01-8DB8-A6B9F7AFCA86}"/>
+									<ObjectRef Name="Good_Old_Days" ID="{55572D41-B7A1-4985-BDB2-681E7F86BDDE}" WorkUnitID="{8E08C725-5B07-4F01-8DB8-A6B9F7AFCA86}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+						<Action Name="" ID="{9AF9F845-3D0B-4B43-93BD-1F8EA526E08B}" ShortID="530160030">
+							<PropertyList>
+								<Property Name="Inclusion" Type="bool">
+									<ValueList>
+										<Value>False</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Energy_Playlist" ID="{9C4E0ADD-29EF-4083-A0C2-7CD43184265B}" WorkUnitID="{10659DF1-08E3-4503-8011-6CC1C2654B9B}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>
@@ -20,6 +34,17 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Car_Engine_Loop" ID="{7914FD28-C8DF-44E6-A58A-21FBEDA96A48}" WorkUnitID="{8E08C725-5B07-4F01-8DB8-A6B9F7AFCA86}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Energy" ID="{8B38FA5A-E064-4B81-90EB-D9B7B97C2B4D}">
+					<ChildrenList>
+						<Action Name="" ID="{51A53DB8-AF00-4FE6-9C65-5227EA31EA6C}" ShortID="221565327">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Energy_Playlist" ID="{9C4E0ADD-29EF-4083-A0C2-7CD43184265B}" WorkUnitID="{10659DF1-08E3-4503-8011-6CC1C2654B9B}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

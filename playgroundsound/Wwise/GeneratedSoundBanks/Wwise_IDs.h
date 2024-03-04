@@ -14,8 +14,14 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID CAR_ENGINE_LOOP = 4193220423U;
+        static const AkUniqueID ENERGY = 1345584937U;
         static const AkUniqueID GOOD_OLD_DAYS = 2578592186U;
     } // namespace EVENTS
+
+    namespace GAME_PARAMETERS
+    {
+        static const AkUniqueID MUSIC_VOLUME = 1006694123U;
+    } // namespace GAME_PARAMETERS
 
     namespace BANKS
     {
@@ -26,11 +32,13 @@ namespace AK
     namespace BUSSES
     {
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
+        static const AkUniqueID MUSIC = 3991942870U;
     } // namespace BUSSES
 
     namespace AUX_BUSSES
     {
         static const AkUniqueID INSIDE = 3553349781U;
+        static const AkUniqueID MUSIC_METER = 1413777708U;
         static const AkUniqueID OUTSIDE = 438105790U;
     } // namespace AUX_BUSSES
 

@@ -72,6 +72,54 @@
 								</Reference>
 							</ReferenceList>
 						</AuxBus>
+						<AuxBus Name="Music_Meter" ID="{44EBD574-5253-4FC7-884F-DDF9382B0A8F}">
+							<PropertyList>
+								<Property Name="BypassEffect2" Type="bool">
+									<ValueList>
+										<Value>True</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Effect0" PluginName="Wwise Parametric EQ" CompanyID="0" PluginID="105" PluginType="3">
+									<ObjectRef Name="High_Pass_60Hz" ID="{F9627628-0B10-4272-BC30-D4C20423CB38}" WorkUnitID="{E8613F7D-BAD3-45CD-A3ED-505576F31277}"/>
+								</Reference>
+								<Reference Name="Effect1">
+									<Custom>
+										<Effect Name="Meter (Custom)" ID="{DF588E63-B991-4C1A-A401-6ED3CE18091F}" ShortID="1165088" PluginName="Wwise Meter" CompanyID="0" PluginID="129" PluginType="3">
+											<PropertyList>
+												<Property Name="Min" Type="Real32" Value="-20"/>
+											</PropertyList>
+										</Effect>
+									</Custom>
+								</Reference>
+								<Reference Name="Effect2">
+									<Custom>
+										<Effect Name="Gain (Custom)" ID="{709907D0-E222-4686-89B8-AB5D7A893D03}" ShortID="496505172" PluginName="Wwise Gain" CompanyID="0" PluginID="139" PluginType="3">
+											<PropertyList>
+												<Property Name="FullBandGain" Type="Real32" Value="-96.3"/>
+											</PropertyList>
+										</Effect>
+									</Custom>
+								</Reference>
+							</ReferenceList>
+						</AuxBus>
+						<Bus Name="Music" ID="{2A977794-D127-4563-BB40-53EED77C0268}">
+							<ReferenceList>
+								<Reference Name="Effect1">
+									<Custom>
+										<Effect Name="Meter (Custom)" ID="{34EE57D6-684D-4DA1-BB53-A322C0A07915}" ShortID="949325981" PluginName="Wwise Meter" CompanyID="0" PluginID="129" PluginType="3">
+											<PropertyList>
+												<Property Name="Min" Type="Real32" Value="-20"/>
+											</PropertyList>
+											<PluginData>
+	<GameParameter Name="Music_Volume" ID="{0939589F-2F4E-41DA-A8F3-56608D57E1A8}"/>
+</PluginData>
+										</Effect>
+									</Custom>
+								</Reference>
+							</ReferenceList>
+						</Bus>
 					</ChildrenList>
 				</Bus>
 			</ChildrenList>

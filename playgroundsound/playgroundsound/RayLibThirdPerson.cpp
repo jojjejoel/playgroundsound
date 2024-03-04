@@ -30,7 +30,7 @@ void RayLibThirdPerson::Run()
         EnableCursor();
     }
         
-        UpdateCamera(camera.get(), cameraMode);                 
+        UpdateCamera(camera.get(), cameraMode);      
         cameraGameObject->SetPosition({camera->position.x, camera->position.y, -camera->position.z});
         playerGameObject->SetPosition({camera->target.x, camera->target.y, -camera->target.z});
         Matrix matrix = GetCameraMatrix(*camera);
@@ -97,9 +97,10 @@ void RayLibThirdPerson::Run()
 
             
         }
+        //unsigned char alphaValue = 255 * musicVolume;
+        DrawSphereWires({ 0,0,0 }, 0.5f, 10, 10, { 0, 255, 0, 255 });
 
-        DrawSphereWires({0,0,0}, 0.5f, 10, 10, GREEN);
-
+        models[0]->transform.m7 = musicVolume;
         DrawModel(*models[0], camera->target, 1, WHITE);
         for (size_t i = 1; i < models.size(); i++)
         {
@@ -112,7 +113,6 @@ void RayLibThirdPerson::Run()
             {
                 color = { 0,255,255,255 };
             }
-            //Vector3 pos = { models[i]->transform.m12, models[i]->transform.m13,models[i]->transform.m14 };
             DrawModelWires(*models[i], {0,0,0}, 1, WHITE);
         }
 
@@ -121,6 +121,10 @@ void RayLibThirdPerson::Run()
       
 
         EndDrawing();
+}
+
+void RayLibThirdPerson::SetMusicVolume(const float& in_musicVolume) {
+    musicVolume = in_musicVolume;
 }
 
 RayCollision RayLibThirdPerson::CheckCollisions()
@@ -177,13 +181,13 @@ void RayLibThirdPerson::Init()
 
     InitWindow(screenWidth, screenHeight, "PlaygroundSound");
 
-    // Define the camera to look into our 3d world (position, target, up vector)
     camera = std::make_shared<Camera3D>();
-    camera->position = { 0.0f, 2.0f, 4.0f };    // Camera position
-    camera->target = { 0.0f, .0f, 0.0f };      // Camera looking at point
-    camera->up = { 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-    camera->fovy = 60.0f;                                // Camera field-of-view Y
-    camera->projection = CAMERA_PERSPECTIVE;             // Camera projection type
+    camera->position = { 0.0f, 2.0f, 4.0f };   
+    camera->target = { 0.0f, .0f, 0.0f };     
+    camera->up = { 0.0f, 1.0f, 0.0f };          
+    camera->fovy = 60.0f;                              
+    camera->projection = CAMERA_PERSPECTIVE;
+    CameraMoveToTarget(camera.get(), -2.f);
 
     cameraGameObject = std::make_shared<GameObject>();
     cameraGameObject->SetPosition({0.2f, 0.4f, 0.2f});
@@ -228,14 +232,6 @@ void RayLibThirdPerson::AddObject(const GoTransform& transform)
     model->transform.m12 = transform.position.x;
     model->transform.m13 = transform.position.y;
     model->transform.m14 = transform.position.z;
-    
-   /* model->transform.m1 = transform.up.x;
-        model->transform.m5 = transform.up.y;
-        model->transform.m9 = transform.up.z;
-
-        model->transform.m2 = transform.forward.x;
-        model->transform.m6 = transform.forward.y;
-        model->transform.m9 = transform.forward.z;*/
 
     std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 

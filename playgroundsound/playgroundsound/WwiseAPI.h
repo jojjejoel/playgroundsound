@@ -16,6 +16,7 @@ public:
 	bool Init();
 	void DeInit();
 	AKRESULT LoadBank(const AkUniqueID& bankID);
+	const float GetRTPCGlobal(const AkUniqueID& rtpcID);
 	void RenderAudio();
 	std::vector<DiffractionPath> GetDiffraction(const AkGameObjectID& gameObjectID);
 	AKRESULT AddListener();
@@ -29,6 +30,8 @@ public:
 
 
 	AKRESULT AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject);
+
+	void MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo);
 
 	AKRESULT AddRoom();
 
@@ -52,5 +55,7 @@ private:
 	void Log(std::string_view logMsg);
 
 	std::vector<AkGameObjectID> akGameObjects;
+
+	float musicVolume = 0;
 };
 

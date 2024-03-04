@@ -60,15 +60,6 @@
     <ClCompile Include="WwiseSource\stdafx.cpp">
       <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
-    <ClCompile Include="RayLibMaze.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RayLibMaze.cpp">
-      <Filter>Source Files\RayLib</Filter>
-    </ClCompile>
-    <ClCompile Include="RayLibTopDown.cpp">
-      <Filter>Source Files\RayLib</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -134,9 +125,6 @@
     <ClInclude Include="WwiseSource\stdafx.h">
       <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
-    <ClInclude Include="RayLibTopDown.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -150,9 +138,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,15 +9,21 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{77BA2718-0EB5-756E-FD15-58613D6A312A}">
+		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{5FABF593-DD51-A883-B466-134F3F9108B7}">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>1355168291.bnk</Path>
 			<Plugins>
 				<Custom>
-					<Plugin Id="391298311" Name="Room_Small (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Inside\Room_Small (Custom)" GUID="{88C04A42-5E03-4C6E-8E88-E4947023CC95}" LibName="Wwise RoomVerb" LibId="7733251"/>
-					<Plugin Id="712540528" Name="Have_U_Ever_Been_Outside (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Outside\Have_U_Ever_Been_Outside (Custom)" GUID="{E218C04A-0788-4A22-95A4-BAB5D7A7027C}" LibName="Wwise RoomVerb" LibId="7733251"/>
+					<Plugin Id="1165088" Name="Meter (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Meter\Meter (Custom)" GUID="{DF588E63-B991-4C1A-A401-6ED3CE18091F}" LibName="Wwise Meter" LibId="8454147"/>
+					<Plugin Id="496505172" Name="Gain (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Meter\Gain (Custom)" GUID="{709907D0-E222-4686-89B8-AB5D7A893D03}" LibName="Wwise Gain" LibId="9109507"/>
+					<Plugin Id="723820213" Name="Hall_Large (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Outside\Hall_Large (Custom)" GUID="{3F70C479-A1F2-4C51-94C8-BDF11477873C}" LibName="Wwise RoomVerb" LibId="7733251"/>
+					<Plugin Id="879621981" Name="Inside_My_Head (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Inside\Inside_My_Head (Custom)" GUID="{C43F5868-FCCF-439B-9E86-997497F74CF2}" LibName="Wwise RoomVerb" LibId="7733251"/>
+					<Plugin Id="949325981" Name="Meter (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music\Meter (Custom)" GUID="{34EE57D6-684D-4DA1-BB53-A322C0A07915}" LibName="Wwise Meter" LibId="8454147"/>
 				</Custom>
+				<ShareSets>
+					<Plugin Id="3604890626" Name="High_Pass_60Hz" ObjectPath="\Effects\Factory Effects\Parametric EQ\High Pass Filters\High_Pass_60Hz" GUID="{F9627628-0B10-4272-BC30-D4C20423CB38}" LibName="Wwise Parametric EQ" LibId="6881283"/>
+				</ShareSets>
 				<AudioDevices>
 					<Plugin Id="2317455096" Name="No_Output" ObjectPath="\Audio Devices\Default Work Unit\No_Output" GUID="{CF140AB8-FCD7-461E-A794-917F81640FB9}" LibName="No Output" LibId="11862023"/>
 					<Plugin Id="3859886410" Name="System" ObjectPath="\Audio Devices\Default Work Unit\System" GUID="{1C9462B9-03B5-4144-9625-3BF1F13B1FEB}" LibName="System" LibId="11403271"/>
@@ -25,23 +31,44 @@
 			</Plugins>
 			<Busses>
 				<Bus Id="3803692087" Name="Master Audio Bus" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus" GUID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"/>
+				<Bus Id="3991942870" Name="Music" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music" GUID="{2A977794-D127-4563-BB40-53EED77C0268}">
+					<PluginRefs>
+						<Custom>
+							<PluginRef Id="949325981"/>
+						</Custom>
+					</PluginRefs>
+				</Bus>
 			</Busses>
 			<AuxBusses>
 				<AuxBus Id="438105790" Name="Outside" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Outside" GUID="{ED0A4729-29F3-465D-B36D-72CA1AF04820}">
 					<PluginRefs>
 						<Custom>
-							<PluginRef Id="712540528"/>
+							<PluginRef Id="723820213"/>
 						</Custom>
+					</PluginRefs>
+				</AuxBus>
+				<AuxBus Id="1413777708" Name="Music_Meter" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Meter" GUID="{44EBD574-5253-4FC7-884F-DDF9382B0A8F}">
+					<PluginRefs>
+						<Custom>
+							<PluginRef Id="1165088"/>
+							<PluginRef Id="496505172"/>
+						</Custom>
+						<ShareSets>
+							<PluginRef Id="3604890626"/>
+						</ShareSets>
 					</PluginRefs>
 				</AuxBus>
 				<AuxBus Id="3553349781" Name="Inside" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Inside" GUID="{9CD79DAC-40E9-4551-817D-4B30F346C28C}">
 					<PluginRefs>
 						<Custom>
-							<PluginRef Id="391298311"/>
+							<PluginRef Id="879621981"/>
 						</Custom>
 					</PluginRefs>
 				</AuxBus>
 			</AuxBusses>
+			<GameParameters>
+				<GameParameter Id="1006694123" Name="Music_Volume" ObjectPath="\Game Parameters\Default Work Unit\Music_Volume" GUID="{0939589F-2F4E-41DA-A8F3-56608D57E1A8}"/>
+			</GameParameters>
 			<AcousticTextures>
 				<AcousticTexture Id="504532776" Name="Brick" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Brick" GUID="{B086A5A9-F204-4C53-A838-BDB18B18F6D6}">
 					<Properties>
@@ -157,33 +184,210 @@
 				</AcousticTexture>
 			</AcousticTextures>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{48C3B90C-CB10-1682-DFBC-423ED68490EF}">
+		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{F477FAF8-4420-D950-83A6-6F2CA2B81905}">
 			<ObjectPath>\SoundBanks\Default Work Unit\Main</ObjectPath>
 			<ShortName>Main</ShortName>
 			<Path>3161908922.bnk</Path>
 			<Media>
+				<File Id="11675263" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Synth Lead Fuzz V1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Synth Lead Fuzz V1_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="26270849" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="40021741" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rhythm 2_2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rhythm 2_2_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="45405565" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Horns.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Horns_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="62182380" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1_5.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_5_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="98778629" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1_1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_1_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="116106740" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Bass V2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Bass V2_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="126130034" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2_2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_2_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="134769915" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2_3.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_3_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="199907317" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Bass V3.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Bass V3_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="203669605" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2_1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_1_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="301898721" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Git. Dist.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Git. Dist_D79FB2B7.wem</CachePath>
+				</File>
 				<File Id="317113129" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Good Old Days.wav</ShortName>
 					<CachePath>SFX/Good Old Days_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="322199033" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1_4.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_4_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="342808671" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Ambience V1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Ambience V1_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="384246966" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="392969211" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Bass V1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Bass V1_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="417996290" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Black Sun.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Black Sun_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="470952860" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Atmosphere.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Atmosphere_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="556872647" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Steel String Box.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Steel String Box_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="560691930" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rythm 1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rythm 1_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="575395605" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2_5.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_5_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="577659645" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rhythm 2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rhythm 2_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="637214336" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rhythm 2_3.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rhythm 2_3_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="638137021" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rythm 2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rythm 2_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="703702468" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Ambience V2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Ambience V2_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="727301707" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Synth Lead Fuzz V2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Synth Lead Fuzz V2_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="761934008" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1_3.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_3_D79FB2B7.wem</CachePath>
 				</File>
 				<File Id="815298708" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Soundly Audio\Vehicles, Car, Hearse V8, Exterior, Engine, Idle, Steady SND0071.wav</ShortName>
 					<CachePath>SFX/Soundly Audio/Vehicles, Car, Hearse V8, Exterior, Engine, Idle, Steady SND0071_D79FB2B7.wem</CachePath>
 				</File>
+				<File Id="864689243" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rhythm 2_1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rhythm 2_1_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="864813500" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2_4.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_4_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="964399234" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Ambience V3.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Ambience V3_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="987656228" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_KS Ice Cream Truck_bip.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_KS Ice Cream Truck_bip_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="1032180702" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1_2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_2_D79FB2B7.wem</CachePath>
+				</File>
 			</Media>
+			<Plugins>
+				<Custom>
+					<Plugin Id="113701460" Name="Meter (Custom)" ObjectPath="\Actor-Mixer Hierarchy\Default Work Unit\Good_Old_Days\Meter (Custom)" GUID="{65EF478E-0486-4EB9-9170-D69D8369AE08}" LibName="Wwise Meter" LibId="8454147"/>
+				</Custom>
+			</Plugins>
 			<Events>
 				<Event Id="4193220423" Name="Car_Engine_Loop" ObjectPath="\Events\Default Work Unit\Car_Engine_Loop" GUID="{B526007C-BA47-440B-A1DD-2E62D9ADD10D}" MaxAttenuation="100" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="815298708"/>
 					</MediaRefs>
 				</Event>
+				<Event Id="1345584937" Name="Energy" ObjectPath="\Events\Default Work Unit\Energy" GUID="{8B38FA5A-E064-4B81-90EB-D9B7B97C2B4D}" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="11675263"/>
+						<MediaRef Id="26270849"/>
+						<MediaRef Id="40021741"/>
+						<MediaRef Id="45405565"/>
+						<MediaRef Id="62182380"/>
+						<MediaRef Id="98778629"/>
+						<MediaRef Id="116106740"/>
+						<MediaRef Id="126130034"/>
+						<MediaRef Id="134769915"/>
+						<MediaRef Id="199907317"/>
+						<MediaRef Id="203669605"/>
+						<MediaRef Id="301898721"/>
+						<MediaRef Id="322199033"/>
+						<MediaRef Id="342808671"/>
+						<MediaRef Id="384246966"/>
+						<MediaRef Id="392969211"/>
+						<MediaRef Id="417996290"/>
+						<MediaRef Id="470952860"/>
+						<MediaRef Id="556872647"/>
+						<MediaRef Id="560691930"/>
+						<MediaRef Id="575395605"/>
+						<MediaRef Id="577659645"/>
+						<MediaRef Id="637214336"/>
+						<MediaRef Id="638137021"/>
+						<MediaRef Id="703702468"/>
+						<MediaRef Id="727301707"/>
+						<MediaRef Id="761934008"/>
+						<MediaRef Id="864689243"/>
+						<MediaRef Id="864813500"/>
+						<MediaRef Id="964399234"/>
+						<MediaRef Id="987656228"/>
+						<MediaRef Id="1032180702"/>
+					</MediaRefs>
+				</Event>
 				<Event Id="2578592186" Name="Good_Old_Days" ObjectPath="\Events\Default Work Unit\Good_Old_Days" GUID="{DDA9C1CC-8691-45CE-83AE-ECA323AED650}" MaxAttenuation="25" DurationType="Infinite">
 					<MediaRefs>
 						<MediaRef Id="317113129"/>
 					</MediaRefs>
+					<PluginRefs>
+						<Custom>
+							<PluginRef Id="113701460"/>
+						</Custom>
+					</PluginRefs>
+					<AuxBusRefs>
+						<AuxBusRef Id="1413777708" Name="Music_Meter" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Meter" GUID="{44EBD574-5253-4FC7-884F-DDF9382B0A8F}"/>
+					</AuxBusRefs>
 				</Event>
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{FF4CF9D3-819E-934C-083D-B268D4F7995F}</FileHash>
+	<FileHash>{540E90D0-97FC-4335-D5B6-29538764C058}</FileHash>
 </SoundBanksInfo>
