@@ -33,7 +33,7 @@ public:
 
 	AKRESULT AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject);
 
-	static void MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo);
+	static void EventCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo);
 
 	void SetCallbackFunctionBeat(std::function<void()> function);
 	void SetCallbackFunctionBar(std::function<void()> function);

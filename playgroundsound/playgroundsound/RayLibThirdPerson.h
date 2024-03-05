@@ -22,13 +22,15 @@ struct Shader;
 class RayLibThirdPerson {
 public:
     void Run();
+    void DrawDiffractionPaths();
+    void UpdateBlinkingLight();
     void MusicBeat();
     void MusicBar();
     RayCollision CheckCollisions();
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();
-    void AddObject(const GoTransform& transform, std::shared_ptr<Shader> shader);
-    void AddWall(const GoTransform& transform, float radians);
+    void AddObject(const GoTransform& transform, const std::shared_ptr<Shader>& shader);
+    void AddWall(const GoTransform& transform, const float& radians);
     void DeInit();
     const std::shared_ptr<GameObject> GetCameraGameObject();
     const std::shared_ptr<GameObject> GetPlayerGameObject();

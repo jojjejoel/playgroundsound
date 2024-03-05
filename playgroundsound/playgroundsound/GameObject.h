@@ -12,8 +12,8 @@ struct Triangle
 
 struct GoTransform {
 	GoVector3 position;
-	GoVector3 forward;
-	GoVector3 up;
+	GoVector3 forward { 0,0,1 };
+	GoVector3 up { 0,1,0 };
 	GoVector3 scale;
 };
 class GameObject

@@ -200,7 +200,6 @@ std::vector<DiffractionPath> WwiseAPI::GetDiffraction(const AkGameObjectID& game
 		diffractionPaths.push_back(diffractionPath);
 	}
 	return diffractionPaths;
-
 }
 
 
@@ -238,7 +237,7 @@ AKRESULT WwiseAPI::AddListener() {
 AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID)
 {
 	AK::SpatialAudio::SetGameObjectInRoom(gameObjectID, ROOM);
-	return AK::SoundEngine::PostEvent(eventID, gameObjectID, AK_MusicSyncBeat | AK_MusicSyncBar, &WwiseAPI::MusicCallback, this);
+	return AK::SoundEngine::PostEvent(eventID, gameObjectID, AK_MusicSyncBeat | AK_MusicSyncBar, &WwiseAPI::EventCallback, this);
 }
 
 AKRESULT WwiseAPI::UpdateListenerGO(const GameObject& listenerGameObject)
@@ -269,11 +268,6 @@ AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const 
 	soundPosition.Set(positionVector, orientationFront, orientationTop);
 
 	AKRESULT result = AK::SoundEngine::SetPosition(akGameObjectID, soundPosition);
-
-	if (result != AK_Success)
-	{
-		Log("Failed to set position. Forward: {" + std::to_string(forwardNormalized.x) + ", " + std::to_string(forwardNormalized.y) + ", " + std::to_string(forwardNormalized.z) + " }");
-	}
 	return result;
 }
 
@@ -550,7 +544,7 @@ AKRESULT WwiseAPI::AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject
 	return AK_Success;
 }
 
-void WwiseAPI::MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo)
+void WwiseAPI::EventCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo)
 {
 	WwiseAPI* wwiseAPI = (WwiseAPI*)in_pCallbackInfo->pCookie;
 	switch (in_eType)
