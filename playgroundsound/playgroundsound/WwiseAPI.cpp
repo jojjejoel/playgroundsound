@@ -66,6 +66,7 @@ const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_4 = 2009;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_5 = 2010;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_6 = 2011;
 
+
 bool WwiseAPI::Init()
 {
 	AkMemSettings memSettings;

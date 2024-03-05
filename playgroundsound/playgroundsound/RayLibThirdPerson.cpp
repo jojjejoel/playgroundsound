@@ -54,7 +54,7 @@ void RayLibThirdPerson::Run()
 	playerGameObject->SetUp({ 0, 1, 0 });
 	playerGameObject->SetForward({ 0, 0, 1 });
 
-	barValue -= GetFrameTime() * 0.4;
+	barValue -= GetFrameTime() * 0.4f;
 	std::cout << "Beat: " << beatValue << "Bar: " << barValue << std::endl;
 
 	BeginDrawing();
@@ -117,7 +117,6 @@ void RayLibThirdPerson::DrawDiffractionPaths()
 				Vector3 emitterPos = { diffractionPath.nodes[nodeIndex - 1].x, diffractionPath.nodes[nodeIndex - 1].y, diffractionPath.nodes[nodeIndex - 1].z };
 
 				DrawSphereWires(nodePos, 0.2f, 10, 10, color);
-
 				DrawLine3D(emitterPos, nodePos, color);
 			}
 			Vector3 emitterPos = { diffractionPath.emitterPos.x, diffractionPath.emitterPos.y, diffractionPath.emitterPos.z };
@@ -190,7 +189,7 @@ RayCollision RayLibThirdPerson::CheckCollisions()
 		RayCollision collision = GetRayCollisionBox(ray, GetModelBoundingBox(*model));
 		if (collision.hit)
 		{
-			collisions.push_back(collision);
+			collisions.emplace_back(collision);
 		}
 	}
 
@@ -259,7 +258,7 @@ void RayLibThirdPerson::Init()
 
 	std::shared_ptr<Model> modelPtr = std::make_shared<Model>(model);
 	std::shared_ptr<Shader> shaderPtr = std::make_shared<Shader>(shader);
-	models.push_back(modelPtr);
+	models.emplace_back(modelPtr);
 
 	GoTransform transform;
 	transform.position = { 0,0,0 };
@@ -314,7 +313,7 @@ void RayLibThirdPerson::AddObject(const GoTransform& transform, const std::share
 		vertex.x = vector3.x;
 		vertex.y = vector3.y;
 		vertex.z = -vector3.z;
-		gameObject->mesh.vertices.push_back(vertex);
+		gameObject->mesh.vertices.emplace_back(vertex);
 	}
 
 	for (size_t i = 0, v = 0; i < model->meshes[0].triangleCount; i++, v += 3)
@@ -323,11 +322,11 @@ void RayLibThirdPerson::AddObject(const GoTransform& transform, const std::share
 		triangle.point0 = model->meshes[0].indices[v];
 		triangle.point1 = model->meshes[0].indices[v + 1];
 		triangle.point2 = model->meshes[0].indices[v + 2];
-		gameObject->triangles.push_back(triangle);
+		gameObject->triangles.emplace_back(triangle);
 	}
 
-	soundBlockingObjects.push_back(gameObject);
-	models.push_back(model);
+	soundBlockingObjects.emplace_back(gameObject);
+	models.emplace_back(model);
 }
 
 void RayLibThirdPerson::AddWall(const GoTransform& transform, const float& radians)
@@ -357,7 +356,7 @@ void RayLibThirdPerson::AddWall(const GoTransform& transform, const float& radia
 		vertex.x = vector3.x;
 		vertex.y = vector3.y;
 		vertex.z = -vector3.z;
-		gameObject->mesh.vertices.push_back(vertex);
+		gameObject->mesh.vertices.emplace_back(vertex);
 	}
 
 	for (size_t i = 0, v = 0; i < model->meshes[0].triangleCount; i++, v += 3)
@@ -366,10 +365,10 @@ void RayLibThirdPerson::AddWall(const GoTransform& transform, const float& radia
 		triangle.point0 = model->meshes[0].indices[v];
 		triangle.point1 = model->meshes[0].indices[v + 1];
 		triangle.point2 = model->meshes[0].indices[v + 2];
-		gameObject->triangles.push_back(triangle);
+		gameObject->triangles.emplace_back(triangle);
 	}
 
-	roomWalls.push_back(gameObject);
+	roomWalls.emplace_back(gameObject);
 }
 
 void RayLibThirdPerson::DeInit()
