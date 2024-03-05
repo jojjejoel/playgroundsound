@@ -66,7 +66,6 @@ const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_4 = 2009;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_5 = 2010;
 const AkGeometrySetID GEOMETRY_WALL_INSTANCE_OUTSIDE_6 = 2011;
 
-static float musicVolume;
 bool WwiseAPI::Init()
 {
 	AkMemSettings memSettings;
@@ -132,7 +131,7 @@ AKRESULT WwiseAPI::LoadBank(const AkUniqueID& bankID)
 
 float WwiseAPI::GetRTPCGlobal(const AkUniqueID& rtpcID) {
 
-	/*AkRtpcValue rtpcValue;
+	AkRtpcValue rtpcValue;
 	AK::SoundEngine::Query::RTPCValue_type valueType = AK::SoundEngine::Query::RTPCValue_Global;
 	AKRESULT result = AK::SoundEngine::Query::GetRTPCValue(AK::GAME_PARAMETERS::MUSIC_VOLUME, AK_INVALID_GAME_OBJECT, AK_INVALID_PLAYING_ID, rtpcValue, valueType);
 
@@ -140,14 +139,11 @@ float WwiseAPI::GetRTPCGlobal(const AkUniqueID& rtpcID) {
 	float maxRTPCValue = 0;
 
 	float normalizedValue = (rtpcValue - (minRTPCValue)) / (maxRTPCValue - (minRTPCValue));
-	return normalizedValue;*/
-	return max(0, musicVolume);
+	return normalizedValue;
 }
 
 void WwiseAPI::RenderAudio()
 {
-	musicVolume -= 0.2f;
-	std::cout << musicVolume << std::endl;
 	AK::SoundEngine::RenderAudio();
 }
 
@@ -242,7 +238,7 @@ AKRESULT WwiseAPI::AddListener() {
 AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID)
 {
 	AK::SpatialAudio::SetGameObjectInRoom(gameObjectID, ROOM);
-	return AK::SoundEngine::PostEvent(eventID, gameObjectID, AK_MusicSyncBeat, &WwiseAPI::MusicCallback, nullptr);
+	return AK::SoundEngine::PostEvent(eventID, gameObjectID, AK_MusicSyncBeat, &WwiseAPI::MusicCallback, this);
 }
 
 AKRESULT WwiseAPI::UpdateListenerGO(const GameObject& listenerGameObject)
@@ -556,5 +552,10 @@ AKRESULT WwiseAPI::AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject
 
 void WwiseAPI::MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo)
 {
-	musicVolume = 1;
+	WwiseAPI* wwiseAPI = (WwiseAPI*)in_pCallbackInfo->pCookie;
+	wwiseAPI->callbackFunction();
+}
+
+void WwiseAPI::SetCallbackFunction(std::function<void()> function) {
+	callbackFunction = function;
 }

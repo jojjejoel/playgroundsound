@@ -2,6 +2,7 @@
 #include "RayLibThirdPerson.h"
 #include "WwiseAPI.h"
 #include "Wwise_IDs.h"
+#include <functional>
 int main()
 {
     RayLibThirdPerson rayLibThird;
@@ -29,7 +30,8 @@ int main()
     emitterGO.SetUp({ 0,1,0 });
     emitterGO.SetScale({ 1,1,1 });
     emitterGO.SetPosition({ 0,0,0 });
-    
+    std::function<void()> function = std::bind(&RayLibThirdPerson::MusicBeat, &rayLibThird);
+    wwiseAPI.SetCallbackFunction(function);
     int a = 0;
     while (a >= 0)  
     {
@@ -39,7 +41,7 @@ int main()
         wwiseAPI.UpdateEmitterGO(emitterGO);
         wwiseAPI.SetPlayerIsInRoom(rayLibThird.IsPlayerInRoom());
         rayLibThird.SetDiffractionPaths(wwiseAPI.GetDiffraction(1));
-        rayLibThird.SetMusicVolume(wwiseAPI.GetRTPCGlobal(AK::GAME_PARAMETERS::MUSIC_VOLUME));
+        //rayLibThird.SetMusicVolume(wwiseAPI.GetRTPCGlobal(AK::GAME_PARAMETERS::MUSIC_VOLUME));
         wwiseAPI.RenderAudio();
     }
     rayLibThird.DeInit();

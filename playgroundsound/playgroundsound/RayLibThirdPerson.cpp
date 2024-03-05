@@ -101,6 +101,7 @@ void RayLibThirdPerson::Run()
         //unsigned char alphaValue = 255 * musicVolume;
         DrawSphereWires({ 0,0,0 }, 0.5f, 10, 10, { 0, 255, 0, 255 });
 
+        musicVolume -= GetFrameTime();
         models[0]->transform.m7 = musicVolume;
         DrawModel(*models[0], camera->target, 1, WHITE);
         for (size_t i = 1; i < models.size(); i++)
@@ -124,8 +125,8 @@ void RayLibThirdPerson::Run()
         EndDrawing();
 }
 
-void RayLibThirdPerson::SetMusicVolume(const float& in_musicVolume) {
-    musicVolume = in_musicVolume;
+void RayLibThirdPerson::MusicBeat() {
+    musicVolume = 1;
 }
 
 RayCollision RayLibThirdPerson::CheckCollisions()

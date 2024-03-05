@@ -21,7 +21,7 @@ struct Model;
 class RayLibThirdPerson {
 public:
     void Run();
-    void SetMusicVolume(const float& in_musicVolume);
+    void MusicBeat();
     RayCollision CheckCollisions();
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();

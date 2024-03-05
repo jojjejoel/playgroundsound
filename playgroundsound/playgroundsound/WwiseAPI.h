@@ -10,6 +10,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <functional>
 
 class WwiseAPI
 {
@@ -34,6 +35,8 @@ public:
 
 	static void MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo);
 
+	void SetCallbackFunction(std::function<void()> function);
+
 	AKRESULT AddRoom();
 
 	AKRESULT AddPortals(const GameObject& gameObject, const GameObject& gameObject2);
@@ -56,7 +59,7 @@ private:
 	void Log(std::string_view logMsg);
 
 	std::vector<AkGameObjectID> akGameObjects;
-
+	std::function<void()> callbackFunction;
 
 };
 
