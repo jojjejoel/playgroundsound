@@ -238,7 +238,7 @@ AKRESULT WwiseAPI::AddListener() {
 AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID)
 {
 	AK::SpatialAudio::SetGameObjectInRoom(gameObjectID, ROOM);
-	return AK::SoundEngine::PostEvent(eventID, gameObjectID, AK_MusicSyncBeat, &WwiseAPI::MusicCallback, this);
+	return AK::SoundEngine::PostEvent(eventID, gameObjectID, AK_MusicSyncBeat | AK_MusicSyncBar, &WwiseAPI::MusicCallback, this);
 }
 
 AKRESULT WwiseAPI::UpdateListenerGO(const GameObject& listenerGameObject)
@@ -435,14 +435,14 @@ void WwiseAPI::GenerateWalls(const std::shared_ptr<GameObject>& gameObject, cons
 		{
 			geometryInstanceID = wallInstance1;
 			akGeometrySetID = wallSidesGeometryID;
-			position = { gameObject->GetPosition().x, gameObject->GetPosition().y, gameObject->GetPosition().z + 5 };
+			position = { gameObject->GetPosition().x, gameObject->GetPosition().y, gameObject->GetPosition().z + 2.5f };
 			frontVector = { 1,0,0 };
 		}
 		else if (i == 1)
 		{
 			geometryInstanceID = wallInstance2;
 			akGeometrySetID = wallSidesGeometryID;
-			position = { gameObject->GetPosition().x, gameObject->GetPosition().y, gameObject->GetPosition().z - 5 };
+			position = { gameObject->GetPosition().x, gameObject->GetPosition().y, gameObject->GetPosition().z - 2.5f };
 			frontVector = { -1,0,0 };
 
 		}
@@ -450,7 +450,7 @@ void WwiseAPI::GenerateWalls(const std::shared_ptr<GameObject>& gameObject, cons
 		{
 			geometryInstanceID = wallInstance3;
 			akGeometrySetID = wallSidesGeometryID;
-			position = { gameObject->GetPosition().x + 5, gameObject->GetPosition().y, gameObject->GetPosition().z };
+			position = { gameObject->GetPosition().x + 2.5f, gameObject->GetPosition().y, gameObject->GetPosition().z };
 			frontVector = { 0,0,1 };
 
 		}
@@ -458,14 +458,14 @@ void WwiseAPI::GenerateWalls(const std::shared_ptr<GameObject>& gameObject, cons
 		{
 			geometryInstanceID = wallInstance4;
 			akGeometrySetID = wallSidesGeometryID;
-			position = { gameObject->GetPosition().x - 5, gameObject->GetPosition().y, gameObject->GetPosition().z };
+			position = { gameObject->GetPosition().x - 2.5, gameObject->GetPosition().y, gameObject->GetPosition().z };
 			frontVector = { 0,0,-1 };
 		}
 		else if (i == 4)
 		{
 			geometryInstanceID = wallInstance5;
 			akGeometrySetID = wallCeilingFloorGeometryID;
-			position = { gameObject->GetPosition().x, gameObject->GetPosition().y + 5, gameObject->GetPosition().z };
+			position = { gameObject->GetPosition().x, gameObject->GetPosition().y + 2.5f, gameObject->GetPosition().z };
 			frontVector = { 1,0,0 };
 			topVector = { 0,0,1 };
 
@@ -474,7 +474,7 @@ void WwiseAPI::GenerateWalls(const std::shared_ptr<GameObject>& gameObject, cons
 		{
 			geometryInstanceID = wallInstance6;
 			akGeometrySetID = wallCeilingFloorGeometryID;
-			position = { gameObject->GetPosition().x, gameObject->GetPosition().y - 5, gameObject->GetPosition().z };
+			position = { gameObject->GetPosition().x, gameObject->GetPosition().y - 2.5f, gameObject->GetPosition().z };
 			frontVector = { -1,0,0 };
 			topVector = { 0,0,1 };
 
@@ -553,9 +553,24 @@ AKRESULT WwiseAPI::AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject
 void WwiseAPI::MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo)
 {
 	WwiseAPI* wwiseAPI = (WwiseAPI*)in_pCallbackInfo->pCookie;
-	wwiseAPI->callbackFunction();
+	switch (in_eType)
+	{
+	case AK_MusicSyncBeat:
+	wwiseAPI->callbackFunctionBeat();
+		break;
+	case AK_MusicSyncBar:
+	wwiseAPI->callbackFunctionBar();
+		break;
+	default:
+		break;
+	}
 }
 
-void WwiseAPI::SetCallbackFunction(std::function<void()> function) {
-	callbackFunction = function;
+void WwiseAPI::SetCallbackFunctionBeat(std::function<void()> function) {
+	callbackFunctionBeat = function;
+}
+
+void WwiseAPI::SetCallbackFunctionBar(std::function<void()> function)
+{
+	callbackFunctionBar = function;
 }

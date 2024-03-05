@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include <vector>
 
+
 struct Camera3D;
 struct Vector3;
 struct Texture;
@@ -15,17 +16,18 @@ struct BoundingBox;
 struct RayCollision;
 struct Mesh;
 struct Model;
-
+struct Shader;
 
 
 class RayLibThirdPerson {
 public:
     void Run();
     void MusicBeat();
+    void MusicBar();
     RayCollision CheckCollisions();
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();
-    void AddObject(const GoTransform& transform);
+    void AddObject(const GoTransform& transform, std::shared_ptr<Shader> shader);
     void AddWall(const GoTransform& transform, float radians);
     void DeInit();
     const std::shared_ptr<GameObject> GetCameraGameObject();
@@ -59,7 +61,10 @@ private:
 
     bool leftHand = true;
 
-    float musicVolume = 0;
+    int beatValue = 0;
+    float barValue = 0;
 
     std::vector<DiffractionPath> diffractionPaths;
+
+    //std::shared_ptr<Light> light;
 };

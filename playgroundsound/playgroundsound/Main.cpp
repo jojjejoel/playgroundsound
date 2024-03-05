@@ -30,8 +30,8 @@ int main()
     emitterGO.SetUp({ 0,1,0 });
     emitterGO.SetScale({ 1,1,1 });
     emitterGO.SetPosition({ 0,0,0 });
-    std::function<void()> function = std::bind(&RayLibThirdPerson::MusicBeat, &rayLibThird);
-    wwiseAPI.SetCallbackFunction(function);
+    wwiseAPI.SetCallbackFunctionBeat(std::bind(&RayLibThirdPerson::MusicBeat, &rayLibThird));
+    wwiseAPI.SetCallbackFunctionBar(std::bind(&RayLibThirdPerson::MusicBar, &rayLibThird));
     int a = 0;
     while (a >= 0)  
     {

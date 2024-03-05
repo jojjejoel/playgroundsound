@@ -5,9 +5,8 @@
 			<ChildrenList>
 				<MusicPlaylistContainer Name="Energy_Playlist" ID="{9C4E0ADD-29EF-4083-A0C2-7CD43184265B}" ShortID="14193860">
 					<PropertyList>
-						<Property Name="EnableAttenuation" Type="bool" Value="False"/>
+						<Property Name="3DSpatialization" Type="int16" Value="1"/>
 						<Property Name="EnableDiffraction" Type="bool" Value="True"/>
-						<Property Name="ListenerRelativeRouting" Type="bool" Value="False"/>
 						<Property Name="Tempo" Type="Real64" Value="90"/>
 					</PropertyList>
 					<ReferenceList>
@@ -1683,7 +1682,6 @@
 								<MusicTrack Name="Energy_Rhythm 2" ID="{8D791FA2-599B-4368-B7D1-2B8BFAB944B2}" ShortID="175844147">
 									<PropertyList>
 										<Property Name="MusicTrackType" Type="int16" Value="1"/>
-										<Property Name="OverrideOutput" Type="bool" Value="True"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="OutputBus">

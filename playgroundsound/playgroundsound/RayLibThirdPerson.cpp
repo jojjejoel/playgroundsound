@@ -18,7 +18,19 @@
 #include <string>
 #include "raymath.h"
 #include <math.h>
+#define RLIGHTS_IMPLEMENTATION
+#include "rlights.h"
 
+#if defined(PLATFORM_DESKTOP)
+#define GLSL_VERSION            330
+#else   // PLATFORM_ANDROID, PLATFORM_WEB
+#define GLSL_VERSION            100
+#endif
+
+#include <algorithm>
+#include <iostream>
+
+Light lights [4];
 void RayLibThirdPerson::Run()
 {
     if (IsKeyPressed(KEY_F))
@@ -52,14 +64,50 @@ void RayLibThirdPerson::Run()
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
-
         BeginMode3D(*camera);
 
-        unsigned char alphaValue = 255 * musicVolume;
-        DrawPlane({ 0.0f, 0.0f, 0.0f }, { 32.0f, 32.0f }, { LIGHTGRAY.r, alphaValue, BLUE.b, alphaValue }); // Draw ground
-        DrawCube({ -16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, BLUE);     // Draw a blue wall
-        DrawCube({ 16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, LIME);      // Draw a green wall
-        DrawCube({ 0.0f, 2.5f, 16.0f }, 32.0f, 5.0f, 1.0f, GOLD);      // Draw a yellow wall
+        unsigned char gValue = 255 * std::max(0.0f, barValue);
+
+        if (beatValue == 0)
+        {
+
+            unsigned char aValueBar = 255 * std::max(0.0f, barValue);
+            lights[0].color = { aValueBar,0,gValue, 255 };
+        }
+        else if (beatValue == 1)
+        {
+            lights[0].color = {0,0,gValue, 255};
+        }
+        else if (beatValue == 2)
+        {
+            unsigned char aValueBar = 255 * std::max(0.0f, barValue);
+            lights[0].color = { 0,aValueBar,gValue, 255 };
+        }
+        else if (beatValue == 3)
+        {
+            unsigned char aValueBar = 100 * std::max(0.0f, barValue);
+            lights[0].color = { aValueBar,aValueBar,gValue, 255 };
+        }
+
+        //lights[1].color = { 0,aValueBeat,0, 0 };
+
+        for (auto& model : models)
+        {
+         UpdateLightValues(model->materials[0].shader, lights[0]);
+         //UpdateLightValues(model->materials[0].shader, lights[1]);
+
+        }
+        //DrawPlane({ 0.0f, 0.0f, 0.0f }, { 32.0f, 32.0f }, { LIGHTGRAY.r, alphaValue, BLUE.b, alphaValue }); // Draw ground
+        ////drawmod({ -16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, BLUE);     // Draw a blue wall
+        //DrawCube({ 16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, LIME);      // Draw a green wall
+        //DrawCube({ 0.0f, 2.5f, 16.0f }, 32.0f, 5.0f, 1.0f, GOLD);      // Draw a yellow wall
+        
+        DrawModel(*models[3], { 0,0,20 }, 1, BLACK);
+        DrawModel(*models[3], { 0,0,-20 }, 1, BLACK);
+        DrawModel(*models[4], { 20,0,0 }, 1, BLACK);
+        DrawModel(*models[4], { -20,0,0 }, 1, BLACK);
+        DrawModel(*models[5], { 0,-2,0 }, 1, WHITE);
+        DrawModel(*models[5], { 0,8,0 }, 1, WHITE);
 
 
         for (int pathIndex = 0; pathIndex < diffractionPaths.size(); pathIndex++)
@@ -101,10 +149,12 @@ void RayLibThirdPerson::Run()
         //unsigned char alphaValue = 255 * musicVolume;
         DrawSphereWires({ 0,0,0 }, 0.5f, 10, 10, { 0, 255, 0, 255 });
 
-        musicVolume -= GetFrameTime();
-        models[0]->transform.m7 = musicVolume;
+        //beatValue -= GetFrameTime()*3.5f;
+        barValue -= GetFrameTime() * 0.4;
+        std::cout << "Beat: " << beatValue << "Bar: " << barValue << std::endl;
+        //models[0]->transform.m7 = musicVolume;
         DrawModel(*models[0], camera->target, 1, WHITE);
-        for (size_t i = 1; i < models.size(); i++)
+        for (size_t i = 1; i < models.size() - 3; i++)
         {
             Color color;
             if (i == 0)
@@ -115,7 +165,7 @@ void RayLibThirdPerson::Run()
             {
                 color = { 0,255,255,255 };
             }
-            DrawModelWires(*models[i], {0,0,0}, 1, WHITE);
+            DrawModel(*models[i], {0,0,0}, 1, WHITE);
         }
 
         EndMode3D();
@@ -126,7 +176,15 @@ void RayLibThirdPerson::Run()
 }
 
 void RayLibThirdPerson::MusicBeat() {
-    musicVolume = 1;
+    beatValue += 1;
+    if (beatValue > 3)
+    {
+        beatValue = 0;
+    }
+}
+
+void RayLibThirdPerson::MusicBar() {
+    barValue = 1;
 }
 
 RayCollision RayLibThirdPerson::CheckCollisions()
@@ -175,6 +233,7 @@ void RayLibThirdPerson::SetDiffractionPaths(const std::vector<DiffractionPath> i
 void RayLibThirdPerson::Init()
 {
     
+
     cameraMode = CAMERA_THIRD_PERSON;
     // Initialization
     //--------------------------------------------------------------------------------------
@@ -182,6 +241,30 @@ void RayLibThirdPerson::Init()
     const int screenHeight = 450;
 
     InitWindow(screenWidth, screenHeight, "PlaygroundSound");
+
+    
+        Shader shader = LoadShader(TextFormat("resources/shaders/glsl%i/lighting.vs", GLSL_VERSION),
+            TextFormat("resources/shaders/glsl%i/lighting.fs", GLSL_VERSION));
+        // Get some required shader locations
+        shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+        // NOTE: "matModel" location name is automatically assigned on shader loading, 
+        // no need to get the location again if using that uniform name
+        //shader.locs[SHADER_LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
+
+        // Ambient light level (some basic lighting)
+        int ambientLoc = GetShaderLocation(shader, "ambient");
+        
+        SetShaderValue(shader, SHADER_LOC_COLOR_AMBIENT, static_cast<const void*>(new float[4] {0.1f, 0.1f, 0.1f, 1.0f}), SHADER_UNIFORM_VEC4);
+
+
+        // Create lights
+        //lights[MAX_LIGHTS] = { 0 };
+        lights[0] = CreateLight(LIGHT_POINT, { -5, 1, -5 }, {5,0,5}, {YELLOW.r, YELLOW.g, YELLOW.b, 100}, shader);
+       
+        //lights[1] = CreateLight(LIGHT_POINT,  { 10, 1, 10 }, Vector3Zero(), { RED.r, RED.g, RED.b, 100 }, shader);
+        //lights[2] = CreateLight(LIGHT_POINT,  { -10, 1, 10 }, Vector3Zero(), { GREEN.r, GREEN.g, GREEN.b, 100 }, shader);
+        //lights[3] = CreateLight(LIGHT_POINT,  { 10, 1, -10 }, Vector3Zero(), { BLUE.r, BLUE.g, BLUE.b, 100 }, shader);
+    
 
     camera = std::make_shared<Camera3D>();
     camera->position = { 0.0f, 2.0f, 4.0f };   
@@ -200,26 +283,45 @@ void RayLibThirdPerson::Init()
 
     Model model = LoadModel("Resources/Models/truck_green.obj");
     
-
+    model.materials[0].shader = shader;
    
 
     std::shared_ptr<Model> modelPtr = std::make_shared<Model>(model);
+    std::shared_ptr<Shader> shaderPtr = std::make_shared<Shader>(shader);
     models.push_back(modelPtr);
     
     GoTransform transform;
     transform.position = { 0,0,0 };
-    transform.scale = { 10,10,10 };
-    AddObject(transform);
+    transform.scale = { 5,5,5 };
+    AddObject(transform, shaderPtr);
 
-    transform.position = { 0,0,5 };
-    transform.scale = { 3,3,3 };
+    transform.position = { 0,0,2.5f };
+    transform.scale = { 2,3,2 };
     transform.forward = { 0,0,1 };
     transform.up = { 0,1,0 };
-    AddObject(transform);
+    AddObject(transform, shaderPtr);
+
+    transform.position = { 0,0,0 };
+    transform.scale = { 40,15,3 };
+    transform.forward = { 0,0,1 };
+    transform.up = { 0,1,0 };
+    AddObject(transform, shaderPtr);
+
+    transform.position = { 0,0,0 };
+    transform.scale = { 3,15,40 };
+    transform.forward = { 0,0,1 };
+    transform.up = { 0,1,0 };
+    AddObject(transform, shaderPtr);
+
+    transform.position = { 0,0,0 };
+    transform.scale = { 40,1,40 };
+    transform.forward = { 0,0,1 };
+    transform.up = { 0,1,0 };
+    AddObject(transform, shaderPtr);
 
    
     transform.position = { 0,0,0 };
-    transform.scale = { 10,10,1 };
+    transform.scale = { 5,5,1 };
     transform.forward = { 0,0,1 };
     transform.up = { 0,1,0 };
     AddWall(transform, 0);
@@ -227,14 +329,14 @@ void RayLibThirdPerson::Init()
     SetTargetFPS(30);
 }
 
-void RayLibThirdPerson::AddObject(const GoTransform& transform)
+void RayLibThirdPerson::AddObject(const GoTransform& transform, std::shared_ptr<Shader> shader)
 {
     std::shared_ptr<Model> model = std::make_shared<Model>();
     *model = LoadModelFromMesh(GenMeshCube(transform.scale.x, transform.scale.y, transform.scale.z));
     model->transform.m12 = transform.position.x;
     model->transform.m13 = transform.position.y;
     model->transform.m14 = transform.position.z;
-
+    model->materials[0].shader = *shader.get();
     std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 
     gameObject->SetTransform(transform);

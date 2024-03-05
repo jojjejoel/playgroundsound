@@ -35,7 +35,8 @@ public:
 
 	static void MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo);
 
-	void SetCallbackFunction(std::function<void()> function);
+	void SetCallbackFunctionBeat(std::function<void()> function);
+	void SetCallbackFunctionBar(std::function<void()> function);
 
 	AKRESULT AddRoom();
 
@@ -59,7 +60,8 @@ private:
 	void Log(std::string_view logMsg);
 
 	std::vector<AkGameObjectID> akGameObjects;
-	std::function<void()> callbackFunction;
+	std::function<void()> callbackFunctionBeat;
+	std::function<void()> callbackFunctionBar;
 
 };
 
