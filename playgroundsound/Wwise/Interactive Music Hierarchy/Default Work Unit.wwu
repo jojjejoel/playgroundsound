@@ -2353,7 +2353,7 @@
 										</PropertyList>
 										<ReferenceList>
 											<Reference Name="ControlInput">
-												<ObjectRef Name="Music_Tempo" ID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}" WorkUnitID="{C763ECE7-83BF-44C9-9FD4-E097D99A4778}"/>
+												<ObjectRef Name="Playback_Speed" ID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}" WorkUnitID="{C763ECE7-83BF-44C9-9FD4-E097D99A4778}"/>
 											</Reference>
 											<Reference Name="Curve">
 												<Custom>
@@ -2364,12 +2364,12 @@
 														<PointList>
 															<Point>
 																<XPos>0.25</XPos>
-																<YPos>1</YPos>
+																<YPos>0.25</YPos>
 																<Flags>5</Flags>
 															</Point>
 															<Point>
 																<XPos>4</XPos>
-																<YPos>1</YPos>
+																<YPos>4</YPos>
 																<Flags>37</Flags>
 															</Point>
 														</PointList>

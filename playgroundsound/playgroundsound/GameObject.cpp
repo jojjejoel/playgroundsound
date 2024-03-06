@@ -13,17 +13,23 @@ void GameObject::SetTransform(const GoTransform& in_transform)
 
 void GameObject::SetPosition(const GoVector3& in_position)
 {
-    transform.position = in_position;
+    transform.position.x = in_position.x;
+    transform.position.y = in_position.y;
+    transform.position.z = -in_position.z;
 }
 
 void GameObject::SetForward(const GoVector3& in_forward)
 {
-    transform.forward = in_forward;
+    transform.forward.x = -in_forward.x;
+    transform.forward.y = -in_forward.y;
+    transform.forward.z = in_forward.z;
 }
 
 void GameObject::SetUp(const GoVector3& in_up)
 {
-    transform.up = in_up;
+    transform.up.x = in_up.x;
+    transform.up.y = in_up.y;
+    transform.up.z = -in_up.z;
 }
 
 void GameObject::SetScale(const GoVector3& in_scale)

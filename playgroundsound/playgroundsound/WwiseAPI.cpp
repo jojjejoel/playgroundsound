@@ -26,8 +26,6 @@
 #include <AK/Plugin/AkParametricEQFXFactory.h>
 
 
-//Get RTPC (Query)
-#include <AK/SoundEngine/Common/AkQueryParameters.h>
 
 
 //IDs
@@ -101,17 +99,32 @@ AKRESULT WwiseAPI::LoadBank(const AkUniqueID& bankID)
 	return AK::SoundEngine::LoadBank(bankID);
 }
 
-float WwiseAPI::GetGameParamValue(const AkUniqueID& rtpcID, const AkGameObjectID& akGameObjectID) {
+float WwiseAPI::GetRTPCValueGameObject(const AkRtpcID& rtpcID, const AkGameObjectID& akGameObjectID) {
+
+	return GetRTPCValue(rtpcID, akGameObjectID, AK::SoundEngine::Query::RTPCValue_type::RTPCValue_GameObject, AK_INVALID_PLAYING_ID, -36, -16);
+}
+
+
+float WwiseAPI::GetRTPCValue(const AkRtpcID& in_rtpcID, const AkGameObjectID& in_akGameObjectID, const AK::SoundEngine::Query::RTPCValue_type& in_valueType, const AkPlayingID& in_playingID, const float& in_minValue, const float& in_maxValue) {
 
 	AkRtpcValue rtpcValue;
-	AK::SoundEngine::Query::RTPCValue_type valueType = AK::SoundEngine::Query::RTPCValue_Global;
-	AKRESULT result = AK::SoundEngine::Query::GetRTPCValue(rtpcID, akGameObjectID, AK_INVALID_PLAYING_ID, rtpcValue, valueType);
+	AK::SoundEngine::Query::RTPCValue_type valueType = in_valueType;
+	AKRESULT result = AK::SoundEngine::Query::GetRTPCValue(in_rtpcID, in_akGameObjectID, in_playingID, rtpcValue, valueType);
 
-	float minRTPCValue = -36;
-	float maxRTPCValue = -16;
-
-	float normalizedValue = (rtpcValue - (minRTPCValue)) / (maxRTPCValue - (minRTPCValue));
+	float normalizedValue = (rtpcValue - (in_minValue)) / (in_maxValue - (in_minValue));
 	return normalizedValue;
+}
+
+void WwiseAPI::SetRTPCValue(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue, const AkGameObjectID& akGameObjectID) {
+	AKRESULT result = AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, akGameObjectID);
+}
+
+void WwiseAPI::SetRTPCValueGlobal(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue) {
+	AKRESULT result = AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, AK_INVALID_GAME_OBJECT);
+}
+
+void WwiseAPI::SetRTPCValueGameObject(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue, const AkGameObjectID& akGameObjectID) {
+	AKRESULT result = AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, akGameObjectID);
 }
 
 void WwiseAPI::RenderAudio()
@@ -515,6 +528,10 @@ void WwiseAPI::EventCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallba
 	default:
 		break;
 	}
+}
+
+void WwiseAPI::SetPlaybackSpeed(const float& playbackSpeed) {
+	SetRTPCValueGameObject(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed, IDs::musicObjectID);
 }
 
 void WwiseAPI::SetCallbackFunctionBeat(std::function<void()> function) {

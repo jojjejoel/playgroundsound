@@ -22,8 +22,8 @@ namespace AK
     namespace GAME_PARAMETERS
     {
         static const AkUniqueID LIGHT_FLICKER = 411515110U;
-        static const AkUniqueID MUSIC_TEMPO = 4014642190U;
         static const AkUniqueID MUSIC_VOLUME = 1006694123U;
+        static const AkUniqueID PLAYBACK_SPEED = 78830142U;
     } // namespace GAME_PARAMETERS
 
     namespace BANKS

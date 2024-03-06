@@ -4,6 +4,8 @@
 #include <AK/SoundEngine/Common/AkCallback.h>
 
 #include "AK/SpatialAudio/Common/AkSpatialAudioTypes.h"
+//Get RTPC (Query)
+#include <AK/SoundEngine/Common/AkQueryParameters.h>
 #include "GameObject.h"
 
 #include "DiffractionPath.h"
@@ -18,7 +20,10 @@ public:
 	bool Init();
 	void DeInit();
 	AKRESULT LoadBank(const AkUniqueID& bankID);
-	float GetGameParamValue(const AkUniqueID& rtpcID, const AkGameObjectID& akGameObjectID = AK_INVALID_GAME_OBJECT);
+	float GetRTPCValueGameObject(const AkRtpcID& rtpcID, const AkGameObjectID& akGameObjectID);
+	float GetRTPCValue(const AkRtpcID& rtpcID, const AkGameObjectID& akGameObjectID, const AK::SoundEngine::Query::RTPCValue_type& valueType, const AkPlayingID& playingID, const float& minValue, const float& maxValue);
+	void SetRTPCValueGlobal(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue);
+	void SetRTPCValueGameObject(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue, const AkGameObjectID& akGameObjectID);
 	void RenderAudio();
 	std::vector<DiffractionPath> GetDiffraction(const AkGameObjectID& gameObjectID);
 	AKRESULT AddListener();
@@ -30,6 +35,8 @@ public:
 	AKRESULT AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject);
 
 	static void EventCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo);
+
+	void SetPlaybackSpeed(const float& playbackSpeed);
 
 	void SetCallbackFunctionBeat(std::function<void()> function);
 	void SetCallbackFunctionBar(std::function<void()> function);
@@ -43,6 +50,7 @@ public:
 
 	AKRESULT UpdateGameObject(const AkGameObjectID& gameObjectID, const GameObject& gameObject);
 private:
+	void SetRTPCValue(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue, const AkGameObjectID& akGameObjectID);
 	void GenerateWalls(const std::shared_ptr<GameObject>& gameObject, const AkRoomID& roomID,
 		const AkGeometrySetID& wallSidesGeometryID,
 		const AkGeometrySetID& wallCeilingFloorGeometryID,

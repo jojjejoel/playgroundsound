@@ -5,7 +5,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	4193220423	Car_Engine_Loop			\Default Work Unit\Car_Engine_Loop	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
-	4014642190	Music_Tempo			\Default Work Unit\Music_Tempo	
+	78830142	Playback_Speed			\Default Work Unit\Playback_Speed	
 
 Effect plug-ins	ID	Name	Type				Notes
 	113701460	Meter (Custom)	Wwise Meter			

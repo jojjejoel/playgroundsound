@@ -50,19 +50,29 @@ void Game::Run()
 		updateSecondLight = !updateSecondLight;
 	}
 
+
+	if (IsKeyDown(KEY_THREE))
+	{
+		playbackSpeed -= GetFrameTime();
+		setRtpcFunction(playbackSpeed);
+	}
+	if (IsKeyDown(KEY_FOUR))
+	{
+		playbackSpeed += GetFrameTime();
+		setRtpcFunction(playbackSpeed);
+	}
+
 	UpdateCamera(camera.get(), cameraMode);
-	cameraGameObject->SetPosition({ camera->position.x, camera->position.y, -camera->position.z });
-	playerGameObject->SetPosition({ camera->target.x, camera->target.y, -camera->target.z });
+	cameraGameObject->SetPosition({ camera->position.x, camera->position.y, camera->position.z });
+	playerGameObject->SetPosition({ camera->target.x, camera->target.y, camera->target.z });
 	Matrix matrix = GetCameraMatrix(*camera);
 
-	cameraGameObject->SetUp({ matrix.m1 * upX, matrix.m5 * upY, matrix.m9 * upZ });
-	cameraGameObject->SetForward({ matrix.m2 * forwardX, matrix.m6 * forwardY, matrix.m10 * forwardZ });
+	cameraGameObject->SetUp({ matrix.m1, matrix.m5, matrix.m9 });
+	cameraGameObject->SetForward({ matrix.m2, matrix.m6, matrix.m10 });
 
 	playerGameObject->SetScale({ 0.5f, 0.5f, 0.5f });
-	playerGameObject->SetUp({ 0, 1, 0 });
-	playerGameObject->SetForward({ 0, 0, 1 });
 
-	barValue -= GetFrameTime() * 0.4f;
+	barValue -= GetFrameTime() * 0.37f * playbackSpeed;
 	std::cout << "Beat: " << beatValue << "Bar: " << barValue << std::endl;
 
 	BeginDrawing();
@@ -106,6 +116,10 @@ void Game::Run()
 
 	DrawDiffractionPaths();
 	EndMode3D();
+
+	std::string playbackSpeedString = "Playback speed: " + std::to_string(playbackSpeed);
+
+	DrawText(playbackSpeedString.c_str(), 0.1, 0.1, 1, WHITE);
 
 	EndDrawing();
 }
@@ -276,9 +290,6 @@ void Game::Init()
 	CameraMoveToTarget(camera.get(), -2.f);
 
 	cameraGameObject = std::make_shared<GameObject>();
-	cameraGameObject->SetPosition({ 0.2f, 0.4f, 0.2f });
-	cameraGameObject->SetForward({ 0.185f, 0.4f, 0.0f });
-	cameraGameObject->SetUp({ 0.0f, -1.0f, 0.0f });
 
 	playerGameObject = std::make_shared<GameObject>();
 
@@ -460,4 +471,9 @@ bool Game::IsPlayerInRoom()
 	BoundingBox boxPlayer = CalculateBoundingBox({ cameraGameObject->GetPosition().x, cameraGameObject->GetPosition().y, cameraGameObject->GetPosition().z },
 		cameraGameObject->GetScale().x, cameraGameObject->GetScale().y, cameraGameObject->GetScale().z);
 	return CheckCollisionBoxes(boxRoom, boxPlayer);
+}
+
+void Game::SetRtpcFunction(std::function<void(const float&)> function)
+{
+	setRtpcFunction = function;
 }

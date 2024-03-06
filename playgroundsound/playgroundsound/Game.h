@@ -5,7 +5,7 @@
 #include <memory>
 #include "GameObject.h"
 #include <vector>
-
+#include <functional>
 
 struct Camera3D;
 struct Vector3;
@@ -39,6 +39,9 @@ public:
     const std::vector<std::shared_ptr<GameObject>>& GetWalls();
     BoundingBox CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const;
     bool IsPlayerInRoom();
+
+    void SetRtpcFunction(std::function<void (const float&)> function);
+
 private:
     std::shared_ptr<Camera3D> camera;
     std::shared_ptr<GameObject> cameraGameObject;
@@ -74,5 +77,9 @@ private:
     bool updateFirstLight = true;
     bool updateSecondLight = false;
 
+    float playbackSpeed = 1;
     //std::shared_ptr<Light> light;
+
+
+    std::function<void(const float&)> setRtpcFunction;
 };

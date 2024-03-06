@@ -17,7 +17,7 @@
 						<Property Name="Min" Type="Real64" Value="-36"/>
 					</PropertyList>
 				</GameParameter>
-				<GameParameter Name="Music_Tempo" ID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}">
+				<GameParameter Name="Playback_Speed" ID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}">
 					<PropertyList>
 						<Property Name="InitialValue" Type="Real64" Value="1"/>
 						<Property Name="Max" Type="Real64" Value="4"/>

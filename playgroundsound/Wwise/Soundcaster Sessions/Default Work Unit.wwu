@@ -16,7 +16,7 @@
 							<Value>-20</Value>
 						</RTPCValue>
 						<RTPCValue>
-							<GameParameterRef Name="Music_Tempo" ID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}"/>
+							<GameParameterRef Name="Playback_Speed" ID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}"/>
 							<Value>0.98874296435272</Value>
 						</RTPCValue>
 						<RTPCValue>
