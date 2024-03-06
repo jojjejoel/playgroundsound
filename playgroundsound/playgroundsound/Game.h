@@ -19,7 +19,7 @@ struct Model;
 struct Shader;
 
 
-class RayLibThirdPerson {
+class Game {
 public:
     void Run();
     void DrawDiffractionPaths();
@@ -29,8 +29,9 @@ public:
     RayCollision CheckCollisions();
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();
-    void AddObject(const GoTransform& transform, const std::shared_ptr<Shader>& shader);
+    void AddCube(const GoTransform& transform, const std::shared_ptr<Shader>& shader);
     void AddWall(const GoTransform& transform, const float& radians);
+    void SetLightFlickerValue(const float& value);
     void DeInit();
     const std::shared_ptr<GameObject> GetCameraGameObject();
     const std::shared_ptr<GameObject> GetPlayerGameObject();
@@ -67,6 +68,11 @@ private:
     float barValue = 0;
 
     std::vector<DiffractionPath> diffractionPaths;
+
+    float lightFlickerValue = 0;
+
+    bool updateFirstLight = true;
+    bool updateSecondLight = false;
 
     //std::shared_ptr<Light> light;
 };

@@ -1,10 +1,15 @@
 Event	ID	Name			Wwise Object Path	Notes
+	411515110	Light_Flicker			\Default Work Unit\Light_Flicker	
 	1345584937	Energy			\Default Work Unit\Energy	
 	2578592186	Good_Old_Days			\Default Work Unit\Good_Old_Days	
 	4193220423	Car_Engine_Loop			\Default Work Unit\Car_Engine_Loop	
 
+Game Parameter	ID	Name			Wwise Object Path	Notes
+	4014642190	Music_Tempo			\Default Work Unit\Music_Tempo	
+
 Effect plug-ins	ID	Name	Type				Notes
 	113701460	Meter (Custom)	Wwise Meter			
+	969659751	Meter (Custom)	Wwise Meter			
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	11675263	Energy_Synth Lead Fuzz V1	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\Energy\Energy_Synth Lead Fuzz V1_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Energy_Playlist\Energy_Segment\Energy_Synth Lead Fuzz V1		11406328
@@ -18,6 +23,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	134769915	Energy_Intense Drum 2	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\Energy\Energy_Intense Drum 2_3_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Energy_Playlist\Energy_Segment\Energy_Intense Drum 2		1881808
 	199907317	Energy_Bass V1	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\Energy\Energy_Bass V3_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Energy_Playlist\Energy_Segment\Energy_Bass V1		11406328
 	203669605	Energy_Intense Drum 2	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\Energy\Energy_Intense Drum 2_1_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Energy_Playlist\Energy_Segment\Energy_Intense Drum 2		1881808
+	268675248	Light_Flicker	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\033830_fxlm-neon-lights-flicker-bathroomwav-75200_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Light_Flicker		2979168
 	301898721	Energy_Git_ Dist	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\Energy\Energy_Git. Dist_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Energy_Playlist\Energy_Segment\Energy_Git_ Dist		8522744
 	317113129	Good_Old_Days	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\Good Old Days_D79FB2B7.wem		\Actor-Mixer Hierarchy\Default Work Unit\Good_Old_Days		47062684
 	322199033	Energy_Intense Drum 1	C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\.cache\Windows\SFX\Energy\Energy_Intense Drum 1_4_D79FB2B7.wem		\Interactive Music Hierarchy\Default Work Unit\Energy_Playlist\Energy_Segment\Energy_Intense Drum 1		1881808

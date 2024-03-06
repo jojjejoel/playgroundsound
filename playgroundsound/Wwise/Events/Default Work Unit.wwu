@@ -50,6 +50,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Light_Flicker" ID="{27B3E7F6-06E1-4032-9219-EDD16708A59B}">
+					<ChildrenList>
+						<Action Name="" ID="{FF1848D2-7378-499A-8DF8-D2333380ADC9}" ShortID="195190791">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Light_Flicker" ID="{E5BCCEE6-1325-4F57-9D1D-9263C6CE7897}" WorkUnitID="{8E08C725-5B07-4F01-8DB8-A6B9F7AFCA86}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

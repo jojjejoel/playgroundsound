@@ -9,7 +9,7 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{5FABF593-DD51-A883-B466-134F3F9108B7}">
+		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{693E25C9-C335-C040-B479-1ABDB6B1A24A}">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>1355168291.bnk</Path>
@@ -67,7 +67,9 @@
 				</AuxBus>
 			</AuxBusses>
 			<GameParameters>
+				<GameParameter Id="411515110" Name="Light_Flicker" ObjectPath="\Game Parameters\Default Work Unit\Light_Flicker" GUID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}"/>
 				<GameParameter Id="1006694123" Name="Music_Volume" ObjectPath="\Game Parameters\Default Work Unit\Music_Volume" GUID="{0939589F-2F4E-41DA-A8F3-56608D57E1A8}"/>
+				<GameParameter Id="4014642190" Name="Music_Tempo" ObjectPath="\Game Parameters\Default Work Unit\Music_Tempo" GUID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}"/>
 			</GameParameters>
 			<AcousticTextures>
 				<AcousticTexture Id="504532776" Name="Brick" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Brick" GUID="{B086A5A9-F204-4C53-A838-BDB18B18F6D6}">
@@ -184,7 +186,7 @@
 				</AcousticTexture>
 			</AcousticTextures>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{6353A599-EBAF-D27B-E21E-D0A5FB19505F}">
+		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{D398F3A1-AF88-2D12-F0D3-E4632F7FA31E}">
 			<ObjectPath>\SoundBanks\Default Work Unit\Main</ObjectPath>
 			<ShortName>Main</ShortName>
 			<Path>3161908922.bnk</Path>
@@ -232,6 +234,10 @@
 				<File Id="203669605" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Energy\Energy_Intense Drum 2_1.wav</ShortName>
 					<CachePath>SFX/Energy/Energy_Intense Drum 2_1_D79FB2B7.wem</CachePath>
+				</File>
+				<File Id="268675248" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>033830_fxlm-neon-lights-flicker-bathroomwav-75200.wav</ShortName>
+					<CachePath>SFX/033830_fxlm-neon-lights-flicker-bathroomwav-75200_D79FB2B7.wem</CachePath>
 				</File>
 				<File Id="301898721" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Energy\Energy_Git. Dist.wav</ShortName>
@@ -329,6 +335,7 @@
 			<Plugins>
 				<Custom>
 					<Plugin Id="113701460" Name="Meter (Custom)" ObjectPath="\Actor-Mixer Hierarchy\Default Work Unit\Good_Old_Days\Meter (Custom)" GUID="{65EF478E-0486-4EB9-9170-D69D8369AE08}" LibName="Wwise Meter" LibId="8454147"/>
+					<Plugin Id="969659751" Name="Meter (Custom)" ObjectPath="\Actor-Mixer Hierarchy\Default Work Unit\Light_Flicker\Meter (Custom)" GUID="{F586E703-55F8-4710-A0E8-E1836ADE078A}" LibName="Wwise Meter" LibId="8454147"/>
 				</Custom>
 			</Plugins>
 			<Events>
@@ -386,8 +393,21 @@
 						<AuxBusRef Id="1413777708" Name="Music_Meter" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Meter" GUID="{44EBD574-5253-4FC7-884F-DDF9382B0A8F}"/>
 					</AuxBusRefs>
 				</Event>
+				<Event Id="411515110" Name="Light_Flicker" ObjectPath="\Events\Default Work Unit\Light_Flicker" GUID="{27B3E7F6-06E1-4032-9219-EDD16708A59B}" MaxAttenuation="25" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="268675248"/>
+					</MediaRefs>
+					<PluginRefs>
+						<Custom>
+							<PluginRef Id="969659751"/>
+						</Custom>
+					</PluginRefs>
+				</Event>
 			</Events>
+			<GameParameters>
+				<GameParameter Id="4014642190" Name="Music_Tempo" ObjectPath="\Game Parameters\Default Work Unit\Music_Tempo" GUID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}"/>
+			</GameParameters>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{870B8CE3-3812-66DB-22C4-D30C49C80CFE}</FileHash>
+	<FileHash>{8FDBE7F4-71A8-809E-2B3C-821884AA7830}</FileHash>
 </SoundBanksInfo>

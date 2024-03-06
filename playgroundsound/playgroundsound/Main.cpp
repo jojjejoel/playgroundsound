@@ -1,14 +1,14 @@
 #include <iostream>
-#include "RayLibThirdPerson.h"
+#include "Game.h"
 #include "WwiseAPI.h"
 #include "Wwise_IDs.h"
 #include <functional>
-
+#include "AkInstanceIDs.h"
 
 int main()
 {
-    RayLibThirdPerson rayLibThird;
-    rayLibThird.Init();
+    Game game;
+    game.Init();
 
     WwiseAPI wwiseAPI;
     wwiseAPI.Init();
@@ -19,12 +19,12 @@ int main()
 
 	wwiseAPI.AddListener();
     
-    wwiseAPI.AddGeometry(rayLibThird.GetWalls()[0]);
+    wwiseAPI.AddGeometry(game.GetWalls()[0]);
 
-    wwiseAPI.AddRoomGeometry(rayLibThird.GetSoundBlockingObjects()[0]);
+    wwiseAPI.AddRoomGeometry(game.GetSoundBlockingObjects()[0]);
 
     wwiseAPI.AddRoom();
-    wwiseAPI.AddPortals(*rayLibThird.GetSoundBlockingObjects()[1], *rayLibThird.GetSoundBlockingObjects()[1]);
+    wwiseAPI.AddPortals(*game.GetSoundBlockingObjects()[1], *game.GetSoundBlockingObjects()[1]);
     wwiseAPI.RenderAudio();
     wwiseAPI.PostEvent(AK::EVENTS::ENERGY, 1);
     GameObject emitterGO;
@@ -32,21 +32,30 @@ int main()
     emitterGO.SetUp({ 0,1,0 });
     emitterGO.SetScale({ 1,1,1 });
     emitterGO.SetPosition({ 0,0,0 });
-    wwiseAPI.SetCallbackFunctionBeat(std::bind(&RayLibThirdPerson::MusicBeat, &rayLibThird));
-    wwiseAPI.SetCallbackFunctionBar(std::bind(&RayLibThirdPerson::MusicBar, &rayLibThird));
+    wwiseAPI.SetCallbackFunctionBeat(std::bind(&Game::MusicBeat, &game));
+    wwiseAPI.SetCallbackFunctionBar(std::bind(&Game::MusicBar, &game));
+
+    wwiseAPI.RegisterGameObject(4, "Light_Bulb");
+    wwiseAPI.PostEvent(AK::EVENTS::LIGHT_FLICKER, IDs::lightBulbID);
+    GameObject lightBulbGO;
+   lightBulbGO.SetForward({ 0,0,1 });
+   lightBulbGO.SetUp({ 0,1,0 });
+   lightBulbGO.SetScale({ 1,1,1 });
+   lightBulbGO.SetPosition({ 10,1,10 });
     int a = 0;
     while (a >= 0)  
     {
-        rayLibThird.Run();
-        wwiseAPI.UpdateListenerGO(*rayLibThird.GetCameraGameObject());
-        wwiseAPI.UpdateDistanceProbeGO(*rayLibThird.GetPlayerGameObject());
-        wwiseAPI.UpdateEmitterGO(emitterGO);
-        wwiseAPI.SetPlayerIsInRoom(rayLibThird.IsPlayerInRoom());
-        rayLibThird.SetDiffractionPaths(wwiseAPI.GetDiffraction(1));
-        //rayLibThird.SetMusicVolume(wwiseAPI.GetRTPCGlobal(AK::GAME_PARAMETERS::MUSIC_VOLUME));
+        game.Run();
+        wwiseAPI.UpdateGameObject(IDs::listenerObjectID, *game.GetCameraGameObject());
+        wwiseAPI.UpdateGameObject(IDs::distanceProbeObjectID, *game.GetPlayerGameObject());
+        wwiseAPI.UpdateGameObject(IDs::musicObjectID, emitterGO);
+        wwiseAPI.UpdateGameObject(IDs::lightBulbID, lightBulbGO);
+        wwiseAPI.SetPlayerIsInRoom(game.IsPlayerInRoom());
+        game.SetDiffractionPaths(wwiseAPI.GetDiffraction(1));
+        game.SetLightFlickerValue(wwiseAPI.GetGameParamValue(AK::GAME_PARAMETERS::LIGHT_FLICKER, IDs::lightBulbID));
         wwiseAPI.RenderAudio();
     }
-    rayLibThird.DeInit();
+    game.DeInit();
 
 
     std::cout << "Program terminated" << std::endl;

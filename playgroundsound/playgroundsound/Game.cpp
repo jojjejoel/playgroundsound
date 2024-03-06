@@ -1,4 +1,4 @@
-#include "RayLibThirdPerson.h"
+#include "Game.h"
 
 /*******************************************************************************************
 *
@@ -31,7 +31,7 @@
 #include <iostream>
 
 Light lights[4];
-void RayLibThirdPerson::Run()
+void Game::Run()
 {
 	if (IsKeyPressed(KEY_F))
 	{
@@ -40,6 +40,14 @@ void RayLibThirdPerson::Run()
 	if (IsKeyPressed(KEY_G))
 	{
 		EnableCursor();
+	}
+
+	if (IsKeyPressed(KEY_ONE))
+	{
+		updateFirstLight = !updateFirstLight;
+	}if (IsKeyPressed(KEY_TWO))
+	{
+		updateSecondLight = !updateSecondLight;
 	}
 
 	UpdateCamera(camera.get(), cameraMode);
@@ -77,7 +85,7 @@ void RayLibThirdPerson::Run()
 	
 
 	DrawModel(*models[0], camera->target, 1, WHITE);
-	for (size_t i = 1; i < models.size() - 3; i++)
+	for (size_t i = 1; i < models.size() - 4; i++)
 	{
 		Color color;
 		if (i == 0)
@@ -91,13 +99,18 @@ void RayLibThirdPerson::Run()
 		DrawModel(*models[i], { 0,0,0 }, 1, WHITE);
 	}
 
+	if (!updateSecondLight || lightFlickerValue == 0)
+	{
+		DrawModel(*models[models.size() - 1], {0,0,0}, 1, WHITE);
+	}
+
 	DrawDiffractionPaths();
 	EndMode3D();
 
 	EndDrawing();
 }
 
-void RayLibThirdPerson::DrawDiffractionPaths()
+void Game::DrawDiffractionPaths()
 {
 	for (int pathIndex = 0; pathIndex < diffractionPaths.size(); pathIndex++)
 	{
@@ -132,8 +145,14 @@ void RayLibThirdPerson::DrawDiffractionPaths()
 	}
 }
 
-void RayLibThirdPerson::UpdateBlinkingLight()
+void Game::UpdateBlinkingLight()
 {
+	lights[0].color = { 0,0,0, 0 };
+	lights[1].color = { 0,0,0, 0 };
+
+	if (updateFirstLight)
+	{
+
 	unsigned char gValue = 255 * std::max(0.0f, barValue);
 
 	if (beatValue == 0)
@@ -155,14 +174,25 @@ void RayLibThirdPerson::UpdateBlinkingLight()
 		unsigned char aValueBar = 100 * std::max(0.0f, barValue);
 		lights[0].color = { aValueBar,aValueBar,gValue, 255 };
 	}
-
-	for (auto& model : models)
-	{
-		UpdateLightValues(model->materials[0].shader, lights[0]);
 	}
+	if (updateSecondLight)
+	{
+	unsigned char r = 155 * (1 - lightFlickerValue);
+	unsigned char g = 255 * (1 - lightFlickerValue);
+	unsigned char b = 50 * (1 - lightFlickerValue);
+	lights[1].color = { r,g,b, 150 };
+	lights[1].attenuation = 0;
+
+	}
+
+	
+		UpdateLightValues(models[0]->materials[0].shader, lights[0]);
+
+		UpdateLightValues(models[0]->materials[0].shader, lights[1]);
+	
 }
 
-void RayLibThirdPerson::MusicBeat() {
+void Game::MusicBeat() {
 	beatValue += 1;
 	if (beatValue > 3)
 	{
@@ -170,11 +200,11 @@ void RayLibThirdPerson::MusicBeat() {
 	}
 }
 
-void RayLibThirdPerson::MusicBar() {
+void Game::MusicBar() {
 	barValue = 1;
 }
 
-RayCollision RayLibThirdPerson::CheckCollisions()
+RayCollision Game::CheckCollisions()
 {
 	std::vector<RayCollision> collisions;
 	for (const auto& model : models)
@@ -213,11 +243,11 @@ RayCollision RayLibThirdPerson::CheckCollisions()
 	}
 }
 
-void RayLibThirdPerson::SetDiffractionPaths(const std::vector<DiffractionPath> in_diffractionPaths) {
+void Game::SetDiffractionPaths(const std::vector<DiffractionPath> in_diffractionPaths) {
 	diffractionPaths = in_diffractionPaths;
 }
 
-void RayLibThirdPerson::Init()
+void Game::Init()
 {
 	cameraMode = CAMERA_THIRD_PERSON;
 	const int screenWidth = 800;
@@ -231,9 +261,10 @@ void RayLibThirdPerson::Init()
 	shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
 	int ambientLoc = GetShaderLocation(shader, "ambient");
 
-	SetShaderValue(shader, ambientLoc, static_cast<const void*>(new float[4] {0.1f, 0.1f, 0.1f, 1.0f}), SHADER_UNIFORM_VEC4);
+	SetShaderValue(shader, ambientLoc, static_cast<const void*>(new float[4] {0.1f, 0.0f, 0.0f, 1.0f}), SHADER_UNIFORM_VEC4);
 
-	lights[0] = CreateLight(LIGHT_POINT, { -5, 1, -5 }, { 5,0,5 }, { YELLOW.r, YELLOW.g, YELLOW.b, 100 }, shader);
+	lights[0] = CreateLight(LIGHT_POINT, { -5, 1, -5 }, { 5,0,5 }, { 0, 0, 0, 0 }, shader);
+	lights[1] = CreateLight(LIGHT_DIRECTIONAL, { 10, 1, 10 }, {0,1,0}, {0, 0, 0, 0}, shader);
 
 
 	camera = std::make_shared<Camera3D>();
@@ -263,24 +294,27 @@ void RayLibThirdPerson::Init()
 	GoTransform transform;
 	transform.position = { 0,0,0 };
 	transform.scale = { 5,5,5 };
-	AddObject(transform, shaderPtr);
+	AddCube(transform, shaderPtr);
 
 	transform.position = { 0,0,2.5f };
 	transform.scale = { 2,3,2 };
-	AddObject(transform, shaderPtr);
+	AddCube(transform, shaderPtr);
 
 	transform.position = { 0,0,0 };
 	transform.scale = { 40,15,3 };
-	AddObject(transform, shaderPtr);
+	AddCube(transform, shaderPtr);
 
 	transform.position = { 0,0,0 };
 	transform.scale = { 3,15,40 };
-	AddObject(transform, shaderPtr);
+	AddCube(transform, shaderPtr);
 
 	transform.position = { 0,0,0 };
 	transform.scale = { 40,1,40 };
-	AddObject(transform, shaderPtr);
+	AddCube(transform, shaderPtr);
 
+	transform.position = { 10,1,-10 };
+	transform.scale = { 1,1,1 };
+	AddCube(transform, shaderPtr);
 
 	transform.position = { 0,0,0 };
 	transform.scale = { 5,5,1 };
@@ -289,7 +323,7 @@ void RayLibThirdPerson::Init()
 	SetTargetFPS(30);
 }
 
-void RayLibThirdPerson::AddObject(const GoTransform& transform, const std::shared_ptr<Shader>& shader)
+void Game::AddCube(const GoTransform& transform, const std::shared_ptr<Shader>& shader)
 {
 	std::shared_ptr<Model> model = std::make_shared<Model>();
 	*model = LoadModelFromMesh(GenMeshCube(transform.scale.x, transform.scale.y, transform.scale.z));
@@ -329,7 +363,7 @@ void RayLibThirdPerson::AddObject(const GoTransform& transform, const std::share
 	models.emplace_back(model);
 }
 
-void RayLibThirdPerson::AddWall(const GoTransform& transform, const float& radians)
+void Game::AddWall(const GoTransform& transform, const float& radians)
 {
 	std::shared_ptr<Model> model = std::make_shared<Model>();
 	*model = LoadModelFromMesh(GenMeshPlane(transform.scale.x, transform.scale.y, 10, 10));
@@ -371,32 +405,36 @@ void RayLibThirdPerson::AddWall(const GoTransform& transform, const float& radia
 	roomWalls.emplace_back(gameObject);
 }
 
-void RayLibThirdPerson::DeInit()
+void Game::SetLightFlickerValue(const float& value) {
+	lightFlickerValue = value;
+}
+
+void Game::DeInit()
 {
 	CloseWindow();
 }
 
-const std::shared_ptr<GameObject> RayLibThirdPerson::GetCameraGameObject()
+const std::shared_ptr<GameObject> Game::GetCameraGameObject()
 {
 	return cameraGameObject;
 }
 
-const std::shared_ptr<GameObject> RayLibThirdPerson::GetPlayerGameObject()
+const std::shared_ptr<GameObject> Game::GetPlayerGameObject()
 {
 	return playerGameObject;
 }
 
-const std::vector<std::shared_ptr<GameObject>>& RayLibThirdPerson::GetSoundBlockingObjects()
+const std::vector<std::shared_ptr<GameObject>>& Game::GetSoundBlockingObjects()
 {
 	return soundBlockingObjects;
 }
 
-const std::vector<std::shared_ptr<GameObject>>& RayLibThirdPerson::GetWalls()
+const std::vector<std::shared_ptr<GameObject>>& Game::GetWalls()
 {
 	return roomWalls;
 }
 
-BoundingBox RayLibThirdPerson::CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const {
+BoundingBox Game::CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const {
 	BoundingBox boundingBox;
 
 	float halfWidth = width / 2.0f;
@@ -414,7 +452,7 @@ BoundingBox RayLibThirdPerson::CalculateBoundingBox(const Vector3& center, const
 	return boundingBox;
 }
 
-bool RayLibThirdPerson::IsPlayerInRoom()
+bool Game::IsPlayerInRoom()
 {
 	GameObject roomGameObject = *soundBlockingObjects[0];
 	BoundingBox boxRoom = CalculateBoundingBox({ roomGameObject.GetPosition().x, roomGameObject.GetPosition().y, roomGameObject.GetPosition().z },

@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\RayLib">
-      <UniqueIdentifier>{c5cef327-da22-4444-80d4-3a0d10627798}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\Wwise">
       <UniqueIdentifier>{cfec5866-c030-4c55-9e5d-efece0929ec5}</UniqueIdentifier>
     </Filter>
@@ -63,14 +60,11 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RayLibThirdPerson.cpp">
-      <Filter>Source Files\RayLib</Filter>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Room.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,17 +122,14 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RayLibThirdPerson.h">
+    <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RayLibObject.h">
-      <Filter>Source Files\RayLib</Filter>
     </ClInclude>
     <ClInclude Include="DiffractionPath.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Room.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="AkInstanceIDs.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

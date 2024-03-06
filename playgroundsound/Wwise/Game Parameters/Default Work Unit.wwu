@@ -10,6 +10,20 @@
 						<Property Name="Min" Type="Real64" Value="-20"/>
 					</PropertyList>
 				</GameParameter>
+				<GameParameter Name="Light_Flicker" ID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="-36"/>
+						<Property Name="Max" Type="Real64" Value="-16"/>
+						<Property Name="Min" Type="Real64" Value="-36"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="Music_Tempo" ID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="1"/>
+						<Property Name="Max" Type="Real64" Value="4"/>
+						<Property Name="Min" Type="Real64" Value="0.25"/>
+					</PropertyList>
+				</GameParameter>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>
