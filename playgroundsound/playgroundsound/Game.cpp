@@ -62,7 +62,7 @@ void Game::Run()
 		setRtpcFunction(playbackSpeed);
 	}
 
-	UpdateCamera(camera.get(), cameraMode);
+	UpdateCamera(camera.get(), CAMERA_THIRD_PERSON);
 	cameraGameObject->SetPosition({ camera->position.x, camera->position.y, camera->position.z });
 	playerGameObject->SetPosition({ camera->target.x, camera->target.y, camera->target.z });
 	Matrix matrix = GetCameraMatrix(*camera);
@@ -74,13 +74,13 @@ void Game::Run()
 
 	barValue -= GetFrameTime() * 0.37f * playbackSpeed;
 	std::cout << "Beat: " << beatValue << "Bar: " << barValue << std::endl;
+	UpdateBlinkingLight();
 
 	BeginDrawing();
 
 	ClearBackground(RAYWHITE);
 	BeginMode3D(*camera);
 
-	UpdateBlinkingLight();
 
 	DrawModel(*models[3], { 0,0,20 }, 1, BLACK);
 	DrawModel(*models[3], { 0,0,-20 }, 1, BLACK);
@@ -123,6 +123,7 @@ void Game::Run()
 
 	EndDrawing();
 }
+
 
 void Game::DrawDiffractionPaths()
 {
@@ -218,52 +219,12 @@ void Game::MusicBar() {
 	barValue = 1;
 }
 
-RayCollision Game::CheckCollisions()
-{
-	std::vector<RayCollision> collisions;
-	for (const auto& model : models)
-	{
-		Ray ray;
-		ray.position = camera->target;
-		Vector3 dir;
-		dir.x = -camera->target.x;
-		dir.y = -camera->target.y;
-		dir.z = -camera->target.z;
-		ray.direction = dir;
-		RayCollision collision = GetRayCollisionBox(ray, GetModelBoundingBox(*model));
-		if (collision.hit)
-		{
-			collisions.emplace_back(collision);
-		}
-	}
-
-	if (collisions.size() > 0)
-	{
-		RayCollision shortestDistanceCollision = collisions[0];
-		for (size_t i = 1; i < collisions.size(); i++)
-		{
-			if (collisions[i].distance < shortestDistanceCollision.distance)
-			{
-				shortestDistanceCollision = collisions[i];
-			}
-		}
-		return shortestDistanceCollision;
-	}
-	else
-	{
-		RayCollision rayCollision;
-		rayCollision.hit = false;
-		return rayCollision;
-	}
-}
-
 void Game::SetDiffractionPaths(const std::vector<DiffractionPath> in_diffractionPaths) {
 	diffractionPaths = in_diffractionPaths;
 }
 
 void Game::Init()
 {
-	cameraMode = CAMERA_THIRD_PERSON;
 	const int screenWidth = 800;
 	const int screenHeight = 450;
 
@@ -323,6 +284,8 @@ void Game::Init()
 	transform.scale = { 40,1,40 };
 	AddCube(transform, shaderPtr);
 
+
+	//Light Bulb
 	transform.position = { 10,1,-10 };
 	transform.scale = { 1,1,1 };
 	AddCube(transform, shaderPtr);
@@ -345,6 +308,16 @@ void Game::AddCube(const GoTransform& transform, const std::shared_ptr<Shader>& 
 	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 
 	gameObject->SetTransform(transform);
+	ConvertVertices(model, gameObject);
+
+	ConvertTriangles(model, gameObject);
+
+	soundBlockingObjects.emplace_back(gameObject);
+	models.emplace_back(model);
+}
+
+void Game::ConvertVertices(std::shared_ptr<Model>& model, std::shared_ptr<GameObject>& gameObject)
+{
 	for (size_t i = 0, v = 0; i < model->meshes[0].vertexCount; i++, v += 3)
 	{
 		Playground::Vertex vertex;
@@ -360,7 +333,10 @@ void Game::AddCube(const GoTransform& transform, const std::shared_ptr<Shader>& 
 		vertex.z = -vector3.z;
 		gameObject->mesh.vertices.emplace_back(vertex);
 	}
+}
 
+void Game::ConvertTriangles(std::shared_ptr<Model>& model, std::shared_ptr<GameObject>& gameObject)
+{
 	for (size_t i = 0, v = 0; i < model->meshes[0].triangleCount; i++, v += 3)
 	{
 		Triangle triangle;
@@ -369,9 +345,6 @@ void Game::AddCube(const GoTransform& transform, const std::shared_ptr<Shader>& 
 		triangle.point2 = model->meshes[0].indices[v + 2];
 		gameObject->triangles.emplace_back(triangle);
 	}
-
-	soundBlockingObjects.emplace_back(gameObject);
-	models.emplace_back(model);
 }
 
 void Game::AddWall(const GoTransform& transform, const float& radians)
@@ -388,30 +361,9 @@ void Game::AddWall(const GoTransform& transform, const float& radians)
 	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
 
 	gameObject->SetTransform(transform);
-	for (size_t i = 0, v = 0; i < model->meshes[0].vertexCount; i++, v += 3)
-	{
-		Playground::Vertex vertex;
-		float* vertices = model->meshes[0].vertices;
-		Vector3 vector3;
-		vector3.x = vertices[v];
-		vector3.y = vertices[v + 1];
-		vector3.z = vertices[v + 2];
-		vector3 = Vector3Transform(vector3, model->transform);
+	ConvertVertices(model, gameObject);
 
-		vertex.x = vector3.x;
-		vertex.y = vector3.y;
-		vertex.z = -vector3.z;
-		gameObject->mesh.vertices.emplace_back(vertex);
-	}
-
-	for (size_t i = 0, v = 0; i < model->meshes[0].triangleCount; i++, v += 3)
-	{
-		Triangle triangle;
-		triangle.point0 = model->meshes[0].indices[v];
-		triangle.point1 = model->meshes[0].indices[v + 1];
-		triangle.point2 = model->meshes[0].indices[v + 2];
-		gameObject->triangles.emplace_back(triangle);
-	}
+	ConvertTriangles(model, gameObject);
 
 	roomWalls.emplace_back(gameObject);
 }
@@ -423,6 +375,11 @@ void Game::SetLightFlickerValue(const float& value) {
 void Game::DeInit()
 {
 	CloseWindow();
+}
+
+const std::shared_ptr<GameObject> Game::GetLightBulbGameObject()
+{
+	return soundBlockingObjects[soundBlockingObjects.size() - 1];
 }
 
 const std::shared_ptr<GameObject> Game::GetCameraGameObject()
@@ -463,17 +420,20 @@ BoundingBox Game::CalculateBoundingBox(const Vector3& center, const float& width
 	return boundingBox;
 }
 
-bool Game::IsPlayerInRoom()
+bool Game::IsGameObjectInRoom(const std::shared_ptr<GameObject>& gameObject)
 {
 	GameObject roomGameObject = *soundBlockingObjects[0];
+
 	BoundingBox boxRoom = CalculateBoundingBox({ roomGameObject.GetPosition().x, roomGameObject.GetPosition().y, roomGameObject.GetPosition().z },
 		roomGameObject.GetScale().x, roomGameObject.GetScale().y, roomGameObject.GetScale().z);
-	BoundingBox boxPlayer = CalculateBoundingBox({ cameraGameObject->GetPosition().x, cameraGameObject->GetPosition().y, cameraGameObject->GetPosition().z },
-		cameraGameObject->GetScale().x, cameraGameObject->GetScale().y, cameraGameObject->GetScale().z);
+
+	BoundingBox boxPlayer = CalculateBoundingBox({ gameObject->GetPosition().x, gameObject->GetPosition().y, gameObject->GetPosition().z },
+		gameObject->GetScale().x, gameObject->GetScale().y, gameObject->GetScale().z);
+
 	return CheckCollisionBoxes(boxRoom, boxPlayer);
 }
 
-void Game::SetRtpcFunction(std::function<void(const float&)> function)
+void Game::AssignRtpcFunction(std::function<void(const float&)> function)
 {
 	setRtpcFunction = function;
 }

@@ -26,21 +26,23 @@ public:
     void UpdateBlinkingLight();
     void MusicBeat();
     void MusicBar();
-    RayCollision CheckCollisions();
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();
     void AddCube(const GoTransform& transform, const std::shared_ptr<Shader>& shader);
+    void ConvertVertices(std::shared_ptr<Model>& model, std::shared_ptr<GameObject>& gameObject);
+    void ConvertTriangles(std::shared_ptr<Model>& model, std::shared_ptr<GameObject>& gameObject);
     void AddWall(const GoTransform& transform, const float& radians);
     void SetLightFlickerValue(const float& value);
     void DeInit();
+    const std::shared_ptr<GameObject> GetLightBulbGameObject();
     const std::shared_ptr<GameObject> GetCameraGameObject();
     const std::shared_ptr<GameObject> GetPlayerGameObject();
     const std::vector<std::shared_ptr<GameObject>>& GetSoundBlockingObjects();
     const std::vector<std::shared_ptr<GameObject>>& GetWalls();
     BoundingBox CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const;
-    bool IsPlayerInRoom();
+    bool IsGameObjectInRoom(const std::shared_ptr<GameObject>& gameObject);
 
-    void SetRtpcFunction(std::function<void (const float&)> function);
+    void AssignRtpcFunction(std::function<void (const float&)> function);
 
 private:
     std::shared_ptr<Camera3D> camera;
@@ -55,7 +57,6 @@ private:
 
     std::vector<std::shared_ptr<GameObject>> roomWalls;
 
-    int cameraMode;
 
     float upX = 1.0f;
     float upY = 1.0f;
@@ -65,7 +66,6 @@ private:
     float forwardY = -1.0f;
     float forwardZ = 1.0f;
 
-    bool leftHand = true;
 
     int beatValue = 0;
     float barValue = 0;

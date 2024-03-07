@@ -45,7 +45,7 @@ public:
 
 	AKRESULT AddPortals(const GameObject& gameObject, const GameObject& gameObject2);
 
-	AKRESULT SetPlayerIsInRoom(const bool& isInRoom);
+	AKRESULT SetGameObjectIsInRoom(const AkGameObjectID& gameObjectID, const bool& isInRoom);
 	AKRESULT RegisterGameObject(const AkGameObjectID& gameObjectID, std::string_view gameObjectName);
 
 	AKRESULT UpdateGameObject(const AkGameObjectID& gameObjectID, const GameObject& gameObject);

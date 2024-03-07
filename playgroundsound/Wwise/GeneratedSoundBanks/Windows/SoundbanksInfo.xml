@@ -9,7 +9,7 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{B718BC54-1747-7A19-05FA-5E02AAC1C4C1}">
+		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{F3686F50-791F-619B-0785-D42ABC07781B}">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>1355168291.bnk</Path>
@@ -74,10 +74,10 @@
 			<AcousticTextures>
 				<AcousticTexture Id="504532776" Name="Brick" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Brick" GUID="{B086A5A9-F204-4C53-A838-BDB18B18F6D6}">
 					<Properties>
-						<Property Name="AbsorptionLow" Type="Real32" Value="-79"/>
-						<Property Name="AbsorptionMidLow" Type="Real32" Value="-82"/>
-						<Property Name="AbsorptionMidHigh" Type="Real32" Value="-77"/>
-						<Property Name="AbsorptionHigh" Type="Real32" Value="-65"/>
+						<Property Name="AbsorptionLow" Type="Real32" Value="21"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="18"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="23"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="35"/>
 					</Properties>
 				</AcousticTexture>
 				<AcousticTexture Id="513139656" Name="Mountain" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Mountain" GUID="{C5933731-001A-4AB4-98DD-9B033A8C8EAB}">
@@ -162,10 +162,10 @@
 				</AcousticTexture>
 				<AcousticTexture Id="3670307564" Name="Drywall" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Drywall" GUID="{68A4E3F4-4C0B-4687-A8B8-A84DB93DBC8F}">
 					<Properties>
-						<Property Name="AbsorptionLow" Type="Real32" Value="-98"/>
-						<Property Name="AbsorptionMidLow" Type="Real32" Value="-98"/>
-						<Property Name="AbsorptionMidHigh" Type="Real32" Value="-98"/>
-						<Property Name="AbsorptionHigh" Type="Real32" Value="-98"/>
+						<Property Name="AbsorptionLow" Type="Real32" Value="2"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="2"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="2"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="2"/>
 					</Properties>
 				</AcousticTexture>
 				<AcousticTexture Id="4168643977" Name="Acoustic_Banner" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Acoustic_Banner" GUID="{2F2D53F2-DACC-408E-8B88-98B1B52A26D6}">
@@ -186,7 +186,7 @@
 				</AcousticTexture>
 			</AcousticTextures>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{86C8BFFF-53DA-5458-7C97-8C9F7F8F41E7}">
+		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{8820EEBE-8B52-4269-31C8-02EC723209E7}">
 			<ObjectPath>\SoundBanks\Default Work Unit\Main</ObjectPath>
 			<ShortName>Main</ShortName>
 			<Path>3161908922.bnk</Path>
@@ -409,5 +409,5 @@
 			</GameParameters>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{6B618CE6-535F-0050-C99D-AFF153F847B2}</FileHash>
+	<FileHash>{A5C085FD-F298-4238-4DEB-AC9A6BC09CAA}</FileHash>
 </SoundBanksInfo>

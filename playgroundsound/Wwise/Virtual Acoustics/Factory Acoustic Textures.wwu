@@ -40,7 +40,6 @@
 								<Property Name="AbsorptionLow" Type="Real32" Value="21"/>
 								<Property Name="AbsorptionMidHigh" Type="Real32" Value="23"/>
 								<Property Name="AbsorptionMidLow" Type="Real32" Value="18"/>
-								<Property Name="AbsorptionOffset" Type="Real32" Value="-100"/>
 								<Property Name="Color" Type="int16" Value="8"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>
@@ -72,7 +71,6 @@
 								<Property Name="AbsorptionLow" Type="Real32" Value="2"/>
 								<Property Name="AbsorptionMidHigh" Type="Real32" Value="2"/>
 								<Property Name="AbsorptionMidLow" Type="Real32" Value="2"/>
-								<Property Name="AbsorptionOffset" Type="Real32" Value="-100"/>
 								<Property Name="Color" Type="int16" Value="15"/>
 								<Property Name="OverrideColor" Type="bool" Value="True"/>
 							</PropertyList>

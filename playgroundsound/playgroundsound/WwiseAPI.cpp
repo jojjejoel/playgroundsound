@@ -198,11 +198,10 @@ AKRESULT WwiseAPI::RegisterGameObject(const AkGameObjectID& gameObjectID, std::s
 	return AK::SoundEngine::RegisterGameObj(gameObjectID, gameObjectName.data());
 }
 
-AKRESULT WwiseAPI::SetPlayerIsInRoom(const bool& isInRoom)
+AKRESULT WwiseAPI::SetGameObjectIsInRoom(const AkGameObjectID& gameObjectID, const bool& isInRoom)
 {
 	AkRoomID currentRoom = isInRoom ? IDs::ROOM : AK::SpatialAudio::kOutdoorRoomID;
-	AK::SpatialAudio::SetGameObjectInRoom(IDs::distanceProbeObjectID, currentRoom);
-	return AK::SpatialAudio::SetGameObjectInRoom(IDs::listenerObjectID, currentRoom);
+	return AK::SpatialAudio::SetGameObjectInRoom(gameObjectID, currentRoom);
 }
 
 AKRESULT WwiseAPI::AddListener() {
