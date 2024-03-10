@@ -1,18 +1,5 @@
 #include "Game.h"
 
-/*******************************************************************************************
-*
-*   raylib [core] example - 3d camera first person
-*
-*   Example originally created with raylib 1.3, last time updated with raylib 1.3
-*
-*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software
-*
-*   Copyright (c) 2015-2024 Ramon Santamaria (@raysan5)
-*
-********************************************************************************************/
-
 #include "raylib.h"
 #include "rcamera.h"
 #include <string>
@@ -21,11 +8,7 @@
 #define RLIGHTS_IMPLEMENTATION
 #include "rlights.h"
 
-#if defined(PLATFORM_DESKTOP)
 #define GLSL_VERSION            330
-#else   // PLATFORM_ANDROID, PLATFORM_WEB
-#define GLSL_VERSION            100
-#endif
 
 #include <algorithm>
 #include <iostream>
@@ -81,7 +64,6 @@ void Game::Run()
 	ClearBackground(RAYWHITE);
 	BeginMode3D(*camera);
 
-
 	DrawModel(*models[3], { 0,0,20 }, 1, BLACK);
 	DrawModel(*models[3], { 0,0,-20 }, 1, BLACK);
 	DrawModel(*models[4], { 20,0,0 }, 1, BLACK);
@@ -89,10 +71,7 @@ void Game::Run()
 	DrawModel(*models[5], { 0,-2,0 }, 1, WHITE);
 	DrawModel(*models[5], { 0,8,0 }, 1, WHITE);
 
-
 	DrawSphereWires({ 0,0,0 }, 0.5f, 10, 10, { 0, 255, 0, 255 });
-
-	
 
 	DrawModel(*models[0], camera->target, 1, WHITE);
 	for (size_t i = 1; i < models.size() - 4; i++)
@@ -111,7 +90,7 @@ void Game::Run()
 
 	if (!updateSecondLight || lightFlickerValue == 0)
 	{
-		DrawModel(*models[models.size() - 1], {0,0,0}, 1, WHITE);
+		DrawModel(*models[models.size() - 1], { 0,0,0 }, 1, WHITE);
 	}
 
 	DrawDiffractionPaths();
@@ -119,11 +98,10 @@ void Game::Run()
 
 	std::string playbackSpeedString = "Playback speed: " + std::to_string(playbackSpeed);
 
-	DrawText(playbackSpeedString.c_str(), 0.1, 0.1, 1, WHITE);
+	DrawText(playbackSpeedString.c_str(), 2, 2, 20, WHITE);
 
 	EndDrawing();
 }
-
 
 void Game::DrawDiffractionPaths()
 {
@@ -131,7 +109,9 @@ void Game::DrawDiffractionPaths()
 	{
 		DiffractionPath diffractionPath = diffractionPaths[pathIndex];
 
-		Color color = { Lerp(0, 255, diffractionPath.diffraction), Lerp(255, 0, diffractionPath.diffraction), 0, 255 };
+		Color color = { static_cast<unsigned char>(Lerp(0, 255, diffractionPath.diffraction)),
+						static_cast<unsigned char>(Lerp(255, 0, diffractionPath.diffraction)),
+						0, 255 };
 		int numNodes = diffractionPath.nodeCount;
 		if (numNodes > 0)
 		{
@@ -168,43 +148,39 @@ void Game::UpdateBlinkingLight()
 	if (updateFirstLight)
 	{
 
-	unsigned char gValue = 255 * std::max(0.0f, barValue);
+		unsigned char gValue = static_cast<unsigned char>(255 * std::max(0.0f, barValue));
 
-	if (beatValue == 0)
-	{
-		unsigned char aValueBar = 255 * std::max(0.0f, barValue);
-		lights[0].color = { aValueBar,0,gValue, 255 };
-	}
-	else if (beatValue == 1)
-	{
-		lights[0].color = { 0,0,gValue, 255 };
-	}
-	else if (beatValue == 2)
-	{
-		unsigned char aValueBar = 255 * std::max(0.0f, barValue);
-		lights[0].color = { 0,aValueBar,gValue, 255 };
-	}
-	else if (beatValue == 3)
-	{
-		unsigned char aValueBar = 100 * std::max(0.0f, barValue);
-		lights[0].color = { aValueBar,aValueBar,gValue, 255 };
-	}
+		if (beatValue == 0)
+		{
+			unsigned char aValueBar = static_cast<unsigned char>(255 * std::max(0.0f, barValue));
+			lights[0].color = { aValueBar,0,gValue, 255 };
+		}
+		else if (beatValue == 1)
+		{
+			lights[0].color = { 0,0,gValue, 255 };
+		}
+		else if (beatValue == 2)
+		{
+			unsigned char aValueBar = static_cast<unsigned char>(255 * std::max(0.0f, barValue));
+			lights[0].color = { 0,aValueBar,gValue, 255 };
+		}
+		else if (beatValue == 3)
+		{
+			unsigned char aValueBar = static_cast<unsigned char>(100 * std::max(0.0f, barValue));
+			lights[0].color = { aValueBar,aValueBar,gValue, 255 };
+		}
 	}
 	if (updateSecondLight)
 	{
-	unsigned char r = 155 * (1 - lightFlickerValue);
-	unsigned char g = 255 * (1 - lightFlickerValue);
-	unsigned char b = 50 * (1 - lightFlickerValue);
-	lights[1].color = { r,g,b, 150 };
-	lights[1].attenuation = 0;
-
+		unsigned char r = static_cast<unsigned char>(155 * (1 - lightFlickerValue));
+		unsigned char g = static_cast<unsigned char>(255 * (1 - lightFlickerValue));
+		unsigned char b = static_cast<unsigned char>(50 * (1 - lightFlickerValue));
+		lights[1].color = { r,g,b, 150 };
+		lights[1].attenuation = 0;
 	}
 
-	
-		UpdateLightValues(models[0]->materials[0].shader, lights[0]);
-
-		UpdateLightValues(models[0]->materials[0].shader, lights[1]);
-	
+	UpdateLightValues(models[0]->materials[0].shader, lights[0]);
+	UpdateLightValues(models[0]->materials[0].shader, lights[1]);
 }
 
 void Game::MusicBeat() {
@@ -239,7 +215,7 @@ void Game::Init()
 	SetShaderValue(shader, ambientLoc, static_cast<const void*>(new float[4] {0.1f, 0.0f, 0.0f, 1.0f}), SHADER_UNIFORM_VEC4);
 
 	lights[0] = CreateLight(LIGHT_POINT, { -5, 1, -5 }, { 5,0,5 }, { 0, 0, 0, 0 }, shader);
-	lights[1] = CreateLight(LIGHT_DIRECTIONAL, { 10, 1, 10 }, {0,1,0}, {0, 0, 0, 0}, shader);
+	lights[1] = CreateLight(LIGHT_DIRECTIONAL, { 10, 1, 10 }, { 0,1,0 }, { 0, 0, 0, 0 }, shader);
 
 
 	camera = std::make_shared<Camera3D>();

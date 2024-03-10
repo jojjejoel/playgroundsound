@@ -26,7 +26,7 @@ int main()
 	wwiseAPI.AddRoom();
 	wwiseAPI.AddPortals(*game.GetSoundBlockingObjects()[1], *game.GetSoundBlockingObjects()[1]);
 	wwiseAPI.RenderAudio();
-	//wwiseAPI.PostEvent(AK::EVENTS::ENERGY, IDs::Energy);
+	wwiseAPI.PostEvent(AK::EVENTS::ENERGY, IDs::musicObjectID);
 	GameObject emitterGO;
 	emitterGO.SetScale({ 1,1,1 });
 	emitterGO.SetPosition({ 0,0,0 });
@@ -51,7 +51,7 @@ int main()
 		wwiseAPI.SetGameObjectIsInRoom(IDs::listenerObjectID, game.IsGameObjectInRoom(game.GetCameraGameObject()));
 		wwiseAPI.SetGameObjectIsInRoom(IDs::distanceProbeObjectID, game.IsGameObjectInRoom(game.GetCameraGameObject()));
 		wwiseAPI.SetGameObjectIsInRoom(IDs::lightBulbID, game.IsGameObjectInRoom(game.GetLightBulbGameObject()));
-		game.SetDiffractionPaths(wwiseAPI.GetDiffraction(IDs::lightBulbID));
+		game.SetDiffractionPaths(wwiseAPI.GetDiffraction(IDs::musicObjectID));
 		game.SetLightFlickerValue(wwiseAPI.GetRTPCValueGameObject(AK::GAME_PARAMETERS::LIGHT_FLICKER, IDs::lightBulbID));
 		wwiseAPI.RenderAudio();
 	}
