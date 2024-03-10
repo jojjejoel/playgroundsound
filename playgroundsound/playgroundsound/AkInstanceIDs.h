@@ -3,17 +3,27 @@
 #include "AK/SpatialAudio/Common/AkSpatialAudioTypes.h"
 
 namespace IDs {
+	const AkGameObjectID musicEmitterGO = 1;
+	const AkGameObjectID cameraGO = 2;
+	const AkGameObjectID playerTruckGO = 3;
+	const AkGameObjectID lightBulbGO = 4;
+	const AkGameObjectID roomCubeGO = 5;
+	const AkGameObjectID portalGO = 6;
+
+	//Room Walls
+	const AkGameObjectID roomWallLeftGO = 7;
+	const AkGameObjectID roomWallRightGO = 8;
+	const AkGameObjectID roomWallFrontGO = 9;
+	const AkGameObjectID roomWallBackGO = 10;
+	const AkGameObjectID roomWallTopGO = 11;
+	const AkGameObjectID roomWallBottomGO = 12;
+
+
 	const AkRoomID ROOM = 200;
 	const AkPortalID PORTAL0 = 300;
 	const AkPortalID PORTAL1 = 301;
 	const AkGeometrySetID GEOMETRY_ROOM = 400;
 	const AkGeometrySetID GEOMETRY_ROOM_INSTANCE = 401;
-
-	const AkGameObjectID musicObjectID = 1;
-	const AkGameObjectID listenerObjectID = 2;
-	const AkGameObjectID distanceProbeObjectID = 3;
-	const AkGameObjectID lightBulbID = 4;
-
 
 	const AkGeometrySetID GEOMETRY_WALL_SIDES = 1000;
 	const AkGeometrySetID GEOMETRY_WALL_CEILINGFLOOR = 1001;

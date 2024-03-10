@@ -6,6 +6,8 @@
 #include "GameObject.h"
 #include <vector>
 #include <functional>
+#include <map>
+#include <string>
 
 struct Camera3D;
 struct Vector3;
@@ -22,49 +24,45 @@ struct Shader;
 class Game {
 public:
     void Run();
+    void InputControls();
     void DrawDiffractionPaths();
     void UpdateBlinkingLight();
     void MusicBeat();
     void MusicBar();
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();
-    void AddCube(const GoTransform& transform, const std::shared_ptr<Shader>& shader);
-    void ConvertVertices(std::shared_ptr<Model>& model, std::shared_ptr<GameObject>& gameObject);
-    void ConvertTriangles(std::shared_ptr<Model>& model, std::shared_ptr<GameObject>& gameObject);
+    void AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID, const GoVector3& in_position = {0,0,0}, const GoVector3& in_scale = {1,1,1});
+    void ConvertVertices(const std::shared_ptr<Model>& model, GameObject& gameObject);
+    void ConvertTriangles(const std::shared_ptr <Model>& model, GameObject& gameObject);
     void AddWall(const GoTransform& transform, const float& radians);
     void SetLightFlickerValue(const float& value);
     void DeInit();
-    const std::shared_ptr<GameObject> GetLightBulbGameObject();
-    const std::shared_ptr<GameObject> GetCameraGameObject();
-    const std::shared_ptr<GameObject> GetPlayerGameObject();
-    const std::vector<std::shared_ptr<GameObject>>& GetSoundBlockingObjects();
+    const std::shared_ptr<GameObject>& GetGameObject(const unsigned int& goID);
     const std::vector<std::shared_ptr<GameObject>>& GetWalls();
     BoundingBox CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const;
     bool IsGameObjectInRoom(const std::shared_ptr<GameObject>& gameObject);
 
-    void AssignRtpcFunction(std::function<void (const float&)> function);
+    void AssignRtpcFunction(std::function<void(const float&)> function);
+
 
 private:
+    void DrawGameObject(std::shared_ptr<GameObject> gameObject);
+    Vector3 ConvertGoVector3(const GoVector3& in_goVector);
     std::shared_ptr<Camera3D> camera;
     std::shared_ptr<GameObject> cameraGameObject;
     std::shared_ptr<GameObject> playerGameObject;
 
-    std::vector<std::shared_ptr<GameObject>> soundBlockingObjects;
-
-    std::vector<std::shared_ptr<Model>> models;
+    std::map<std::string, std::shared_ptr<Model>> models;
+    std::map<std::string, std::shared_ptr<Shader>> shaders;
 
     std::vector<std::shared_ptr<BoundingBox>> boundingBoxes;
 
     std::vector<std::shared_ptr<GameObject>> roomWalls;
 
 
-    float upX = 1.0f;
-    float upY = 1.0f;
-    float upZ = -1.0f;
+    std::map<unsigned int, std::shared_ptr<GameObject>> gameObjects;
 
-    float forwardX = -1.0f;
-    float forwardY = -1.0f;
-    float forwardZ = 1.0f;
+
 
 
     int beatValue = 0;
@@ -78,7 +76,6 @@ private:
     bool updateSecondLight = false;
 
     float playbackSpeed = 1;
-    //std::shared_ptr<Light> light;
 
 
     std::function<void(const float&)> setRtpcFunction;

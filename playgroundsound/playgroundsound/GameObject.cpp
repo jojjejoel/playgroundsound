@@ -1,9 +1,10 @@
 #include "GameObject.h"
+#include "Game.h"
 
-const GoTransform& GameObject::GetTransform() const
-{
-    return transform;
-}
+//const GoTransform& GameObject::GetTransform() const
+//{
+//    return transform;
+//}
 
 void GameObject::SetTransform(const GoTransform& in_transform)
 {
@@ -11,25 +12,28 @@ void GameObject::SetTransform(const GoTransform& in_transform)
 }
 
 
+void GameObject::SetModel(std::shared_ptr<Model> in_model)
+{
+    model = in_model;
+}
+
+std::shared_ptr<Model> GameObject::GetModel() {
+    return model;
+}
+
 void GameObject::SetPosition(const GoVector3& in_position)
 {
-    transform.position.x = in_position.x;
-    transform.position.y = in_position.y;
-    transform.position.z = -in_position.z;
+    transform.position = in_position;
 }
 
 void GameObject::SetForward(const GoVector3& in_forward)
 {
-    transform.forward.x = -in_forward.x;
-    transform.forward.y = -in_forward.y;
-    transform.forward.z = in_forward.z;
+    transform.forward = in_forward;
 }
 
 void GameObject::SetUp(const GoVector3& in_up)
 {
-    transform.up.x = in_up.x;
-    transform.up.y = in_up.y;
-    transform.up.z = -in_up.z;
+    transform.up = in_up;
 }
 
 void GameObject::SetScale(const GoVector3& in_scale)
@@ -79,4 +83,14 @@ GoVector3 GameObject::GetNormalized(float x, float y, float z) const
             return { 0.0f, 0.0f, 0.0f };  // Returning a default value
         }
 
+}
+
+void GameObject::SetScaleMultiplier(const float& in_scaleMultiplier)
+{
+    scaleMultiplier = in_scaleMultiplier;
+}
+
+const float& GameObject::GetScaleMultiplier()
+{
+    return scaleMultiplier;
 }

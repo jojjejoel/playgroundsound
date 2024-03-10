@@ -206,14 +206,14 @@ AKRESULT WwiseAPI::SetGameObjectIsInRoom(const AkGameObjectID& gameObjectID, con
 
 AKRESULT WwiseAPI::AddListener() {
 
-	RegisterGameObject(IDs::musicObjectID, "Music");
-	RegisterGameObject(IDs::listenerObjectID, "Listener");
-	RegisterGameObject(IDs::distanceProbeObjectID, "DistanceProbe");
+	RegisterGameObject(IDs::musicEmitterGO, "Music");
+	RegisterGameObject(IDs::cameraGO, "Listener");
+	RegisterGameObject(IDs::playerTruckGO, "DistanceProbe");
 
-	AK::SoundEngine::AddDefaultListener(IDs::listenerObjectID);
-	AK::SoundEngine::SetDistanceProbe(IDs::listenerObjectID, IDs::distanceProbeObjectID);
+	AK::SoundEngine::AddDefaultListener(IDs::cameraGO);
+	AK::SoundEngine::SetDistanceProbe(IDs::cameraGO, IDs::playerTruckGO);
 
-	AK::SpatialAudio::RegisterListener(IDs::listenerObjectID);
+	AK::SpatialAudio::RegisterListener(IDs::cameraGO);
 	//AK::SoundEngine::PostEvent("Car_Engine_Loop", IDs::distanceProbeObjectID);
 	return AK_Success;
 }
@@ -227,11 +227,11 @@ AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID&
 AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const GameObject& gameObject)
 {
 	AkListenerPosition soundPosition;
-	AkVector positionVector = { gameObject.GetPosition().x, gameObject.GetPosition().y ,gameObject.GetPosition().z };
+	AkVector positionVector = { gameObject.GetPosition().x, gameObject.GetPosition().y ,-gameObject.GetPosition().z };
 	GoVector3 forwardNormalized = gameObject.GetNormalizedForward();
 	GoVector3 upNormalized = gameObject.GetNormalizedUp();
-	AkVector orientationFront = { forwardNormalized.x, forwardNormalized.y, forwardNormalized.z };
-	AkVector orientationTop = { upNormalized.x, upNormalized.y, upNormalized.z };
+	AkVector orientationFront = { -forwardNormalized.x, -forwardNormalized.y, forwardNormalized.z };
+	AkVector orientationTop = { upNormalized.x, upNormalized.y, -upNormalized.z };
 	AkTransform transform;
 	transform.Set(positionVector, orientationFront, orientationTop);
 	soundPosition.Set(positionVector, orientationFront, orientationTop);
@@ -275,7 +275,7 @@ AKRESULT WwiseAPI::AddRoom() {
 
 }
 
-AKRESULT WwiseAPI::AddPortals(const GameObject& gameObject1, const GameObject& gameObject2) {
+AKRESULT WwiseAPI::AddPortal(const GameObject& gameObject1) {
 	AKRESULT result;
 
 	AkPortalParams paramsPortal;
@@ -285,10 +285,10 @@ AKRESULT WwiseAPI::AddPortals(const GameObject& gameObject1, const GameObject& g
 
 	GoVector3 forward = gameObject1.GetNormalizedForward();
 	GoVector3 up = gameObject1.GetNormalizedUp();
-	paramsPortal.Transform.SetOrientation({ forward.x, forward.y, -forward.z }, { up.x, up.y, up.z });
-	paramsPortal.Extent.halfWidth = gameObject1.GetTransform().scale.x / 2.f;
-	paramsPortal.Extent.halfHeight = gameObject1.GetTransform().scale.y / 2.f;
-	paramsPortal.Extent.halfDepth = gameObject1.GetTransform().scale.z / 2.f;
+	paramsPortal.Transform.SetOrientation({ forward.x, forward.y, -forward.z }, { -up.x, -up.y, up.z });
+	paramsPortal.Extent.halfWidth = gameObject1.GetScale().x / 2.f;
+	paramsPortal.Extent.halfHeight = gameObject1.GetScale().y / 2.f;
+	paramsPortal.Extent.halfDepth = gameObject1.GetScale().z / 2.f;
 
 	paramsPortal.bEnabled = true;
 	paramsPortal.FrontRoom = AK::SpatialAudio::kOutdoorRoomID;
@@ -530,7 +530,7 @@ void WwiseAPI::EventCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallba
 }
 
 void WwiseAPI::SetPlaybackSpeed(const float& playbackSpeed) {
-	SetRTPCValueGameObject(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed, IDs::musicObjectID);
+	SetRTPCValueGameObject(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed, IDs::musicEmitterGO);
 }
 
 void WwiseAPI::SetCallbackFunctionBeat(std::function<void()> function) {

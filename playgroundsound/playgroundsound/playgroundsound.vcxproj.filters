@@ -131,6 +131,9 @@
     <ClInclude Include="AkInstanceIDs.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectIDs.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="WwiseSource\AkFilePackageLowLevelIO.inl">

@@ -153,6 +153,7 @@
     <ClInclude Include="DiffractionPath.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObjectIDs.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h" />
     <ClInclude Include="WwiseSource\AkDefaultLowLevelIODispatcher.h" />
