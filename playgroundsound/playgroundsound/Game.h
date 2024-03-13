@@ -31,7 +31,7 @@ public:
     void MusicBar();
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();
-    void AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID, const GoVector3& in_position = {0,0,0}, const GoVector3& in_scale = {1,1,1});
+    void AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID , const std::string_view name, const GoVector3& in_position = {0,0,0}, const GoVector3& in_scale = {1,1,1});
     void ConvertVertices(const std::shared_ptr<Model>& model, GameObject& gameObject);
     void ConvertTriangles(const std::shared_ptr <Model>& model, GameObject& gameObject);
     void AddWall(const GoTransform& transform, const float& radians);
@@ -44,6 +44,7 @@ public:
 
     void AssignRtpcFunction(std::function<void(const float&)> function);
 
+    const std::map<unsigned int, std::shared_ptr<GameObject>>& GetAllGameObjects();;
 
 private:
     void DrawGameObject(std::shared_ptr<GameObject> gameObject);

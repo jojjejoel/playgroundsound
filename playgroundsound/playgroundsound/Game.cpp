@@ -45,10 +45,13 @@ void Game::Init()
 	CameraMoveToTarget(camera.get(), -2.f);
 
 	cameraGameObject = std::make_shared<GameObject>();
+	cameraGameObject->SetID(GUIDs::cameraGO);
+	cameraGameObject->SetName("Camera");
 	gameObjects.insert(std::make_pair(GUIDs::cameraGO, cameraGameObject));
 
 	playerGameObject = std::make_shared<GameObject>();
-
+	playerGameObject->SetID(GUIDs::playerTruckGO);
+	playerGameObject->SetName("Truck");
 	Model model = LoadModel("Resources/Models/truck_green.obj");
 	models.insert(std::make_pair("truck_green", std::make_shared<Model>(model)));
 	model.materials[0].shader = *shaders["lighting"];
@@ -76,16 +79,16 @@ void Game::Init()
 	models.insert(std::make_pair("PortalCube", std::make_shared<Model>(portalCubeModel)));
 	portalCubeModel.materials[0].shader = *shaders["lighting"];
 
-	AddGameObject(models["RoomCube"], GUIDs::roomCubeGO);
-	AddGameObject(nullptr, GUIDs::musicEmitterGO);
-	AddGameObject(models["PortalCube"], GUIDs::portalGO, {0,0,2.5f}, { 2,3,2 });
-	AddGameObject(models["WallFront"], GUIDs::roomWallFrontGO, {0,0,20});
-	AddGameObject(models["WallFront"], GUIDs::roomWallBackGO, {0,0,-20});
-	AddGameObject(models["WallSide"], GUIDs::roomWallRightGO, {20,0,0});
-	AddGameObject(models["WallSide"], GUIDs::roomWallLeftGO, {-20,0,0});
-	AddGameObject(models["WallTop"], GUIDs::roomWallBottomGO, {0,-2,0});
-	AddGameObject(models["WallTop"], GUIDs::roomWallTopGO, {0,8,0});
-	AddGameObject(models["PortalCube"], GUIDs::lightBulbGO, {10,1,10});
+	AddGameObject(models["RoomCube"], GUIDs::roomCubeGO, "Room");
+	AddGameObject(nullptr, GUIDs::musicEmitterGO, "Music");
+	AddGameObject(models["PortalCube"], GUIDs::portalGO, "Portal", {0, 0, 2.5f}, {2,3,2});
+	AddGameObject(models["WallFront"], GUIDs::roomWallFrontGO, "WallFront", {0, 0, 20});
+	AddGameObject(models["WallFront"], GUIDs::roomWallBackGO, "WallBack", {0, 0, -20});
+	AddGameObject(models["WallSide"], GUIDs::roomWallRightGO, "WallRight", {20, 0, 0});
+	AddGameObject(models["WallSide"], GUIDs::roomWallLeftGO, "WallLeft", {-20, 0, 0});
+	AddGameObject(models["WallTop"], GUIDs::roomWallBottomGO, "WallBottom", {0, -2, 0});
+	AddGameObject(models["WallTop"], GUIDs::roomWallTopGO, "WallTop", {0, 8, 0});
+	AddGameObject(models["PortalCube"], GUIDs::lightBulbGO, "LightBulb", {10, 1, 10});
 
 	GoTransform transform;
 	transform.position = { 0,0,0 };
@@ -112,6 +115,21 @@ void Game::Run()
 	barValue -= GetFrameTime() * 0.37f * playbackSpeed;
 	std::cout << "Beat: " << beatValue << "Bar: " << barValue << std::endl;
 	UpdateBlinkingLight();
+
+
+	for (const auto& gameObject : gameObjects)
+	{
+		if (IsGameObjectInRoom(gameObject.second))
+		{
+			gameObject.second->SetRoomID(GUIDs::ROOM);
+		}
+		else
+		{
+			gameObject.second->SetRoomID(0);
+		}
+	}
+
+
 
 	BeginDrawing();
 
@@ -259,10 +277,10 @@ void Game::SetDiffractionPaths(const std::vector<DiffractionPath> in_diffraction
 	diffractionPaths = in_diffractionPaths;
 }
 
-void Game::AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID, const GoVector3& in_position, const GoVector3& in_scale)
+void Game::AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID, const std::string_view name, const GoVector3& in_position, const GoVector3& in_scale)
 {
 	GameObject gameObject;
-
+	gameObject.SetName(name);
 	gameObject.SetPosition(in_position);
 	gameObject.SetScale(in_scale);
 	if (model != nullptr)
@@ -274,6 +292,7 @@ void Game::AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID,
 	}
 
 	gameObject.SetModel(model);
+	gameObject.SetID(goID);
 
 	gameObjects.insert(std::make_pair(goID, std::make_shared<GameObject>(gameObject)));
 }
@@ -387,6 +406,11 @@ bool Game::IsGameObjectInRoom(const std::shared_ptr<GameObject>& gameObject)
 void Game::AssignRtpcFunction(std::function<void(const float&)> function)
 {
 	setRtpcFunction = function;
+}
+
+const std::map<unsigned int, std::shared_ptr<GameObject>>& Game::GetAllGameObjects()
+{
+	return gameObjects;
 }
 
 void Game::DrawGameObject(std::shared_ptr<GameObject> in_gameObject) {

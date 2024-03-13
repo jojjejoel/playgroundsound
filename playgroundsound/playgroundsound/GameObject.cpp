@@ -1,23 +1,17 @@
 #include "GameObject.h"
 #include "Game.h"
 
-//const GoTransform& GameObject::GetTransform() const
-//{
-//    return transform;
-//}
-
 void GameObject::SetTransform(const GoTransform& in_transform)
 {
     transform = in_transform;
 }
-
 
 void GameObject::SetModel(std::shared_ptr<Model> in_model)
 {
     model = in_model;
 }
 
-std::shared_ptr<Model> GameObject::GetModel() {
+const std::shared_ptr<Model> GameObject::GetModel() const {
     return model;
 }
 
@@ -39,6 +33,10 @@ void GameObject::SetUp(const GoVector3& in_up)
 void GameObject::SetScale(const GoVector3& in_scale)
 {
     transform.scale = in_scale;
+}
+
+const unsigned int& GameObject::GetID() const {
+    return iD;
 }
 
 const GoVector3& GameObject::GetPosition() const
@@ -88,6 +86,41 @@ GoVector3 GameObject::GetNormalized(float x, float y, float z) const
 void GameObject::SetScaleMultiplier(const float& in_scaleMultiplier)
 {
     scaleMultiplier = in_scaleMultiplier;
+}
+
+void GameObject::SetID(const unsigned int& in_iD)
+{
+    iD = in_iD;
+}
+
+const bool& GameObject::GetIsWwiseRegistered() const
+{
+    return isWwiseRegistered;
+}
+
+void GameObject::SetName(const std::string_view in_name)
+{
+    name = in_name;
+}
+
+std::string_view GameObject::GetName() const
+{
+    return name;
+}
+
+void GameObject::SetRoomID(const unsigned int& in_roomID)
+{
+    roomID = in_roomID;
+}
+
+const unsigned int& GameObject::GetRoomID() const
+{
+    return roomID;
+}
+
+void GameObject::SetIsWwiseRegistered(const bool& in_isWwiseRegistered)
+{
+    isWwiseRegistered = in_isWwiseRegistered;
 }
 
 const float& GameObject::GetScaleMultiplier()

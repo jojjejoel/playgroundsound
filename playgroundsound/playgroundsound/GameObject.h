@@ -2,6 +2,7 @@
 #include <cmath>
 #include "Mesh.h"
 #include <memory>
+#include <string>
 struct Model;
 
 struct GoVector3 {
@@ -26,9 +27,9 @@ public:
 	const GoVector3& GetUp() const;
 	const GoVector3& GetForward() const;
 	const GoVector3& GetScale() const;
+	const std::shared_ptr<Model> GetModel() const;
 	void SetTransform(const GoTransform& transform);
 	void SetModel(std::shared_ptr<Model> in_model);
-	std::shared_ptr<Model> GetModel();
 	void SetPosition(const GoVector3& position);
 	void SetForward(const GoVector3& in_position);
 	void SetUp(const GoVector3& in_position);
@@ -44,6 +45,19 @@ public:
 	void SetScaleMultiplier(const float& in_scaleMultiplier);
 	const float& GetScaleMultiplier();
 
+	void SetID(const unsigned int& in_iD);
+	const unsigned int& GetID() const;
+
+	const bool& GetIsWwiseRegistered() const;
+	void SetIsWwiseRegistered(const bool& in_isWwiseRegistered);
+
+	void SetName(const std::string_view in_name);
+	std::string_view GetName() const;
+
+	bool isWwiseRegistered = false;
+
+	void SetRoomID(const unsigned int& roomID);
+	const unsigned int& GetRoomID() const;
 private:
 	GoVector3 GetNormalized(float x, float y, float z) const;
 
@@ -52,5 +66,11 @@ private:
 	std::shared_ptr<Model> model;
 
 	float scaleMultiplier = 1.0f;
+
+	unsigned int iD;
+	unsigned int roomID;
+
+	std::string name;
+
 };
 

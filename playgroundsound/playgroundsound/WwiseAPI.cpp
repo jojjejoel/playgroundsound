@@ -30,7 +30,7 @@
 
 //IDs
 #include "Wwise_IDs.h"
-
+#include "GameObjectIDs.h"
 
 #include <AK/MusicEngine/Common/AkMusicEngine.h>
 #include "AkInstanceIDs.h"
@@ -110,21 +110,36 @@ float WwiseAPI::GetRTPCValue(const AkRtpcID& in_rtpcID, const AkGameObjectID& in
 	AkRtpcValue rtpcValue;
 	AK::SoundEngine::Query::RTPCValue_type valueType = in_valueType;
 	AKRESULT result = AK::SoundEngine::Query::GetRTPCValue(in_rtpcID, in_akGameObjectID, in_playingID, rtpcValue, valueType);
-
+	if (result != AK_Success)
+	{
+		// Log error/warning
+	}
 	float normalizedValue = (rtpcValue - (in_minValue)) / (in_maxValue - (in_minValue));
 	return normalizedValue;
 }
 
 void WwiseAPI::SetRTPCValue(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue, const AkGameObjectID& akGameObjectID) {
 	AKRESULT result = AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, akGameObjectID);
+	if (result != AK_Success)
+	{
+		// Log error/warning
+	}
 }
 
 void WwiseAPI::SetRTPCValueGlobal(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue) {
 	AKRESULT result = AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, AK_INVALID_GAME_OBJECT);
+	if (result != AK_Success)
+	{
+		// Log error/warning
+	}
 }
 
 void WwiseAPI::SetRTPCValueGameObject(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue, const AkGameObjectID& akGameObjectID) {
 	AKRESULT result = AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, akGameObjectID);
+	if (result != AK_Success)
+	{
+		// Log error/warning
+	}
 }
 
 void WwiseAPI::RenderAudio()
@@ -192,40 +207,40 @@ void WwiseAPI::Log(std::string_view logMsg) {
 	std::cout << logMsg << std::endl;
 }
 
-AKRESULT WwiseAPI::RegisterGameObject(const AkGameObjectID& gameObjectID, std::string_view gameObjectName)
+AKRESULT WwiseAPI::RegisterGameObject(const GameObject& gameObject)
 {
-	akGameObjects.emplace_back(gameObjectID);
-	return AK::SoundEngine::RegisterGameObj(gameObjectID, gameObjectName.data());
+	AkGameObjectID akGameObjectID = gameObject.GetID();
+	const char* name = gameObject.GetName().data();
+	registeredObjects.insert(std::make_pair(akGameObjectID, true));
+	return AK::SoundEngine::RegisterGameObj(akGameObjectID, name);
 }
 
-AKRESULT WwiseAPI::SetGameObjectIsInRoom(const AkGameObjectID& gameObjectID, const bool& isInRoom)
+AKRESULT WwiseAPI::SetGameObjectIsInRoom(const AkGameObjectID& gameObjectID, const unsigned int& roomID)
 {
-	AkRoomID currentRoom = isInRoom ? IDs::ROOM : AK::SpatialAudio::kOutdoorRoomID;
-	return AK::SpatialAudio::SetGameObjectInRoom(gameObjectID, currentRoom);
+	return AK::SpatialAudio::SetGameObjectInRoom(gameObjectID, roomID);
 }
 
 AKRESULT WwiseAPI::AddListener() {
+	AK::SoundEngine::AddDefaultListener(static_cast<AkGameObjectID>(GUIDs::cameraGO));
+	AK::SoundEngine::SetDistanceProbe(static_cast<AkGameObjectID>(GUIDs::cameraGO), static_cast<AkGameObjectID>(GUIDs::playerTruckGO));
 
-	RegisterGameObject(IDs::musicEmitterGO, "Music");
-	RegisterGameObject(IDs::cameraGO, "Listener");
-	RegisterGameObject(IDs::playerTruckGO, "DistanceProbe");
-
-	AK::SoundEngine::AddDefaultListener(IDs::cameraGO);
-	AK::SoundEngine::SetDistanceProbe(IDs::cameraGO, IDs::playerTruckGO);
-
-	AK::SpatialAudio::RegisterListener(IDs::cameraGO);
-	//AK::SoundEngine::PostEvent("Car_Engine_Loop", IDs::distanceProbeObjectID);
+	AK::SpatialAudio::RegisterListener(static_cast<AkGameObjectID>(GUIDs::cameraGO));
 	return AK_Success;
 }
 
 AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID)
 {
-	AK::SpatialAudio::SetGameObjectInRoom(gameObjectID, IDs::ROOM);
+	AK::SpatialAudio::SetGameObjectInRoom(gameObjectID, GUIDs::ROOM);
 	return AK::SoundEngine::PostEvent(eventID, gameObjectID, AK_MusicSyncBeat | AK_MusicSyncBar, &WwiseAPI::EventCallback, this);
 }
 
-AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const GameObject& gameObject)
+AKRESULT WwiseAPI::UpdateGameObject(const GameObject& gameObject)
 {
+	AkGameObjectID akGameObjectID = gameObject.GetID();
+	if (registeredObjects.find(akGameObjectID) == registeredObjects.end())
+	{
+		return AK_InvalidID;
+	}
 	AkListenerPosition soundPosition;
 	AkVector positionVector = { gameObject.GetPosition().x, gameObject.GetPosition().y ,-gameObject.GetPosition().z };
 	GoVector3 forwardNormalized = gameObject.GetNormalizedForward();
@@ -235,6 +250,15 @@ AKRESULT WwiseAPI::UpdateGameObject(const AkGameObjectID& akGameObjectID, const 
 	AkTransform transform;
 	transform.Set(positionVector, orientationFront, orientationTop);
 	soundPosition.Set(positionVector, orientationFront, orientationTop);
+
+	if (gameObject.GetRoomID() != 0)
+	{
+		SetGameObjectIsInRoom(akGameObjectID, gameObject.GetRoomID());
+	}
+	else
+	{
+		SetGameObjectIsInRoom(akGameObjectID, AK::SpatialAudio::kOutdoorRoomID);
+	}
 
 	AKRESULT result = AK::SoundEngine::SetPosition(akGameObjectID, soundPosition);
 	return result;
@@ -255,9 +279,14 @@ AKRESULT WwiseAPI::AddRoom() {
 	paramsRoom.RoomGameObj_KeepRegistered = true;
 	paramsRoom.RoomGameObj_AuxSendLevelToSelf = 0.25f;
 	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Inside");
-	paramsRoom.GeometryInstanceID = IDs::GEOMETRY_ROOM_INSTANCE;
+	paramsRoom.GeometryInstanceID = GUIDs::GEOMETRY_ROOM_INSTANCE;
 
-	result = AK::SpatialAudio::SetRoom(IDs::ROOM, paramsRoom, "Inside");
+	result = AK::SpatialAudio::SetRoom(GUIDs::ROOM, paramsRoom, "Inside");
+	if (result != AK_Success)
+	{
+		return result;
+		// Log error/warning
+	}
 
 	paramsRoom.Front.X = 0.f;
 	paramsRoom.Front.Y = 0.f;
@@ -270,8 +299,13 @@ AKRESULT WwiseAPI::AddRoom() {
 	paramsRoom.RoomGameObj_KeepRegistered = true;
 	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Outside");
 	paramsRoom.GeometryInstanceID = AkGeometryInstanceID();
-	result = AK::SpatialAudio::SetRoom(AK::SpatialAudio::kOutdoorRoomID, paramsRoom, "Outside");
-	return result;
+	result = AK::SpatialAudio::SetRoom(AK::SpatialAudio::kOutdoorRoomID, paramsRoom, "Outside"); 
+	if (result != AK_Success)
+	{
+		// Log error/warning
+		return result;
+	}
+	return AK_Success;
 
 }
 
@@ -292,9 +326,14 @@ AKRESULT WwiseAPI::AddPortal(const GameObject& gameObject1) {
 
 	paramsPortal.bEnabled = true;
 	paramsPortal.FrontRoom = AK::SpatialAudio::kOutdoorRoomID;
-	paramsPortal.BackRoom = IDs::ROOM;
+	paramsPortal.BackRoom = GUIDs::ROOM;
 
-	result = AK::SpatialAudio::SetPortal(IDs::PORTAL0, paramsPortal, "Portal One");
+	result = AK::SpatialAudio::SetPortal(GUIDs::PORTAL0, paramsPortal, "Portal One");
+	if (result != AK_Success)
+	{
+		return result;
+		// Log error/warning
+	}
 	return AK_Success;
 }
 
@@ -346,28 +385,37 @@ AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<GameObject>& gameObject) {
 	geomWallsInside.EnableTriangles = true;
 
 
-	result = AK::SpatialAudio::SetGeometry(IDs::GEOMETRY_WALL_SIDES, geomWallsInside);
+	result = AK::SpatialAudio::SetGeometry(GUIDs::GEOMETRY_WALL_SIDES, geomWallsInside);
+	if (result != AK_Success)
+	{
+		return result;
+		// Log error/warning
+	}
 
 	AkGeometryParams geomRoofCeilingInside = geomWallsInside;
 	geomRoofCeilingInside.EnableDiffractionOnBoundaryEdges = false;
-	result = AK::SpatialAudio::SetGeometry(IDs::GEOMETRY_WALL_CEILINGFLOOR, geomRoofCeilingInside);
+	result = AK::SpatialAudio::SetGeometry(GUIDs::GEOMETRY_WALL_CEILINGFLOOR, geomRoofCeilingInside);
+	if (result != AK_Success)
+	{
+		return result;
+		// Log error/warning
+	}
 
+	GenerateWalls(gameObject, GUIDs::ROOM, GUIDs::GEOMETRY_WALL_SIDES, GUIDs::GEOMETRY_WALL_CEILINGFLOOR,
+		GUIDs::GEOMETRY_WALL_INSTANCE_1,
+		GUIDs::GEOMETRY_WALL_INSTANCE_2,
+		GUIDs::GEOMETRY_WALL_INSTANCE_3,
+		GUIDs::GEOMETRY_WALL_INSTANCE_4,
+		GUIDs::GEOMETRY_WALL_INSTANCE_5,
+		GUIDs::GEOMETRY_WALL_INSTANCE_6);
 
-	GenerateWalls(gameObject, IDs::ROOM, IDs::GEOMETRY_WALL_SIDES, IDs::GEOMETRY_WALL_CEILINGFLOOR,
-		IDs::GEOMETRY_WALL_INSTANCE_1,
-		IDs::GEOMETRY_WALL_INSTANCE_2,
-		IDs::GEOMETRY_WALL_INSTANCE_3,
-		IDs::GEOMETRY_WALL_INSTANCE_4,
-		IDs::GEOMETRY_WALL_INSTANCE_5,
-		IDs::GEOMETRY_WALL_INSTANCE_6);
-
-	GenerateWalls(gameObject, AK::SpatialAudio::kOutdoorRoomID, IDs::GEOMETRY_WALL_SIDES, IDs::GEOMETRY_WALL_CEILINGFLOOR,
-		IDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_1,
-		IDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_2,
-		IDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_3,
-		IDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_4,
-		IDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_5,
-		IDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_6);
+	GenerateWalls(gameObject, AK::SpatialAudio::kOutdoorRoomID, GUIDs::GEOMETRY_WALL_SIDES, GUIDs::GEOMETRY_WALL_CEILINGFLOOR,
+		GUIDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_1,
+		GUIDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_2,
+		GUIDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_3,
+		GUIDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_4,
+		GUIDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_5,
+		GUIDs::GEOMETRY_WALL_INSTANCE_OUTSIDE_6);
 
 
 	return AK_Success;
@@ -501,15 +549,22 @@ AKRESULT WwiseAPI::AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject
 	geom.EnableDiffractionOnBoundaryEdges = false;
 	geom.EnableTriangles = true;
 
-	result = AK::SpatialAudio::SetGeometry(IDs::GEOMETRY_ROOM, geom);
+	result = AK::SpatialAudio::SetGeometry(GUIDs::GEOMETRY_ROOM, geom);
+	if (result != AK_Success)
+	{
+		return result;
+	}
 
 	AkGeometryInstanceParams instanceParams;
 
-	instanceParams.GeometrySetID = IDs::GEOMETRY_ROOM;
-	instanceParams.RoomID = IDs::ROOM;
+	instanceParams.GeometrySetID = GUIDs::GEOMETRY_ROOM;
+	instanceParams.RoomID = GUIDs::ROOM;
 
-	result = AK::SpatialAudio::SetGeometryInstance(IDs::GEOMETRY_ROOM_INSTANCE, instanceParams);
-
+	result = AK::SpatialAudio::SetGeometryInstance(GUIDs::GEOMETRY_ROOM_INSTANCE, instanceParams);
+	if (result != AK_Success)
+	{
+		return result;
+	}
 	return AK_Success;
 }
 
@@ -530,7 +585,7 @@ void WwiseAPI::EventCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallba
 }
 
 void WwiseAPI::SetPlaybackSpeed(const float& playbackSpeed) {
-	SetRTPCValueGameObject(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed, IDs::musicEmitterGO);
+	SetRTPCValueGameObject(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed, GUIDs::musicEmitterGO);
 }
 
 void WwiseAPI::SetCallbackFunctionBeat(std::function<void()> function) {

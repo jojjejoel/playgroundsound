@@ -16,7 +16,9 @@ int main()
 	wwiseAPI.LoadBank(AK::BANKS::INIT);
 
 	wwiseAPI.LoadBank(AK::BANKS::MAIN);
-
+	wwiseAPI.RegisterGameObject(*game.GetGameObject(GUIDs::musicEmitterGO));
+	wwiseAPI.RegisterGameObject(*game.GetGameObject(GUIDs::cameraGO));
+	wwiseAPI.RegisterGameObject(*game.GetGameObject(GUIDs::playerTruckGO));
 	wwiseAPI.AddListener();
 
 	wwiseAPI.AddGeometry(game.GetWalls()[0]);
@@ -26,29 +28,26 @@ int main()
 	wwiseAPI.AddRoom();
 	wwiseAPI.AddPortal(*game.GetGameObject(GUIDs::portalGO));
 	wwiseAPI.RenderAudio();
-	wwiseAPI.PostEvent(AK::EVENTS::ENERGY, IDs::musicEmitterGO);
+	wwiseAPI.PostEvent(AK::EVENTS::ENERGY, GUIDs::musicEmitterGO);
 	wwiseAPI.SetCallbackFunctionBeat(std::bind(&Game::MusicBeat, &game));
 	wwiseAPI.SetCallbackFunctionBar(std::bind(&Game::MusicBar, &game));
 
 	game.AssignRtpcFunction(std::bind(&WwiseAPI::SetPlaybackSpeed, &wwiseAPI, std::placeholders::_1));
 
-	wwiseAPI.RegisterGameObject(IDs::lightBulbGO, "Light_Bulb");
-	wwiseAPI.PostEvent(AK::EVENTS::LIGHT_FLICKER, IDs::lightBulbGO);
+	wwiseAPI.RegisterGameObject(*game.GetGameObject(GUIDs::lightBulbGO));
+	wwiseAPI.PostEvent(AK::EVENTS::LIGHT_FLICKER, GUIDs::lightBulbGO);
 	
-
-	int a = 0;
-	while (a >= 0)
+	while (true)
 	{
 		game.Run();
-		wwiseAPI.UpdateGameObject(IDs::cameraGO, *game.GetGameObject(GUIDs::cameraGO));
-		wwiseAPI.UpdateGameObject(IDs::playerTruckGO, *game.GetGameObject(GUIDs::playerTruckGO));
-		wwiseAPI.UpdateGameObject(IDs::musicEmitterGO, *game.GetGameObject(GUIDs::musicEmitterGO));
-		wwiseAPI.UpdateGameObject(IDs::lightBulbGO, *game.GetGameObject(GUIDs::lightBulbGO));
-		wwiseAPI.SetGameObjectIsInRoom(IDs::cameraGO, game.IsGameObjectInRoom(game.GetGameObject(GUIDs::cameraGO)));
-		wwiseAPI.SetGameObjectIsInRoom(IDs::playerTruckGO, game.IsGameObjectInRoom(game.GetGameObject(GUIDs::playerTruckGO)));
-		wwiseAPI.SetGameObjectIsInRoom(IDs::lightBulbGO, game.IsGameObjectInRoom(game.GetGameObject(GUIDs::lightBulbGO)));
-		game.SetDiffractionPaths(wwiseAPI.GetDiffraction(IDs::musicEmitterGO));
-		game.SetLightFlickerValue(wwiseAPI.GetRTPCValueGameObject(AK::GAME_PARAMETERS::LIGHT_FLICKER, IDs::lightBulbGO));
+
+		for (const auto& gameobject : game.GetAllGameObjects())
+		{
+			wwiseAPI.UpdateGameObject(*gameobject.second);
+		}
+
+		game.SetDiffractionPaths(wwiseAPI.GetDiffraction(GUIDs::musicEmitterGO));
+		game.SetLightFlickerValue(wwiseAPI.GetRTPCValueGameObject(AK::GAME_PARAMETERS::LIGHT_FLICKER, GUIDs::lightBulbGO));
 		wwiseAPI.RenderAudio();
 	}
 	game.DeInit();

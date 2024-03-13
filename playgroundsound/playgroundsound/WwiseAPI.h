@@ -13,6 +13,7 @@
 #include <memory>
 #include <vector>
 #include <functional>
+#include <map>
 
 class WwiseAPI
 {
@@ -28,6 +29,8 @@ public:
 	std::vector<DiffractionPath> GetDiffraction(const AkGameObjectID& gameObjectID);
 	AKRESULT AddListener();
 	AkPlayingID PostEvent(const AkUniqueID& eventID, const AkGameObjectID& gameObjectID);
+
+	AKRESULT UpdateAllGameObjects();
 
 	AKRESULT AddGeometry(const std::shared_ptr<GameObject>& gameObject);
 
@@ -45,10 +48,10 @@ public:
 
 	AKRESULT AddPortal(const GameObject& gameObject);
 
-	AKRESULT SetGameObjectIsInRoom(const AkGameObjectID& gameObjectID, const bool& isInRoom);
-	AKRESULT RegisterGameObject(const AkGameObjectID& gameObjectID, std::string_view gameObjectName);
+	AKRESULT SetGameObjectIsInRoom(const AkGameObjectID& gameObjectID, const unsigned int& roomID);
+	AKRESULT RegisterGameObject(const GameObject& gameObject);
 
-	AKRESULT UpdateGameObject(const AkGameObjectID& gameObjectID, const GameObject& gameObject);
+	AKRESULT UpdateGameObject(const GameObject& gameObject);
 private:
 	void SetRTPCValue(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue, const AkGameObjectID& akGameObjectID);
 	void GenerateWalls(const std::shared_ptr<GameObject>& gameObject, const AkRoomID& roomID,
@@ -63,9 +66,10 @@ private:
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 	void Log(std::string_view logMsg);
 
-	std::vector<AkGameObjectID> akGameObjects;
 	std::function<void()> callbackFunctionBeat;
 	std::function<void()> callbackFunctionBar;
+
+	std::map<unsigned int, bool> registeredObjects;
 
 };
 
