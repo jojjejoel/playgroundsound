@@ -149,7 +149,6 @@
     <ClCompile Include="WwiseAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AkInstanceIDs.h" />
     <ClInclude Include="DiffractionPath.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Game.h" />

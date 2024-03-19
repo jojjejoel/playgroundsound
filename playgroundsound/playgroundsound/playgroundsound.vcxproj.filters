@@ -128,9 +128,6 @@
     <ClInclude Include="DiffractionPath.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="AkInstanceIDs.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameObjectIDs.h">
       <Filter>Source Files</Filter>
     </ClInclude>

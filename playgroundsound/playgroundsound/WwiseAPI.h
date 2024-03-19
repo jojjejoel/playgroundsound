@@ -2,13 +2,12 @@
 #include <AK/SoundEngine/Common/AkTypes.h>
 #include <AkFilePackageLowLevelIOBlocking.h>
 #include <AK/SoundEngine/Common/AkCallback.h>
-
-#include "AK/SpatialAudio/Common/AkSpatialAudioTypes.h"
-//Get RTPC (Query)
+#include <AK/SpatialAudio/Common/AkSpatialAudioTypes.h>
 #include <AK/SoundEngine/Common/AkQueryParameters.h>
-#include "GameObject.h"
 
+#include "GameObject.h"
 #include "DiffractionPath.h"
+
 #include <string>
 #include <memory>
 #include <vector>

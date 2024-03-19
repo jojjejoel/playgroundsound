@@ -1,39 +1,25 @@
 #include "WwiseAPI.h"
+
 #include <iostream>
 
-//// Memory management
 #include <AK/SoundEngine/Common/AkMemoryMgr.h>
 #include <AK/SoundEngine/Common/AkModule.h>
-//
-//// Streaming
 #include <AK/SoundEngine/Common/IAkStreamMgr.h>
 #include <AK/Tools/Common/AkPlatformFuncs.h>
-
-//// File packaging
 #include "AkFilePackage.h"
 #include "AkFilePackageLUT.h"
-
-// Communication
 #include "AK/Comm/AkCommunication.h"
-
 #include "AK/SpatialAudio/Common/AkSpatialAudio.h"
-
-
-//Plugins
 #include "AK/Plugin/AkRoomVerbFXFactory.h"
 #include <AK/Plugin/AkMeterFXFactory.h>
 #include <AK/Plugin/AkGainFXFactory.h>
 #include <AK/Plugin/AkParametricEQFXFactory.h>
-
-
-
+#include <AK/MusicEngine/Common/AkMusicEngine.h>
 
 //IDs
 #include "Wwise_IDs.h"
 #include "GameObjectIDs.h"
 
-#include <AK/MusicEngine/Common/AkMusicEngine.h>
-#include "AkInstanceIDs.h"
 
 
 bool WwiseAPI::Init()
@@ -44,19 +30,16 @@ bool WwiseAPI::Init()
 
 	AkStreamMgrSettings streamSettings;
 	AK::StreamMgr::GetDefaultSettings(streamSettings);
-
 	AK::StreamMgr::Create(streamSettings);
 
 	AkDeviceSettings deviceSettings;
 	AK::StreamMgr::GetDefaultDeviceSettings(deviceSettings);
-
 	g_lowLevelIO.Init(deviceSettings);
-
 
 	AkInitSettings initSettings;
 	AkPlatformInitSettings platformInitSettings;
-	AK::SoundEngine::GetDefaultInitSettings(initSettings);
 
+	AK::SoundEngine::GetDefaultInitSettings(initSettings);
 	AK::SoundEngine::GetDefaultPlatformInitSettings(platformInitSettings);
 	AK::SoundEngine::Init(&initSettings, &platformInitSettings);
 
@@ -78,7 +61,6 @@ bool WwiseAPI::Init()
 
 #endif // !AK_OPTIMIZED
 
-
 	return true;
 }
 
@@ -92,6 +74,7 @@ void WwiseAPI::DeInit()
 	}
 	AK::Comm::Term();
 	AK::MemoryMgr::Term();
+	AK::MusicEngine::Term();
 }
 
 AKRESULT WwiseAPI::LoadBank(const AkUniqueID& bankID)
@@ -299,7 +282,7 @@ AKRESULT WwiseAPI::AddRoom() {
 	paramsRoom.RoomGameObj_KeepRegistered = true;
 	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Outside");
 	paramsRoom.GeometryInstanceID = AkGeometryInstanceID();
-	result = AK::SpatialAudio::SetRoom(AK::SpatialAudio::kOutdoorRoomID, paramsRoom, "Outside"); 
+	result = AK::SpatialAudio::SetRoom(AK::SpatialAudio::kOutdoorRoomID, paramsRoom, "Outside");
 	if (result != AK_Success)
 	{
 		// Log error/warning
@@ -574,21 +557,23 @@ void WwiseAPI::EventCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallba
 	switch (in_eType)
 	{
 	case AK_MusicSyncBeat:
-	wwiseAPI->callbackFunctionBeat();
+		wwiseAPI->callbackFunctionBeat();
 		break;
 	case AK_MusicSyncBar:
-	wwiseAPI->callbackFunctionBar();
+		wwiseAPI->callbackFunctionBar();
 		break;
 	default:
 		break;
 	}
 }
 
-void WwiseAPI::SetPlaybackSpeed(const float& playbackSpeed) {
+void WwiseAPI::SetPlaybackSpeed(const float& playbackSpeed) 
+{
 	SetRTPCValueGameObject(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed, GUIDs::musicEmitterGO);
 }
 
-void WwiseAPI::SetCallbackFunctionBeat(std::function<void()> function) {
+void WwiseAPI::SetCallbackFunctionBeat(std::function<void()> function) 
+{
 	callbackFunctionBeat = function;
 }
 
