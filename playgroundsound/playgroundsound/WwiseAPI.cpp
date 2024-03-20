@@ -190,7 +190,7 @@ void WwiseAPI::Log(std::string_view logMsg) {
 	std::cout << logMsg << std::endl;
 }
 
-AKRESULT WwiseAPI::RegisterGameObject(const GameObject& gameObject)
+AKRESULT WwiseAPI::RegisterGameObject(const OldGameObject& gameObject)
 {
 	AkGameObjectID akGameObjectID = gameObject.GetID();
 	const char* name = gameObject.GetName().data();
@@ -217,7 +217,7 @@ AkPlayingID WwiseAPI::PostEvent(const AkUniqueID& eventID, const AkGameObjectID&
 	return AK::SoundEngine::PostEvent(eventID, gameObjectID, AK_MusicSyncBeat | AK_MusicSyncBar, &WwiseAPI::EventCallback, this);
 }
 
-AKRESULT WwiseAPI::UpdateGameObject(const GameObject& gameObject)
+AKRESULT WwiseAPI::UpdateGameObject(const OldGameObject& gameObject)
 {
 	AkGameObjectID akGameObjectID = gameObject.GetID();
 	if (registeredObjects.find(akGameObjectID) == registeredObjects.end())
@@ -292,7 +292,7 @@ AKRESULT WwiseAPI::AddRoom() {
 
 }
 
-AKRESULT WwiseAPI::AddPortal(const GameObject& gameObject1) {
+AKRESULT WwiseAPI::AddPortal(const OldGameObject& gameObject1) {
 	AKRESULT result;
 
 	AkPortalParams paramsPortal;
@@ -320,7 +320,7 @@ AKRESULT WwiseAPI::AddPortal(const GameObject& gameObject1) {
 	return AK_Success;
 }
 
-AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<GameObject>& gameObject) {
+AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<OldGameObject>& gameObject) {
 	AKRESULT result;
 	AkGeometryParams geomWallsInside;
 	geomWallsInside.NumVertices = gameObject->mesh.vertices.size();
@@ -404,7 +404,7 @@ AKRESULT WwiseAPI::AddGeometry(const std::shared_ptr<GameObject>& gameObject) {
 	return AK_Success;
 }
 
-void WwiseAPI::GenerateWalls(const std::shared_ptr<GameObject>& gameObject, const AkRoomID& roomID,
+void WwiseAPI::GenerateWalls(const std::shared_ptr<OldGameObject>& gameObject, const AkRoomID& roomID,
 	const AkGeometrySetID& wallSidesGeometryID,
 	const AkGeometrySetID& wallCeilingFloorGeometryID,
 	const AkGeometryInstanceID& wallInstance1,
@@ -485,7 +485,7 @@ void WwiseAPI::GenerateWalls(const std::shared_ptr<GameObject>& gameObject, cons
 	}
 }
 
-AKRESULT WwiseAPI::AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject) {
+AKRESULT WwiseAPI::AddRoomGeometry(const std::shared_ptr<OldGameObject>& gameObject) {
 	AKRESULT result;
 	AkGeometryParams geom;
 	geom.NumVertices = gameObject->mesh.vertices.size();

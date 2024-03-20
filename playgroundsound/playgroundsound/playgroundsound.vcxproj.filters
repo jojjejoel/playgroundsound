@@ -16,6 +16,12 @@
     <Filter Include="Resource Files\Wwise">
       <UniqueIdentifier>{cfec5866-c030-4c55-9e5d-efece0929ec5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{c425a415-c9eb-4711-877e-57be2747c6b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{d088ccf0-ece5-4ac1-8ad5-ee96e43c9c4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -57,14 +63,20 @@
     <ClCompile Include="WwiseSource\stdafx.cpp">
       <Filter>Resource Files\Wwise</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="OldGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Mesh.h">
-      <Filter>Header Files</Filter>
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,9 +131,6 @@
     <ClInclude Include="WwiseSource\stdafx.h">
       <Filter>Resource Files\Wwise</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -130,6 +139,27 @@
     </ClInclude>
     <ClInclude Include="GameObjectIDs.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GoTransform.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="OldGameObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GoVector3.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

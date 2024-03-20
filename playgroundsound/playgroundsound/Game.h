@@ -3,7 +3,7 @@
 
 #include "DiffractionPath.h"
 #include <memory>
-#include "GameObject.h"
+#include "OldGameObject.h"
 #include <vector>
 #include <functional>
 #include <map>
@@ -32,36 +32,36 @@ public:
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();
     void AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID , const std::string_view name, const GoVector3& in_position = {0,0,0}, const GoVector3& in_scale = {1,1,1});
-    void ConvertVertices(const std::shared_ptr<Model>& model, GameObject& gameObject);
-    void ConvertTriangles(const std::shared_ptr <Model>& model, GameObject& gameObject);
+    void ConvertVertices(const std::shared_ptr<Model>& model, OldGameObject& gameObject);
+    void ConvertTriangles(const std::shared_ptr <Model>& model, OldGameObject& gameObject);
     void AddWall(const GoTransform& transform, const float& radians);
     void SetLightFlickerValue(const float& value);
     void DeInit();
-    const std::shared_ptr<GameObject>& GetGameObject(const unsigned int& goID);
-    const std::vector<std::shared_ptr<GameObject>>& GetWalls();
+    const std::shared_ptr<OldGameObject>& GetGameObject(const unsigned int& goID);
+    const std::vector<std::shared_ptr<OldGameObject>>& GetWalls();
     BoundingBox CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const;
-    bool IsGameObjectInRoom(const std::shared_ptr<GameObject>& gameObject);
+    bool IsGameObjectInRoom(const std::shared_ptr<OldGameObject>& gameObject);
 
     void AssignRtpcFunction(std::function<void(const float&)> function);
 
-    const std::map<unsigned int, std::shared_ptr<GameObject>>& GetAllGameObjects();;
+    const std::map<unsigned int, std::shared_ptr<OldGameObject>>& GetAllGameObjects();;
 
 private:
-    void DrawGameObject(std::shared_ptr<GameObject> gameObject);
+    void DrawGameObject(std::shared_ptr<OldGameObject> gameObject);
     Vector3 ConvertGoVector3(const GoVector3& in_goVector);
     std::shared_ptr<Camera3D> camera;
-    std::shared_ptr<GameObject> cameraGameObject;
-    std::shared_ptr<GameObject> playerGameObject;
+    std::shared_ptr<OldGameObject> cameraGameObject;
+    std::shared_ptr<OldGameObject> playerGameObject;
 
     std::map<std::string, std::shared_ptr<Model>> models;
     std::map<std::string, std::shared_ptr<Shader>> shaders;
 
     std::vector<std::shared_ptr<BoundingBox>> boundingBoxes;
 
-    std::vector<std::shared_ptr<GameObject>> roomWalls;
+    std::vector<std::shared_ptr<OldGameObject>> roomWalls;
 
 
-    std::map<unsigned int, std::shared_ptr<GameObject>> gameObjects;
+    std::map<unsigned int, std::shared_ptr<OldGameObject>> gameObjects;
 
 
 

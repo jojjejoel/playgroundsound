@@ -5,7 +5,7 @@
 #include <AK/SpatialAudio/Common/AkSpatialAudioTypes.h>
 #include <AK/SoundEngine/Common/AkQueryParameters.h>
 
-#include "GameObject.h"
+#include "OldGameObject.h"
 #include "DiffractionPath.h"
 
 #include <string>
@@ -31,10 +31,10 @@ public:
 
 	AKRESULT UpdateAllGameObjects();
 
-	AKRESULT AddGeometry(const std::shared_ptr<GameObject>& gameObject);
+	AKRESULT AddGeometry(const std::shared_ptr<OldGameObject>& gameObject);
 
 
-	AKRESULT AddRoomGeometry(const std::shared_ptr<GameObject>& gameObject);
+	AKRESULT AddRoomGeometry(const std::shared_ptr<OldGameObject>& gameObject);
 
 	static void EventCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo);
 
@@ -45,15 +45,15 @@ public:
 
 	AKRESULT AddRoom();
 
-	AKRESULT AddPortal(const GameObject& gameObject);
+	AKRESULT AddPortal(const OldGameObject& gameObject);
 
 	AKRESULT SetGameObjectIsInRoom(const AkGameObjectID& gameObjectID, const unsigned int& roomID);
-	AKRESULT RegisterGameObject(const GameObject& gameObject);
+	AKRESULT RegisterGameObject(const OldGameObject& gameObject);
 
-	AKRESULT UpdateGameObject(const GameObject& gameObject);
+	AKRESULT UpdateGameObject(const OldGameObject& gameObject);
 private:
 	void SetRTPCValue(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue, const AkGameObjectID& akGameObjectID);
-	void GenerateWalls(const std::shared_ptr<GameObject>& gameObject, const AkRoomID& roomID,
+	void GenerateWalls(const std::shared_ptr<OldGameObject>& gameObject, const AkRoomID& roomID,
 		const AkGeometrySetID& wallSidesGeometryID,
 		const AkGeometrySetID& wallCeilingFloorGeometryID,
 		const AkGeometryInstanceID& wallInstance1,

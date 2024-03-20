@@ -44,12 +44,12 @@ void Game::Init()
 	camera->projection = CAMERA_PERSPECTIVE;
 	CameraMoveToTarget(camera.get(), -2.f);
 
-	cameraGameObject = std::make_shared<GameObject>();
+	cameraGameObject = std::make_shared<OldGameObject>();
 	cameraGameObject->SetID(GUIDs::cameraGO);
 	cameraGameObject->SetName("Camera");
 	gameObjects.insert(std::make_pair(GUIDs::cameraGO, cameraGameObject));
 
-	playerGameObject = std::make_shared<GameObject>();
+	playerGameObject = std::make_shared<OldGameObject>();
 	playerGameObject->SetID(GUIDs::playerTruckGO);
 	playerGameObject->SetName("Truck");
 	Model model = LoadModel("Resources/Models/truck_green.obj");
@@ -279,7 +279,7 @@ void Game::SetDiffractionPaths(const std::vector<DiffractionPath> in_diffraction
 
 void Game::AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID, const std::string_view name, const GoVector3& in_position, const GoVector3& in_scale)
 {
-	GameObject gameObject;
+	OldGameObject gameObject;
 	gameObject.SetName(name);
 	gameObject.SetPosition(in_position);
 	gameObject.SetScale(in_scale);
@@ -294,10 +294,10 @@ void Game::AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID,
 	gameObject.SetModel(model);
 	gameObject.SetID(goID);
 
-	gameObjects.insert(std::make_pair(goID, std::make_shared<GameObject>(gameObject)));
+	gameObjects.insert(std::make_pair(goID, std::make_shared<OldGameObject>(gameObject)));
 }
 
-void Game::ConvertVertices(const std::shared_ptr <Model>& model, GameObject& gameObject)
+void Game::ConvertVertices(const std::shared_ptr <Model>& model, OldGameObject& gameObject)
 {
 	for (size_t i = 0, v = 0; i < model->meshes[0].vertexCount; i++, v += 3)
 	{
@@ -316,7 +316,7 @@ void Game::ConvertVertices(const std::shared_ptr <Model>& model, GameObject& gam
 	}
 }
 
-void Game::ConvertTriangles(const std::shared_ptr <Model>& model, GameObject& ref_gameObject)
+void Game::ConvertTriangles(const std::shared_ptr <Model>& model, OldGameObject& ref_gameObject)
 {
 	for (size_t i = 0, v = 0; i < model->meshes[0].triangleCount; i++, v += 3)
 	{
@@ -338,7 +338,7 @@ void Game::AddWall(const GoTransform& transform, const float& radians)
 	model.transform = MatrixMultiply(MatrixRotateZ(1.5708f), model.transform);
 	model.transform = MatrixMultiply(MatrixRotateX(radians), model.transform);
 
-	GameObject gameObject;
+	OldGameObject gameObject;
 
 	gameObject.SetTransform(transform);
 	std::shared_ptr<Model> modelPtr = std::make_shared<Model>(model);
@@ -346,7 +346,7 @@ void Game::AddWall(const GoTransform& transform, const float& radians)
 
 	ConvertTriangles(modelPtr, gameObject);
 
-	roomWalls.emplace_back(std::make_shared<GameObject>(gameObject));
+	roomWalls.emplace_back(std::make_shared<OldGameObject>(gameObject));
 }
 
 void Game::SetLightFlickerValue(const float& value) {
@@ -358,7 +358,7 @@ void Game::DeInit()
 	CloseWindow();
 }
 
-const std::shared_ptr<GameObject>& Game::GetGameObject(const unsigned int& goID) {
+const std::shared_ptr<OldGameObject>& Game::GetGameObject(const unsigned int& goID) {
 	if (gameObjects.find(goID) == gameObjects.end()) {
 		return nullptr;
 	}
@@ -367,7 +367,7 @@ const std::shared_ptr<GameObject>& Game::GetGameObject(const unsigned int& goID)
 	}
 }
 
-const std::vector<std::shared_ptr<GameObject>>& Game::GetWalls()
+const std::vector<std::shared_ptr<OldGameObject>>& Game::GetWalls()
 {
 	return roomWalls;
 }
@@ -390,9 +390,9 @@ BoundingBox Game::CalculateBoundingBox(const Vector3& center, const float& width
 	return boundingBox;
 }
 
-bool Game::IsGameObjectInRoom(const std::shared_ptr<GameObject>& gameObject)
+bool Game::IsGameObjectInRoom(const std::shared_ptr<OldGameObject>& gameObject)
 {
-	GameObject roomGameObject = *gameObjects[GUIDs::roomCubeGO];
+	OldGameObject roomGameObject = *gameObjects[GUIDs::roomCubeGO];
 
 	BoundingBox boxRoom = CalculateBoundingBox({ roomGameObject.GetPosition().x, roomGameObject.GetPosition().y, roomGameObject.GetPosition().z },
 		roomGameObject.GetScale().x, roomGameObject.GetScale().y, roomGameObject.GetScale().z);
@@ -408,12 +408,12 @@ void Game::AssignRtpcFunction(std::function<void(const float&)> function)
 	setRtpcFunction = function;
 }
 
-const std::map<unsigned int, std::shared_ptr<GameObject>>& Game::GetAllGameObjects()
+const std::map<unsigned int, std::shared_ptr<OldGameObject>>& Game::GetAllGameObjects()
 {
 	return gameObjects;
 }
 
-void Game::DrawGameObject(std::shared_ptr<GameObject> in_gameObject) {
+void Game::DrawGameObject(std::shared_ptr<OldGameObject> in_gameObject) {
 	if (in_gameObject->GetModel())
 	{
 		DrawModel(*in_gameObject->GetModel(), ConvertGoVector3(in_gameObject->GetPosition()), in_gameObject->GetScaleMultiplier(), WHITE);
