@@ -9,6 +9,9 @@
 #include <map>
 #include <string>
 
+#include "GameObjectManager.h"
+#include "GameObject.h"
+
 struct Camera3D;
 struct Vector3;
 struct Texture;
@@ -49,9 +52,6 @@ public:
 private:
     void DrawGameObject(std::shared_ptr<OldGameObject> gameObject);
     Vector3 ConvertGoVector3(const GoVector3& in_goVector);
-    std::shared_ptr<Camera3D> camera;
-    std::shared_ptr<OldGameObject> cameraGameObject;
-    std::shared_ptr<OldGameObject> playerGameObject;
 
     std::map<std::string, std::shared_ptr<Model>> models;
     std::map<std::string, std::shared_ptr<Shader>> shaders;
@@ -60,8 +60,6 @@ private:
 
     std::vector<std::shared_ptr<OldGameObject>> roomWalls;
 
-
-    std::map<unsigned int, std::shared_ptr<OldGameObject>> gameObjects;
 
 
 
@@ -80,4 +78,7 @@ private:
 
 
     std::function<void(const float&)> setRtpcFunction;
+
+
+    GameObjectManager gameObjectManager;
 };

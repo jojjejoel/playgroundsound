@@ -12,6 +12,6 @@ void GameObject::Update()
 {
     for (auto& [id, component] : m_components)
     {
-        component->Update();
+        component->Update(this);
     }
 }

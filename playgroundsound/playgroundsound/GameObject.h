@@ -8,7 +8,7 @@
 #include <typeindex>
 
 #include "GoTransform.h"
- 
+
 
 using GameObjectID = int;
 class GameObject
@@ -26,9 +26,11 @@ public:
     void Update();
 
     template<typename T>
-    void AddComponent()
+    T& AddComponent()
     {
-        m_components[typeid(T)] = new T;
+        T* t = new T;
+        m_components[typeid(T)] = t;
+        return *t;
     }
 
     template<typename T>

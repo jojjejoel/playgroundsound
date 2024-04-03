@@ -131,12 +131,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="ControllerComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="OldGameObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.h" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookBlocking.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookDeferred.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultLowLevelIODispatcher.cpp" />
@@ -151,7 +154,10 @@
     <ClCompile Include="WwiseAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Components.h" />
+    <ClInclude Include="ControllerComponent.h" />
     <ClInclude Include="DiffractionPath.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
@@ -160,6 +166,7 @@
     <ClInclude Include="OldGameObject.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObjectIDs.h" />
+    <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h" />

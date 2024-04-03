@@ -1,5 +1,7 @@
 #pragma once
+#include <map>
 #include "GameObject.h"
+
 class GameObjectManager
 {
 public:
@@ -10,6 +12,6 @@ public:
     void Init();
     void Update();
 
-    std::vector<GameObject*> m_gameObjects;
+    std::map<std::string_view, GameObject*> m_gameObjects;
 };
 

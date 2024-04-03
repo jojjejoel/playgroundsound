@@ -80,7 +80,6 @@ GoVector3 OldGameObject::GetNormalized(float x, float y, float z) const
         else {
             return { 0.0f, 0.0f, 0.0f };  // Returning a default value
         }
-
 }
 
 void OldGameObject::SetScaleMultiplier(const float& in_scaleMultiplier)
