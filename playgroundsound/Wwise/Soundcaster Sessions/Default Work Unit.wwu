@@ -23,6 +23,14 @@
 							<GameParameterRef Name="Light_Flicker" ID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}"/>
 							<Value>-36</Value>
 						</RTPCValue>
+						<RTPCValue>
+							<GameParameterRef Name="Car_Gas" ID="{AA4D7E60-7AFB-4D49-B3A0-ACCE35EF6400}"/>
+							<Value>1</Value>
+						</RTPCValue>
+						<RTPCValue>
+							<GameParameterRef Name="Car_Speed" ID="{9DB601EB-465E-4DD1-BCCB-7C434BFFD3B9}"/>
+							<Value>0</Value>
+						</RTPCValue>
 					</RTPCValueList>
 					<CurrentStateList ShowAll="true"/>
 					<CurrentSwitchList ShowAll="true"/>

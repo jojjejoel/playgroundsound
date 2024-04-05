@@ -9,7 +9,7 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{F3686F50-791F-619B-0785-D42ABC07781B}">
+		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{E26BB56B-0C34-5144-9CC3-CB438ECD894F}">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>1355168291.bnk</Path>
@@ -70,6 +70,8 @@
 				<GameParameter Id="78830142" Name="Playback_Speed" ObjectPath="\Game Parameters\Default Work Unit\Playback_Speed" GUID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}"/>
 				<GameParameter Id="411515110" Name="Light_Flicker" ObjectPath="\Game Parameters\Default Work Unit\Light_Flicker" GUID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}"/>
 				<GameParameter Id="1006694123" Name="Music_Volume" ObjectPath="\Game Parameters\Default Work Unit\Music_Volume" GUID="{0939589F-2F4E-41DA-A8F3-56608D57E1A8}"/>
+				<GameParameter Id="3134688807" Name="Car_Gas" ObjectPath="\Game Parameters\Default Work Unit\Car_Gas" GUID="{AA4D7E60-7AFB-4D49-B3A0-ACCE35EF6400}"/>
+				<GameParameter Id="4164958897" Name="Car_Speed" ObjectPath="\Game Parameters\Default Work Unit\Car_Speed" GUID="{9DB601EB-465E-4DD1-BCCB-7C434BFFD3B9}"/>
 			</GameParameters>
 			<AcousticTextures>
 				<AcousticTexture Id="504532776" Name="Brick" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Brick" GUID="{B086A5A9-F204-4C53-A838-BDB18B18F6D6}">
@@ -186,7 +188,7 @@
 				</AcousticTexture>
 			</AcousticTextures>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{8820EEBE-8B52-4269-31C8-02EC723209E7}">
+		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{FAA4BCC8-DC2E-423D-9BCC-20D8B63799BD}">
 			<ObjectPath>\SoundBanks\Default Work Unit\Main</ObjectPath>
 			<ShortName>Main</ShortName>
 			<Path>3161908922.bnk</Path>
@@ -267,6 +269,10 @@
 					<ShortName>Energy\Energy_Black Sun.wav</ShortName>
 					<CachePath>SFX/Energy/Energy_Black Sun_D79FB2B7.wem</CachePath>
 				</File>
+				<File Id="462271539" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>engine-6000.wav</ShortName>
+					<CachePath>SFX/engine-6000_06F7C21F.wem</CachePath>
+				</File>
 				<File Id="470952860" Language="SFX" Streaming="false" Location="Memory">
 					<ShortName>Energy\Energy_Atmosphere.wav</ShortName>
 					<CachePath>SFX/Energy/Energy_Atmosphere_D79FB2B7.wem</CachePath>
@@ -341,6 +347,7 @@
 			<Events>
 				<Event Id="4193220423" Name="Car_Engine_Loop" ObjectPath="\Events\Default Work Unit\Car_Engine_Loop" GUID="{B526007C-BA47-440B-A1DD-2E62D9ADD10D}" MaxAttenuation="100" DurationType="Infinite">
 					<MediaRefs>
+						<MediaRef Id="462271539"/>
 						<MediaRef Id="815298708"/>
 					</MediaRefs>
 				</Event>
@@ -406,8 +413,10 @@
 			</Events>
 			<GameParameters>
 				<GameParameter Id="78830142" Name="Playback_Speed" ObjectPath="\Game Parameters\Default Work Unit\Playback_Speed" GUID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}"/>
+				<GameParameter Id="3134688807" Name="Car_Gas" ObjectPath="\Game Parameters\Default Work Unit\Car_Gas" GUID="{AA4D7E60-7AFB-4D49-B3A0-ACCE35EF6400}"/>
+				<GameParameter Id="4164958897" Name="Car_Speed" ObjectPath="\Game Parameters\Default Work Unit\Car_Speed" GUID="{9DB601EB-465E-4DD1-BCCB-7C434BFFD3B9}"/>
 			</GameParameters>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{A5C085FD-F298-4238-4DEB-AC9A6BC09CAA}</FileHash>
+	<FileHash>{220FFA2C-A77E-6675-FC25-2F62F168FF5E}</FileHash>
 </SoundBanksInfo>

@@ -37,6 +37,13 @@
 								</Reference>
 							</ReferenceList>
 						</Action>
+						<Action Name="" ID="{BC216469-AE40-4CF6-9C18-8150A0245BC9}" ShortID="825085656">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Car_Engine_Gas" ID="{EFF0E657-3DF6-49F6-8AD1-3C16C1209877}" WorkUnitID="{8E08C725-5B07-4F01-8DB8-A6B9F7AFCA86}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
 					</ChildrenList>
 				</Event>
 				<Event Name="Energy" ID="{8B38FA5A-E064-4B81-90EB-D9B7B97C2B4D}">

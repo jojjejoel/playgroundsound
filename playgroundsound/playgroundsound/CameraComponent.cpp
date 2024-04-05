@@ -3,7 +3,7 @@
 #include "rcamera.h"
 #include "raylib.h"
 #define RCAMERA_IMPLEMENTATION
-void CameraComponent::Init()
+void CameraComponent::Init(GameObject* in_gameObject)
 {
 	camera3D = new Camera3D();
 	camera3D->position = { 0.0f, 5.0f, 8.0f };
@@ -13,13 +13,19 @@ void CameraComponent::Init()
 	camera3D->projection = CAMERA_PERSPECTIVE;
 }
 
-void CameraComponent::Update(GameObject* in_parentGO)
+void CameraComponent::Update(GameObject* in_gameObject)
 {
 	camera3D->target = { targetGO->m_transform.position.x, targetGO->m_transform.position.y,targetGO->m_transform.position.z };
 
-	GoVector3 newCameraPos = { targetGO->m_transform.position.x - (targetGO->m_transform.forward.x + targetGO->m_transform.forward.Normalized().x * distance), targetGO->m_transform.position.y - (targetGO->m_transform.forward.y + targetGO->m_transform.forward.Normalized().y * distance), targetGO->m_transform.position.z - (targetGO->m_transform.forward.z + targetGO->m_transform.forward.Normalized().z * distance)};
+	GoVector3 newCameraPos = { targetGO->m_transform.position.x - (targetGO->m_transform.forward.x + targetGO->m_transform.forward.Normalized().x * distance), 
+		targetGO->m_transform.position.y - (targetGO->m_transform.forward.y + targetGO->m_transform.forward.Normalized().y * distance), 
+		targetGO->m_transform.position.z - (targetGO->m_transform.forward.z + targetGO->m_transform.forward.Normalized().z * distance)};
 
 	camera3D->position = { newCameraPos.x, newCameraPos.y + 2.5f, newCameraPos.z };
+	in_gameObject->m_transform.position = newCameraPos;
+	//GoVector3 newForward = targetGO->m_transform.position - newCameraPos
+	in_gameObject->m_transform.forward = newCameraPos - targetGO->m_transform.position;
+	in_gameObject->m_transform.up = { camera3D->up.x, camera3D->up.y, camera3D->up.z };
 }
 
 void CameraComponent::SetTarget(const GameObject* in_targetGO)

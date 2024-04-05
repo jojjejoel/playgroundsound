@@ -34,6 +34,9 @@ public:
     void MusicBar();
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();
+    void AddShader();
+    void AddGameObjects();
+    void LoadModels();
     void AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID , const std::string_view name, const GoVector3& in_position = {0,0,0}, const GoVector3& in_scale = {1,1,1});
     void ConvertVertices(const std::shared_ptr<Model>& model, OldGameObject& gameObject);
     void ConvertTriangles(const std::shared_ptr <Model>& model, OldGameObject& gameObject);

@@ -21,6 +21,8 @@ namespace AK
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID CAR_GAS = 3134688807U;
+        static const AkUniqueID CAR_SPEED = 4164958897U;
         static const AkUniqueID LIGHT_FLICKER = 411515110U;
         static const AkUniqueID MUSIC_VOLUME = 1006694123U;
         static const AkUniqueID PLAYBACK_SPEED = 78830142U;

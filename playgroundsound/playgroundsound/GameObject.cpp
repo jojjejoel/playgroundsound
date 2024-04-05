@@ -4,7 +4,7 @@ void GameObject::Init()
 {
     for (auto& [id, component] : m_components)
     {
-        component->Init();
+        component->Init(this);
     }
 }
 

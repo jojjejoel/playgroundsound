@@ -8,9 +8,9 @@ struct Camera3D;
 class CameraComponent : public Component
 {
 public:
-    virtual void Init() override;
+    virtual void Init(GameObject* in_gameObject) override;
 
-    virtual void Update(GameObject* in_parentGO) override;
+    virtual void Update(GameObject* in_gameObject) override;
 
     void SetTarget(const GameObject* in_targetGO);
 private:

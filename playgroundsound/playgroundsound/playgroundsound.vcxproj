@@ -140,6 +140,7 @@
     <ClCompile Include="Mesh.h" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
+    <ClCompile Include="WwiseObjectComponent.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookBlocking.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookDeferred.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultLowLevelIODispatcher.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="GameObjectIDs.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="WwiseObjectComponent.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h" />
     <ClInclude Include="WwiseSource\AkDefaultLowLevelIODispatcher.h" />

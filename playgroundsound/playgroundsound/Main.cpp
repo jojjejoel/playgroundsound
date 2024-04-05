@@ -6,19 +6,19 @@
 #include "GameObjectIDs.h"
 int main()
 {
-	Game game;
-	game.Init();
 
 	WwiseAPI wwiseAPI;
 	wwiseAPI.Init();
-
 	wwiseAPI.LoadBank(AK::BANKS::INIT);
-
 	wwiseAPI.LoadBank(AK::BANKS::MAIN);
+
+	Game game;
+	game.Init();
+
 	//wwiseAPI.RegisterGameObject(*game.GetGameObject(GUIDs::musicEmitterGO));
 	//wwiseAPI.RegisterGameObject(*game.GetGameObject(GUIDs::cameraGO));
 	//wwiseAPI.RegisterGameObject(*game.GetGameObject(GUIDs::playerTruckGO));
-	wwiseAPI.AddListener();
+	//wwiseAPI.AddListener();
 
 	//wwiseAPI.AddGeometry(game.GetWalls()[0]);
 

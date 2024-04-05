@@ -14,6 +14,8 @@
 #include <iostream>
 #include "GameObjectIDs.h"
 #include "Components.h"
+
+#include "Wwise_IDs.h"
 Light lights[4];
 
 void Game::Init()
@@ -23,7 +25,29 @@ void Game::Init()
 
 	InitWindow(screenWidth, screenHeight, "PlaygroundSound");
 
+	AddShader();
 
+	LoadModels();
+
+	AddGameObjects();
+
+	GoTransform transform;
+	transform.position = { 0,0,0 };
+	transform.scale = { 5,5,1 };
+	AddWall(transform, 0);
+
+	SetTargetFPS(30);
+
+	gameObjectManager.Init();
+	WwiseObjectComponent comp = gameObjectManager.m_gameObjects["Camera"]->GetComponent<WwiseObjectComponent>();
+	comp.RegisterAsListener();
+	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::CAR_ENGINE_LOOP);
+	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().RegisterAsDistanceProbe(gameObjectManager.m_gameObjects["Camera"]->m_id);
+	gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::GOOD_OLD_DAYS);
+}
+
+void Game::AddShader()
+{
 	Shader shader = LoadShader(TextFormat("resources/shaders/glsl%i/lighting.vs", GLSL_VERSION), TextFormat("resources/shaders/glsl%i/lighting.fs", GLSL_VERSION));
 
 	shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
@@ -35,49 +59,27 @@ void Game::Init()
 
 	lights[0] = CreateLight(LIGHT_POINT, { -5, 1, -5 }, { 5,0,5 }, { 0, 0, 0, 0 }, shader);
 	lights[1] = CreateLight(LIGHT_DIRECTIONAL, { 10, 1, 10 }, { 0,1,0 }, { 0, 0, 0, 0 }, shader);
+}
 
-
+void Game::AddGameObjects()
+{
 	GameObject* truckObj = gameObjectManager.AddGameObject("Truck");
 	truckObj->AddComponent<ControllerComponent>().SetMovementSpeed(5);
-	Model model = LoadModel("Resources/Models/truck_green.obj");
-	models.insert(std::make_pair("truck_green", std::make_shared<Model>(model)));
-	model.materials[0].shader = *shaders["lighting"];
 	truckObj->AddComponent<RenderComponent>().SetModel(models["truck_green"].get());
+	truckObj->AddComponent<WwiseObjectComponent>();
 
 	GameObject* cameraObj = gameObjectManager.AddGameObject("Camera");
 	cameraObj->AddComponent<CameraComponent>().SetTarget(truckObj);
-
-
-	Model wallSideModel = LoadModelFromMesh(GenMeshCube(3, 15, 40));
-	models.insert(std::make_pair("WallSide", std::make_shared<Model>(wallSideModel)));
-	wallSideModel.materials[0].shader = *shaders["lighting"];
-
-	Model wallFrontModel = LoadModelFromMesh(GenMeshCube(40, 15, 3));
-	models.insert(std::make_pair("WallFront", std::make_shared<Model>(wallFrontModel)));
-	wallFrontModel.materials[0].shader = *shaders["lighting"];
-
-	Model wallTopModel = LoadModelFromMesh(GenMeshCube(40, 3, 40));
-	models.insert(std::make_pair("WallTop", std::make_shared<Model>(wallTopModel)));
-	wallTopModel.materials[0].shader = *shaders["lighting"];
-
-	Model roomCubeModel = LoadModelFromMesh(GenMeshCube(5, 5, 5));
-	models.insert(std::make_pair("RoomCube", std::make_shared<Model>(roomCubeModel)));
-	roomCubeModel.materials[0].shader = *shaders["lighting"];
-
-	Model portalCubeModel = LoadModelFromMesh(GenMeshCube(2, 3, 2));
-	models.insert(std::make_pair("PortalCube", std::make_shared<Model>(portalCubeModel)));
-	portalCubeModel.materials[0].shader = *shaders["lighting"];
-
+	cameraObj->AddComponent<WwiseObjectComponent>();
 
 	GameObject* roomCubeObj = gameObjectManager.AddGameObject("RoomCube");
 	roomCubeObj->AddComponent<RenderComponent>().SetModel(models["RoomCube"].get());
 
 	GameObject* musicEmitterObj = gameObjectManager.AddGameObject("Music");
-
+	musicEmitterObj->AddComponent<WwiseObjectComponent>();
 
 	GameObject* portalCubeObj = gameObjectManager.AddGameObject("PortalCube");
 	roomCubeObj->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get());
-
 
 	GameObject* wallFrontObj = gameObjectManager.AddGameObject("WallFront");
 	wallFrontObj->AddComponent<RenderComponent>().SetModel(models["WallFront"].get());
@@ -106,15 +108,33 @@ void Game::Init()
 	GameObject* lightBulbObj = gameObjectManager.AddGameObject("LightBulb");
 	lightBulbObj->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get());
 	lightBulbObj->m_transform.position = { 10,1,10 };
+}
 
-	GoTransform transform;
-	transform.position = { 0,0,0 };
-	transform.scale = { 5,5,1 };
-	AddWall(transform, 0);
+void Game::LoadModels()
+{
+	Model model = LoadModel("Resources/Models/truck_green.obj");
+	models.insert(std::make_pair("truck_green", std::make_shared<Model>(model)));
+	model.materials[0].shader = *shaders["lighting"];
 
-	SetTargetFPS(30);
+	Model wallSideModel = LoadModelFromMesh(GenMeshCube(3, 15, 40));
+	models.insert(std::make_pair("WallSide", std::make_shared<Model>(wallSideModel)));
+	wallSideModel.materials[0].shader = *shaders["lighting"];
 
-	gameObjectManager.Init();
+	Model wallFrontModel = LoadModelFromMesh(GenMeshCube(40, 15, 3));
+	models.insert(std::make_pair("WallFront", std::make_shared<Model>(wallFrontModel)));
+	wallFrontModel.materials[0].shader = *shaders["lighting"];
+
+	Model wallTopModel = LoadModelFromMesh(GenMeshCube(40, 3, 40));
+	models.insert(std::make_pair("WallTop", std::make_shared<Model>(wallTopModel)));
+	wallTopModel.materials[0].shader = *shaders["lighting"];
+
+	Model roomCubeModel = LoadModelFromMesh(GenMeshCube(5, 5, 5));
+	models.insert(std::make_pair("RoomCube", std::make_shared<Model>(roomCubeModel)));
+	roomCubeModel.materials[0].shader = *shaders["lighting"];
+
+	Model portalCubeModel = LoadModelFromMesh(GenMeshCube(2, 3, 2));
+	models.insert(std::make_pair("PortalCube", std::make_shared<Model>(portalCubeModel)));
+	portalCubeModel.materials[0].shader = *shaders["lighting"];
 }
 
 void Game::Run()
@@ -122,9 +142,13 @@ void Game::Run()
 	InputControls();
 
 	barValue -= GetFrameTime() * 0.37f * playbackSpeed;
-	std::cout << "Beat: " << beatValue << "Bar: " << barValue << std::endl;
+	//std::cout << "Beat: " << beatValue << "Bar: " << barValue << std::endl;
 	UpdateBlinkingLight();
+	float carSpeed = gameObjectManager.m_gameObjects["Truck"]->GetComponent<ControllerComponent>().GetPercentageOfMaxSpeed();
+	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
 
+	float carGas = gameObjectManager.m_gameObjects["Truck"]->GetComponent<ControllerComponent>().GetGas();
+	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
 
 	/*for (const auto& gameObject : gameObjects)
 	{
@@ -183,7 +207,6 @@ void Game::InputControls()
 		playbackSpeed += GetFrameTime();
 		setRtpcFunction(playbackSpeed);
 	}
-
 
 	if (IsKeyDown(KEY_FOUR))
 	{
