@@ -4,6 +4,9 @@
 struct Model;
 struct Shader;
 
+#include "GoVertex.h"
+#include "Triangle.h"
+
 class RenderComponent : public Component
 {
 public:
@@ -12,8 +15,18 @@ public:
     virtual void Update(GameObject* in_gameObject) override;
 
 
-    void SetModel(Model* in_model);
+    void SetModel(Model* in_model, bool initRoom = false);
+
+
+    const std::vector<GoVertex>& GetVertices() const;
+    const std::vector<Triangle>& GetTriangles() const;
+
 private:
+    void InitRoomGeometry();
     Model* model;
+
+    std::vector<Triangle> m_triangles;
+    //GoMesh mesh; 
+    std::vector<GoVertex> m_vertices;
 };
 

@@ -226,8 +226,8 @@ AKRESULT WwiseAPI::UpdateGameObject(const OldGameObject& gameObject)
 	}
 	AkListenerPosition soundPosition;
 	AkVector positionVector = { gameObject.GetPosition().x, gameObject.GetPosition().y ,-gameObject.GetPosition().z };
-	GoVector3 forwardNormalized = gameObject.GetNormalizedForward();
-	GoVector3 upNormalized = gameObject.GetNormalizedUp();
+	GO_Vector3 forwardNormalized = gameObject.GetNormalizedForward();
+	GO_Vector3 upNormalized = gameObject.GetNormalizedUp();
 	AkVector orientationFront = { -forwardNormalized.x, -forwardNormalized.y, forwardNormalized.z };
 	AkVector orientationTop = { upNormalized.x, upNormalized.y, -upNormalized.z };
 	AkTransform transform;
@@ -297,11 +297,11 @@ AKRESULT WwiseAPI::AddPortal(const OldGameObject& gameObject1) {
 
 	AkPortalParams paramsPortal;
 
-	GoVector3 position = gameObject1.GetPosition();
+	GO_Vector3 position = gameObject1.GetPosition();
 	paramsPortal.Transform.SetPosition(position.x, position.y, -position.z);
 
-	GoVector3 forward = gameObject1.GetNormalizedForward();
-	GoVector3 up = gameObject1.GetNormalizedUp();
+	GO_Vector3 forward = gameObject1.GetNormalizedForward();
+	GO_Vector3 up = gameObject1.GetNormalizedUp();
 	paramsPortal.Transform.SetOrientation({ forward.x, forward.y, -forward.z }, { -up.x, -up.y, up.z });
 	paramsPortal.Extent.halfWidth = gameObject1.GetScale().x / 2.f;
 	paramsPortal.Extent.halfHeight = gameObject1.GetScale().y / 2.f;

@@ -7,7 +7,7 @@
 #include <map>
 #include <typeindex>
 
-#include "GoTransform.h"
+#include "GO_Transform.h"
 
 
 using GameObjectID = int;
@@ -41,7 +41,7 @@ public:
 
     std::map<std::type_index, Component*> m_components;
 
-    GoTransform m_transform;
+    GO_Transform m_transform;
     GameObjectID m_id;
     std::string m_name;
 };

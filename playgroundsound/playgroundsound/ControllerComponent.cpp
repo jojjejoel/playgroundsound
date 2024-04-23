@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include <iostream>
+#include "GameObject.h"
 void ControllerComponent::Init(GameObject* in_gameObject)
 {
 }
@@ -34,7 +35,7 @@ void ControllerComponent::Update(GameObject* in_gameObject)
 	{
 		Rotate(in_gameObject, rotateSpeed * GetFrameTime());
 	}
-	GoVector3 posDiff = in_gameObject->m_transform.forward.Normalized() * currentSpeed * GetFrameTime();
+	GO_Vector3 posDiff = in_gameObject->m_transform.forward.Normalized() * currentSpeed * GetFrameTime();
 	in_gameObject->m_transform.position += posDiff;
 
 	std::cout << currentSpeed << std::endl;	
@@ -55,7 +56,7 @@ void ControllerComponent::Update(GameObject* in_gameObject)
 
 void ControllerComponent::Rotate(GameObject* in_gameObject, const float& in_rotateSpeed)
 {
-	GoTransform& goTransform = in_gameObject->m_transform;
+	GO_Transform& goTransform = in_gameObject->m_transform;
 	Matrix currentMatrix;
 	currentMatrix.m0 = goTransform.right.x;
 	currentMatrix.m4 = goTransform.right.y;

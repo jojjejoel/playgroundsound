@@ -93,6 +93,18 @@
     <ClCompile Include="WwiseObjectComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="WwisePortalComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseRoomComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseRoomManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="GO_BoundingBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WwiseAPI.h">
@@ -155,13 +167,13 @@
     <ClInclude Include="GameObjectIDs.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="GoTransform.h">
+    <ClInclude Include="GO_Transform.h">
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="OldGameObject.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="GoVector3.h">
+    <ClInclude Include="GO_Vector3.h">
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
@@ -190,6 +202,21 @@
     </ClInclude>
     <ClInclude Include="WwiseObjectComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GoVertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WwisePortalComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseRoomComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseRoomManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="GO_BoundingBox.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

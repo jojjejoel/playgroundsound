@@ -31,11 +31,17 @@ void Game::Init()
 
 	AddGameObjects();
 
-	GoTransform transform;
+	GO_Transform transform;
 	transform.position = { 0,0,0 };
 	transform.scale = { 5,5,1 };
 	AddWall(transform, 0);
 
+	gameObjectManager.m_gameObjects["RoomCube"]->AddComponent<WwiseRoomComponent>().InitRoom(gameObjectManager.m_gameObjects["RoomWall"]);
+	WwiseRoomComponent& roomComponent = gameObjectManager.m_gameObjects["RoomCube"]->GetComponent<WwiseRoomComponent>();
+	roomComponent.SetBoundingBox({ 0,0,0 }, 5, 5, 5);
+	wwiseRoomManager.AddRoom(&roomComponent);
+	wwiseRoomManager.AddObject(&gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>());
+	wwiseRoomManager.AddObject(&gameObjectManager.m_gameObjects["Camera"]->GetComponent<WwiseObjectComponent>());
 	SetTargetFPS(30);
 
 	gameObjectManager.Init();
@@ -44,6 +50,7 @@ void Game::Init()
 	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::CAR_ENGINE_LOOP);
 	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().RegisterAsDistanceProbe(gameObjectManager.m_gameObjects["Camera"]->m_id);
 	gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::GOOD_OLD_DAYS);
+	gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>().SetRoomID(200);
 }
 
 void Game::AddShader()
@@ -73,13 +80,16 @@ void Game::AddGameObjects()
 	cameraObj->AddComponent<WwiseObjectComponent>();
 
 	GameObject* roomCubeObj = gameObjectManager.AddGameObject("RoomCube");
-	roomCubeObj->AddComponent<RenderComponent>().SetModel(models["RoomCube"].get());
+	roomCubeObj->AddComponent<RenderComponent>().SetModel(models["RoomCube"].get(), true);
+
+	GameObject* roomWallObj = gameObjectManager.AddGameObject("RoomWall");
+	roomWallObj->AddComponent<RenderComponent>().SetModel(models["RoomWall"].get(), true);
 
 	GameObject* musicEmitterObj = gameObjectManager.AddGameObject("Music");
 	musicEmitterObj->AddComponent<WwiseObjectComponent>();
 
-	GameObject* portalCubeObj = gameObjectManager.AddGameObject("PortalCube");
-	roomCubeObj->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get());
+	/*GameObject* portalCubeObj = gameObjectManager.AddGameObject("PortalCube");
+	portalCubeObj->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get());*/
 
 	GameObject* wallFrontObj = gameObjectManager.AddGameObject("WallFront");
 	wallFrontObj->AddComponent<RenderComponent>().SetModel(models["WallFront"].get());
@@ -112,29 +122,28 @@ void Game::AddGameObjects()
 
 void Game::LoadModels()
 {
-	Model model = LoadModel("Resources/Models/truck_green.obj");
-	models.insert(std::make_pair("truck_green", std::make_shared<Model>(model)));
-	model.materials[0].shader = *shaders["lighting"];
+	models.insert(std::make_pair("truck_green", std::make_shared<Model>(LoadModel("Resources/Models/truck_green.obj"))));
+	models["truck_green"]->materials[0].shader = *shaders["lighting"];
 
-	Model wallSideModel = LoadModelFromMesh(GenMeshCube(3, 15, 40));
-	models.insert(std::make_pair("WallSide", std::make_shared<Model>(wallSideModel)));
-	wallSideModel.materials[0].shader = *shaders["lighting"];
+	models.insert(std::make_pair("WallSide", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(3, 15, 40)))));
+	models["WallSide"]->materials[0].shader = *shaders["lighting"];
 
-	Model wallFrontModel = LoadModelFromMesh(GenMeshCube(40, 15, 3));
-	models.insert(std::make_pair("WallFront", std::make_shared<Model>(wallFrontModel)));
-	wallFrontModel.materials[0].shader = *shaders["lighting"];
+	models.insert(std::make_pair("WallFront", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(40, 15, 3)))));
+	models["WallFront"]->materials[0].shader = *shaders["lighting"];
 
-	Model wallTopModel = LoadModelFromMesh(GenMeshCube(40, 3, 40));
-	models.insert(std::make_pair("WallTop", std::make_shared<Model>(wallTopModel)));
-	wallTopModel.materials[0].shader = *shaders["lighting"];
+	models.insert(std::make_pair("WallTop", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(40, 3, 40)))));
+	models["WallTop"]->materials[0].shader = *shaders["lighting"];
 
-	Model roomCubeModel = LoadModelFromMesh(GenMeshCube(5, 5, 5));
-	models.insert(std::make_pair("RoomCube", std::make_shared<Model>(roomCubeModel)));
-	roomCubeModel.materials[0].shader = *shaders["lighting"];
+	models.insert(std::make_pair("RoomCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(5, 5, 5)))));
+	models["RoomCube"]->materials[0].shader = *shaders["lighting"];
 
-	Model portalCubeModel = LoadModelFromMesh(GenMeshCube(2, 3, 2));
-	models.insert(std::make_pair("PortalCube", std::make_shared<Model>(portalCubeModel)));
-	portalCubeModel.materials[0].shader = *shaders["lighting"];
+	models.insert(std::make_pair("PortalCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(2, 3, 2)))));
+	models["PortalCube"]->materials[0].shader = *shaders["lighting"];
+
+	Model model = LoadModelFromMesh(GenMeshPlane(5, 5, 20, 20));
+	model.transform = MatrixMultiply(MatrixRotateZ(1.5708f), model.transform);
+	models.insert(std::make_pair("RoomWall", std::make_shared<Model>(model)));
+	models["RoomWall"]->materials[0].shader = *shaders["lighting"];
 }
 
 void Game::Run()
@@ -142,25 +151,12 @@ void Game::Run()
 	InputControls();
 
 	barValue -= GetFrameTime() * 0.37f * playbackSpeed;
-	//std::cout << "Beat: " << beatValue << "Bar: " << barValue << std::endl;
 	UpdateBlinkingLight();
 	float carSpeed = gameObjectManager.m_gameObjects["Truck"]->GetComponent<ControllerComponent>().GetPercentageOfMaxSpeed();
 	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
 
 	float carGas = gameObjectManager.m_gameObjects["Truck"]->GetComponent<ControllerComponent>().GetGas();
 	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
-
-	/*for (const auto& gameObject : gameObjects)
-	{
-		if (IsGameObjectInRoom(gameObject.second))
-		{
-			gameObject.second->SetRoomID(GUIDs::ROOM);
-		}
-		else
-		{
-			gameObject.second->SetRoomID(0);
-		}
-	}*/
 
 
 
@@ -170,6 +166,7 @@ void Game::Run()
 	BeginMode3D(*gameObjectManager.m_gameObjects["Camera"]->GetComponent<CameraComponent>().camera3D);
 
 	gameObjectManager.Update();
+	wwiseRoomManager.Update();
 	DrawDiffractionPaths();
 	EndMode3D();
 
@@ -311,7 +308,7 @@ void Game::SetDiffractionPaths(const std::vector<DiffractionPath> in_diffraction
 	diffractionPaths = in_diffractionPaths;
 }
 
-void Game::AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID, const std::string_view name, const GoVector3& in_position, const GoVector3& in_scale)
+void Game::AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID, const std::string_view name, const GO_Vector3& in_position, const GO_Vector3& in_scale)
 {
 	OldGameObject gameObject;
 	gameObject.SetName(name);
@@ -335,7 +332,7 @@ void Game::ConvertVertices(const std::shared_ptr <Model>& model, OldGameObject& 
 {
 	for (size_t i = 0, v = 0; i < model->meshes[0].vertexCount; i++, v += 3)
 	{
-		Playground::Vertex vertex;
+		GoVertex vertex;
 		float* vertices = model->meshes[0].vertices;
 		Vector3 vector3;
 		vector3.x = vertices[v];
@@ -362,7 +359,7 @@ void Game::ConvertTriangles(const std::shared_ptr <Model>& model, OldGameObject&
 	}
 }
 
-void Game::AddWall(const GoTransform& transform, const float& radians)
+void Game::AddWall(const GO_Transform& transform, const float& radians)
 {
 	Model model = LoadModelFromMesh(GenMeshPlane(transform.scale.x, transform.scale.y, 20, 20));
 	model.transform.m12 = transform.position.x;
@@ -458,6 +455,6 @@ void Game::DrawGameObject(std::shared_ptr<OldGameObject> in_gameObject) {
 	}
 }
 
-Vector3 Game::ConvertGoVector3(const GoVector3& in_goVector) {
+Vector3 Game::ConvertGoVector3(const GO_Vector3& in_goVector) {
 	return { in_goVector.x, in_goVector.y, in_goVector.z };
 }

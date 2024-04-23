@@ -1,11 +1,7 @@
+#pragma once
 #include <vector>
-namespace Playground {
-	struct Vertex
-	{
-		float x, y, z;
-	};
-	struct Mesh
-	{
-		std::vector<Vertex> vertices;
-	};
-}
+#include "GoVertex.h"
+struct GoMesh
+{
+	std::vector<GoVertex> vertices;
+};

@@ -1,23 +1,31 @@
 #pragma once
 #include "Component.h"
-#include "GameObject.h"
-#include <AK/SoundEngine/Common/AkTypes.h>
+#include "GO_Vector3.h"
+
 class WwiseObjectComponent : public Component
 {
 public:
 	virtual void Init(GameObject* in_gameObject) override;
 	virtual void Update(GameObject* in_gameObject) override;
 
-	void PostEvent(const AkUniqueID& eventID);
+	void PostEvent(const unsigned int& eventID);
 
 	void RegisterAsListener();
 
-	void RegisterAsDistanceProbe(const AkGameObjectID& listenerID);
+	void RegisterAsDistanceProbe(const unsigned int& listenerID);
 
-	void SetRTPC(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue);
+	void SetRTPC(const unsigned int& rtpcID, const float& rtpcValue);
+
+	void SetRoomID(const unsigned int& in_akRoomID);
+
+	const GO_Vector3& GetPosition();
 
 private:
-	AkGameObjectID akGameObjectID;
+	unsigned int akGameObjectID;
 	const char* gameObjectName;
+
+	unsigned int currentRoomID;
+
+	GO_Vector3 m_position;
 };
 

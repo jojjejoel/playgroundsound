@@ -1,8 +1,11 @@
 #include "RenderComponent.h"
+
 #include "raylib.h"
+#include "raymath.h"
 
 void RenderComponent::Init(GameObject* in_gameObject)
 {
+	
 }
 
 void RenderComponent::Update(GameObject* in_gameObject)
@@ -23,7 +26,50 @@ void RenderComponent::Update(GameObject* in_gameObject)
 	DrawModel(*model, pos, 1, WHITE);
 }
 
-void RenderComponent::SetModel(Model* in_model)
+void RenderComponent::SetModel(Model* in_model, bool initRoom)
 {
 	model = in_model;
+
+	if (initRoom)
+	{
+		InitRoomGeometry();
+	}
+}
+
+void RenderComponent::InitRoomGeometry() {
+	for (size_t i = 0, v = 0; i < model->meshes[0].vertexCount; i++, v += 3)
+	{
+		GoVertex vertex;
+		float* vertices = model->meshes[0].vertices;
+		Vector3 vector3;
+		vector3.x = vertices[v];
+		vector3.y = vertices[v + 1];
+		vector3.z = vertices[v + 2];
+
+		vector3 = Vector3Transform(vector3, model->transform);
+
+		vertex.x = vector3.x;
+		vertex.y = vector3.y;
+		vertex.z = -vector3.z;
+		m_vertices.emplace_back(vertex);
+	}
+
+	for (size_t i = 0, v = 0; i < model->meshes[0].triangleCount; i++, v += 3)
+	{
+		Triangle triangle;
+		triangle.point0 = model->meshes[0].indices[v];
+		triangle.point1 = model->meshes[0].indices[v + 1];
+		triangle.point2 = model->meshes[0].indices[v + 2];
+		m_triangles.emplace_back(triangle);
+	}
+}
+
+const std::vector<GoVertex>& RenderComponent::GetVertices() const
+{
+	return m_vertices;
+}
+
+const std::vector<Triangle>& RenderComponent::GetTriangles() const
+{
+	return m_triangles;
 }

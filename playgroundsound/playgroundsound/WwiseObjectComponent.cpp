@@ -1,31 +1,26 @@
 #include "WwiseObjectComponent.h"
-#include <AkFilePackageLowLevelIOBlocking.h>
 #include <AK/SoundEngine/Common/AkCallback.h>
-#include <AK/SpatialAudio/Common/AkSpatialAudioTypes.h>
 #include <AK/SoundEngine/Common/AkQueryParameters.h>
-#include <AK/SoundEngine/Common/AkMemoryMgr.h>
-#include <AK/SoundEngine/Common/AkModule.h>
-#include <AK/SoundEngine/Common/IAkStreamMgr.h>
 #include <AK/Tools/Common/AkPlatformFuncs.h>
-#include "AkFilePackage.h"
-#include "AkFilePackageLUT.h"
 #include "AK/Comm/AkCommunication.h"
 #include "AK/SpatialAudio/Common/AkSpatialAudio.h"
-#include <AK/MusicEngine/Common/AkMusicEngine.h>
+#include "GameObject.h"
 
 void WwiseObjectComponent::Init(GameObject* in_gameObject)
 {
 	akGameObjectID = in_gameObject->m_id;
 	gameObjectName = in_gameObject->m_name.c_str();
+	currentRoomID = AK::SpatialAudio::kOutdoorRoomID;
 	AK::SoundEngine::RegisterGameObj(akGameObjectID, gameObjectName);
 }
 
 void WwiseObjectComponent::Update(GameObject* in_gameObject)
 {
+	m_position = in_gameObject->m_transform.position;
 	AkListenerPosition soundPosition;
 	AkVector positionVector = { in_gameObject->m_transform.position.x, in_gameObject->m_transform.position.y ,-in_gameObject->m_transform.position.z };
-	GoVector3 forwardNormalized = in_gameObject->m_transform.forward.Normalized();
-	GoVector3 upNormalized = in_gameObject->m_transform.up.Normalized();
+	GO_Vector3 forwardNormalized = in_gameObject->m_transform.forward.Normalized();
+	GO_Vector3 upNormalized = in_gameObject->m_transform.up.Normalized();
 	AkVector orientationFront = { -forwardNormalized.x, -forwardNormalized.y, forwardNormalized.z };
 	AkVector orientationTop = { upNormalized.x, upNormalized.y, -upNormalized.z };
 	AkTransform transform;
@@ -44,7 +39,7 @@ void WwiseObjectComponent::Update(GameObject* in_gameObject)
 	AKRESULT result = AK::SoundEngine::SetPosition(akGameObjectID, soundPosition);
 }
 
-void WwiseObjectComponent::PostEvent(const AkUniqueID& eventID)
+void WwiseObjectComponent::PostEvent(const unsigned int& eventID)
 {
 	AK::SoundEngine::PostEvent(eventID, akGameObjectID);
 }
@@ -55,12 +50,22 @@ void WwiseObjectComponent::RegisterAsListener()
 	AK::SpatialAudio::RegisterListener(akGameObjectID);
 }
 
-void WwiseObjectComponent::RegisterAsDistanceProbe(const AkGameObjectID& listenerID)
+void WwiseObjectComponent::RegisterAsDistanceProbe(const unsigned int& listenerID)
 {
-	AK::SoundEngine::SetDistanceProbe(static_cast<AkGameObjectID>(listenerID), static_cast<AkGameObjectID>(akGameObjectID));
+	AK::SoundEngine::SetDistanceProbe(listenerID, akGameObjectID);
 }
 
-void WwiseObjectComponent::SetRTPC(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue)
+void WwiseObjectComponent::SetRTPC(const unsigned int& rtpcID, const float& rtpcValue)
 {
 	AKRESULT result = AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, akGameObjectID);
+}
+
+void WwiseObjectComponent::SetRoomID(const unsigned int& in_akRoomID)
+{
+	currentRoomID = in_akRoomID;
+	AK::SpatialAudio::SetGameObjectInRoom(akGameObjectID, currentRoomID);
+}
+const GO_Vector3& WwiseObjectComponent::GetPosition()
+{
+	return m_position;
 }

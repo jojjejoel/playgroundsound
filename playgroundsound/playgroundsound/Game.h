@@ -12,6 +12,8 @@
 #include "GameObjectManager.h"
 #include "GameObject.h"
 
+#include "WwiseRoomManager.h"
+
 struct Camera3D;
 struct Vector3;
 struct Texture;
@@ -37,10 +39,10 @@ public:
     void AddShader();
     void AddGameObjects();
     void LoadModels();
-    void AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID , const std::string_view name, const GoVector3& in_position = {0,0,0}, const GoVector3& in_scale = {1,1,1});
+    void AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID , const std::string_view name, const GO_Vector3& in_position = {0,0,0}, const GO_Vector3& in_scale = {1,1,1});
     void ConvertVertices(const std::shared_ptr<Model>& model, OldGameObject& gameObject);
     void ConvertTriangles(const std::shared_ptr <Model>& model, OldGameObject& gameObject);
-    void AddWall(const GoTransform& transform, const float& radians);
+    void AddWall(const GO_Transform& transform, const float& radians);
     void SetLightFlickerValue(const float& value);
     void DeInit();
     const std::shared_ptr<OldGameObject>& GetGameObject(const unsigned int& goID);
@@ -54,7 +56,7 @@ public:
 
 private:
     void DrawGameObject(std::shared_ptr<OldGameObject> gameObject);
-    Vector3 ConvertGoVector3(const GoVector3& in_goVector);
+    Vector3 ConvertGoVector3(const GO_Vector3& in_goVector);
 
     std::map<std::string, std::shared_ptr<Model>> models;
     std::map<std::string, std::shared_ptr<Shader>> shaders;
@@ -84,4 +86,5 @@ private:
 
 
     GameObjectManager gameObjectManager;
+    WwiseRoomManager wwiseRoomManager;
 };

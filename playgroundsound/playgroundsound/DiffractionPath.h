@@ -6,11 +6,11 @@ struct DiffractionPath {
 
 	/// Diffraction points along the path. nodes[0] is the point closest to the listener; nodes[numNodes-1] is the point closest to the emitter. 
 	/// Neither the emitter position nor the listener position are represented in this array.
-	GoVector3 nodes[kMaxNodes];
+	GO_Vector3 nodes[kMaxNodes];
 
 	/// Emitter position. This is the source position for an emitter. In all cases, except for radial emitters, it is the same position as the game object position.
 	/// For radial emitters, it is the calculated position at the edge of the volume.
-	GoVector3 emitterPos;
+	GO_Vector3 emitterPos;
 
 	/// Raw diffraction angles at each point, in radians.
 	float angles[kMaxNodes];
@@ -26,7 +26,7 @@ struct DiffractionPath {
 	int rooms[kMaxNodes + 1];
 
 	/// Virtual emitter position. This is the position that is passed to the sound engine to render the audio using multi-positioning, for this particular path.
-	GoTransform virtualPos;
+	GO_Transform virtualPos;
 
 	/// Total number of nodes in the path.  Defines the number of valid entries in the \c nodes, \c angles, and \c portals arrays. The \c rooms array has one extra slot to fit the emitter's room.
 	int nodeCount;

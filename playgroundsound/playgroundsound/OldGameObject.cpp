@@ -1,7 +1,7 @@
 #include "OldGameObject.h"
 #include "Game.h"
 
-void OldGameObject::SetTransform(const GoTransform& in_transform)
+void OldGameObject::SetTransform(const GO_Transform& in_transform)
 {
     transform = in_transform;
 }
@@ -15,22 +15,22 @@ const std::shared_ptr<Model> OldGameObject::GetModel() const {
     return model;
 }
 
-void OldGameObject::SetPosition(const GoVector3& in_position)
+void OldGameObject::SetPosition(const GO_Vector3& in_position)
 {
     transform.position = in_position;
 }
 
-void OldGameObject::SetForward(const GoVector3& in_forward)
+void OldGameObject::SetForward(const GO_Vector3& in_forward)
 {
     transform.forward = in_forward;
 }
 
-void OldGameObject::SetUp(const GoVector3& in_up)
+void OldGameObject::SetUp(const GO_Vector3& in_up)
 {
     transform.up = in_up;
 }
 
-void OldGameObject::SetScale(const GoVector3& in_scale)
+void OldGameObject::SetScale(const GO_Vector3& in_scale)
 {
     transform.scale = in_scale;
 }
@@ -39,37 +39,37 @@ const unsigned int& OldGameObject::GetID() const {
     return iD;
 }
 
-const GoVector3& OldGameObject::GetPosition() const
+const GO_Vector3& OldGameObject::GetPosition() const
 {
     return transform.position;
 }
 
-const GoVector3& OldGameObject::GetUp() const
+const GO_Vector3& OldGameObject::GetUp() const
 {
     return transform.up;
 }
 
-const GoVector3& OldGameObject::GetForward() const
+const GO_Vector3& OldGameObject::GetForward() const
 {
    return  transform.forward;
 }
 
-const GoVector3& OldGameObject::GetScale() const
+const GO_Vector3& OldGameObject::GetScale() const
 {
     return  transform.scale;
 }
 
-GoVector3 OldGameObject::GetNormalizedForward() const
+GO_Vector3 OldGameObject::GetNormalizedForward() const
 {
     return GetNormalized(transform.forward.x, transform.forward.y, transform.forward.z);
 }
 
-GoVector3 OldGameObject::GetNormalizedUp() const
+GO_Vector3 OldGameObject::GetNormalizedUp() const
 {
     return GetNormalized(transform.up.x, transform.up.y, transform.up.z);
 }
 
-GoVector3 OldGameObject::GetNormalized(float x, float y, float z) const
+GO_Vector3 OldGameObject::GetNormalized(float x, float y, float z) const
 {
         float magnitude = std::sqrt(x * x + y * y + z * z);
 

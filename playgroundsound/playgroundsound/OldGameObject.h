@@ -3,31 +3,31 @@
 #include "Mesh.h"
 #include <memory>
 #include <string>
-#include "GoVector3.h"
-#include "GoTransform.h"
+#include "GO_Vector3.h"
+#include "GO_Transform.h"
 #include "Triangle.h"
 struct Model;
 
 class OldGameObject
 {
 public:
-	const GoVector3& GetPosition() const;
-	const GoVector3& GetUp() const;
-	const GoVector3& GetForward() const;
-	const GoVector3& GetScale() const;
+	const GO_Vector3& GetPosition() const;
+	const GO_Vector3& GetUp() const;
+	const GO_Vector3& GetForward() const;
+	const GO_Vector3& GetScale() const;
 	const std::shared_ptr<Model> GetModel() const;
-	void SetTransform(const GoTransform& transform);
+	void SetTransform(const GO_Transform& transform);
 	void SetModel(std::shared_ptr<Model> in_model);
-	void SetPosition(const GoVector3& position);
-	void SetForward(const GoVector3& in_position);
-	void SetUp(const GoVector3& in_position);
+	void SetPosition(const GO_Vector3& position);
+	void SetForward(const GO_Vector3& in_position);
+	void SetUp(const GO_Vector3& in_position);
 
-	void SetScale(const GoVector3& in_scale);
+	void SetScale(const GO_Vector3& in_scale);
 
-    GoVector3 GetNormalizedForward() const;
-    GoVector3 GetNormalizedUp() const;
+    GO_Vector3 GetNormalizedForward() const;
+    GO_Vector3 GetNormalizedUp() const;
     
-	Playground::Mesh mesh;
+	GoMesh mesh;
 	std::vector<Triangle> triangles;
 
 	void SetScaleMultiplier(const float& in_scaleMultiplier);
@@ -47,9 +47,9 @@ public:
 	void SetRoomID(const unsigned int& roomID);
 	const unsigned int& GetRoomID() const;
 private:
-	GoVector3 GetNormalized(float x, float y, float z) const;
+	GO_Vector3 GetNormalized(float x, float y, float z) const;
 
-	GoTransform transform;
+	GO_Transform transform;
 
 	std::shared_ptr<Model> model;
 

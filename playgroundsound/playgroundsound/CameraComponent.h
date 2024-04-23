@@ -1,7 +1,6 @@
 #pragma once
 #include "Component.h"
-#include "GameObject.h"
-#include "GoVector3.h"
+#include "GO_Vector3.h"
 struct Camera3D;
 
 
