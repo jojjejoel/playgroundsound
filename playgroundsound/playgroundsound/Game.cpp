@@ -38,11 +38,14 @@ void Game::Init()
 
 	gameObjectManager.m_gameObjects["RoomCube"]->AddComponent<WwiseRoomComponent>().InitRoom(gameObjectManager.m_gameObjects["RoomWall"]);
 	WwiseRoomComponent& roomComponent = gameObjectManager.m_gameObjects["RoomCube"]->GetComponent<WwiseRoomComponent>();
-	roomComponent.SetBoundingBox({ 0,0,0 }, 5, 5, 5);
+	roomComponent.SetBoundingBox({ 0,0,0 }, 10, 10, 10);
 	wwiseRoomManager.AddRoom(&roomComponent);
 	wwiseRoomManager.AddObject(&gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>());
 	wwiseRoomManager.AddObject(&gameObjectManager.m_gameObjects["Camera"]->GetComponent<WwiseObjectComponent>());
+	wwiseRoomManager.AddObject(&gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>());
 	SetTargetFPS(30);
+	GameObject* portalObj = gameObjectManager.m_gameObjects["PortalCube"];
+	portalObj->GetComponent<WwisePortalComponent>().InitPortal(portalObj, roomComponent.GetRoomID());
 
 	gameObjectManager.Init();
 	WwiseObjectComponent comp = gameObjectManager.m_gameObjects["Camera"]->GetComponent<WwiseObjectComponent>();
@@ -50,7 +53,6 @@ void Game::Init()
 	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::CAR_ENGINE_LOOP);
 	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().RegisterAsDistanceProbe(gameObjectManager.m_gameObjects["Camera"]->m_id);
 	gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::GOOD_OLD_DAYS);
-	gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>().SetRoomID(200);
 }
 
 void Game::AddShader()
@@ -88,8 +90,10 @@ void Game::AddGameObjects()
 	GameObject* musicEmitterObj = gameObjectManager.AddGameObject("Music");
 	musicEmitterObj->AddComponent<WwiseObjectComponent>();
 
-	/*GameObject* portalCubeObj = gameObjectManager.AddGameObject("PortalCube");
-	portalCubeObj->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get());*/
+	GameObject* portalCubeObj = gameObjectManager.AddGameObject("PortalCube");
+	portalCubeObj->m_transform.position = { 0,0,2.5f };
+	portalCubeObj->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get());
+	portalCubeObj->AddComponent<WwisePortalComponent>();
 
 	GameObject* wallFrontObj = gameObjectManager.AddGameObject("WallFront");
 	wallFrontObj->AddComponent<RenderComponent>().SetModel(models["WallFront"].get());
@@ -134,13 +138,13 @@ void Game::LoadModels()
 	models.insert(std::make_pair("WallTop", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(40, 3, 40)))));
 	models["WallTop"]->materials[0].shader = *shaders["lighting"];
 
-	models.insert(std::make_pair("RoomCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(5, 5, 5)))));
+	models.insert(std::make_pair("RoomCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(10, 10, 10)))));
 	models["RoomCube"]->materials[0].shader = *shaders["lighting"];
 
 	models.insert(std::make_pair("PortalCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(2, 3, 2)))));
 	models["PortalCube"]->materials[0].shader = *shaders["lighting"];
 
-	Model model = LoadModelFromMesh(GenMeshPlane(5, 5, 20, 20));
+	Model model = LoadModelFromMesh(GenMeshPlane(10, 10, 20, 20));
 	model.transform = MatrixMultiply(MatrixRotateZ(1.5708f), model.transform);
 	models.insert(std::make_pair("RoomWall", std::make_shared<Model>(model)));
 	models["RoomWall"]->materials[0].shader = *shaders["lighting"];
@@ -422,19 +426,7 @@ BoundingBox Game::CalculateBoundingBox(const Vector3& center, const float& width
 	return boundingBox;
 }
 
-bool Game::IsGameObjectInRoom(const std::shared_ptr<OldGameObject>& gameObject)
-{
-	return true;
-	/*OldGameObject roomGameObject = *gameObjects[GUIDs::roomCubeGO];
 
-	BoundingBox boxRoom = CalculateBoundingBox({ roomGameObject.GetPosition().x, roomGameObject.GetPosition().y, roomGameObject.GetPosition().z },
-		roomGameObject.GetScale().x, roomGameObject.GetScale().y, roomGameObject.GetScale().z);
-
-	BoundingBox boxPlayer = CalculateBoundingBox({ gameObject->GetPosition().x, gameObject->GetPosition().y, gameObject->GetPosition().z },
-		gameObject->GetScale().x, gameObject->GetScale().y, gameObject->GetScale().z);
-
-	return CheckCollisionBoxes(boxRoom, boxPlayer);*/
-}
 
 void Game::AssignRtpcFunction(std::function<void(const float&)> function)
 {

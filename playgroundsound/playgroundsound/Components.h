@@ -4,4 +4,4 @@
 #include "RenderComponent.h"
 #include "WwiseObjectComponent.h"
 #include "WwiseRoomComponent.h"
-//#include "WwisePortalComponent.h"
+#include "WwisePortalComponent.h"

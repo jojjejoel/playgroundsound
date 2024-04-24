@@ -43,8 +43,6 @@ public:
 	void SetCallbackFunctionBeat(std::function<void()> function);
 	void SetCallbackFunctionBar(std::function<void()> function);
 
-	AKRESULT AddRoom();
-
 	AKRESULT AddPortal(const OldGameObject& gameObject);
 
 	AKRESULT SetGameObjectIsInRoom(const AkGameObjectID& gameObjectID, const unsigned int& roomID);

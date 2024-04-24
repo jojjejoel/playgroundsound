@@ -50,11 +50,11 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 	AkPlacementNew(&surfaces[0]) AkAcousticSurface();
 	surfaces[0].strName = "Outside";
 	surfaces[0].textureID = AK::SoundEngine::GetIDFromString("Brick");
-	surfaces[0].transmissionLoss = 0.5f;
+	surfaces[0].transmissionLoss = 1.0f;
 	AkPlacementNew(&surfaces[1]) AkAcousticSurface();
 	surfaces[1].strName = "Inside";
 	surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
-	surfaces[1].transmissionLoss = 0.5f;
+	surfaces[1].transmissionLoss = 1.0f;
 	geomWallsInside.Surfaces = surfaces;
 	geomWallsInside.NumTriangles = triangles.size();
 
@@ -116,7 +116,7 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 	paramsRoom.Up.X = 0.f;
 	paramsRoom.Up.Y = 1.f;
 	paramsRoom.Up.Z = 0.f;
-	paramsRoom.TransmissionLoss = 0.5f;
+	paramsRoom.TransmissionLoss = 1.0f;
 	paramsRoom.RoomGameObj_KeepRegistered = true;
 	paramsRoom.RoomGameObj_AuxSendLevelToSelf = 0.25f;
 	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Inside");
@@ -135,7 +135,7 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 	paramsRoom.Up.Y = 1.f;
 	paramsRoom.Up.Z = 0.f;
 
-	paramsRoom.TransmissionLoss = 0.5f;
+	paramsRoom.TransmissionLoss = 1.0f;
 	paramsRoom.RoomGameObj_KeepRegistered = true;
 	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Outside");
 	paramsRoom.GeometryInstanceID = AkGeometryInstanceID();
