@@ -7,6 +7,8 @@
 #include "GameObject.h"
 
 #include "GO_BoundingBox.h"
+#include <cstdint>
+
 
 class WwiseRoomComponent : public Component
 {
@@ -15,7 +17,9 @@ public:
 	void InitRoom(GameObject* in_gameObject);
 	virtual void Update(GameObject* in_gameObject) override;
 
-	void GenerateWalls(const GameObject* gameObject, const unsigned int& roomID, const unsigned int& wallSidesGeometryID, const unsigned int& wallCeilingFloorGeometryID, const unsigned int& wallInstance1, const unsigned int& wallInstance2, const unsigned int& wallInstance3, const unsigned int& wallInstance4, const unsigned int& wallInstance5, const unsigned int& wallInstance6);
+	void InitRoomGeometry(GameObject* roomObj);
+
+	void GenerateWalls(const GameObject* gameObject, const uint64_t& roomID, const uint64_t& wallSidesGeometryID, const uint64_t& wallCeilingFloorGeometryID, const uint64_t& wallInstance1, const uint64_t& wallInstance2, const uint64_t& wallInstance3, const uint64_t& wallInstance4, const uint64_t& wallInstance5, const uint64_t& wallInstance6);
 
 	void SetBoundingBox(const GO_Vector3& center, const float& width, const float& length, const float& height);
 

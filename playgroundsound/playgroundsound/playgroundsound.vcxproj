@@ -136,10 +136,10 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="GO_BoundingBox.cpp" />
-    <ClCompile Include="OldGameObject.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.h" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="OldGameObject.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="WwiseObjectComponent.cpp" />
     <ClCompile Include="WwisePortalComponent.cpp" />
@@ -159,22 +159,24 @@
     <ClCompile Include="WwiseAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AkInstanceIDs.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="ControllerComponent.h" />
     <ClInclude Include="DiffractionPath.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObjectIDs.h" />
     <ClInclude Include="GameObjectManager.h" />
+    <ClInclude Include="GoVertex.h" />
     <ClInclude Include="GO_BoundingBox.h" />
     <ClInclude Include="GO_Transform.h" />
     <ClInclude Include="GO_Vector3.h" />
-    <ClInclude Include="GoVertex.h" />
     <ClInclude Include="OldGameObject.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObjectIDs.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="WwiseID.h" />
     <ClInclude Include="WwiseObjectComponent.h" />
     <ClInclude Include="WwisePortalComponent.h" />
     <ClInclude Include="WwiseRoomComponent.h" />

@@ -26,7 +26,6 @@ private:
     Model* model;
 
     std::vector<Triangle> m_triangles;
-    //GoMesh mesh; 
     std::vector<GoVertex> m_vertices;
 };
 

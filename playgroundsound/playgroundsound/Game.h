@@ -29,7 +29,6 @@ struct Shader;
 class Game {
 public:
     void Run();
-    void InputControls();
     void DrawDiffractionPaths();
     void UpdateBlinkingLight();
     void MusicBeat();
@@ -39,24 +38,10 @@ public:
     void AddShader();
     void AddGameObjects();
     void LoadModels();
-    void AddGameObject(std::shared_ptr<Model> model, const unsigned int& goID , const std::string_view name, const GO_Vector3& in_position = {0,0,0}, const GO_Vector3& in_scale = {1,1,1});
-    void ConvertVertices(const std::shared_ptr<Model>& model, OldGameObject& gameObject);
-    void ConvertTriangles(const std::shared_ptr <Model>& model, OldGameObject& gameObject);
-    void AddWall(const GO_Transform& transform, const float& radians);
     void SetLightFlickerValue(const float& value);
     void DeInit();
-    const std::shared_ptr<OldGameObject>& GetGameObject(const unsigned int& goID);
-    const std::vector<std::shared_ptr<OldGameObject>>& GetWalls();
-    BoundingBox CalculateBoundingBox(const Vector3& center, const float& width, const float& height, const float& length) const;
-    bool IsGameObjectInRoom(const std::shared_ptr<OldGameObject>& gameObject);
-
-    void AssignRtpcFunction(std::function<void(const float&)> function);
-
-    const std::map<unsigned int, std::shared_ptr<OldGameObject>>& GetAllGameObjects();;
 
 private:
-    void DrawGameObject(std::shared_ptr<OldGameObject> gameObject);
-    Vector3 ConvertGoVector3(const GO_Vector3& in_goVector);
 
     std::map<std::string, std::shared_ptr<Model>> models;
     std::map<std::string, std::shared_ptr<Shader>> shaders;

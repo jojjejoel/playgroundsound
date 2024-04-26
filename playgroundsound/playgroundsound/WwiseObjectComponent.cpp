@@ -27,15 +27,6 @@ void WwiseObjectComponent::Update(GameObject* in_gameObject)
 	transform.Set(positionVector, orientationFront, orientationTop);
 	soundPosition.Set(positionVector, orientationFront, orientationTop);
 
-	/*if (gameObject.GetRoomID() != 0)
-	{
-		SetGameObjectIsInRoom(akGameObjectID, gameObject.GetRoomID());
-	}
-	else
-	{
-		SetGameObjectIsInRoom(akGameObjectID, AK::SpatialAudio::kOutdoorRoomID);
-	}*/
-
 	AKRESULT result = AK::SoundEngine::SetPosition(akGameObjectID, soundPosition);
 }
 
@@ -62,8 +53,11 @@ void WwiseObjectComponent::SetRTPC(const unsigned int& rtpcID, const float& rtpc
 
 void WwiseObjectComponent::SetRoomID(const unsigned int& in_akRoomID)
 {
-	currentRoomID = in_akRoomID;
-	AK::SpatialAudio::SetGameObjectInRoom(akGameObjectID, currentRoomID);
+	if (currentRoomID != in_akRoomID)
+	{
+		currentRoomID = in_akRoomID;
+		AK::SpatialAudio::SetGameObjectInRoom(akGameObjectID, currentRoomID);
+	}
 }
 const GO_Vector3& WwiseObjectComponent::GetPosition()
 {

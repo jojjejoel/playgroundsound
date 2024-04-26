@@ -11,7 +11,7 @@ public:
 
     void Rotate(GameObject* in_gameObject, const float& in_rotateSpeed);
 
-    const float& GetPercentageOfMaxSpeed() const;
+    const float GetPercentageOfMaxSpeed() const;
 
     const float& GetGas() const;
 
