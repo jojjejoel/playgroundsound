@@ -30,8 +30,8 @@ void WwisePortalComponent::InitPortal(const GameObject* in_gameObject, const uin
 	paramsPortal.Extent.halfDepth = in_gameObject->m_transform.scale.z / 2.f;
 
 	paramsPortal.bEnabled = true;
-	paramsPortal.FrontRoom = backRoomID;
-	paramsPortal.BackRoom = frontRoomID;
+	paramsPortal.FrontRoom = frontRoomID;
+	paramsPortal.BackRoom = backRoomID ;
 
 	result = AK::SpatialAudio::SetPortal(in_gameObject->m_id, paramsPortal, in_gameObject->m_name.c_str());
 }
