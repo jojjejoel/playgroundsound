@@ -166,6 +166,14 @@ void Game::LoadModels()
 
 void Game::Run()
 {
+	if (IsKeyDown(KEY_THREE))
+	{
+		playbackSpeed -= GetFrameTime();
+	}
+	if (IsKeyDown(KEY_FOUR))
+	{
+		playbackSpeed += GetFrameTime();
+	}
 
 	barValue -= GetFrameTime() * 0.37f * playbackSpeed;
 	UpdateBlinkingLight();
@@ -175,7 +183,7 @@ void Game::Run()
 	float carGas = gameObjectManager.m_gameObjects["Truck"]->GetComponent<ControllerComponent>().GetGas();
 	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
 
-
+	gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed);
 
 	BeginDrawing();
 
