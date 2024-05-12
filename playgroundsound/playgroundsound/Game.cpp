@@ -65,7 +65,7 @@ void Game::Init()
 	comp.RegisterAsListener();
 	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::CAR_ENGINE_LOOP);
 	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().RegisterAsDistanceProbe(gameObjectManager.m_gameObjects["Camera"]->m_id);
-	gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::ENERGY);
+	gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>().PostMusicEvent(AK::EVENTS::ENERGY, std::bind(&Game::MusicBar, this), std::bind(&Game::MusicBeat, this));
 }
 
 void Game::AddShader()
@@ -167,7 +167,7 @@ void Game::LoadModels()
 void Game::Run()
 {
 
-	//barValue -= GetFrameTime() * 0.37f * playbackSpeed;
+	barValue -= GetFrameTime() * 0.37f * playbackSpeed;
 	UpdateBlinkingLight();
 	float carSpeed = gameObjectManager.m_gameObjects["Truck"]->GetComponent<ControllerComponent>().GetPercentageOfMaxSpeed();
 	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
@@ -234,7 +234,7 @@ void Game::UpdateBlinkingLight()
 	lights[0].color = { 255,255,255, 255 };
 	lights[1].color = { 255,255,255, 255 };
 
-	/*if (updateFirstLight)
+	if (updateFirstLight)
 	{
 
 	unsigned char gValue = 255 * std::max(0.0f, barValue);
@@ -259,7 +259,7 @@ void Game::UpdateBlinkingLight()
 		lights[0].color = { aValueBar,aValueBar,gValue, 255 };
 	}
 	}
-	if (updateSecondLight)
+	/*if (updateSecondLight)
 	{
 	unsigned char r = 155 * (1 - lightFlickerValue);
 	unsigned char g = 255 * (1 - lightFlickerValue);
@@ -270,7 +270,7 @@ void Game::UpdateBlinkingLight()
 	}*/
 
 
-	//UpdateLightValues(models[0]->materials[0].shader, lights[0]);
+	UpdateLightValues(models["truck_green"]->materials[0].shader, lights[0]);
 
 	//UpdateLightValues(models[0]->materials[0].shader, lights[1]);
 

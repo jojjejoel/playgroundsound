@@ -1,10 +1,10 @@
 #include "WwiseObjectComponent.h"
-#include <AK/SoundEngine/Common/AkCallback.h>
 #include <AK/SoundEngine/Common/AkQueryParameters.h>
 #include <AK/Tools/Common/AkPlatformFuncs.h>
 #include "AK/Comm/AkCommunication.h"
 #include "AK/SpatialAudio/Common/AkSpatialAudio.h"
 #include "GameObject.h"
+#include <AK/SoundEngine/Common/AkCallback.h>
 
 void WwiseObjectComponent::Init(GameObject* in_gameObject)
 {
@@ -33,6 +33,30 @@ void WwiseObjectComponent::Update(GameObject* in_gameObject)
 void WwiseObjectComponent::PostEvent(const unsigned int& eventID)
 {
 	AK::SoundEngine::PostEvent(eventID, akGameObjectID);
+}
+
+
+static void MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo)
+{
+	WwiseObjectComponent* wwiseObjectComponent = (WwiseObjectComponent*)in_pCallbackInfo->pCookie;
+	switch (in_eType)
+	{
+	case AK_MusicSyncBeat:
+		wwiseObjectComponent->callbackFuntionBeat();
+		break;
+	case AK_MusicSyncBar:
+		wwiseObjectComponent->callbackFuntionBar();
+		break;
+	default:
+		break;
+	}
+}
+
+void WwiseObjectComponent::PostMusicEvent(const unsigned int& eventID, std::function<void()> in_callbackFuncBar, std::function<void()> in_callbackFuncBeat)
+{
+	callbackFuntionBar = in_callbackFuncBar;
+	callbackFuntionBeat = in_callbackFuncBeat;
+	AK::SoundEngine::PostEvent(eventID, akGameObjectID, AK_MusicSyncAll, &MusicCallback, this);
 }
 
 void WwiseObjectComponent::RegisterAsListener()
