@@ -14,6 +14,8 @@
 
 #include "WwiseRoomManager.h"
 
+#include "DiffractionManager.h"
+
 struct Camera3D;
 struct Vector3;
 struct Texture;
@@ -72,4 +74,5 @@ private:
 
     GameObjectManager gameObjectManager;
     WwiseRoomManager wwiseRoomManager;
+    DiffractionManager diffractionManager;
 };

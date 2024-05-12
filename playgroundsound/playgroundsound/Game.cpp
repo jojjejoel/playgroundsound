@@ -95,10 +95,10 @@ void Game::AddGameObjects()
 	cameraObj->AddComponent<WwiseObjectComponent>();
 
 	GameObject* roomCubeObj = gameObjectManager.AddGameObject("RoomCube");
-	roomCubeObj->AddComponent<RenderComponent>().SetModel(models["RoomCube"].get(), true);
+	roomCubeObj->AddComponent<RenderComponent>().SetModel(models["RoomCube"].get(), false, true);
 
 	GameObject* roomWallObj = gameObjectManager.AddGameObject("RoomWall");
-	roomWallObj->AddComponent<RenderComponent>().SetModel(models["RoomWall"].get(), true);
+	roomWallObj->AddComponent<RenderComponent>().SetModel(models["RoomWall"].get(), false, true);
 
 	GameObject* musicEmitterObj = gameObjectManager.AddGameObject("Music");
 	musicEmitterObj->AddComponent<WwiseObjectComponent>();
@@ -106,7 +106,7 @@ void Game::AddGameObjects()
 	GameObject* portalCubeObj = gameObjectManager.AddGameObject("PortalCube");
 	portalCubeObj->m_transform.position = { 0,0,5 };
 	portalCubeObj->m_transform.scale = { 4,6,2 };
-	portalCubeObj->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get());
+	portalCubeObj->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get(), false);
 	portalCubeObj->AddComponent<WwisePortalComponent>();
 
 	GameObject* wallFrontObj = gameObjectManager.AddGameObject("WallFront");
@@ -184,17 +184,13 @@ void Game::Run()
 
 	gameObjectManager.Update();
 	wwiseRoomManager.Update();
-	DrawDiffractionPaths();
-	EndMode3D();
+	
 
-	std::string playbackSpeedString = "Playback speed: " + std::to_string(playbackSpeed);
-	DrawText(playbackSpeedString.c_str(), 2, 2, 20, WHITE);
+	std::vector<DiffractionPath> diffractionPaths = diffractionManager.GetDiffractionPath(gameObjectManager.m_gameObjects["Music"]->m_id);
+	GO_Vector3 listenerPosGo = gameObjectManager.m_gameObjects["Truck"]->m_transform.position;
 
-	EndDrawing();
-}
-void Game::DrawDiffractionPaths()
-{
-	/*for (int pathIndex = 0; pathIndex < diffractionPaths.size(); pathIndex++)
+	Vector3 listenerPos = { listenerPosGo.x, listenerPosGo.y, listenerPosGo.z };
+		for (int pathIndex = 0; pathIndex < diffractionPaths.size(); pathIndex++)
 	{
 		DiffractionPath diffractionPath = diffractionPaths[pathIndex];
 
@@ -203,7 +199,7 @@ void Game::DrawDiffractionPaths()
 		if (numNodes > 0)
 		{
 			Vector3 firstNodePos = { diffractionPath.nodes[0].x, diffractionPath.nodes[0].y, diffractionPath.nodes[0].z };
-			DrawLine3D(firstNodePos, camera->target, color);
+			DrawLine3D(firstNodePos, listenerPos, color);
 			DrawSphereWires(firstNodePos, 0.2f, 10, 10, color);
 
 			for (int nodeIndex = 1; nodeIndex < numNodes; nodeIndex++)
@@ -218,13 +214,19 @@ void Game::DrawDiffractionPaths()
 			Vector3 nodePos = { diffractionPath.nodes[numNodes - 1].x, diffractionPath.nodes[numNodes - 1].y, diffractionPath.nodes[numNodes - 1].z };
 			DrawLine3D(emitterPos, nodePos, color);
 		}
-		else
+		/*else
 		{
 			Vector3 startLinePos = { diffractionPath.emitterPos.x, diffractionPath.emitterPos.y, diffractionPath.emitterPos.z };
-			Vector3 endLinePos = { camera->target };
+			Vector3 endLinePos = { listenerPos };
 			DrawLine3D(startLinePos, endLinePos, color);
-		}
-	}*/
+		}*/
+	}
+	
+		EndMode3D();
+
+		std::string playbackSpeedString = "Playback speed: " + std::to_string(playbackSpeed);
+		DrawText(playbackSpeedString.c_str(), 2, 2, 20, WHITE);
+	EndDrawing();
 }
 
 void Game::UpdateBlinkingLight()

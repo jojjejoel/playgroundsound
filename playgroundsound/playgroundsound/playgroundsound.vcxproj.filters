@@ -93,17 +93,20 @@
     <ClCompile Include="WwiseObjectComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="WwisePortalComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="WwiseRoomComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WwiseRoomManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="GO_BoundingBox.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DiffractionManager.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="WwisePortalComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseRoomComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +164,6 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DiffractionPath.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameObjectIDs.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -206,17 +206,29 @@
     <ClInclude Include="GoVertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WwisePortalComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WwiseRoomComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WwiseRoomManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="GO_BoundingBox.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AkInstanceIDs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseID.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DiffractionPath.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="WwisePortalComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseRoomComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DiffractionManager.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="ControllerComponent.cpp" />
+    <ClCompile Include="DiffractionManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="GO_BoundingBox.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Components.h" />
     <ClInclude Include="ControllerComponent.h" />
+    <ClInclude Include="DiffractionManager.h" />
     <ClInclude Include="DiffractionPath.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Game.h" />

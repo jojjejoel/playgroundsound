@@ -15,7 +15,7 @@ public:
     virtual void Update(GameObject* in_gameObject) override;
 
 
-    void SetModel(Model* in_model, bool initRoom = false);
+    void SetModel(Model* in_model, const bool& renderWireFrame = false, const bool& initRoom = false);
 
 
     const std::vector<GoVertex>& GetVertices() const;
@@ -27,5 +27,6 @@ private:
 
     std::vector<Triangle> m_triangles;
     std::vector<GoVertex> m_vertices;
+    bool renderWireFrame;
 };
 
