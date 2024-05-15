@@ -3,7 +3,6 @@
 
 #include "DiffractionPath.h"
 #include <memory>
-#include "OldGameObject.h"
 #include <vector>
 #include <functional>
 #include <map>
@@ -49,8 +48,6 @@ private:
     std::map<std::string, std::shared_ptr<Shader>> shaders;
 
     std::vector<std::shared_ptr<BoundingBox>> boundingBoxes;
-
-    std::vector<std::shared_ptr<OldGameObject>> roomWalls;
 
 
 

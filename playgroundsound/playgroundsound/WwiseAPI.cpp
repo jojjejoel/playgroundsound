@@ -16,11 +16,7 @@
 #include <AK/Plugin/AkParametricEQFXFactory.h>
 #include <AK/MusicEngine/Common/AkMusicEngine.h>
 
-//IDs
 #include "Wwise_IDs.h"
-#include "GameObjectIDs.h"
-
-
 
 bool WwiseAPI::Init()
 {
@@ -80,49 +76,6 @@ void WwiseAPI::DeInit()
 AKRESULT WwiseAPI::LoadBank(const AkUniqueID& bankID)
 {
 	return AK::SoundEngine::LoadBank(bankID);
-}
-
-float WwiseAPI::GetRTPCValueGameObject(const AkRtpcID& rtpcID, const AkGameObjectID& akGameObjectID) {
-
-	return GetRTPCValue(rtpcID, akGameObjectID, AK::SoundEngine::Query::RTPCValue_type::RTPCValue_GameObject, AK_INVALID_PLAYING_ID, -36, -16);
-}
-
-
-float WwiseAPI::GetRTPCValue(const AkRtpcID& in_rtpcID, const AkGameObjectID& in_akGameObjectID, const AK::SoundEngine::Query::RTPCValue_type& in_valueType, const AkPlayingID& in_playingID, const float& in_minValue, const float& in_maxValue) {
-
-	AkRtpcValue rtpcValue;
-	AK::SoundEngine::Query::RTPCValue_type valueType = in_valueType;
-	AKRESULT result = AK::SoundEngine::Query::GetRTPCValue(in_rtpcID, in_akGameObjectID, in_playingID, rtpcValue, valueType);
-	if (result != AK_Success)
-	{
-		// Log error/warning
-	}
-	float normalizedValue = (rtpcValue - (in_minValue)) / (in_maxValue - (in_minValue));
-	return normalizedValue;
-}
-
-void WwiseAPI::SetRTPCValue(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue, const AkGameObjectID& akGameObjectID) {
-	AKRESULT result = AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, akGameObjectID);
-	if (result != AK_Success)
-	{
-		// Log error/warning
-	}
-}
-
-void WwiseAPI::SetRTPCValueGlobal(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue) {
-	AKRESULT result = AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, AK_INVALID_GAME_OBJECT);
-	if (result != AK_Success)
-	{
-		// Log error/warning
-	}
-}
-
-void WwiseAPI::SetRTPCValueGameObject(const AkRtpcID& rtpcID, const AkRtpcValue& rtpcValue, const AkGameObjectID& akGameObjectID) {
-	AKRESULT result = AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, akGameObjectID);
-	if (result != AK_Success)
-	{
-		// Log error/warning
-	}
 }
 
 void WwiseAPI::RenderAudio()
@@ -185,22 +138,6 @@ std::vector<DiffractionPath> WwiseAPI::GetDiffraction(const AkGameObjectID& game
 	return diffractionPaths;
 }
 
-
 void WwiseAPI::Log(std::string_view logMsg) {
 	std::cout << logMsg << std::endl;
-}
-
-void WwiseAPI::SetPlaybackSpeed(const float& playbackSpeed) 
-{
-	SetRTPCValueGameObject(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed, GUIDs::musicEmitterGO);
-}
-
-void WwiseAPI::SetCallbackFunctionBeat(std::function<void()> function) 
-{
-	callbackFunctionBeat = function;
-}
-
-void WwiseAPI::SetCallbackFunctionBar(std::function<void()> function)
-{
-	callbackFunctionBar = function;
 }

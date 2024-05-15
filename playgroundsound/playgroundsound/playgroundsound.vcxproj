@@ -136,11 +136,9 @@
     <ClCompile Include="DiffractionManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
-    <ClCompile Include="GO_BoundingBox.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.h" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="OldGameObject.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="WwiseObjectComponent.cpp" />
     <ClCompile Include="WwisePortalComponent.cpp" />
@@ -169,13 +167,11 @@
     <ClInclude Include="DiffractionPath.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObjectIDs.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="GoVertex.h" />
     <ClInclude Include="GO_BoundingBox.h" />
     <ClInclude Include="GO_Transform.h" />
     <ClInclude Include="GO_Vector3.h" />
-    <ClInclude Include="OldGameObject.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="WwiseID.h" />

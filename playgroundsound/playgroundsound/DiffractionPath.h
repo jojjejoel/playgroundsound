@@ -1,5 +1,5 @@
 #pragma once
-#include "OldGameObject.h"
+#include "GameObject.h"
 struct DiffractionPath {
 	/// Defines the maximum number of nodes that a user can retrieve information about.  Longer paths will be truncated. 
 	static const int kMaxNodes = 4;
