@@ -1,18 +1,5 @@
 #include "Game.h"
 
-/*******************************************************************************************
-*
-*   raylib [core] example - 3d camera first person
-*
-*   Example originally created with raylib 1.3, last time updated with raylib 1.3
-*
-*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software
-*
-*   Copyright (c) 2015-2024 Ramon Santamaria (@raysan5)
-*
-********************************************************************************************/
-
 #include "raylib.h"
 #include "rcamera.h"
 #include <string>
@@ -46,7 +33,6 @@ void Game::Init()
 	LoadModels();
 
 	AddGameObjects();
-
 
 	WwiseRoomComponent& roomComponent = gameObjectManager.m_gameObjects["RoomCube"]->AddComponent<WwiseRoomComponent>();
 	roomComponent.InitRoomGeometry(gameObjectManager.m_gameObjects["RoomCube"]);
@@ -222,12 +208,6 @@ void Game::Run()
 			Vector3 nodePos = { diffractionPath.nodes[numNodes - 1].x, diffractionPath.nodes[numNodes - 1].y, diffractionPath.nodes[numNodes - 1].z };
 			DrawLine3D(emitterPos, nodePos, color);
 		}
-		/*else
-		{
-			Vector3 startLinePos = { diffractionPath.emitterPos.x, diffractionPath.emitterPos.y, diffractionPath.emitterPos.z };
-			Vector3 endLinePos = { listenerPos };
-			DrawLine3D(startLinePos, endLinePos, color);
-		}*/
 	}
 	
 		EndMode3D();

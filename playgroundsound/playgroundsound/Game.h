@@ -43,15 +43,10 @@ public:
     void DeInit();
 
 private:
-
     std::map<std::string, std::shared_ptr<Model>> models;
     std::map<std::string, std::shared_ptr<Shader>> shaders;
 
     std::vector<std::shared_ptr<BoundingBox>> boundingBoxes;
-
-
-
-
 
     int beatValue = 0;
     float barValue = 0;
