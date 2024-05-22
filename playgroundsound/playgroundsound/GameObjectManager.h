@@ -2,16 +2,17 @@
 #include <map>
 #include "GameObject.h"
 
+#define MAX_GAME_OBJECTS 50
 class GameObjectManager
 {
 public:
     ~GameObjectManager();
-
     GameObject* AddGameObject(std::string_view name);
 
     void Init();
     void Update();
 
-    std::map<std::string_view, GameObject*> m_gameObjects;
+    int gameObjectCount = 0;
+    GameObject* m_gameObjects[MAX_GAME_OBJECTS];
 };
 

@@ -24,7 +24,6 @@ void CameraComponent::Update(GameObject* in_gameObject)
 
 	camera3D->position = { newCameraPos.x, newCameraPos.y + 2.5f, newCameraPos.z };
 	in_gameObject->m_transform.position = newCameraPos;
-	//GoVector3 newForward = targetGO->m_transform.position - newCameraPos
 	in_gameObject->m_transform.forward = newCameraPos - targetGO->m_transform.position;
 	in_gameObject->m_transform.up = { camera3D->up.x, camera3D->up.y, camera3D->up.z };
 }

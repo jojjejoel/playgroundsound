@@ -34,24 +34,24 @@ void Game::Init()
 
 	AddGameObjects();
 
-	WwiseRoomComponent& roomComponent = gameObjectManager.m_gameObjects["RoomCube"]->AddComponent<WwiseRoomComponent>();
-	roomComponent.InitRoomGeometry(gameObjectManager.m_gameObjects["RoomCube"]);
-	roomComponent.InitRoom(gameObjectManager.m_gameObjects["RoomWall"]);
+	WwiseRoomComponent& roomComponent = roomCubeObjPtr->AddComponent<WwiseRoomComponent>();
+	roomComponent.InitRoomGeometry(roomCubeObjPtr);
+	roomComponent.InitRoom(roomWallObjPtr);
 	roomComponent.SetBoundingBox({ 0,0,0 }, 10, 10, 10);
 	wwiseRoomManager.AddRoom(&roomComponent);
-	wwiseRoomManager.AddObject(&gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>());
-	wwiseRoomManager.AddObject(&gameObjectManager.m_gameObjects["Camera"]->GetComponent<WwiseObjectComponent>());
-	wwiseRoomManager.AddObject(&gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>());
+	wwiseRoomManager.AddObject(&truckObjPtr->GetComponent<WwiseObjectComponent>());
+	wwiseRoomManager.AddObject(&cameraObjPtr->GetComponent<WwiseObjectComponent>());
+	wwiseRoomManager.AddObject(&musicEmitterObjPtr->GetComponent<WwiseObjectComponent>());
 	SetTargetFPS(30);
-	GameObject* portalObj = gameObjectManager.m_gameObjects["PortalCube"];
+	GameObject* portalObj = portalCubeObjPtr;
 	portalObj->GetComponent<WwisePortalComponent>().InitPortal(portalObj, roomComponent.GetRoomID());
 
 	gameObjectManager.Init();
-	WwiseObjectComponent comp = gameObjectManager.m_gameObjects["Camera"]->GetComponent<WwiseObjectComponent>();
+	WwiseObjectComponent comp = cameraObjPtr->GetComponent<WwiseObjectComponent>();
 	comp.RegisterAsListener();
-	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::CAR_ENGINE_LOOP);
-	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().RegisterAsDistanceProbe(gameObjectManager.m_gameObjects["Camera"]->m_id);
-	gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>().PostMusicEvent(AK::EVENTS::ENERGY, std::bind(&Game::MusicBar, this), std::bind(&Game::MusicBeat, this));
+	truckObjPtr->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::CAR_ENGINE_LOOP);
+	truckObjPtr->GetComponent<WwiseObjectComponent>().RegisterAsDistanceProbe(cameraObjPtr->m_id);
+	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().PostMusicEvent(AK::EVENTS::ENERGY, std::bind(&Game::MusicBar, this), std::bind(&Game::MusicBeat, this));
 }
 
 void Game::AddShader()
@@ -71,29 +71,29 @@ void Game::AddShader()
 
 void Game::AddGameObjects()
 {
-	GameObject* truckObj = gameObjectManager.AddGameObject("Truck");
-	truckObj->AddComponent<ControllerComponent>().SetMovementSpeed(5);
-	truckObj->AddComponent<RenderComponent>().SetModel(models["truck_green"].get());
-	truckObj->AddComponent<WwiseObjectComponent>();
+	truckObjPtr = gameObjectManager.AddGameObject("Truck");
+	truckObjPtr->AddComponent<ControllerComponent>().SetMovementSpeed(5);
+	truckObjPtr->AddComponent<RenderComponent>().SetModel(models["truck_green"].get());
+	truckObjPtr->AddComponent<WwiseObjectComponent>();
 
-	GameObject* cameraObj = gameObjectManager.AddGameObject("Camera");
-	cameraObj->AddComponent<CameraComponent>().SetTarget(truckObj);
-	cameraObj->AddComponent<WwiseObjectComponent>();
+	cameraObjPtr = gameObjectManager.AddGameObject("Camera");
+	cameraObjPtr->AddComponent<CameraComponent>().SetTarget(truckObjPtr);
+	cameraObjPtr->AddComponent<WwiseObjectComponent>();
 
-	GameObject* roomCubeObj = gameObjectManager.AddGameObject("RoomCube");
-	roomCubeObj->AddComponent<RenderComponent>().SetModel(models["RoomCube"].get(), false, true);
+	roomCubeObjPtr = gameObjectManager.AddGameObject("RoomCube");
+	roomCubeObjPtr->AddComponent<RenderComponent>().SetModel(models["RoomCube"].get(), false, true);
 
-	GameObject* roomWallObj = gameObjectManager.AddGameObject("RoomWall");
-	roomWallObj->AddComponent<RenderComponent>().SetModel(models["RoomWall"].get(), false, true);
+	roomWallObjPtr = gameObjectManager.AddGameObject("RoomWall");
+	roomWallObjPtr->AddComponent<RenderComponent>().SetModel(models["RoomWall"].get(), false, true);
 
-	GameObject* musicEmitterObj = gameObjectManager.AddGameObject("Music");
-	musicEmitterObj->AddComponent<WwiseObjectComponent>();
+	musicEmitterObjPtr = gameObjectManager.AddGameObject("Music");
+	musicEmitterObjPtr->AddComponent<WwiseObjectComponent>();
 
-	GameObject* portalCubeObj = gameObjectManager.AddGameObject("PortalCube");
-	portalCubeObj->m_transform.position = { 0,0,5 };
-	portalCubeObj->m_transform.scale = { 4,6,2 };
-	portalCubeObj->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get(), false);
-	portalCubeObj->AddComponent<WwisePortalComponent>();
+	portalCubeObjPtr = gameObjectManager.AddGameObject("PortalCube");
+	portalCubeObjPtr->m_transform.position = { 0,0,5 };
+	portalCubeObjPtr->m_transform.scale = { 4,6,2 };
+	portalCubeObjPtr->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get(), false);
+	portalCubeObjPtr->AddComponent<WwisePortalComponent>();
 
 	GameObject* wallFrontObj = gameObjectManager.AddGameObject("WallFront");
 	wallFrontObj->AddComponent<RenderComponent>().SetModel(models["WallFront"].get());
@@ -119,9 +119,9 @@ void Game::AddGameObjects()
 	wallTopObj->AddComponent<RenderComponent>().SetModel(models["WallTop"].get());
 	wallTopObj->m_transform.position = { 0,8,0 };
 
-	GameObject* lightBulbObj = gameObjectManager.AddGameObject("LightBulb");
-	lightBulbObj->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get());
-	lightBulbObj->m_transform.position = { 10,1,10 };
+	lightBulbObjPtr = gameObjectManager.AddGameObject("LightBulb");
+	lightBulbObjPtr->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get());
+	lightBulbObjPtr->m_transform.position = { 10,1,10 };
 }
 
 void Game::LoadModels()
@@ -150,6 +150,17 @@ void Game::LoadModels()
 	models["RoomWall"]->materials[0].shader = *shaders["lighting"];
 }
 
+Game::~Game()
+{
+	delete truckObjPtr;
+	delete cameraObjPtr;
+	delete musicEmitterObjPtr;
+	delete portalCubeObjPtr;
+	delete roomCubeObjPtr;
+	delete roomWallObjPtr;
+	delete lightBulbObjPtr;
+}
+
 void Game::Run()
 {
 	if (IsKeyDown(KEY_THREE))
@@ -163,25 +174,25 @@ void Game::Run()
 
 	barValue -= GetFrameTime() * 0.37f * playbackSpeed;
 	UpdateBlinkingLight();
-	float carSpeed = gameObjectManager.m_gameObjects["Truck"]->GetComponent<ControllerComponent>().GetPercentageOfMaxSpeed();
-	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
+	float carSpeed = truckObjPtr->GetComponent<ControllerComponent>().GetPercentageOfMaxSpeed();
+	truckObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
 
-	float carGas = gameObjectManager.m_gameObjects["Truck"]->GetComponent<ControllerComponent>().GetGas();
-	gameObjectManager.m_gameObjects["Truck"]->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
+	float carGas = truckObjPtr->GetComponent<ControllerComponent>().GetGas();
+	truckObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
 
-	gameObjectManager.m_gameObjects["Music"]->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed);
+	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed);
 
 	BeginDrawing();
 
 	ClearBackground(RAYWHITE);
-	BeginMode3D(*gameObjectManager.m_gameObjects["Camera"]->GetComponent<CameraComponent>().camera3D);
+	BeginMode3D(*cameraObjPtr->GetComponent<CameraComponent>().camera3D);
 
 	gameObjectManager.Update();
 	wwiseRoomManager.Update();
 	
 
-	std::vector<DiffractionPath> diffractionPaths = diffractionManager.GetDiffractionPath(gameObjectManager.m_gameObjects["Music"]->m_id);
-	GO_Vector3 listenerPosGo = gameObjectManager.m_gameObjects["Truck"]->m_transform.position;
+	std::vector<DiffractionPath> diffractionPaths = diffractionManager.GetDiffractionPath(musicEmitterObjPtr->m_id);
+	GO_Vector3 listenerPosGo = truckObjPtr->m_transform.position;
 
 	Vector3 listenerPos = { listenerPosGo.x, listenerPosGo.y, listenerPosGo.z };
 		for (int pathIndex = 0; pathIndex < diffractionPaths.size(); pathIndex++)

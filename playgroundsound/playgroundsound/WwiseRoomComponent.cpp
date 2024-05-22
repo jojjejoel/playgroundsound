@@ -169,9 +169,8 @@ void WwiseRoomComponent::InitRoomGeometry(GameObject* roomObj) {
 	paramsRoom.RoomGameObj_KeepRegistered = true;
 	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Outside");
 	paramsRoom.GeometryInstanceID = AkGeometryInstanceID();
-	result = AK::SpatialAudio::SetRoom(AK::SpatialAudio::kOutdoorRoomID, paramsRoom, "Outside");
+	result = AK::SpatialAudio::SetRoom(AK::SpatialAudio::kOutdoorRoomID, paramsRoom, "Outside");	
 
-	
 
 	paramsRoom.Front.X = 0.f;
 	paramsRoom.Front.Y = 0.f;

@@ -29,6 +29,8 @@ struct Shader;
 
 class Game {
 public:
+    ~Game();
+
     void Run();
     void DrawDiffractionPaths();
     void UpdateBlinkingLight();
@@ -67,4 +69,13 @@ private:
     GameObjectManager gameObjectManager;
     WwiseRoomManager wwiseRoomManager;
     DiffractionManager diffractionManager;
+
+
+    GameObject* truckObjPtr;
+    GameObject* cameraObjPtr;
+    GameObject* musicEmitterObjPtr;
+    GameObject* portalCubeObjPtr;
+    GameObject* roomCubeObjPtr;
+    GameObject* roomWallObjPtr;
+    GameObject* lightBulbObjPtr;
 };
