@@ -21,23 +21,27 @@ void RenderComponent::Update(GameObject* in_gameObject)
 	model->transform.m2 = in_gameObject->m_transform.forward.x;
 	model->transform.m6 = in_gameObject->m_transform.forward.y;
 	model->transform.m10 = -in_gameObject->m_transform.forward.z;
+}
 
+void RenderComponent::Draw(GameObject* in_gameObject)
+{
 	Vector3 pos = { in_gameObject->m_transform.position.x, in_gameObject->m_transform.position.y, in_gameObject->m_transform.position.z };
+	Color drawColor = { color.x, color.y, color.z, 255 };
 	if (renderWireFrame)
 	{
-		DrawModelWires(*model, pos, 100, WHITE);
+		DrawModelWires(*model, pos, 1, drawColor);
 	}
 	else
 	{
-		Color color = { 255,255,255,120 };
-		DrawModel(*model, pos, 1, color);
+		DrawModelEx(*model, pos, { 0.0f, 1.0f, 0.0f }, 0, { 1.0f, 1.0f, 1.0f }, drawColor);
 	}
 }
 
-void RenderComponent::SetModel(Model* in_model, const bool& in_renderWireFrame, const bool& initRoom)
+void RenderComponent::SetModel(Model* in_model, const bool& in_renderWireFrame, const bool& initRoom, const GO_Vector3& in_color )
 {
 	model = in_model;
 	renderWireFrame = in_renderWireFrame;
+	color = in_color;
 	if (initRoom)
 	{
 		InitRoomGeometry();

@@ -13,9 +13,10 @@ public:
     virtual void Init(GameObject* in_gameObject) override;
 
     virtual void Update(GameObject* in_gameObject) override;
+    void Draw(GameObject* in_gameObject);
 
 
-    void SetModel(Model* in_model, const bool& renderWireFrame = false, const bool& initRoom = false);
+    void SetModel(Model* in_model, const bool& renderWireFrame = false, const bool& initRoom = false, const GO_Vector3& in_color = {255,255,255});
 
 
     const std::vector<GoVertex>& GetVertices() const;
@@ -28,5 +29,6 @@ private:
     std::vector<Triangle> m_triangles;
     std::vector<GoVertex> m_vertices;
     bool renderWireFrame;
+    GO_Vector3 color;
 };
 

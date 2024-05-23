@@ -11,7 +11,7 @@
 #if defined(PLATFORM_DESKTOP)
 #define GLSL_VERSION            330
 #else   // PLATFORM_ANDROID, PLATFORM_WEB
-#define GLSL_VERSION            100
+#define GLSL_VERSION            120
 #endif
 
 #include <algorithm>
@@ -19,20 +19,12 @@
 #include "Components.h"
 #include "Wwise_IDs.h"
 
-Light lights[4];
 
 void Game::Init()
 {
-	const int screenWidth = 800;
-	const int screenHeight = 450;
-
-	InitWindow(screenWidth, screenHeight, "PlaygroundSound");
-
-	AddShader();
-
-	LoadModels();
-
+	renderManager.Init();
 	AddGameObjects();
+	renderManager.SetCamera(&cameraObjPtr->GetComponent<CameraComponent>());
 
 	WwiseRoomComponent& roomComponent = roomCubeObjPtr->AddComponent<WwiseRoomComponent>();
 	roomComponent.InitRoomGeometry(roomCubeObjPtr);
@@ -54,26 +46,12 @@ void Game::Init()
 	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().PostMusicEvent(AK::EVENTS::ENERGY, std::bind(&Game::MusicBar, this), std::bind(&Game::MusicBeat, this));
 }
 
-void Game::AddShader()
-{
-	Shader shader = LoadShader(TextFormat("resources/shaders/glsl%i/lighting.vs", GLSL_VERSION), TextFormat("resources/shaders/glsl%i/lighting.fs", GLSL_VERSION));
-
-	shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
-	int ambientLoc = GetShaderLocation(shader, "ambient");
-
-	SetShaderValue(shader, ambientLoc, static_cast<const void*>(new float[4] {0.1f, 0.0f, 0.0f, 1.0f}), SHADER_UNIFORM_VEC4);
-
-	shaders.insert(std::make_pair("lighting", std::make_shared<Shader>(shader)));
-
-	lights[0] = CreateLight(LIGHT_POINT, { -5, 1, -5 }, { 5,0,5 }, { 255,255, 255, 255 }, shader);
-	lights[1] = CreateLight(LIGHT_DIRECTIONAL, { 10, 1, 10 }, { 0,1,0 }, { 255, 255, 255, 255 }, shader);
-}
-
 void Game::AddGameObjects()
 {
 	truckObjPtr = gameObjectManager.AddGameObject("Truck");
 	truckObjPtr->AddComponent<ControllerComponent>().SetMovementSpeed(5);
-	truckObjPtr->AddComponent<RenderComponent>().SetModel(models["truck_green"].get());
+	truckObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("truck_green").get());
+	renderManager.AddRenderObject(truckObjPtr);
 	truckObjPtr->AddComponent<WwiseObjectComponent>();
 
 	cameraObjPtr = gameObjectManager.AddGameObject("Camera");
@@ -81,74 +59,31 @@ void Game::AddGameObjects()
 	cameraObjPtr->AddComponent<WwiseObjectComponent>();
 
 	roomCubeObjPtr = gameObjectManager.AddGameObject("RoomCube");
-	roomCubeObjPtr->AddComponent<RenderComponent>().SetModel(models["RoomCube"].get(), false, true);
+	roomCubeObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("RoomCube").get(), true, true, { 255,0,0 });
+	renderManager.AddRenderObject(roomCubeObjPtr);
 
 	roomWallObjPtr = gameObjectManager.AddGameObject("RoomWall");
-	roomWallObjPtr->AddComponent<RenderComponent>().SetModel(models["RoomWall"].get(), false, true);
+	roomWallObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("RoomWall").get(), false, true);
+	renderManager.AddRenderObject(roomWallObjPtr);
 
 	musicEmitterObjPtr = gameObjectManager.AddGameObject("Music");
 	musicEmitterObjPtr->AddComponent<WwiseObjectComponent>();
+	musicEmitterObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("MusicCube").get(), false, false, {0,0,255});
+	renderManager.AddRenderObject(musicEmitterObjPtr);
 
 	portalCubeObjPtr = gameObjectManager.AddGameObject("PortalCube");
 	portalCubeObjPtr->m_transform.position = { 0,0,5 };
 	portalCubeObjPtr->m_transform.scale = { 4,6,2 };
-	portalCubeObjPtr->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get(), false);
+	portalCubeObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("PortalCube").get(), false, false, {0,255,0});
+	renderManager.AddRenderObject(portalCubeObjPtr);
 	portalCubeObjPtr->AddComponent<WwisePortalComponent>();
 
-	GameObject* wallFrontObj = gameObjectManager.AddGameObject("WallFront");
-	wallFrontObj->AddComponent<RenderComponent>().SetModel(models["WallFront"].get());
-	wallFrontObj->m_transform.position = { 0,0,20 };
-
-	GameObject* wallBackObj = gameObjectManager.AddGameObject("WallBack");
-	wallBackObj->AddComponent<RenderComponent>().SetModel(models["WallFront"].get());
-	wallBackObj->m_transform.position = { 0,0,-20 };
-
-	GameObject* wallRightObj = gameObjectManager.AddGameObject("WallRight");
-	wallRightObj->AddComponent<RenderComponent>().SetModel(models["WallSide"].get());
-	wallRightObj->m_transform.position = { 20,0,0 };
-
-	GameObject* wallLeftObj = gameObjectManager.AddGameObject("WallLeft");
-	wallLeftObj->AddComponent<RenderComponent>().SetModel(models["WallSide"].get());
-	wallLeftObj->m_transform.position = { -20,0,0 };
-
 	GameObject* wallBottomObj = gameObjectManager.AddGameObject("WallBottom");
-	wallBottomObj->AddComponent<RenderComponent>().SetModel(models["WallTop"].get());
-	wallBottomObj->m_transform.position = { 0,-2,0 };
-
-	GameObject* wallTopObj = gameObjectManager.AddGameObject("WallTop");
-	wallTopObj->AddComponent<RenderComponent>().SetModel(models["WallTop"].get());
-	wallTopObj->m_transform.position = { 0,8,0 };
-
-	lightBulbObjPtr = gameObjectManager.AddGameObject("LightBulb");
-	lightBulbObjPtr->AddComponent<RenderComponent>().SetModel(models["PortalCube"].get());
-	lightBulbObjPtr->m_transform.position = { 10,1,10 };
+	wallBottomObj->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("WallTop").get());
+	renderManager.AddRenderObject(wallBottomObj);
+	wallBottomObj->m_transform.position = { 0,-1.5,0 };
 }
 
-void Game::LoadModels()
-{
-	models.insert(std::make_pair("truck_green", std::make_shared<Model>(LoadModel("Resources/Models/truck_green.obj"))));
-	models["truck_green"]->materials[0].shader = *shaders["lighting"];
-
-	models.insert(std::make_pair("WallSide", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(3, 15, 40)))));
-	models["WallSide"]->materials[0].shader = *shaders["lighting"];
-
-	models.insert(std::make_pair("WallFront", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(40, 15, 3)))));
-	models["WallFront"]->materials[0].shader = *shaders["lighting"];
-
-	models.insert(std::make_pair("WallTop", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(40, 3, 40)))));
-	models["WallTop"]->materials[0].shader = *shaders["lighting"];
-
-	models.insert(std::make_pair("RoomCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(10, 10, 10)))));
-	models["RoomCube"]->materials[0].shader = *shaders["lighting"];
-
-	models.insert(std::make_pair("PortalCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(4, 6, 2)))));
-	models["PortalCube"]->materials[0].shader = *shaders["lighting"];
-
-	Model model = LoadModelFromMesh(GenMeshPlane(10, 10, 10, 20));
-	model.transform = MatrixMultiply(MatrixRotateZ(1.5708f), model.transform);
-	models.insert(std::make_pair("RoomWall", std::make_shared<Model>(model)));
-	models["RoomWall"]->materials[0].shader = *shaders["lighting"];
-}
 
 Game::~Game()
 {
@@ -171,7 +106,7 @@ void Game::Run()
 	{
 		playbackSpeed += GetFrameTime();
 	}
-
+	renderManager.SetPlaybackSpeed(playbackSpeed);
 	barValue -= GetFrameTime() * 0.37f * playbackSpeed;
 	UpdateBlinkingLight();
 	float carSpeed = truckObjPtr->GetComponent<ControllerComponent>().GetPercentageOfMaxSpeed();
@@ -182,20 +117,22 @@ void Game::Run()
 
 	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed);
 
-	BeginDrawing();
-
-	ClearBackground(RAYWHITE);
-	BeginMode3D(*cameraObjPtr->GetComponent<CameraComponent>().camera3D);
-
 	gameObjectManager.Update();
+	renderManager.Render();
+	DrawDiffractionPaths();
 	wwiseRoomManager.Update();
-	
 
+	renderManager.EndRender();
+}
+
+void Game::DrawDiffractionPaths()
+{
 	std::vector<DiffractionPath> diffractionPaths = diffractionManager.GetDiffractionPath(musicEmitterObjPtr->m_id);
 	GO_Vector3 listenerPosGo = truckObjPtr->m_transform.position;
 
 	Vector3 listenerPos = { listenerPosGo.x, listenerPosGo.y, listenerPosGo.z };
-		for (int pathIndex = 0; pathIndex < diffractionPaths.size(); pathIndex++)
+	float lowestDiffractionValue = 1;
+	for (int pathIndex = 0; pathIndex < diffractionPaths.size(); pathIndex++)
 	{
 		DiffractionPath diffractionPath = diffractionPaths[pathIndex];
 
@@ -215,51 +152,47 @@ void Game::Run()
 				DrawSphereWires(nodePos, 0.2f, 10, 10, color);
 				DrawLine3D(emitterPos, nodePos, color);
 			}
-			Vector3 emitterPos = { diffractionPath.emitterPos.x, diffractionPath.emitterPos.y, diffractionPath.emitterPos.z };
-			Vector3 nodePos = { diffractionPath.nodes[numNodes - 1].x, diffractionPath.nodes[numNodes - 1].y, diffractionPath.nodes[numNodes - 1].z };
-			DrawLine3D(emitterPos, nodePos, color);
+			if (diffractionPath.diffraction < lowestDiffractionValue)
+			{
+				lowestDiffractionValue = diffractionPath.diffraction;
+				Vector3 emitterPos = { diffractionPath.emitterPos.x, diffractionPath.emitterPos.y, diffractionPath.emitterPos.z };
+				Vector3 nodePos = { diffractionPath.nodes[numNodes - 1].x, diffractionPath.nodes[numNodes - 1].y, diffractionPath.nodes[numNodes - 1].z };
+				DrawLine3D(emitterPos, nodePos, color);
+			}
 		}
 	}
-	
-		EndMode3D();
-
-		std::string playbackSpeedString = "Playback speed: " + std::to_string(playbackSpeed);
-		DrawText(playbackSpeedString.c_str(), 2, 2, 20, WHITE);
-	EndDrawing();
 }
 
 void Game::UpdateBlinkingLight()
 {
-	lights[0].color = { 255,255,255, 255 };
-	lights[1].color = { 255,255,255, 255 };
+	renderManager.SetLightColor({ 255,255,255 });
 
 	if (updateFirstLight)
 	{
-
-	unsigned char gValue = 255 * std::max(0.0f, barValue);
-
-	if (beatValue == 0)
-	{
-		unsigned char aValueBar = 255 * std::max(0.0f, barValue);
-		lights[0].color = { aValueBar,0,gValue, 255 };
+		float gValue = 255 * std::max(0.0f, barValue);
+		if (beatValue == 0)
+		{
+			float aValueBar = 255 * std::max(0.0f, barValue);
+			renderManager.SetLightColor({ aValueBar,0,gValue });
+		}
+		else if (beatValue == 1)
+		{
+			renderManager.SetLightColor({ 0,0,gValue });
+		}
+		else if (beatValue == 2)
+		{
+			float aValueBar = 255 * std::max(0.0f, barValue);
+			renderManager.SetLightColor({ 0,aValueBar,gValue });
+		}
+		else if (beatValue == 3)
+		{
+			float aValueBar = 100 * std::max(0.0f, barValue);
+			renderManager.SetLightColor({ aValueBar,aValueBar,gValue });
+		}
 	}
-	else if (beatValue == 1)
-	{
-		lights[0].color = { 0,0,gValue, 255 };
-	}
-	else if (beatValue == 2)
-	{
-		unsigned char aValueBar = 255 * std::max(0.0f, barValue);
-		lights[0].color = { 0,aValueBar,gValue, 255 };
-	}
-	else if (beatValue == 3)
-	{
-		unsigned char aValueBar = 100 * std::max(0.0f, barValue);
-		lights[0].color = { aValueBar,aValueBar,gValue, 255 };
-	}
-	}
+	//}
 	/*if (updateSecondLight)
-	{
+
 	unsigned char r = 155 * (1 - lightFlickerValue);
 	unsigned char g = 255 * (1 - lightFlickerValue);
 	unsigned char b = 50 * (1 - lightFlickerValue);
@@ -269,7 +202,6 @@ void Game::UpdateBlinkingLight()
 	}*/
 
 
-	UpdateLightValues(models["truck_green"]->materials[0].shader, lights[0]);
 
 	//UpdateLightValues(models[0]->materials[0].shader, lights[1]);
 

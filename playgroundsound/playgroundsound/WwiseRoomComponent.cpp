@@ -67,9 +67,9 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 		// Log error/warning
 	}
 
-	AkGeometryParams geomRoofCeilingInside = geomWallsInside;
-	geomRoofCeilingInside.EnableDiffractionOnBoundaryEdges = false;
-	result = AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_CEILINGFLOOR, geomRoofCeilingInside);
+	AkGeometryParams geomFloorCeilingInside = geomWallsInside;
+	geomFloorCeilingInside.EnableDiffractionOnBoundaryEdges = false;
+	result = AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_CEILINGFLOOR, geomFloorCeilingInside);
 	if (result != AK_Success)
 	{
 		// Log error/warning

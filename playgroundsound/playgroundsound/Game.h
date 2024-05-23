@@ -14,17 +14,14 @@
 #include "WwiseRoomManager.h"
 
 #include "DiffractionManager.h"
+#include "RenderManager.h"
 
-struct Camera3D;
-struct Vector3;
-struct Texture;
-struct Model;
-struct Color;
+//struct Vector3;
+//struct Texture;
+//struct Color;
 struct BoundingBox;
-struct RayCollision;
-struct Mesh;
-struct Model;
-struct Shader;
+//struct RayCollision;
+//struct Mesh;
 
 
 class Game {
@@ -38,15 +35,11 @@ public:
     void MusicBar();
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void Init();
-    void AddShader();
     void AddGameObjects();
-    void LoadModels();
     void SetLightFlickerValue(const float& value);
     void DeInit();
 
 private:
-    std::map<std::string, std::shared_ptr<Model>> models;
-    std::map<std::string, std::shared_ptr<Shader>> shaders;
 
     std::vector<std::shared_ptr<BoundingBox>> boundingBoxes;
 
@@ -62,14 +55,12 @@ private:
 
     float playbackSpeed = 1;
 
-
     std::function<void(const float&)> setRtpcFunction;
 
-
     GameObjectManager gameObjectManager;
+    RenderManager renderManager;
     WwiseRoomManager wwiseRoomManager;
     DiffractionManager diffractionManager;
-
 
     GameObject* truckObjPtr;
     GameObject* cameraObjPtr;

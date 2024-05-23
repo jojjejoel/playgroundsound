@@ -14,7 +14,7 @@ public:
     void SetTarget(const GameObject* in_targetGO);
 private:
     const GameObject* targetGO;
-    float distance = 3; // Distance of the camera from the target
+    float distance = 5; // Distance of the camera from the target
     float angleX;   // Angle of rotation around the target on X-axis
     float angleY;   // Angle of rotation around the target on Y-axis
     float sensitivity = 1; // Mouse sensitivity for camera movement
