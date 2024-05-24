@@ -85,3 +85,8 @@ const std::vector<Triangle>& RenderComponent::GetTriangles() const
 {
 	return m_triangles;
 }
+
+void RenderComponent::SetRenderWireFrame(const bool& in_renderWireFrame)
+{
+	renderWireFrame = in_renderWireFrame;
+}

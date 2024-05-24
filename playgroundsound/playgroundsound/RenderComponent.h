@@ -22,6 +22,8 @@ public:
     const std::vector<GoVertex>& GetVertices() const;
     const std::vector<Triangle>& GetTriangles() const;
 
+    void SetRenderWireFrame(const bool& in_renderWireFrame);
+
 private:
     void InitRoomGeometry();
     Model* model;

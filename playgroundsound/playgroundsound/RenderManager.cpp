@@ -22,8 +22,8 @@ void RenderManager::SetCamera(CameraComponent* in_camera)
 
 void RenderManager::Init()
 {
-	const int screenWidth = 800;
-	const int screenHeight = 450;
+	const int screenWidth = 1600;
+	const int screenHeight = 900;
 
 	InitWindow(screenWidth, screenHeight, "PlaygroundSound");
 	SetConfigFlags(FLAG_MSAA_4X_HINT);
@@ -37,8 +37,8 @@ void RenderManager::Init()
 		TextFormat("Resources/Shaders/glsl%i/shadowmap.fs", GLSL_VERSION)))));
 	Shader& shadowShader = *shaders["shadow"];
 	shadowShader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shadowShader, "viewPos");
-	Vector3 lightDir = Vector3Normalize({ 0.35f, -1.0f, -0.35f });
-	lightColor = { 255,255,255 };
+	Vector3 lightDir = Vector3Normalize({ -0.35f, -10.0f, 0.35f });
+	lightColor = { 255,0,255 };
 	Vector4 lightColorNormalized = ColorNormalize({(unsigned char)lightColor.x, (unsigned char)lightColor.y, (unsigned char)lightColor.z, 255});
 	lightDirLoc = GetShaderLocation(shadowShader, "lightDir");
 	lightColLoc = GetShaderLocation(shadowShader, "lightColor");
@@ -74,13 +74,19 @@ void RenderManager::LoadModels()
 
 	models.insert(std::make_pair("RoomCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(10, 10, 10)))));
 
-	models.insert(std::make_pair("PortalCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(4, 6, 2)))));
+	models.insert(std::make_pair("PortalCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(10, 10, 0.1f)))));
 
 	models.insert(std::make_pair("MusicCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(2, 2, 2)))));
 
 	Model model = LoadModelFromMesh(GenMeshPlane(10, 10, 10, 20));
 	model.transform = MatrixMultiply(MatrixRotateZ(1.5708f), model.transform);
 	models.insert(std::make_pair("RoomWall", std::make_shared<Model>(model)));
+
+	models.insert(std::make_pair("RoomWallSide", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(0.1f, 10, 10)))));
+
+	models.insert(std::make_pair("RoomWallFront", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(10, 10, 0.1f)))));
+
+	models.insert(std::make_pair("RoomWallTop", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(10, 0.1f, 10)))));
 }
 
 void RenderManager::StartRender()

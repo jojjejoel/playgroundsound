@@ -29,17 +29,18 @@ public:
     ~Game();
 
     void Run();
+    void Init();
+    void DeInit();
+
+private:
     void DrawDiffractionPaths();
     void UpdateBlinkingLight();
     void MusicBeat();
     void MusicBar();
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
-    void Init();
-    void AddGameObjects();
     void SetLightFlickerValue(const float& value);
-    void DeInit();
-
-private:
+    void AddGameObjects();
+    void AddRoomWalls(GameObject* in_roomWallObjPtr, std::string_view modelName, std::string_view gameObjectName, const GO_Vector3& position);
 
     std::vector<std::shared_ptr<BoundingBox>> boundingBoxes;
 
@@ -67,6 +68,11 @@ private:
     GameObject* musicEmitterObjPtr;
     GameObject* portalCubeObjPtr;
     GameObject* roomCubeObjPtr;
-    GameObject* roomWallObjPtr;
     GameObject* lightBulbObjPtr;
+    GameObject* roomWallBackObjPtr;
+    GameObject* roomWallRightObjPtr;
+    GameObject* roomWallLeftObjPtr;
+    GameObject* roomWallTopObjPtr;
+    GameObject* roomWallBottomObjPtr;
+    GameObject* roomWallObjPtr;
 };

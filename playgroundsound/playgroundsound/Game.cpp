@@ -60,11 +60,18 @@ void Game::AddGameObjects()
 
 	roomCubeObjPtr = gameObjectManager.AddGameObject("RoomCube");
 	roomCubeObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("RoomCube").get(), true, true, { 255,0,0 });
-	renderManager.AddRenderObject(roomCubeObjPtr);
+	//renderManager.AddRenderObject(roomCubeObjPtr);
 
 	roomWallObjPtr = gameObjectManager.AddGameObject("RoomWall");
 	roomWallObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("RoomWall").get(), false, true);
-	renderManager.AddRenderObject(roomWallObjPtr);
+	//renderManager.AddRenderObject(roomWallObjPtr);
+
+
+	AddRoomWalls(roomWallLeftObjPtr, "RoomWallSide", "RoomWallLeft", {5,0,0});
+	AddRoomWalls(roomWallRightObjPtr, "RoomWallSide", "RoomWallRight", { -5,0,0 });
+	AddRoomWalls(roomWallBackObjPtr, "RoomWallFront", "RoomWallBack", { 0,0,-5 });
+	AddRoomWalls(roomWallTopObjPtr, "RoomWallTop", "RoomWallTop", { 0,5,0 });
+	AddRoomWalls(roomWallBottomObjPtr, "RoomWallTop", "RoomWallFloor", { 0,-5,0 });
 
 	musicEmitterObjPtr = gameObjectManager.AddGameObject("Music");
 	musicEmitterObjPtr->AddComponent<WwiseObjectComponent>();
@@ -73,8 +80,8 @@ void Game::AddGameObjects()
 
 	portalCubeObjPtr = gameObjectManager.AddGameObject("PortalCube");
 	portalCubeObjPtr->m_transform.position = { 0,0,5 };
-	portalCubeObjPtr->m_transform.scale = { 4,6,2 };
-	portalCubeObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("PortalCube").get(), false, false, {0,255,0});
+	portalCubeObjPtr->m_transform.scale = { 10,10,0.1f };
+	portalCubeObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("PortalCube").get(), true, false, {0,255,0});
 	renderManager.AddRenderObject(portalCubeObjPtr);
 	portalCubeObjPtr->AddComponent<WwisePortalComponent>();
 
@@ -82,6 +89,14 @@ void Game::AddGameObjects()
 	wallBottomObj->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("WallTop").get());
 	renderManager.AddRenderObject(wallBottomObj);
 	wallBottomObj->m_transform.position = { 0,-1.5,0 };
+}
+
+void Game::AddRoomWalls(GameObject* in_roomWallObjPtr, std::string_view modelName, std::string_view gameObjectName, const GO_Vector3& position)
+{
+	in_roomWallObjPtr = gameObjectManager.AddGameObject(gameObjectName.data());
+	in_roomWallObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel(modelName.data()).get(), false, false);
+	in_roomWallObjPtr->m_transform.position = position;
+	renderManager.AddRenderObject(in_roomWallObjPtr);
 }
 
 
@@ -98,6 +113,16 @@ Game::~Game()
 
 void Game::Run()
 {
+	if (IsKeyPressed(KEY_ONE))
+	{
+		portalCubeObjPtr->GetComponent<WwisePortalComponent>().SetPortalEnabled(portalCubeObjPtr, true);
+		portalCubeObjPtr->GetComponent<RenderComponent>().SetRenderWireFrame(true);
+	}
+	if (IsKeyPressed(KEY_TWO))
+	{
+		portalCubeObjPtr->GetComponent<WwisePortalComponent>().SetPortalEnabled(portalCubeObjPtr, false);
+		portalCubeObjPtr->GetComponent<RenderComponent>().SetRenderWireFrame(false);
+	}
 	if (IsKeyDown(KEY_THREE))
 	{
 		playbackSpeed -= GetFrameTime();

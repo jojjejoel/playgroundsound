@@ -11,7 +11,7 @@ void WwisePortalComponent::Update(GameObject* in_gameObject)
 {
 }
 
-void WwisePortalComponent::InitPortal(const GameObject* in_gameObject, const uint64_t& in_backRoomID, const uint64_t& in_frontRoomID)
+void WwisePortalComponent::InitPortal(const GameObject* in_gameObject, const uint64_t& in_backRoomID, const uint64_t& in_frontRoomID, const bool& isEnabled)
 {
 	frontRoomID = in_frontRoomID;
 	backRoomID = in_backRoomID;
@@ -29,7 +29,7 @@ void WwisePortalComponent::InitPortal(const GameObject* in_gameObject, const uin
 	paramsPortal.Extent.halfHeight = in_gameObject->m_transform.scale.y / 2.f;
 	paramsPortal.Extent.halfDepth = in_gameObject->m_transform.scale.z / 2.f;
 
-	paramsPortal.bEnabled = true;
+	paramsPortal.bEnabled = isEnabled;
 	paramsPortal.FrontRoom = frontRoomID;
 	paramsPortal.BackRoom = backRoomID ;
 
@@ -39,4 +39,9 @@ void WwisePortalComponent::InitPortal(const GameObject* in_gameObject, const uin
 void WwisePortalComponent::InitPortal(const GameObject* in_gameObject, const uint64_t& in_backRoomID)
 {
 	InitPortal(in_gameObject, in_backRoomID, AK::SpatialAudio::kOutdoorRoomID);
+}
+
+void WwisePortalComponent::SetPortalEnabled(GameObject* in_gameObject, const bool& isEnabled)
+{
+	InitPortal(in_gameObject, backRoomID, frontRoomID, isEnabled);
 }

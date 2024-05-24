@@ -34,11 +34,11 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 	AkPlacementNew(&surfaces[0]) AkAcousticSurface();
 	surfaces[0].strName = "Outside";
 	surfaces[0].textureID = AK::SoundEngine::GetIDFromString("Brick");
-	surfaces[0].transmissionLoss = 1.f;
+	surfaces[0].transmissionLoss = 0.8f;
 	AkPlacementNew(&surfaces[1]) AkAcousticSurface();
 	surfaces[1].strName = "Inside";
 	surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
-	surfaces[1].transmissionLoss = 1.f;
+	surfaces[1].transmissionLoss = 0.8f;
 	geomWallsInside.Surfaces = surfaces;
 	geomWallsInside.NumTriangles = triangles.size();
 
@@ -119,11 +119,11 @@ void WwiseRoomComponent::InitRoomGeometry(GameObject* roomObj) {
 	AkPlacementNew(&surfaces[0]) AkAcousticSurface();
 	surfaces[0].strName = "Outside";
 	surfaces[0].textureID = AK::SoundEngine::GetIDFromString("Brick");
-	surfaces[0].transmissionLoss = 1.f;
+	surfaces[0].transmissionLoss = 0.8f;
 	AkPlacementNew(&surfaces[1]) AkAcousticSurface();
 	surfaces[1].strName = "Inside";
 	surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
-	surfaces[1].transmissionLoss = 1.f;
+	surfaces[1].transmissionLoss = 0.8f;
 	geom.Surfaces = surfaces;
 	geom.NumTriangles = roomObj->GetComponent<RenderComponent>().GetTriangles().size();
 
@@ -221,7 +221,6 @@ void WwiseRoomComponent::GenerateWalls(const GameObject* gameObject, const uint6
 			akGeometrySetID = wallSidesGeometryID;
 			position = { gameObject->m_transform.position.x, gameObject->m_transform.position.y, gameObject->m_transform.position.z - 5 };
 			frontVector = { -1,0,0 };
-
 		}
 		else if (i == 2)
 		{
@@ -254,7 +253,6 @@ void WwiseRoomComponent::GenerateWalls(const GameObject* gameObject, const uint6
 			position = { gameObject->m_transform.position.x, gameObject->m_transform.position.y - 5, gameObject->m_transform.position.z };
 			frontVector = { -1,0,0 };
 			topVector = { 0,0,1 };
-
 		}
 
 		worldTransform.Set(position, frontVector, topVector);
