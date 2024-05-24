@@ -203,12 +203,6 @@
     <ClInclude Include="GO_BoundingBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AkInstanceIDs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WwiseID.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DiffractionPath.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -223,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="RenderManager.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Wwise\GeneratedSoundBanks\Wwise_IDs.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

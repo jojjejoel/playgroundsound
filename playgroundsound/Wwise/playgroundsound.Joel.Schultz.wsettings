@@ -4,6 +4,7 @@
 		<UserProjectSettings Name="" ID="{36F6D02C-6635-4A2A-BE3D-D3EC9BEBBD5E}">
 			<PropertyList>
 				<Property Name="AudioFilesImporter\Path" Type="string" Value="C:\Users\Joel.Schultz\Downloads\"/>
+				<Property Name="EffectsView\MeteringObject\{34EE57D6-684D-4DA1-BB53-A322C0A07915}" Type="string" Value="{2A977794-D127-4563-BB40-53EED77C0268}"/>
 				<Property Name="EffectsView\MeteringObject\{DF588E63-B991-4C1A-A401-6ED3CE18091F}" Type="string" Value="{44EBD574-5253-4FC7-884F-DDF9382B0A8F}"/>
 				<Property Name="Event Action List\{4A6A2749-838F-41C9-8B5B-42234088D614}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="Event Action List\{6FE5198D-9628-4545-98BC-2FFA10CBC863}\x64_Expand States" Type="string" Value=""/>
@@ -31,7 +32,7 @@
 				<Property Name="GenerateSoundBanks\x64_SelectedPlatforms" Type="string" Value=""/>
 				<Property Name="GenerateSoundBanks\x64_SelectedSoundBanks" Type="string" Value=""/>
 				<Property Name="HardwareController\CurrentSession" Type="string" Value="{00000000-0000-0000-0000-000000000000}"/>
-				<Property Name="Interactive Music\x64_{2F82E5A3-A404-4413-BC3D-DD33EC345217} - SegmentEditorZoomInfo" Type="string" Value="PyzY4xEmAUCemZmZmZnxP7tFtlyydiFAAAAAAAAA8D8AAAAAAAiJQAAAAAAA5qpA"/>
+				<Property Name="Interactive Music\x64_{2F82E5A3-A404-4413-BC3D-DD33EC345217} - SegmentEditorZoomInfo" Type="string" Value="PyzY4xEmAUCemZmZmZnxP7tFtlyydiFAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAq1A"/>
 				<Property Name="Interactive Music\x64_{E92E189B-FF82-4A75-9FA5-B216CF881C7F} - SegmentEditorZoomInfo" Type="string" Value="LLP9ZJbe4z8AAAAAAADwPwAAAAAAeGNAAAAAAAAA8D8AAAAAAAAAAAAAAAAAAAAA"/>
 				<Property Name="MeterView\LastObject1" Type="string" Value="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"/>
 				<Property Name="MeterView\MeterMode1" Type="int32" Value="1"/>

@@ -16,13 +16,7 @@
 #include "DiffractionManager.h"
 #include "RenderManager.h"
 
-//struct Vector3;
-//struct Texture;
-//struct Color;
 struct BoundingBox;
-//struct RayCollision;
-//struct Mesh;
-
 
 class Game {
 public:
@@ -33,12 +27,13 @@ public:
     void DeInit();
 
 private:
+    void ControlPortalState();
+    void ControlPlaybackSpeed();
     void DrawDiffractionPaths();
     void UpdateBlinkingLight();
     void MusicBeat();
     void MusicBar();
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
-    void SetLightFlickerValue(const float& value);
     void AddGameObjects();
     void AddRoomWalls(GameObject* in_roomWallObjPtr, std::string_view modelName, std::string_view gameObjectName, const GO_Vector3& position);
 
@@ -46,17 +41,10 @@ private:
 
     int beatValue = 0;
     float barValue = 0;
+    float playbackSpeed = 1;
+    std::function<void(const float&)> setRtpcFunction;
 
     std::vector<DiffractionPath> diffractionPaths;
-
-    float lightFlickerValue = 0;
-
-    bool updateFirstLight = true;
-    bool updateSecondLight = false;
-
-    float playbackSpeed = 1;
-
-    std::function<void(const float&)> setRtpcFunction;
 
     GameObjectManager gameObjectManager;
     RenderManager renderManager;

@@ -1682,10 +1682,11 @@
 								<MusicTrack Name="Energy_Rhythm 2" ID="{8D791FA2-599B-4368-B7D1-2B8BFAB944B2}" ShortID="175844147">
 									<PropertyList>
 										<Property Name="MusicTrackType" Type="int16" Value="1"/>
+										<Property Name="OverrideOutput" Type="bool" Value="True"/>
 									</PropertyList>
 									<ReferenceList>
 										<Reference Name="OutputBus">
-											<ObjectRef Name="Music" ID="{2A977794-D127-4563-BB40-53EED77C0268}" WorkUnitID="{9E530EF8-93C1-4F22-BB88-506C86B93025}"/>
+											<ObjectRef Name="Music_Drums" ID="{2A977794-D127-4563-BB40-53EED77C0268}" WorkUnitID="{9E530EF8-93C1-4F22-BB88-506C86B93025}"/>
 										</Reference>
 										<Reference Name="UserAuxSend0">
 											<ObjectRef Name="Music_Meter" ID="{44EBD574-5253-4FC7-884F-DDF9382B0A8F}" WorkUnitID="{9E530EF8-93C1-4F22-BB88-506C86B93025}"/>

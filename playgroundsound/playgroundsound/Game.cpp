@@ -49,6 +49,7 @@ void Game::Init()
 void Game::AddGameObjects()
 {
 	truckObjPtr = gameObjectManager.AddGameObject("Truck");
+	truckObjPtr->m_transform.position = { 0,0,-10 };
 	truckObjPtr->AddComponent<ControllerComponent>().SetMovementSpeed(5);
 	truckObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("truck_green").get());
 	renderManager.AddRenderObject(truckObjPtr);
@@ -63,11 +64,11 @@ void Game::AddGameObjects()
 	//renderManager.AddRenderObject(roomCubeObjPtr);
 
 	roomWallObjPtr = gameObjectManager.AddGameObject("RoomWall");
-	roomWallObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("RoomWall").get(), false, true);
+	roomWallObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("RoomWall").get(), true, true);
 	//renderManager.AddRenderObject(roomWallObjPtr);
 
 
-	AddRoomWalls(roomWallLeftObjPtr, "RoomWallSide", "RoomWallLeft", {5,0,0});
+	AddRoomWalls(roomWallLeftObjPtr, "RoomWallSide", "RoomWallLeft", { 5,0,0 });
 	AddRoomWalls(roomWallRightObjPtr, "RoomWallSide", "RoomWallRight", { -5,0,0 });
 	AddRoomWalls(roomWallBackObjPtr, "RoomWallFront", "RoomWallBack", { 0,0,-5 });
 	AddRoomWalls(roomWallTopObjPtr, "RoomWallTop", "RoomWallTop", { 0,5,0 });
@@ -75,13 +76,14 @@ void Game::AddGameObjects()
 
 	musicEmitterObjPtr = gameObjectManager.AddGameObject("Music");
 	musicEmitterObjPtr->AddComponent<WwiseObjectComponent>();
-	musicEmitterObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("MusicCube").get(), false, false, {0,0,255});
+	musicEmitterObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("MusicCube").get(), true, false, { 0,0,255 });
+	musicEmitterObjPtr->m_transform.position = { 0,0,3 };
 	renderManager.AddRenderObject(musicEmitterObjPtr);
 
 	portalCubeObjPtr = gameObjectManager.AddGameObject("PortalCube");
 	portalCubeObjPtr->m_transform.position = { 0,0,5 };
 	portalCubeObjPtr->m_transform.scale = { 10,10,0.1f };
-	portalCubeObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("PortalCube").get(), true, false, {0,255,0});
+	portalCubeObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("PortalCube").get(), false, false, { 0,255,0 });
 	renderManager.AddRenderObject(portalCubeObjPtr);
 	portalCubeObjPtr->AddComponent<WwisePortalComponent>();
 
@@ -94,44 +96,15 @@ void Game::AddGameObjects()
 void Game::AddRoomWalls(GameObject* in_roomWallObjPtr, std::string_view modelName, std::string_view gameObjectName, const GO_Vector3& position)
 {
 	in_roomWallObjPtr = gameObjectManager.AddGameObject(gameObjectName.data());
-	in_roomWallObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel(modelName.data()).get(), false, false);
+	in_roomWallObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel(modelName.data()).get(), true, false);
 	in_roomWallObjPtr->m_transform.position = position;
 	renderManager.AddRenderObject(in_roomWallObjPtr);
 }
 
-
-Game::~Game()
-{
-	delete truckObjPtr;
-	delete cameraObjPtr;
-	delete musicEmitterObjPtr;
-	delete portalCubeObjPtr;
-	delete roomCubeObjPtr;
-	delete roomWallObjPtr;
-	delete lightBulbObjPtr;
-}
-
 void Game::Run()
 {
-	if (IsKeyPressed(KEY_ONE))
-	{
-		portalCubeObjPtr->GetComponent<WwisePortalComponent>().SetPortalEnabled(portalCubeObjPtr, true);
-		portalCubeObjPtr->GetComponent<RenderComponent>().SetRenderWireFrame(true);
-	}
-	if (IsKeyPressed(KEY_TWO))
-	{
-		portalCubeObjPtr->GetComponent<WwisePortalComponent>().SetPortalEnabled(portalCubeObjPtr, false);
-		portalCubeObjPtr->GetComponent<RenderComponent>().SetRenderWireFrame(false);
-	}
-	if (IsKeyDown(KEY_THREE))
-	{
-		playbackSpeed -= GetFrameTime();
-	}
-	if (IsKeyDown(KEY_FOUR))
-	{
-		playbackSpeed += GetFrameTime();
-	}
-	renderManager.SetPlaybackSpeed(playbackSpeed);
+	ControlPortalState();
+	ControlPlaybackSpeed();
 	barValue -= GetFrameTime() * 0.37f * playbackSpeed;
 	UpdateBlinkingLight();
 	float carSpeed = truckObjPtr->GetComponent<ControllerComponent>().GetPercentageOfMaxSpeed();
@@ -141,6 +114,7 @@ void Game::Run()
 	truckObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
 
 	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed);
+	musicEmitterObjPtr->m_transform.scale.y = 0.2f + 3 * musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().GetGameParamValueGlobal(AK::GAME_PARAMETERS::LIGHT_FLICKER);
 
 	gameObjectManager.Update();
 	renderManager.Render();
@@ -148,6 +122,34 @@ void Game::Run()
 	wwiseRoomManager.Update();
 
 	renderManager.EndRender();
+}
+
+void Game::ControlPortalState()
+{
+	if (IsKeyPressed(KEY_ONE))
+	{
+		portalCubeObjPtr->GetComponent<WwisePortalComponent>().SetPortalEnabled(portalCubeObjPtr, true);
+		portalCubeObjPtr->GetComponent<RenderComponent>().SetShouldRender(false);
+	}
+	if (IsKeyPressed(KEY_TWO))
+	{
+		portalCubeObjPtr->GetComponent<WwisePortalComponent>().SetPortalEnabled(portalCubeObjPtr, false);
+		portalCubeObjPtr->GetComponent<RenderComponent>().SetShouldRender(true);
+	}
+}
+
+void Game::ControlPlaybackSpeed()
+{
+	if (IsKeyDown(KEY_THREE))
+	{
+		playbackSpeed -= GetFrameTime();
+	}
+	if (IsKeyDown(KEY_FOUR))
+	{
+		playbackSpeed += GetFrameTime();
+	}
+
+	renderManager.SetPlaybackSpeed(playbackSpeed);
 }
 
 void Game::DrawDiffractionPaths()
@@ -192,44 +194,26 @@ void Game::UpdateBlinkingLight()
 {
 	renderManager.SetLightColor({ 255,255,255 });
 
-	if (updateFirstLight)
+	float gValue = 255 * std::max(0.0f, barValue);
+	if (beatValue == 0)
 	{
-		float gValue = 255 * std::max(0.0f, barValue);
-		if (beatValue == 0)
-		{
-			float aValueBar = 255 * std::max(0.0f, barValue);
-			renderManager.SetLightColor({ aValueBar,0,gValue });
-		}
-		else if (beatValue == 1)
-		{
-			renderManager.SetLightColor({ 0,0,gValue });
-		}
-		else if (beatValue == 2)
-		{
-			float aValueBar = 255 * std::max(0.0f, barValue);
-			renderManager.SetLightColor({ 0,aValueBar,gValue });
-		}
-		else if (beatValue == 3)
-		{
-			float aValueBar = 100 * std::max(0.0f, barValue);
-			renderManager.SetLightColor({ aValueBar,aValueBar,gValue });
-		}
+		float aValueBar = 255 * std::max(0.0f, barValue);
+		renderManager.SetLightColor({ aValueBar,0,gValue });
 	}
-	//}
-	/*if (updateSecondLight)
-
-	unsigned char r = 155 * (1 - lightFlickerValue);
-	unsigned char g = 255 * (1 - lightFlickerValue);
-	unsigned char b = 50 * (1 - lightFlickerValue);
-	lights[1].color = { r,g,b, 150 };
-	lights[1].attenuation = 0;
-
-	}*/
-
-
-
-	//UpdateLightValues(models[0]->materials[0].shader, lights[1]);
-
+	else if (beatValue == 1)
+	{
+		renderManager.SetLightColor({ 0,0,gValue });
+	}
+	else if (beatValue == 2)
+	{
+		float aValueBar = 255 * std::max(0.0f, barValue);
+		renderManager.SetLightColor({ 0,aValueBar,gValue });
+	}
+	else if (beatValue == 3)
+	{
+		float aValueBar = 100 * std::max(0.0f, barValue);
+		renderManager.SetLightColor({ aValueBar,aValueBar,gValue });
+	}
 }
 
 void Game::MusicBeat() {
@@ -248,13 +232,23 @@ void Game::SetDiffractionPaths(const std::vector<DiffractionPath> in_diffraction
 	diffractionPaths = in_diffractionPaths;
 }
 
-void Game::SetLightFlickerValue(const float& value) {
-	lightFlickerValue = value;
-}
-
 void Game::DeInit()
 {
 	CloseWindow();
 }
 
-
+Game::~Game()
+{
+	delete truckObjPtr;
+	delete cameraObjPtr;
+	delete musicEmitterObjPtr;
+	delete portalCubeObjPtr;
+	delete roomCubeObjPtr;
+	delete lightBulbObjPtr;
+	delete roomWallObjPtr;
+	delete roomWallBackObjPtr;
+	delete roomWallRightObjPtr;
+	delete roomWallLeftObjPtr;
+	delete roomWallTopObjPtr;
+	delete roomWallBottomObjPtr;
+}

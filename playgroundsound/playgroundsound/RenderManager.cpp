@@ -74,7 +74,7 @@ void RenderManager::LoadModels()
 
 	models.insert(std::make_pair("RoomCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(10, 10, 10)))));
 
-	models.insert(std::make_pair("PortalCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(10, 10, 0.1f)))));
+	models.insert(std::make_pair("PortalCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(1, 1, 1)))));
 
 	models.insert(std::make_pair("MusicCube", std::make_shared<Model>(LoadModelFromMesh(GenMeshCube(2, 2, 2)))));
 
@@ -151,6 +151,10 @@ void RenderManager::EndRender()
 
 	std::string playbackSpeedString = "Playback speed: " + std::to_string(playBackSpeed);
 	DrawText(playbackSpeedString.c_str(), 2, 2, 20, WHITE);
+	DrawText("Press 1 to open portal", 2, 22, 20, WHITE);
+	DrawText("Press 2 to close portal", 2, 42, 20, WHITE);
+	DrawText("Press 3 to decrease playback speed", 2, 62, 20, WHITE);
+	DrawText("Press 4 to increase playback speed", 2, 82, 20, WHITE);
 	EndDrawing();
 }
 

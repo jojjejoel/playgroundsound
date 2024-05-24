@@ -87,3 +87,17 @@ const GO_Vector3& WwiseObjectComponent::GetPosition()
 {
 	return m_position;
 }
+
+const float& WwiseObjectComponent::GetGameParamValueGlobal(const unsigned int& rtpcID)
+{
+	AkRtpcValue rtpcValue;
+	AK::SoundEngine::Query::RTPCValue_type valueType = AK::SoundEngine::Query::RTPCValue_Global;
+	AKRESULT result = AK::SoundEngine::Query::GetRTPCValue(rtpcID, akGameObjectID, AK_INVALID_PLAYING_ID, rtpcValue, valueType);
+
+	float minRTPCValue = -20;
+	float maxRTPCValue = -4;
+
+	float normalizedValue = (rtpcValue - (minRTPCValue)) / (maxRTPCValue - (minRTPCValue));
+
+	return normalizedValue;
+}

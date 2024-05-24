@@ -104,16 +104,18 @@
 								</Reference>
 							</ReferenceList>
 						</AuxBus>
-						<Bus Name="Music" ID="{2A977794-D127-4563-BB40-53EED77C0268}">
+						<Bus Name="Music_Drums" ID="{2A977794-D127-4563-BB40-53EED77C0268}">
 							<ReferenceList>
 								<Reference Name="Effect1">
 									<Custom>
 										<Effect Name="Meter (Custom)" ID="{34EE57D6-684D-4DA1-BB53-A322C0A07915}" ShortID="949325981" PluginName="Wwise Meter" CompanyID="0" PluginID="129" PluginType="3">
 											<PropertyList>
+												<Property Name="Max" Type="Real32" Value="-4"/>
 												<Property Name="Min" Type="Real32" Value="-20"/>
+												<Property Name="ReleaseTime" Type="Real32" Value="0.2"/>
 											</PropertyList>
 											<PluginData>
-	<GameParameter Name="Music_Volume" ID="{0939589F-2F4E-41DA-A8F3-56608D57E1A8}"/>
+	<GameParameter Name="Light_Flicker" ID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}"/>
 </PluginData>
 										</Effect>
 									</Custom>

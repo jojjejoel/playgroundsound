@@ -26,21 +26,18 @@ void RenderComponent::Update(GameObject* in_gameObject)
 void RenderComponent::Draw(GameObject* in_gameObject)
 {
 	Vector3 pos = { in_gameObject->m_transform.position.x, in_gameObject->m_transform.position.y, in_gameObject->m_transform.position.z };
+	Vector3 scale = { in_gameObject->m_transform.scale.x, in_gameObject->m_transform.scale.y, in_gameObject->m_transform.scale.z };
 	Color drawColor = { color.x, color.y, color.z, 255 };
-	if (renderWireFrame)
+	if (shouldRender)
 	{
-		DrawModelWires(*model, pos, 1, drawColor);
-	}
-	else
-	{
-		DrawModelEx(*model, pos, { 0.0f, 1.0f, 0.0f }, 0, { 1.0f, 1.0f, 1.0f }, drawColor);
+		DrawModelEx(*model, pos, { 0.0f, 1.0f, 0.0f }, 0, scale, drawColor);
 	}
 }
 
-void RenderComponent::SetModel(Model* in_model, const bool& in_renderWireFrame, const bool& initRoom, const GO_Vector3& in_color )
+void RenderComponent::SetModel(Model* in_model, const bool& in_shouldRender, const bool& initRoom, const GO_Vector3& in_color )
 {
 	model = in_model;
-	renderWireFrame = in_renderWireFrame;
+	shouldRender = in_shouldRender;
 	color = in_color;
 	if (initRoom)
 	{
@@ -86,7 +83,7 @@ const std::vector<Triangle>& RenderComponent::GetTriangles() const
 	return m_triangles;
 }
 
-void RenderComponent::SetRenderWireFrame(const bool& in_renderWireFrame)
+void RenderComponent::SetShouldRender(const bool& in_renderWireFrame)
 {
-	renderWireFrame = in_renderWireFrame;
+	shouldRender = in_renderWireFrame;
 }

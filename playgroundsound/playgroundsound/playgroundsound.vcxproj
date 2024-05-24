@@ -159,7 +159,7 @@
     <ClCompile Include="WwiseAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AkInstanceIDs.h" />
+    <ClInclude Include="..\Wwise\GeneratedSoundBanks\Wwise_IDs.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Components.h" />
@@ -176,7 +176,6 @@
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Triangle.h" />
-    <ClInclude Include="WwiseID.h" />
     <ClInclude Include="WwiseObjectComponent.h" />
     <ClInclude Include="WwisePortalComponent.h" />
     <ClInclude Include="WwiseRoomComponent.h" />
