@@ -218,7 +218,7 @@
     <ClInclude Include="RenderManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="..\Wwise\GeneratedSoundBanks\Wwise_IDs.h">
+    <ClInclude Include="Wwise\GeneratedSoundBanks\Wwise_IDs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -226,5 +226,29 @@
     <None Include="WwiseSource\AkFilePackageLowLevelIO.inl">
       <Filter>Resource Files\Wwise</Filter>
     </None>
+    <None Include="Resources\Models\truck_green.mtl" />
+    <None Include="Wwise\GeneratedSoundBanks\Windows\1355168291.bnk" />
+    <None Include="Wwise\GeneratedSoundBanks\Windows\3161908922.bnk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Models\Textures\truck.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\Models\Textures\truck_alien.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Models\truck_green.obj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Wwise\GeneratedSoundBanks\ProjectInfo.xml" />
+    <Xml Include="Wwise\GeneratedSoundBanks\Windows\PlatformInfo.xml" />
+    <Xml Include="Wwise\GeneratedSoundBanks\Windows\PluginInfo.xml" />
+    <Xml Include="Wwise\GeneratedSoundBanks\Windows\SoundbanksInfo.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Wwise\GeneratedSoundBanks\Windows\1355168291.txt" />
+    <Text Include="Wwise\GeneratedSoundBanks\Windows\3161908922.txt" />
   </ItemGroup>
 </Project>

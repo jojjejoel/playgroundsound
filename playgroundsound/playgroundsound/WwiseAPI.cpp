@@ -17,7 +17,7 @@
 #include <AK/Plugin/AkVorbisDecoderFactory.h>
 #include <AK/MusicEngine/Common/AkMusicEngine.h>
 
-#include "Wwise_IDs.h"
+#include "Wwise_Project/GeneratedSoundBanks/Wwise_IDs.h"
 
 bool WwiseAPI::Init()
 {
@@ -47,7 +47,7 @@ bool WwiseAPI::Init()
 	AK::MusicEngine::GetDefaultInitSettings(musicInitSettings);
 	AK::MusicEngine::Init(&musicInitSettings);
 
-	g_lowLevelIO.SetBasePath(AKTEXT("..\\Wwise\\GeneratedSoundBanks\\Windows"));
+	g_lowLevelIO.SetBasePath(AKTEXT("Wwise_Project\\GeneratedSoundBanks\\Windows"));
 	AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
 
 #ifndef AK_OPTIMIZED 

@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="145">
+	<RootPaths>
+		<ProjectRoot>../..</ProjectRoot>
+		<SourceFilesRoot>../../.cache/Windows</SourceFilesRoot>
+		<SoundBanksRoot>.</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>.</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{9200812F-E582-6458-CAB6-09474EC85448}">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>1355168291.bnk</Path>
+			<Plugins>
+				<Custom>
+					<Plugin Id="1165088" Name="Meter (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Meter\Meter (Custom)" GUID="{DF588E63-B991-4C1A-A401-6ED3CE18091F}" LibName="Wwise Meter" LibId="8454147"/>
+					<Plugin Id="496505172" Name="Gain (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Meter\Gain (Custom)" GUID="{709907D0-E222-4686-89B8-AB5D7A893D03}" LibName="Wwise Gain" LibId="9109507"/>
+					<Plugin Id="723820213" Name="Hall_Large (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Outside\Hall_Large (Custom)" GUID="{3F70C479-A1F2-4C51-94C8-BDF11477873C}" LibName="Wwise RoomVerb" LibId="7733251"/>
+					<Plugin Id="879621981" Name="Inside_My_Head (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Inside\Inside_My_Head (Custom)" GUID="{C43F5868-FCCF-439B-9E86-997497F74CF2}" LibName="Wwise RoomVerb" LibId="7733251"/>
+					<Plugin Id="949325981" Name="Meter (Custom)" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Drums\Meter (Custom)" GUID="{34EE57D6-684D-4DA1-BB53-A322C0A07915}" LibName="Wwise Meter" LibId="8454147"/>
+				</Custom>
+				<ShareSets>
+					<Plugin Id="3604890626" Name="High_Pass_60Hz" ObjectPath="\Effects\Factory Effects\Parametric EQ\High Pass Filters\High_Pass_60Hz" GUID="{F9627628-0B10-4272-BC30-D4C20423CB38}" LibName="Wwise Parametric EQ" LibId="6881283"/>
+				</ShareSets>
+				<AudioDevices>
+					<Plugin Id="2317455096" Name="No_Output" ObjectPath="\Audio Devices\Default Work Unit\No_Output" GUID="{CF140AB8-FCD7-461E-A794-917F81640FB9}" LibName="No Output" LibId="11862023"/>
+					<Plugin Id="3859886410" Name="System" ObjectPath="\Audio Devices\Default Work Unit\System" GUID="{1C9462B9-03B5-4144-9625-3BF1F13B1FEB}" LibName="System" LibId="11403271"/>
+				</AudioDevices>
+			</Plugins>
+			<Busses>
+				<Bus Id="2215673664" Name="Music_Drums" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Drums" GUID="{2A977794-D127-4563-BB40-53EED77C0268}">
+					<PluginRefs>
+						<Custom>
+							<PluginRef Id="949325981"/>
+						</Custom>
+					</PluginRefs>
+				</Bus>
+				<Bus Id="3803692087" Name="Master Audio Bus" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus" GUID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}"/>
+			</Busses>
+			<AuxBusses>
+				<AuxBus Id="438105790" Name="Outside" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Outside" GUID="{ED0A4729-29F3-465D-B36D-72CA1AF04820}">
+					<PluginRefs>
+						<Custom>
+							<PluginRef Id="723820213"/>
+						</Custom>
+					</PluginRefs>
+				</AuxBus>
+				<AuxBus Id="1413777708" Name="Music_Meter" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Music_Meter" GUID="{44EBD574-5253-4FC7-884F-DDF9382B0A8F}">
+					<PluginRefs>
+						<Custom>
+							<PluginRef Id="1165088"/>
+							<PluginRef Id="496505172"/>
+						</Custom>
+						<ShareSets>
+							<PluginRef Id="3604890626"/>
+						</ShareSets>
+					</PluginRefs>
+				</AuxBus>
+				<AuxBus Id="3553349781" Name="Inside" ObjectPath="\Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\Inside" GUID="{9CD79DAC-40E9-4551-817D-4B30F346C28C}">
+					<PluginRefs>
+						<Custom>
+							<PluginRef Id="879621981"/>
+						</Custom>
+					</PluginRefs>
+				</AuxBus>
+			</AuxBusses>
+			<GameParameters>
+				<GameParameter Id="78830142" Name="Playback_Speed" ObjectPath="\Game Parameters\Default Work Unit\Playback_Speed" GUID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}"/>
+				<GameParameter Id="411515110" Name="Light_Flicker" ObjectPath="\Game Parameters\Default Work Unit\Light_Flicker" GUID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}"/>
+				<GameParameter Id="1006694123" Name="Music_Volume" ObjectPath="\Game Parameters\Default Work Unit\Music_Volume" GUID="{0939589F-2F4E-41DA-A8F3-56608D57E1A8}"/>
+				<GameParameter Id="3134688807" Name="Car_Gas" ObjectPath="\Game Parameters\Default Work Unit\Car_Gas" GUID="{AA4D7E60-7AFB-4D49-B3A0-ACCE35EF6400}"/>
+				<GameParameter Id="4164958897" Name="Car_Speed" ObjectPath="\Game Parameters\Default Work Unit\Car_Speed" GUID="{9DB601EB-465E-4DD1-BCCB-7C434BFFD3B9}"/>
+			</GameParameters>
+			<AcousticTextures>
+				<AcousticTexture Id="504532776" Name="Brick" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Brick" GUID="{B086A5A9-F204-4C53-A838-BDB18B18F6D6}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="21"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="18"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="23"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="35"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="513139656" Name="Mountain" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Mountain" GUID="{C5933731-001A-4AB4-98DD-9B033A8C8EAB}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="0"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="0"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="0"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="841620460" Name="Concrete" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Concrete" GUID="{5CF81C00-2896-4AE0-AF7C-3080BDABA682}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="6"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="6"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="6"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="14"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="1755085759" Name="Wood_Deep" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Wood_Deep" GUID="{5246478E-C5DA-4E0C-A0DE-C98D1479529A}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="1"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="8"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="20"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="35"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="1873957695" Name="Anechoic" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Anechoic" GUID="{8B0AC232-02E2-4EDE-BEAC-FDD1A900E3ED}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="100"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="100"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="100"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="100"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="1970351858" Name="Fabric" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Fabric" GUID="{8381D532-DB6E-4EED-A7A3-BC7B0A0B8BA8}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="3"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="13"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="48"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="72"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="2058049674" Name="Wood" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Wood" GUID="{1FFFBC96-6FE7-489E-BA6C-7C14A71391AE}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="32"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="25"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="20"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="35"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="2412606308" Name="Carpet" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Carpet" GUID="{34227589-DC56-4260-96C4-B9F4B669092B}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="46"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="45"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="76"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="100"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="2637588553" Name="Tile" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Tile" GUID="{A882DAC4-132A-47B7-BA9D-B9907BA29CC0}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="67"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="41"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="12"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="0"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="2928161104" Name="Curtains" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Curtains" GUID="{F8E69E33-5C97-4968-B508-A1535F2D66E8}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="7"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="60"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="0"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="84"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="3195498748" Name="Cork_Tiles" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Cork_Tiles" GUID="{30D2C919-925F-4143-8906-3DBB3C4AE5E2}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="14"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="30"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="73"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="100"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="3670307564" Name="Drywall" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Drywall" GUID="{68A4E3F4-4C0B-4687-A8B8-A84DB93DBC8F}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="2"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="2"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="2"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="2"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="4168643977" Name="Acoustic_Banner" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Acoustic_Banner" GUID="{2F2D53F2-DACC-408E-8B88-98B1B52A26D6}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="37"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="100"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="100"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="100"/>
+					</Properties>
+				</AcousticTexture>
+				<AcousticTexture Id="4262522749" Name="Wood_Bright" ObjectPath="\Virtual Acoustics\Factory Acoustic Textures\Textures\Wood_Bright" GUID="{7B85D1E5-C1A2-4E63-9A13-CEC54B641ADC}">
+					<Properties>
+						<Property Name="AbsorptionLow" Type="Real32" Value="32"/>
+						<Property Name="AbsorptionMidLow" Type="Real32" Value="25"/>
+						<Property Name="AbsorptionMidHigh" Type="Real32" Value="10"/>
+						<Property Name="AbsorptionHigh" Type="Real32" Value="9"/>
+					</Properties>
+				</AcousticTexture>
+			</AcousticTextures>
+		</SoundBank>
+		<SoundBank Id="3161908922" Type="User" GUID="{851F3450-4D41-4421-89F1-771835EAA182}" Language="SFX" Hash="{EE702DD9-13DF-4898-B1C9-AD1155862265}">
+			<ObjectPath>\SoundBanks\Default Work Unit\Main</ObjectPath>
+			<ShortName>Main</ShortName>
+			<Path>3161908922.bnk</Path>
+			<Media>
+				<File Id="11675263" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Synth Lead Fuzz V1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Synth Lead Fuzz V1_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="26270849" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="40021741" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rhythm 2_2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rhythm 2_2_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="45405565" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Horns.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Horns_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="62182380" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1_5.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_5_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="98778629" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1_1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_1_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="116106740" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Bass V2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Bass V2_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="126130034" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2_2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_2_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="134769915" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2_3.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_3_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="199907317" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Bass V3.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Bass V3_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="203669605" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2_1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_1_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="301898721" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Git. Dist.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Git. Dist_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="322199033" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1_4.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_4_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="342808671" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Ambience V1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Ambience V1_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="384246966" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="392969211" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Bass V1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Bass V1_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="417996290" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Black Sun.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Black Sun_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="462271539" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>engine-6000.wav</ShortName>
+					<CachePath>SFX/engine-6000_643BF5E3.wem</CachePath>
+				</File>
+				<File Id="470952860" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Atmosphere.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Atmosphere_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="556872647" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Steel String Box.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Steel String Box_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="560691930" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rythm 1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rythm 1_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="575395605" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2_5.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_5_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="577659645" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rhythm 2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rhythm 2_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="637214336" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rhythm 2_3.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rhythm 2_3_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="638137021" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rythm 2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rythm 2_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="703702468" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Ambience V2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Ambience V2_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="727301707" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Synth Lead Fuzz V2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Synth Lead Fuzz V2_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="761934008" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1_3.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_3_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="815298708" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Soundly Audio\Vehicles, Car, Hearse V8, Exterior, Engine, Idle, Steady SND0071.wav</ShortName>
+					<CachePath>SFX/Soundly Audio/Vehicles, Car, Hearse V8, Exterior, Engine, Idle, Steady SND0071_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="864689243" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Rhythm 2_1.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Rhythm 2_1_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="864813500" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 2_4.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 2_4_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="964399234" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Ambience V3.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Ambience V3_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="987656228" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_KS Ice Cream Truck_bip.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_KS Ice Cream Truck_bip_9EDFC787.wem</CachePath>
+				</File>
+				<File Id="1032180702" Language="SFX" Streaming="false" Location="Memory">
+					<ShortName>Energy\Energy_Intense Drum 1_2.wav</ShortName>
+					<CachePath>SFX/Energy/Energy_Intense Drum 1_2_9EDFC787.wem</CachePath>
+				</File>
+			</Media>
+			<Events>
+				<Event Id="4193220423" Name="Car_Engine_Loop" ObjectPath="\Events\Default Work Unit\Car_Engine_Loop" GUID="{B526007C-BA47-440B-A1DD-2E62D9ADD10D}" MaxAttenuation="100" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="462271539"/>
+						<MediaRef Id="815298708"/>
+					</MediaRefs>
+				</Event>
+				<Event Id="1345584937" Name="Energy" ObjectPath="\Events\Default Work Unit\Energy" GUID="{8B38FA5A-E064-4B81-90EB-D9B7B97C2B4D}" MaxAttenuation="25" DurationType="Infinite">
+					<MediaRefs>
+						<MediaRef Id="11675263"/>
+						<MediaRef Id="26270849"/>
+						<MediaRef Id="40021741"/>
+						<MediaRef Id="45405565"/>
+						<MediaRef Id="62182380"/>
+						<MediaRef Id="98778629"/>
+						<MediaRef Id="116106740"/>
+						<MediaRef Id="126130034"/>
+						<MediaRef Id="134769915"/>
+						<MediaRef Id="199907317"/>
+						<MediaRef Id="203669605"/>
+						<MediaRef Id="301898721"/>
+						<MediaRef Id="322199033"/>
+						<MediaRef Id="342808671"/>
+						<MediaRef Id="384246966"/>
+						<MediaRef Id="392969211"/>
+						<MediaRef Id="417996290"/>
+						<MediaRef Id="470952860"/>
+						<MediaRef Id="556872647"/>
+						<MediaRef Id="560691930"/>
+						<MediaRef Id="575395605"/>
+						<MediaRef Id="577659645"/>
+						<MediaRef Id="637214336"/>
+						<MediaRef Id="638137021"/>
+						<MediaRef Id="703702468"/>
+						<MediaRef Id="727301707"/>
+						<MediaRef Id="761934008"/>
+						<MediaRef Id="864689243"/>
+						<MediaRef Id="864813500"/>
+						<MediaRef Id="964399234"/>
+						<MediaRef Id="987656228"/>
+						<MediaRef Id="1032180702"/>
+					</MediaRefs>
+				</Event>
+			</Events>
+			<GameParameters>
+				<GameParameter Id="78830142" Name="Playback_Speed" ObjectPath="\Game Parameters\Default Work Unit\Playback_Speed" GUID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}"/>
+				<GameParameter Id="3134688807" Name="Car_Gas" ObjectPath="\Game Parameters\Default Work Unit\Car_Gas" GUID="{AA4D7E60-7AFB-4D49-B3A0-ACCE35EF6400}"/>
+				<GameParameter Id="4164958897" Name="Car_Speed" ObjectPath="\Game Parameters\Default Work Unit\Car_Speed" GUID="{9DB601EB-465E-4DD1-BCCB-7C434BFFD3B9}"/>
+			</GameParameters>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{16636D44-F1AA-EDDB-E8F8-02F3A86640E9}</FileHash>
+</SoundBanksInfo>

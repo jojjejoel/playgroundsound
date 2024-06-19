@@ -17,7 +17,7 @@
 #include <algorithm>
 #include <iostream>
 #include "Components.h"
-#include "Wwise_IDs.h"
+#include "Wwise_Project/GeneratedSoundBanks/Wwise_IDs.h"
 
 
 void Game::Init()

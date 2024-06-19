@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Game.h"
 #include "WwiseAPI.h"
-#include "Wwise_IDs.h"
+#include "Wwise_Project/GeneratedSoundBanks/Wwise_IDs.h"
 #include <functional>
 
 int main()

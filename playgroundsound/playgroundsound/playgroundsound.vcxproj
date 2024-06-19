@@ -72,6 +72,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+    <IntDir>$(Platform)\$(Configuration)\Intermediate\</IntDir>
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
+    <OutDir>$(SolutionDir)Executables\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+    <IntDir>$(Platform)\$(Configuration)\Intermediate\</IntDir>
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
+    <OutDir>$(SolutionDir)Executables\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,6 +126,13 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Wwise_SDK\x64_vc170\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>CommunicationCentral.lib;AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;AkAudioInputSource.lib;ws2_32.lib;AkRoomVerbFX.lib;AkMeterFX.lib;AkGainFX.lib;AkParametricEQFX.lib;AkVorbisDecoder.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY $(SolutionDir)playgroundsound\Resources $(TargetDir)Resources /S /e /i /y
+XCOPY $(SolutionDir)playgroundsound\Wwise_Project\GeneratedSoundBanks $(TargetDir)Wwise_Project\GeneratedSoundBanks /S /e /i /y</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying "Resource" folders</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -139,6 +156,13 @@
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
+    <PostBuildEvent>
+      <Command>XCOPY $(SolutionDir)playgroundsound\Resources $(TargetDir)Resources /S /e /i /y
+XCOPY $(SolutionDir)playgroundsound\Wwise_Project\GeneratedSoundBanks $(TargetDir)Wwise_Project\GeneratedSoundBanks /S /e /i /y</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying "Resource" folders</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CameraComponent.cpp" />
@@ -169,7 +193,6 @@
     <ClCompile Include="WwiseAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Wwise\GeneratedSoundBanks\Wwise_IDs.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Components.h" />
@@ -207,9 +230,32 @@
     <ClInclude Include="WwiseSource\AkPlatformProfilerHooks.h" />
     <ClInclude Include="WwiseSource\stdafx.h" />
     <ClInclude Include="WwiseAPI.h" />
+    <ClInclude Include="Wwise\GeneratedSoundBanks\Wwise_IDs.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Models\truck_green.mtl" />
     <None Include="WwiseSource\AkFilePackageLowLevelIO.inl" />
+    <None Include="Wwise\GeneratedSoundBanks\Windows\1355168291.bnk" />
+    <None Include="Wwise\GeneratedSoundBanks\Windows\3161908922.bnk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Models\truck_green.obj">
+      <FileType>Document</FileType>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Models\Textures\truck.png" />
+    <Image Include="Resources\Models\Textures\truck_alien.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Wwise\GeneratedSoundBanks\ProjectInfo.xml" />
+    <Xml Include="Wwise\GeneratedSoundBanks\Windows\PlatformInfo.xml" />
+    <Xml Include="Wwise\GeneratedSoundBanks\Windows\PluginInfo.xml" />
+    <Xml Include="Wwise\GeneratedSoundBanks\Windows\SoundbanksInfo.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Wwise\GeneratedSoundBanks\Windows\1355168291.txt" />
+    <Text Include="Wwise\GeneratedSoundBanks\Windows\3161908922.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
