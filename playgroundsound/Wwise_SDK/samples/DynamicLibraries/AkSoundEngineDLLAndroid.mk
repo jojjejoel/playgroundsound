@@ -1,0 +1,34 @@
+workspace_AKSOUNDENGINEDLLANDROID_PATH := $(call my-dir)
+
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/Ak3DAudioBedMixer/Android/Ak3DAudioBedMixer.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkAudioInput/Android/AkAudioInput.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkCompressor/Android/AkCompressor.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkConvolutionReverb/Android/AkConvolutionReverb.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkDelay/Android/AkDelay.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkExpander/Android/AkExpander.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkFlanger/Android/AkFlanger.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkGain/Android/AkGain.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkGuitarDistortion/Android/AkGuitarDistortion.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkHarmonizer/Android/AkHarmonizer.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkImpacter/Android/AkImpacter.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkMatrixReverb/Android/AkMatrixReverb.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkMotion/Android/AkMotion.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkParametricEQ/Android/AkParametricEQ.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkPeakLimiter/Android/AkPeakLimiter.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkPitchShifter/Android/AkPitchShifter.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkRecorder/Android/AkRecorder.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkReflect/Android/AkReflect.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkRoomVerb/Android/AkRoomVerb.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkSilenceGenerator/Android/AkSilenceGenerator.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkSineTone/Android/AkSineTone.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkSoundSeedAir/Android/AkSoundSeedAir.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkSoundSeedGrain/Android/AkSoundSeedGrain.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkStereoDelay/Android/AkStereoDelay.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkSynthOne/Android/AkSynthOne.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkTimeStretch/Android/AkTimeStretch.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkToneGen/Android/AkToneGen.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/AkTremolo/Android/AkTremolo.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/Auro/Android/Auro.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/MasteringSuite/Android/MasteringSuite.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/McDSP/Android/McDSP.mk
+include $(workspace_AKSOUNDENGINEDLLANDROID_PATH)/iZotope/Android/iZotope.mk

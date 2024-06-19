@@ -1,0 +1,734 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 53;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0B1BEAC418CF81FD0A985DE0 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED02069D3D2EC3B7A29E4985 /* CoreAudio.framework */; };
+		209FFD81E49C04FBD5C035F3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0436599AB82AA692F8509CF6 /* CoreFoundation.framework */; };
+		2F256534FECF2F7AC5DEAE22 /* libAkVorbisDecoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3546E4433EA7BA5E5AA9C379 /* libAkVorbisDecoder.a */; };
+		318BEAC1EBBD0C72CF6975EC /* libAkMeterFX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4108863FFA5CF2B9EE9C5E00 /* libAkMeterFX.a */; };
+		7DE9B507BE872109A0E3A2A1 /* libCommunicationCentral.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6EE58D7196B010741F84EB9 /* libCommunicationCentral.a */; };
+		93542B9334FB1D6E0DC16056 /* libAkOpusDecoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 236AADBAF595BAAA708AB51D /* libAkOpusDecoder.a */; };
+		93FD2033AC787D98A5969300 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4CAAB948A6E2D5E3E67CA34 /* AudioUnit.framework */; };
+		9C741893B1234A1FE6F04B40 /* libAkMusicEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03B45D137310427930E56CE2 /* libAkMusicEngine.a */; };
+		B3532533812A377CA20422A4 /* libAkMemoryMgr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AF9ABE5FBF30BC0823FF862 /* libAkMemoryMgr.a */; };
+		BBCC10A78C80AB71EC9A5D90 /* libAkSoundEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C24FCC245FD2DC8A9B86074 /* libAkSoundEngine.a */; };
+		CDBF25D8D991FB702D1CF9C7 /* AkGeneratedSoundBanksResolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 07F21C573CDC4C3CA4F70786 /* AkGeneratedSoundBanksResolver.cpp */; };
+		D16726F70134701AD6833932 /* AkMultipleFileLocation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C7F3A038B8CA4E32DB7A7C7 /* AkMultipleFileLocation.cpp */; };
+		D61360889EF1102484550147 /* AkFileLocationBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE29FDB39E41BC608FA0A2DC /* AkFileLocationBase.cpp */; };
+		E24C5077A7B79A00FF20B8E9 /* AkSoundEngineDLL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DED2A57F3DFCB576248B919 /* AkSoundEngineDLL.cpp */; };
+		E7A0BDF96AFDB1B7872F436A /* AkDefaultIOHookBlocking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22C379A0C37A5C0C1BC81A54 /* AkDefaultIOHookBlocking.cpp */; };
+		F092DA3A3D56C747D7C6A252 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E63CB65A9C970277BA0FDC67 /* AudioToolbox.framework */; };
+		F7D185335C7AD3116D40FD11 /* libAkStreamMgr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DD6040F847C401131F2E393 /* libAkStreamMgr.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		03B45D137310427930E56CE2 /* libAkMusicEngine.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAkMusicEngine.a; path = ../../../../Mac/Debug/lib/libAkMusicEngine.a; sourceTree = "<group>"; };
+		0436599AB82AA692F8509CF6 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		07F21C573CDC4C3CA4F70786 /* AkGeneratedSoundBanksResolver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AkGeneratedSoundBanksResolver.cpp; path = ../../../SoundEngine/Common/AkGeneratedSoundBanksResolver.cpp; sourceTree = "<group>"; };
+		1C7F3A038B8CA4E32DB7A7C7 /* AkMultipleFileLocation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AkMultipleFileLocation.cpp; path = ../../../SoundEngine/Common/AkMultipleFileLocation.cpp; sourceTree = "<group>"; };
+		22C379A0C37A5C0C1BC81A54 /* AkDefaultIOHookBlocking.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AkDefaultIOHookBlocking.cpp; path = ../../../SoundEngine/POSIX/AkDefaultIOHookBlocking.cpp; sourceTree = "<group>"; };
+		236AADBAF595BAAA708AB51D /* libAkOpusDecoder.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAkOpusDecoder.a; path = ../../../../Mac/Debug/lib/libAkOpusDecoder.a; sourceTree = "<group>"; };
+		28E995185D8041717334C8DE /* AkFileLocationBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AkFileLocationBase.h; path = ../../../SoundEngine/Common/AkFileLocationBase.h; sourceTree = "<group>"; };
+		3546E4433EA7BA5E5AA9C379 /* libAkVorbisDecoder.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAkVorbisDecoder.a; path = ../../../../Mac/Debug/lib/libAkVorbisDecoder.a; sourceTree = "<group>"; };
+		3DED2A57F3DFCB576248B919 /* AkSoundEngineDLL.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AkSoundEngineDLL.cpp; path = ../AkSoundEngineDLL.cpp; sourceTree = "<group>"; };
+		4108863FFA5CF2B9EE9C5E00 /* libAkMeterFX.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAkMeterFX.a; path = ../../../../Mac/Debug/lib/libAkMeterFX.a; sourceTree = "<group>"; };
+		4C24FCC245FD2DC8A9B86074 /* libAkSoundEngine.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAkSoundEngine.a; path = ../../../../Mac/Debug/lib/libAkSoundEngine.a; sourceTree = "<group>"; };
+		5F0822CE6778CF07088D5F23 /* AkFileHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AkFileHelpers.h; path = ../../../SoundEngine/POSIX/AkFileHelpers.h; sourceTree = "<group>"; };
+		6AF9ABE5FBF30BC0823FF862 /* libAkMemoryMgr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAkMemoryMgr.a; path = ../../../../Mac/Debug/lib/libAkMemoryMgr.a; sourceTree = "<group>"; };
+		761D35CF4CE9C8D81F8885B7 /* AkGeneratedSoundBanksResolver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AkGeneratedSoundBanksResolver.h; path = ../../../SoundEngine/Common/AkGeneratedSoundBanksResolver.h; sourceTree = "<group>"; };
+		8DD6040F847C401131F2E393 /* libAkStreamMgr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAkStreamMgr.a; path = ../../../../Mac/Debug/lib/libAkStreamMgr.a; sourceTree = "<group>"; };
+		A2061BD9BA06EA5ACAD80C90 /* libAkSoundEngineDLL.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; name = libAkSoundEngineDLL.dylib; path = libAkSoundEngineDLL.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2F755D7A790F53B7737C1E8 /* AkDefaultIOHookBlocking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AkDefaultIOHookBlocking.h; path = ../../../SoundEngine/POSIX/AkDefaultIOHookBlocking.h; sourceTree = "<group>"; };
+		A6EE58D7196B010741F84EB9 /* libCommunicationCentral.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCommunicationCentral.a; path = ../../../../Mac/Debug/lib/libCommunicationCentral.a; sourceTree = "<group>"; };
+		AE29FDB39E41BC608FA0A2DC /* AkFileLocationBase.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AkFileLocationBase.cpp; path = ../../../SoundEngine/Common/AkFileLocationBase.cpp; sourceTree = "<group>"; };
+		C4CAAB948A6E2D5E3E67CA34 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		E63CB65A9C970277BA0FDC67 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		ED02069D3D2EC3B7A29E4985 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		F4A72354CC5915DBB58B4CC2 /* AkMultipleFileLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AkMultipleFileLocation.h; path = ../../../SoundEngine/Common/AkMultipleFileLocation.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		53FBF049BDAB947E5A1A7F2A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F092DA3A3D56C747D7C6A252 /* AudioToolbox.framework in Frameworks */,
+				93FD2033AC787D98A5969300 /* AudioUnit.framework in Frameworks */,
+				0B1BEAC418CF81FD0A985DE0 /* CoreAudio.framework in Frameworks */,
+				209FFD81E49C04FBD5C035F3 /* CoreFoundation.framework in Frameworks */,
+				B3532533812A377CA20422A4 /* libAkMemoryMgr.a in Frameworks */,
+				318BEAC1EBBD0C72CF6975EC /* libAkMeterFX.a in Frameworks */,
+				9C741893B1234A1FE6F04B40 /* libAkMusicEngine.a in Frameworks */,
+				93542B9334FB1D6E0DC16056 /* libAkOpusDecoder.a in Frameworks */,
+				BBCC10A78C80AB71EC9A5D90 /* libAkSoundEngine.a in Frameworks */,
+				F7D185335C7AD3116D40FD11 /* libAkStreamMgr.a in Frameworks */,
+				2F256534FECF2F7AC5DEAE22 /* libAkVorbisDecoder.a in Frameworks */,
+				7DE9B507BE872109A0E3A2A1 /* libCommunicationCentral.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		841625B2FBA58F9F14DEB23C /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXGroup section */
+		046EFF415214B8041C4D2B67 /* AkSoundEngineDLL */ = {
+			isa = PBXGroup;
+			children = (
+				3DED2A57F3DFCB576248B919 /* AkSoundEngineDLL.cpp */,
+				BEEC6274AE755D683ADDC0A4 /* SoundEngine */,
+				1C9FFA62804A8D7D4F18C366 /* Resources */,
+				A9A80184BAE508CFF0B8ACFA /* Frameworks */,
+				990A9E97AA7ABFD9D0C572FA /* Products */,
+			);
+			name = AkSoundEngineDLL;
+			sourceTree = "<group>";
+		};
+		1C9FFA62804A8D7D4F18C366 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		3D60A5DDD4005553C87398E0 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				AE29FDB39E41BC608FA0A2DC /* AkFileLocationBase.cpp */,
+				28E995185D8041717334C8DE /* AkFileLocationBase.h */,
+				07F21C573CDC4C3CA4F70786 /* AkGeneratedSoundBanksResolver.cpp */,
+				761D35CF4CE9C8D81F8885B7 /* AkGeneratedSoundBanksResolver.h */,
+				1C7F3A038B8CA4E32DB7A7C7 /* AkMultipleFileLocation.cpp */,
+				F4A72354CC5915DBB58B4CC2 /* AkMultipleFileLocation.h */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		41F25DE4E4BCF837695725E4 /* POSIX */ = {
+			isa = PBXGroup;
+			children = (
+				22C379A0C37A5C0C1BC81A54 /* AkDefaultIOHookBlocking.cpp */,
+				A2F755D7A790F53B7737C1E8 /* AkDefaultIOHookBlocking.h */,
+				5F0822CE6778CF07088D5F23 /* AkFileHelpers.h */,
+			);
+			name = POSIX;
+			sourceTree = "<group>";
+		};
+		990A9E97AA7ABFD9D0C572FA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A2061BD9BA06EA5ACAD80C90 /* libAkSoundEngineDLL.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9A80184BAE508CFF0B8ACFA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E63CB65A9C970277BA0FDC67 /* AudioToolbox.framework */,
+				C4CAAB948A6E2D5E3E67CA34 /* AudioUnit.framework */,
+				ED02069D3D2EC3B7A29E4985 /* CoreAudio.framework */,
+				0436599AB82AA692F8509CF6 /* CoreFoundation.framework */,
+				6AF9ABE5FBF30BC0823FF862 /* libAkMemoryMgr.a */,
+				4108863FFA5CF2B9EE9C5E00 /* libAkMeterFX.a */,
+				03B45D137310427930E56CE2 /* libAkMusicEngine.a */,
+				236AADBAF595BAAA708AB51D /* libAkOpusDecoder.a */,
+				4C24FCC245FD2DC8A9B86074 /* libAkSoundEngine.a */,
+				8DD6040F847C401131F2E393 /* libAkStreamMgr.a */,
+				3546E4433EA7BA5E5AA9C379 /* libAkVorbisDecoder.a */,
+				A6EE58D7196B010741F84EB9 /* libCommunicationCentral.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BEEC6274AE755D683ADDC0A4 /* SoundEngine */ = {
+			isa = PBXGroup;
+			children = (
+				3D60A5DDD4005553C87398E0 /* Common */,
+				41F25DE4E4BCF837695725E4 /* POSIX */,
+			);
+			name = SoundEngine;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3E5BC5E6A25EC82C361B4A90 /* AkSoundEngineDLL */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F1EEBFBA013A253595E3D457 /* Build configuration list for PBXNativeTarget "AkSoundEngineDLL" */;
+			buildPhases = (
+				B5DB9A63C9AAD257580D6971 /* Resources */,
+				78BD5E5C6CFA69BBEBBA4003 /* Sources */,
+				53FBF049BDAB947E5A1A7F2A /* Frameworks */,
+				841625B2FBA58F9F14DEB23C /* Embed Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AkSoundEngineDLL;
+			productName = AkSoundEngineDLL;
+			productReference = A2061BD9BA06EA5ACAD80C90 /* libAkSoundEngineDLL.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1300;
+			};
+			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "AkSoundEngineDLL" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = 046EFF415214B8041C4D2B67 /* AkSoundEngineDLL */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3E5BC5E6A25EC82C361B4A90 /* libAkSoundEngineDLL.dylib */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B5DB9A63C9AAD257580D6971 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		78BD5E5C6CFA69BBEBBA4003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E24C5077A7B79A00FF20B8E9 /* AkSoundEngineDLL.cpp in Sources */,
+				D61360889EF1102484550147 /* AkFileLocationBase.cpp in Sources */,
+				CDBF25D8D991FB702D1CF9C7 /* AkGeneratedSoundBanksResolver.cpp in Sources */,
+				D16726F70134701AD6833932 /* AkMultipleFileLocation.cpp in Sources */,
+				E7A0BDF96AFDB1B7872F436A /* AkDefaultIOHookBlocking.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4AB2B35E8C8A0ABC49D4D558 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = BCB4VLKTK5;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_AUTO_VECTORIZATION = NO;
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_FLOATING_POINT_LIBRARY_CALLS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_FAST_MATH = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					_DEBUG,
+					AKSOUNDENGINE_EXPORTS,
+					AKSOUNDENGINE_DLL,
+				);
+				GCC_STRICT_ALIASING = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESIS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = ". ../../../../include ../../../SoundEngine/POSIX";
+				LIBRARY_SEARCH_PATHS = ../../../../Mac/Debug/lib;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				OBJROOT = "../../../../Mac/Debug/obj/$(PREMAKE4_BUILDTARGET_BASENAME)";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fno-objc-msgsend-selector-stubs",
+					"-Qunused-arguments",
+				);
+				OTHER_LDFLAGS = "-Wl,-install_name,@rpath/libAkSoundEngineDLL.dylib";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SYMROOT = ../../../../Mac/Debug/bin;
+			};
+			name = Debug;
+		};
+		557AE22E31EC70D3948ADB6A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				DEVELOPMENT_TEAM = BCB4VLKTK5;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_AUTO_VECTORIZATION = NO;
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_FLOATING_POINT_LIBRARY_CALLS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_FAST_MATH = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					AK_OPTIMIZED,
+					AKSOUNDENGINE_EXPORTS,
+					AKSOUNDENGINE_DLL,
+				);
+				GCC_STRICT_ALIASING = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESIS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = ". ../../../../include ../../../SoundEngine/POSIX";
+				LIBRARY_SEARCH_PATHS = ../../../../Mac/Release/lib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OBJROOT = "../../../../Mac/Release/obj/$(PREMAKE4_BUILDTARGET_BASENAME)";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fno-objc-msgsend-selector-stubs",
+					"-Qunused-arguments",
+				);
+				OTHER_LDFLAGS = "-Wl,-install_name,@rpath/libAkSoundEngineDLL.dylib";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SYMROOT = ../../../../Mac/Release/bin;
+			};
+			name = Release;
+		};
+		6554AE7AE46C687B8C330D4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = ../../../../Mac/Debug/bin;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = BCB4VLKTK5;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_AUTO_VECTORIZATION = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FLOATING_POINT_LIBRARY_CALLS = NO;
+				GCC_FAST_MATH = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
+				GCC_STRICT_ALIASING = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESIS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fno-objc-msgsend-selector-stubs",
+					"-Qunused-arguments",
+				);
+				PRODUCT_NAME = AkSoundEngineDLL;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+			};
+			name = Debug;
+		};
+		8A9BDB0ECC63DEE68D54A0B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = ../../../../Mac/Release/bin;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = BCB4VLKTK5;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_AUTO_VECTORIZATION = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FLOATING_POINT_LIBRARY_CALLS = NO;
+				GCC_FAST_MATH = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
+				GCC_STRICT_ALIASING = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESIS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fno-objc-msgsend-selector-stubs",
+					"-Qunused-arguments",
+				);
+				PRODUCT_NAME = AkSoundEngineDLL;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+			};
+			name = Release;
+		};
+		8BF1502850699F09733A952B /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = "$(SYMROOT)";
+				CONFIGURATION_TEMP_DIR = "$(OBJROOT)";
+				DEVELOPMENT_TEAM = BCB4VLKTK5;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_AUTO_VECTORIZATION = NO;
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_FLOATING_POINT_LIBRARY_CALLS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_FAST_MATH = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
+				GCC_OPTIMIZATION_LEVEL = 3;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					AKSOUNDENGINE_EXPORTS,
+					AKSOUNDENGINE_DLL,
+				);
+				GCC_STRICT_ALIASING = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESIS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = ". ../../../../include ../../../SoundEngine/POSIX";
+				LIBRARY_SEARCH_PATHS = ../../../../Mac/Profile/lib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OBJROOT = "../../../../Mac/Profile/obj/$(PREMAKE4_BUILDTARGET_BASENAME)";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fno-objc-msgsend-selector-stubs",
+					"-Qunused-arguments",
+				);
+				OTHER_LDFLAGS = "-Wl,-install_name,@rpath/libAkSoundEngineDLL.dylib";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SYMROOT = ../../../../Mac/Profile/bin;
+			};
+			name = Profile;
+		};
+		A51C5242BDBC1C9C6776DB57 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = ../../../../Mac/Profile/bin;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = BCB4VLKTK5;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXECUTABLE_PREFIX = lib;
+				GCC_AUTO_VECTORIZATION = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FLOATING_POINT_LIBRARY_CALLS = NO;
+				GCC_FAST_MATH = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
+				GCC_STRICT_ALIASING = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = NO;
+				GCC_WARN_MISSING_PARENTHESIS = NO;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INSTALL_PATH = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-fno-objc-msgsend-selector-stubs",
+					"-Qunused-arguments",
+				);
+				PRODUCT_NAME = AkSoundEngineDLL;
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+			};
+			name = Profile;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "AkSoundEngineDLL" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4AB2B35E8C8A0ABC49D4D558 /* Debug */,
+				8BF1502850699F09733A952B /* Profile */,
+				557AE22E31EC70D3948ADB6A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F1EEBFBA013A253595E3D457 /* Build configuration list for PBXNativeTarget "libAkSoundEngineDLL.dylib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6554AE7AE46C687B8C330D4B /* Debug */,
+				A51C5242BDBC1C9C6776DB57 /* Profile */,
+				8A9BDB0ECC63DEE68D54A0B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

@@ -14,6 +14,7 @@
 #include <AK/Plugin/AkMeterFXFactory.h>
 #include <AK/Plugin/AkGainFXFactory.h>
 #include <AK/Plugin/AkParametricEQFXFactory.h>
+#include <AK/Plugin/AkVorbisDecoderFactory.h>
 #include <AK/MusicEngine/Common/AkMusicEngine.h>
 
 #include "Wwise_IDs.h"

@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+
+android {
+	ndkPath = System.getenv("NDKROOT")
+
+	ext.myOutDir = { platform, config, suffix ->
+		return project.file("../Android_${platform}/${config}/${suffix}")
+	}
+	ext.ndkOut = { platform, config ->
+		return "NDK_OUT=" + myOutDir(platform, config, '/lib').getAbsolutePath()
+	}
+	ext.ndkLibsOut = { platform, config ->
+		return "NDK_LIBS_OUT=" + myOutDir(platform, config, '/libs').getAbsolutePath()
+	}
+	def ndkJobs = project.hasProperty("jobs") ? "--jobs=${project.jobs}" : "--jobs=1"
+
+	compileSdkVersion = 26
+
+	externalNativeBuild {
+		ndkBuild {
+			path "../jni/Android.mk"
+		}
+	}
+	defaultConfig {
+		applicationId = 'com.audiokinetic.IntegrationDemo'
+		targetSdkVersion  26
+	}
+	flavorDimensions "pm5"
+
+	def configs = ["debug", "profile", "release"]
+	def abis = [["x86", 16], ["x86_64", 21], ["armeabi-v7a", 16], ["arm64-v8a", 21]]
+
+	configs.each{ cfg ->
+		abis.each { abidescr ->
+			def abi = abidescr[0]
+			def sdkver = abidescr[1]
+            def flavor = cfg + "_" + abi
+            def pm5 = cfg + "_android_" + abi
+            productFlavors.create(flavor, {
+				dimension "pm5"
+				minSdkVersion sdkver
+				ndk {
+					abiFilter abi
+				}
+				externalNativeBuild {
+					ndkBuild {
+						arguments "PM5_CONFIG=" + pm5, ndkOut(abi, cfg), ndkLibsOut(abi, cfg), ndkJobs
+					}
+				}
+			})
+		}
+	}
+}
+
+def copyAssets = project.tasks.create("copyAssets", Copy) {
+	from(project.file('../assets').getAbsolutePath())
+	into(project.file('src/main/assets').getAbsolutePath())
+}
+
+// Our build system wants nothing to do with what Gradle considers "Release" builds
+android.variantFilter { variant ->
+	def build = variant.buildType.name
+	if (build == "release")
+		variant.setIgnore(true)
+}
+
+def publishAll = project.tasks.create("publishAll")
+android.applicationVariants.all { variant ->
+	def split = variant.flavorName.split("_", 2)
+	def config = split[0]
+	def platform = split[1]
+	def dest = "bin/IntegrationDemo/"
+
+	variant.assembleProvider.get().dependsOn copyAssets
+	def publishVariant = project.tasks.create("publish${variant.name}Apk", Copy) {
+		from(variant.outputs[0].outputFile) {
+			include '*.apk'
+			rename variant.outputs[0].outputFile.name, "IntegrationDemo.apk"
+		}
+		into(project.file("../../../../Android_${platform}/${config}/${dest}").getAbsolutePath())
+		dependsOn variant.assembleProvider
+	}
+	publishAll.dependsOn publishVariant
+}
+
+dependencies {
+	implementation fileTree(dir: 'libs', include: ['*.jar'])
+	implementation 'com.android.support:appcompat-v7:26.1.0'
+}
