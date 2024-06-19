@@ -50,7 +50,7 @@ bool WwiseAPI::Init()
 	g_lowLevelIO.SetBasePath(AKTEXT("..\\Wwise\\GeneratedSoundBanks\\Windows"));
 	AK::StreamMgr::SetCurrentLanguage(AKTEXT("English(US)"));
 
-#ifndef AK_OPTIMIZED
+#ifndef AK_OPTIMIZED 
 
 	AkCommSettings commSettings;
 	AK::Comm::GetDefaultInitSettings(commSettings);
@@ -69,9 +69,14 @@ void WwiseAPI::DeInit()
 	{
 		AK::IAkStreamMgr::Get()->Destroy();
 	}
-	AK::Comm::Term();
 	AK::MemoryMgr::Term();
 	AK::MusicEngine::Term();
+
+#ifndef AK_OPTIMIZED 
+
+	AK::Comm::Term();
+
+#endif // !AK_OPTIMIZED
 }
 
 AKRESULT WwiseAPI::LoadBank(const AkUniqueID& bankID)
