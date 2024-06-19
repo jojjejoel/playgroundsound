@@ -3,31 +3,6 @@
 	<Events>
 		<WorkUnit Name="Default Work Unit" ID="{CC45DA19-C521-4450-A12E-057D523989D8}" PersistMode="Standalone">
 			<ChildrenList>
-				<Event Name="Good_Old_Days" ID="{DDA9C1CC-8691-45CE-83AE-ECA323AED650}">
-					<ChildrenList>
-						<Action Name="" ID="{0F197402-7D26-4FBB-A587-7C02D6C5888E}" ShortID="319692682">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="Good_Old_Days" ID="{55572D41-B7A1-4985-BDB2-681E7F86BDDE}" WorkUnitID="{8E08C725-5B07-4F01-8DB8-A6B9F7AFCA86}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-						<Action Name="" ID="{9AF9F845-3D0B-4B43-93BD-1F8EA526E08B}" ShortID="530160030">
-							<PropertyList>
-								<Property Name="Inclusion" Type="bool">
-									<ValueList>
-										<Value>False</Value>
-									</ValueList>
-								</Property>
-							</PropertyList>
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="Energy_Playlist" ID="{9C4E0ADD-29EF-4083-A0C2-7CD43184265B}" WorkUnitID="{10659DF1-08E3-4503-8011-6CC1C2654B9B}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
 				<Event Name="Car_Engine_Loop" ID="{B526007C-BA47-440B-A1DD-2E62D9ADD10D}">
 					<ChildrenList>
 						<Action Name="" ID="{1D6747D8-B9D7-4F45-85B2-7159A3C7AC7D}" ShortID="999691230">
@@ -52,17 +27,6 @@
 							<ReferenceList>
 								<Reference Name="Target">
 									<ObjectRef Name="Energy_Playlist" ID="{9C4E0ADD-29EF-4083-A0C2-7CD43184265B}" WorkUnitID="{10659DF1-08E3-4503-8011-6CC1C2654B9B}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
-				<Event Name="Light_Flicker" ID="{27B3E7F6-06E1-4032-9219-EDD16708A59B}">
-					<ChildrenList>
-						<Action Name="" ID="{FF1848D2-7378-499A-8DF8-D2333380ADC9}" ShortID="195190791">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="Light_Flicker" ID="{E5BCCEE6-1325-4F57-9D1D-9263C6CE7897}" WorkUnitID="{8E08C725-5B07-4F01-8DB8-A6B9F7AFCA86}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

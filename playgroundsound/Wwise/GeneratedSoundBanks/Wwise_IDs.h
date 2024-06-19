@@ -15,8 +15,6 @@ namespace AK
     {
         static const AkUniqueID CAR_ENGINE_LOOP = 4193220423U;
         static const AkUniqueID ENERGY = 1345584937U;
-        static const AkUniqueID GOOD_OLD_DAYS = 2578592186U;
-        static const AkUniqueID LIGHT_FLICKER = 411515110U;
     } // namespace EVENTS
 
     namespace GAME_PARAMETERS
