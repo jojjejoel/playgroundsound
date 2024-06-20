@@ -3,7 +3,7 @@
 #include <src/rcamera.h>
 #include <src/raylib.h>
 #define RCAMERA_IMPLEMENTATION
-#include "GameObject.h"
+#include "..\GameObject\GameObject.h"
 void CameraComponent::Init(GameObject* in_gameObject)
 {
 	camera3D = new Camera3D();

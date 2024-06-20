@@ -1,8 +1,8 @@
 #pragma once
 
-#include "GameObject.h"
-#include "WwiseRoomComponent.h"
-#include "WwiseObjectComponent.h"
+#include "..\GameObject\GameObject.h"
+#include "..\Components\WwiseRoomComponent.h"
+#include "..\Components\WwiseObjectComponent.h"
 
 class WwiseRoomManager
 {

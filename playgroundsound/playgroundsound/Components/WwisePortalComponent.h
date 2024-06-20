@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-#include "GameObject.h"
+#include "..\GameObject\GameObject.h"
 #include <cstdint>
 class WwisePortalComponent : public Component
 {

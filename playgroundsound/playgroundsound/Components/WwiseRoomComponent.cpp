@@ -2,7 +2,7 @@
 
 #include "AK/SpatialAudio/Common/AkSpatialAudio.h"
 #include "RenderComponent.h"
-#include "GoMesh.h"
+#include "..\GameObject\GoMesh.h"
 
 void WwiseRoomComponent::Init(GameObject* in_gameObject)
 {

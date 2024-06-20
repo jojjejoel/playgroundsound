@@ -1,11 +1,9 @@
 #pragma once
-#include "Component.h"
-//#include <AK/SoundEngine/Common/AkTypes.h>
-//#include <AK/SpatialAudio/Common/AkSpatialAudioTypes.h>
+#include "..\Components\Component.h"
 
-#include "Triangle.h"
+#include "..\Triangle.h"
 #include <cstdint>
-#include "DiffractionPath.h"
+#include "..\DiffractionPath.h"
 #include <vector>
 
 #define MAX_DIFFRACTIONPATHS 10

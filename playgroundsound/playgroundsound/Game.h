@@ -8,13 +8,13 @@
 #include <map>
 #include <string>
 
-#include "GameObjectManager.h"
-#include "GameObject.h"
+#include "Managers/GameObjectManager.h"
+#include "GameObject/GameObject.h"
 
-#include "WwiseRoomManager.h"
+#include "Managers/WwiseRoomManager.h"
 
-#include "DiffractionManager.h"
-#include "RenderManager.h"
+#include "Managers/DiffractionManager.h"
+#include "Managers/RenderManager.h"
 
 struct BoundingBox;
 

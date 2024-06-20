@@ -1,11 +1,11 @@
 #pragma once
-#include "GameObject.h"
-#include "CameraComponent.h"
+#include "..\GameObject\GameObject.h"
+#include "..\Components\CameraComponent.h"
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "RenderComponent.h"
+#include "..\Components\RenderComponent.h"
 
 struct RenderTexture;
 typedef RenderTexture RenderTexture2D;

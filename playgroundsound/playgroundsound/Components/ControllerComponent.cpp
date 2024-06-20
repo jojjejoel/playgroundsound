@@ -2,7 +2,7 @@
 #include <src/raylib.h>
 #include <src/raymath.h>
 #include <iostream>
-#include "GameObject.h"
+#include "..\GameObject\GameObject.h"
 void ControllerComponent::Init(GameObject* in_gameObject)
 {
 }

@@ -1,12 +1,10 @@
 #pragma once
 #include "Component.h"
-//#include <AK/SoundEngine/Common/AkTypes.h>
-//#include <AK/SpatialAudio/Common/AkSpatialAudioTypes.h>
 
-#include "Triangle.h"
-#include "GameObject.h"
+#include "..\Triangle.h"
+#include "..\GameObject\GameObject.h"
 
-#include "GO_BoundingBox.h"
+#include "..\GameObject\GO_BoundingBox.h"
 #include <cstdint>
 
 

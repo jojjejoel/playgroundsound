@@ -69,41 +69,38 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GoMesh.h">
-      <Filter>GameObject</Filter>
+    <ClCompile Include="Managers\DiffractionManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjectManager.cpp">
-      <Filter>Managers</Filter>
+    <ClCompile Include="Managers\GameObjectManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CameraComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Managers\RenderManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ControllerComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Managers\WwiseRoomManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RenderComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Components\CameraComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WwiseObjectComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Components\ControllerComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WwiseRoomManager.cpp">
-      <Filter>Managers</Filter>
+    <ClCompile Include="Components\RenderComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DiffractionManager.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Components\WwiseObjectComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WwisePortalComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Components\WwisePortalComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WwiseRoomComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Components\WwiseRoomComponent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderManager.cpp">
-      <Filter>Managers</Filter>
+    <ClCompile Include="GameObject\GameObject.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,62 +158,11 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GO_Transform.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="GO_Vector3.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Triangle.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjectManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Component.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ControllerComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="WwiseObjectComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="GoVertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WwiseRoomManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="GO_BoundingBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DiffractionPath.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="WwisePortalComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="WwiseRoomComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="DiffractionManager.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderManager.h">
-      <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="Wwise\GeneratedSoundBanks\Wwise_IDs.h">
       <Filter>Header Files</Filter>
@@ -234,6 +180,60 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\raylib-master\examples\shaders\rlights.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\DiffractionManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\GameObjectManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\RenderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\WwiseRoomManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\CameraComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Components.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ControllerComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\RenderComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\WwiseObjectComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\WwisePortalComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\WwiseRoomComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GO_BoundingBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GO_Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GO_Vector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GoMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GoVertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

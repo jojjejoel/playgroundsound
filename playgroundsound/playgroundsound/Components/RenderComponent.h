@@ -1,11 +1,11 @@
 #pragma once
 #include "Component.h"
-#include "GameObject.h"
+#include "..\GameObject\GameObject.h"
 struct Model;
 struct Shader;
 
-#include "GoVertex.h"
-#include "Triangle.h"
+#include "..\GameObject\GoVertex.h"
+#include "..\Triangle.h"
 
 class RenderComponent : public Component
 {

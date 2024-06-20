@@ -3,7 +3,7 @@
 #include <AK/Tools/Common/AkPlatformFuncs.h>
 #include "AK/Comm/AkCommunication.h"
 #include "AK/SpatialAudio/Common/AkSpatialAudio.h"
-#include "GameObject.h"
+#include "..\GameObject\GameObject.h"
 #include <AK/SoundEngine/Common/AkCallback.h>
 
 void WwiseObjectComponent::Init(GameObject* in_gameObject)

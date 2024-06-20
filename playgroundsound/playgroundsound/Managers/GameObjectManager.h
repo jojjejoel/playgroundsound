@@ -1,6 +1,6 @@
 #pragma once
 #include <map>
-#include "GameObject.h"
+#include "..\GameObject\GameObject.h"
 
 #define MAX_GAME_OBJECTS 50
 class GameObjectManager
