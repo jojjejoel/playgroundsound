@@ -31,7 +31,7 @@ void WwiseRoomManager::Update()
 			}
 			else
 			{
-				object->SetRoomID(AK::SpatialAudio::kOutdoorRoomID);
+				object->SetRoomID(static_cast<unsigned int>(AK::SpatialAudio::kOutdoorRoomID));
 			}
 			
 		}

@@ -18,7 +18,7 @@ public:
 
 	const GO_Vector3& GetPosition();
 
-	const float& GetGameParamValueGlobal(const unsigned int& rtpcID);
+	float GetGameParamValueGlobal(const unsigned int& rtpcID);
 
 	std::function<void()> callbackFuntionBar;
 	std::function<void()> callbackFuntionBeat;

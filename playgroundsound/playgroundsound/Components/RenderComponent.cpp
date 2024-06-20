@@ -27,7 +27,7 @@ void RenderComponent::Draw(GameObject* in_gameObject)
 {
 	Vector3 pos = { in_gameObject->m_transform.position.x, in_gameObject->m_transform.position.y, in_gameObject->m_transform.position.z };
 	Vector3 scale = { in_gameObject->m_transform.scale.x, in_gameObject->m_transform.scale.y, in_gameObject->m_transform.scale.z };
-	Color drawColor = { color.x, color.y, color.z, 255 };
+	Color drawColor = { static_cast<unsigned char>(color.x), static_cast<unsigned char>(color.y), static_cast<unsigned char>(color.z), 255 };
 	if (shouldRender)
 	{
 		DrawModelEx(*model, pos, { 0.0f, 1.0f, 0.0f }, 0, scale, drawColor);

@@ -114,12 +114,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level1</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;GRAPHICS_API_OPENGL_33;PLATFORM_DESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)raylib-master;$(SolutionDir)Wwise_SDK\samples\SoundEngine\Win32;$(SolutionDir)Wwise_SDK\include;$(SolutionDir)Wwise\GeneratedSoundBanks;$(SolutionDir)playgroundsound\WwiseSource</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,6 +150,7 @@ XCOPY $(SolutionDir)playgroundsound\Wwise_Project\GeneratedSoundBanks $(TargetDi
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)raylib-master;$(SolutionDir)Wwise_SDK\samples\SoundEngine\Win32;$(SolutionDir)Wwise_SDK\include;$(SolutionDir)Wwise\GeneratedSoundBanks;$(SolutionDir)playgroundsound\WwiseSource</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -10,7 +10,7 @@ void WwiseObjectComponent::Init(GameObject* in_gameObject)
 {
 	akGameObjectID = in_gameObject->m_id;
 	gameObjectName = in_gameObject->m_name.c_str();
-	currentRoomID = AK::SpatialAudio::kOutdoorRoomID;
+	currentRoomID = static_cast<unsigned int>(AK::SpatialAudio::kOutdoorRoomID);
 	AK::SoundEngine::RegisterGameObj(akGameObjectID, gameObjectName);
 }
 
@@ -88,7 +88,7 @@ const GO_Vector3& WwiseObjectComponent::GetPosition()
 	return m_position;
 }
 
-const float& WwiseObjectComponent::GetGameParamValueGlobal(const unsigned int& rtpcID)
+float WwiseObjectComponent::GetGameParamValueGlobal(const unsigned int& rtpcID)
 {
 	AkRtpcValue rtpcValue;
 	AK::SoundEngine::Query::RTPCValue_type valueType = AK::SoundEngine::Query::RTPCValue_Global;

@@ -165,7 +165,7 @@ void Game::DrawDiffractionPaths()
 	{
 		DiffractionPath diffractionPath = diffractionPaths[pathIndex];
 
-		Color color = { Lerp(0, 255, diffractionPath.diffraction), Lerp(255, 0, diffractionPath.diffraction), 0, 255 };
+		Color color = { static_cast<unsigned char>(Lerp(0, 255, diffractionPath.diffraction)), static_cast<unsigned char>(Lerp(255, 0, diffractionPath.diffraction)), 0, 255 };
 		int numNodes = diffractionPath.nodeCount;
 		if (numNodes > 0)
 		{
