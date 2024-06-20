@@ -16,7 +16,7 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 	std::vector<Triangle> triangles = in_gameObject->GetComponent<RenderComponent>().GetTriangles();
 
 	AkGeometryParams geomWallsInside;
-	geomWallsInside.NumVertices = vertices.size();
+	geomWallsInside.NumVertices = static_cast<AkVertIdx>(vertices.size());
 	std::vector<AkVertex> akVertices;
 	for (size_t i = 0; i < geomWallsInside.NumVertices; i++)
 	{
@@ -40,7 +40,7 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 	surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
 	surfaces[1].transmissionLoss = 0.8f;
 	geomWallsInside.Surfaces = surfaces;
-	geomWallsInside.NumTriangles = triangles.size();
+	geomWallsInside.NumTriangles = static_cast<AkTriIdx>(triangles.size());
 
 	std::vector<AkTriangle> akTriangles;
 
@@ -101,7 +101,7 @@ void WwiseRoomComponent::InitRoomGeometry(GameObject* roomObj) {
 	AKRESULT result;
 	
 	AkGeometryParams geom;
-	geom.NumVertices = roomObj->GetComponent<RenderComponent>().GetVertices().size();
+	geom.NumVertices = static_cast<AkVertIdx>(roomObj->GetComponent<RenderComponent>().GetVertices().size());
 	std::vector<AkVertex> vertices;
 	for (size_t i = 0; i < geom.NumVertices; i++)
 	{
@@ -125,7 +125,7 @@ void WwiseRoomComponent::InitRoomGeometry(GameObject* roomObj) {
 	surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
 	surfaces[1].transmissionLoss = 0.8f;
 	geom.Surfaces = surfaces;
-	geom.NumTriangles = roomObj->GetComponent<RenderComponent>().GetTriangles().size();
+	geom.NumTriangles = static_cast<AkTriIdx>(roomObj->GetComponent<RenderComponent>().GetTriangles().size());
 
 	std::vector<AkTriangle> akTriangles;
 
@@ -202,7 +202,7 @@ void WwiseRoomComponent::GenerateWalls(const GameObject* gameObject, const uint6
 	for (size_t i = 0; i < 6; i++)
 	{
 		AkGeometryInstanceParams instanceParams;
-		instanceParams.Scale = { 1.0001,1.0001,1.0001 };
+		instanceParams.Scale = { 1.0001f,1.0001f,1.0001f };
 		AkWorldTransform worldTransform;
 		AkVector topVector = { 0,1,0 };
 		AkVector frontVector = { 0,0,1 };

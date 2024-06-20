@@ -90,9 +90,6 @@ void ControllerComponent::Rotate(GameObject* in_gameObject, const float& in_rota
 	currentMatrix.m6 = goTransform.forward.y;
 	currentMatrix.m10 = goTransform.forward.z;
 
-	float x = in_gameObject->m_transform.forward.x;
-	float z = in_gameObject->m_transform.forward.z;
-
 	Matrix rot = MatrixRotateY(in_rotateSpeed);
 
 	currentMatrix = MatrixMultiply(currentMatrix, rot);
