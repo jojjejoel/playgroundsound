@@ -1,6 +1,6 @@
 #include "ControllerComponent.h"
-#include "raylib.h"
-#include "raymath.h"
+#include <src/raylib.h>
+#include <src/raymath.h>
 #include <iostream>
 #include "GameObject.h"
 void ControllerComponent::Init(GameObject* in_gameObject)

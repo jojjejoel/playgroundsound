@@ -1,12 +1,14 @@
 #include "Game.h"
 
-#include "raylib.h"
-#include "rcamera.h"
+
+
+#include <src/raylib.h>
+#include <src/rcamera.h>
 #include <string>
-#include "raymath.h"
+#include <src/raymath.h>
 #include <math.h>
 #define RLIGHTS_IMPLEMENTATION
-#include "rlights.h"
+#include <examples/shaders/rlights.h>
 
 #if defined(PLATFORM_DESKTOP)
 #define GLSL_VERSION            330

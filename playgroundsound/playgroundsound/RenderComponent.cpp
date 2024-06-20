@@ -1,7 +1,7 @@
 #include "RenderComponent.h"
 
-#include "raylib.h"
-#include "raymath.h"
+#include <src/raylib.h>
+#include <src/raymath.h>
 
 void RenderComponent::Init(GameObject* in_gameObject)
 {

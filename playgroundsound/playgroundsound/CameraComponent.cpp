@@ -1,7 +1,7 @@
 #include "CameraComponent.h"
 
-#include "rcamera.h"
-#include "raylib.h"
+#include <src/rcamera.h>
+#include <src/raylib.h>
 #define RCAMERA_IMPLEMENTATION
 #include "GameObject.h"
 void CameraComponent::Init(GameObject* in_gameObject)

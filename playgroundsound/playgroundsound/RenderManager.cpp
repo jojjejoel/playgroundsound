@@ -1,9 +1,9 @@
 #include "RenderManager.h"
 
-#include "raylib.h"
-#include "raymath.h"
-#include "rlgl.h"
-#include "rlights.h"
+#include <src/raylib.h>
+#include <src/raymath.h>
+#include <src/rlgl.h>
+#include <examples/shaders/rlights.h>
 
 #if defined(PLATFORM_DESKTOP)
 #define GLSL_VERSION            330
@@ -172,7 +172,7 @@ RenderTexture2D* RenderManager::LoadShadowmapRenderTexture(int width, int height
 {
 	RenderTexture2D target = { 0 };
 
-	target.id = rlLoadFramebuffer(0, 0); // Load an empty framebuffer
+	target.id = rlLoadFramebuffer(); // Load an empty framebuffer
 	target.texture.width = width;
 	target.texture.height = height;
 

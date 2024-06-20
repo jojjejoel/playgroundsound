@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
     <IntDir>$(Platform)\$(Configuration)\Intermediate\</IntDir>
     <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
@@ -82,6 +82,7 @@
     <IntDir>$(Platform)\$(Configuration)\Intermediate\</IntDir>
     <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
     <OutDir>$(SolutionDir)Executables\$(Platform)\$(Configuration)\</OutDir>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -117,13 +118,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;GRAPHICS_API_OPENGL_33;PLATFORM_DESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Raylib\src;$(SolutionDir)Wwise_SDK\samples\SoundEngine\Win32;$(SolutionDir)Wwise_SDK\include;$(SolutionDir)Wwise\GeneratedSoundBanks;$(SolutionDir)playgroundsound\WwiseSource</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)raylib-master;$(SolutionDir)Wwise_SDK\samples\SoundEngine\Win32;$(SolutionDir)Wwise_SDK\include;$(SolutionDir)Wwise\GeneratedSoundBanks;$(SolutionDir)playgroundsound\WwiseSource</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Wwise_SDK\x64_vc170\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Wwise_SDK\x64_vc170\$(Configuration)\lib;$(SolutionDir)Raylib_build\$(Platform)\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>CommunicationCentral.lib;AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;AkAudioInputSource.lib;ws2_32.lib;AkRoomVerbFX.lib;AkMeterFX.lib;AkGainFX.lib;AkParametricEQFX.lib;AkVorbisDecoder.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -133,6 +134,10 @@ XCOPY $(SolutionDir)playgroundsound\Wwise_Project\GeneratedSoundBanks $(TargetDi
     <PostBuildEvent>
       <Message>Copying "Resource" folders</Message>
     </PostBuildEvent>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -142,7 +147,7 @@ XCOPY $(SolutionDir)playgroundsound\Wwise_Project\GeneratedSoundBanks $(TargetDi
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_NDEBUG;AK_OPTIMIZED;_CONSOLE;GRAPHICS_API_OPENGL_33;PLATFORM_DESKTOP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Raylib\src;$(SolutionDir)Wwise_SDK\samples\SoundEngine\Win32;$(SolutionDir)Wwise_SDK\include;$(SolutionDir)Wwise\GeneratedSoundBanks;$(SolutionDir)playgroundsound\WwiseSource</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)raylib-master;$(SolutionDir)Wwise_SDK\samples\SoundEngine\Win32;$(SolutionDir)Wwise_SDK\include;$(SolutionDir)Wwise\GeneratedSoundBanks;$(SolutionDir)playgroundsound\WwiseSource</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -151,10 +156,11 @@ XCOPY $(SolutionDir)playgroundsound\Wwise_Project\GeneratedSoundBanks $(TargetDi
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);AkSoundEngine.lib;AkMemoryMgr.lib;AkStreamMgr.lib;AkMusicEngine.lib;AkSpatialAudio.lib;AkAudioInputSource.lib;ws2_32.lib;AkRoomVerbFX.lib;AkMeterFX.lib;AkGainFX.lib;AkParametricEQFX.lib;AkVorbisDecoder.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Wwise_SDK\x64_vc170\$(Configuration)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Wwise_SDK\x64_vc170\$(Configuration)\lib;$(SolutionDir)Raylib_build\$(Platform)\$(Configuration)\lib</AdditionalLibraryDirectories>
     </Link>
     <ProjectReference>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <PostBuildEvent>
       <Command>XCOPY $(SolutionDir)playgroundsound\Resources $(TargetDir)Resources /S /e /i /y
@@ -193,6 +199,11 @@ XCOPY $(SolutionDir)playgroundsound\Wwise_Project\GeneratedSoundBanks $(TargetDi
     <ClCompile Include="WwiseAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\raylib-master\examples\shaders\rlights.h" />
+    <ClInclude Include="..\raylib-master\src\raylib.h" />
+    <ClInclude Include="..\raylib-master\src\raymath.h" />
+    <ClInclude Include="..\raylib-master\src\rcamera.h" />
+    <ClInclude Include="..\raylib-master\src\rlgl.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Components.h" />
@@ -256,6 +267,11 @@ XCOPY $(SolutionDir)playgroundsound\Wwise_Project\GeneratedSoundBanks $(TargetDi
   <ItemGroup>
     <Text Include="Wwise\GeneratedSoundBanks\Windows\1355168291.txt" />
     <Text Include="Wwise\GeneratedSoundBanks\Windows\3161908922.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\raylib-master\projects\VS2022\raylib\raylib.vcxproj">
+      <Project>{e89d61ac-55de-4482-afd4-df7242ebc859}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

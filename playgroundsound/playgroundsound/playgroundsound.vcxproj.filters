@@ -221,6 +221,21 @@
     <ClInclude Include="Wwise\GeneratedSoundBanks\Wwise_IDs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\raylib-master\src\raylib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\raylib-master\src\raymath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\raylib-master\src\rcamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\raylib-master\src\rlgl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\raylib-master\examples\shaders\rlights.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="WwiseSource\AkFilePackageLowLevelIO.inl">
