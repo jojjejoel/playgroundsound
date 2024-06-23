@@ -38,21 +38,27 @@ void WwiseObjectComponent::PostEvent(const unsigned int& eventID)
 
 static void MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo)
 {
-	WwiseObjectComponent* wwiseObjectComponent = (WwiseObjectComponent*)in_pCallbackInfo->pCookie;
-	switch (in_eType)
+	if (in_eType & AK_MusicSyncAll)
 	{
-	case AK_MusicSyncBeat:
-		wwiseObjectComponent->callbackFuntionBeat();
-		break;
-	case AK_MusicSyncBar:
-		wwiseObjectComponent->callbackFuntionBar();
-		break;
-	default:
-		break;
+		WwiseObjectComponent* wwiseObjectComponent = (WwiseObjectComponent*)in_pCallbackInfo->pCookie;
+		AkMusicSyncCallbackInfo* akMusicSyncCallbackInfo = static_cast<AkMusicSyncCallbackInfo*>(in_pCallbackInfo);
+		float barDuration = akMusicSyncCallbackInfo->segmentInfo.fBarDuration;
+		switch (in_eType)
+		{
+		case AK_MusicSyncBeat:
+			wwiseObjectComponent->callbackFuntionBeat();
+			break;
+		case AK_MusicSyncBar:
+			wwiseObjectComponent->callbackFuntionBar(barDuration);
+			break;
+		default:
+			break;
+		}
+
 	}
 }
 
-void WwiseObjectComponent::PostMusicEvent(const unsigned int& eventID, std::function<void()> in_callbackFuncBar, std::function<void()> in_callbackFuncBeat)
+void WwiseObjectComponent::PostMusicEvent(const unsigned int& eventID, std::function<void(float)> in_callbackFuncBar, std::function<void()> in_callbackFuncBeat)
 {
 	callbackFuntionBar = in_callbackFuncBar;
 	callbackFuntionBeat = in_callbackFuncBeat;

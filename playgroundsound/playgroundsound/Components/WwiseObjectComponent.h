@@ -10,7 +10,7 @@ public:
 	virtual void Update(GameObject* in_gameObject) override;
 
 	void PostEvent(const unsigned int& eventID);
-	void PostMusicEvent(const unsigned int&, std::function<void()> callbackFuncBar, std::function<void()> in_callbackFuncBeat);
+	void PostMusicEvent(const unsigned int&, std::function<void(float)> callbackFuncBar, std::function<void()> in_callbackFuncBeat);
 	void RegisterAsListener();
 	void RegisterAsDistanceProbe(const unsigned int& listenerID);
 	void SetRTPC(const unsigned int& rtpcID, const float& rtpcValue);
@@ -20,7 +20,7 @@ public:
 
 	float GetGameParamValueGlobal(const unsigned int& rtpcID);
 
-	std::function<void()> callbackFuntionBar;
+	std::function<void(float)> callbackFuntionBar;
 	std::function<void()> callbackFuntionBeat;
 private:
 	unsigned int akGameObjectID;

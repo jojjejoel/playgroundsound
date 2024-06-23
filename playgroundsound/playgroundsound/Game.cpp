@@ -45,7 +45,10 @@ void Game::Init()
 	comp.RegisterAsListener();
 	truckObjPtr->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::CAR_ENGINE_LOOP);
 	truckObjPtr->GetComponent<WwiseObjectComponent>().RegisterAsDistanceProbe(cameraObjPtr->m_id);
-	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().PostMusicEvent(AK::EVENTS::ENERGY, std::bind(&Game::MusicBar, this), std::bind(&Game::MusicBeat, this));
+	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().PostMusicEvent(
+		AK::EVENTS::ENERGY,
+		std::bind(&Game::MusicBar, this, std::placeholders::_1),  // Bind MusicBar with a float parameter
+		std::bind(&Game::MusicBeat, this));  // Bind MusicBeat with no parameters
 }
 
 void Game::AddGameObjects()
@@ -63,11 +66,9 @@ void Game::AddGameObjects()
 
 	roomCubeObjPtr = gameObjectManager.AddGameObject("RoomCube");
 	roomCubeObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("RoomCube").get(), true, true, { 255,0,0 });
-	//renderManager.AddRenderObject(roomCubeObjPtr);
 
 	roomWallObjPtr = gameObjectManager.AddGameObject("RoomWall");
 	roomWallObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("RoomWall").get(), true, true);
-	//renderManager.AddRenderObject(roomWallObjPtr);
 
 
 	AddRoomWalls(roomWallLeftObjPtr, "RoomWallSide", "RoomWallLeft", { 5,0,0 });
@@ -107,7 +108,7 @@ void Game::Run()
 {
 	ControlPortalState();
 	ControlPlaybackSpeed();
-	barValue -= GetFrameTime() * 0.37f * playbackSpeed;
+	
 	UpdateBlinkingLight();
 	float carSpeed = truckObjPtr->GetComponent<ControllerComponent>().GetPercentageOfMaxSpeed();
 	truckObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
@@ -194,40 +195,51 @@ void Game::DrawDiffractionPaths()
 
 void Game::UpdateBlinkingLight()
 {
-	renderManager.SetLightColor({ 255,255,255 });
+	// Callback from Wwise resets timeLeftOnBar to barDuration 
+	// at the beginning of each bar in the music track.
+	timeLeftOnBar -= GetFrameTime();
 
-	float gValue = 255 * std::max(0.0f, barValue);
-	if (beatValue == 0)
-	{
-		float aValueBar = 255 * std::max(0.0f, barValue);
-		renderManager.SetLightColor({ aValueBar,0,gValue });
+	const float barColorIntensity = std::max(0.0f, timeLeftOnBar / barDuration);
+
+	const uint8_t MAX_COLOR = 255;
+	const uint8_t MIN_COLOR = 0;
+
+	// Define beat color configurations
+	const GO_Vector3 beatColors[numberOfBeatsInBar] = {
+		{ MIN_COLOR, MAX_COLOR, MIN_COLOR },  // beatValue == 0
+		{ MAX_COLOR, MIN_COLOR, MIN_COLOR },  // beatValue == 1
+		{ MIN_COLOR, MAX_COLOR, MAX_COLOR },  // beatValue == 2
+		{ MIN_COLOR, MAX_COLOR, MIN_COLOR }   // beatValue == 3
+	};
+
+	GO_Vector3 lightColor = { 0, 0, 0 };
+
+	// Ensure beatValue is within the expected range and assign corresponding color
+	if (beatValue >= 0 && beatValue < numberOfBeatsInBar) {
+		lightColor = beatColors[beatValue];
 	}
-	else if (beatValue == 1)
-	{
-		renderManager.SetLightColor({ 0,0,gValue });
-	}
-	else if (beatValue == 2)
-	{
-		float aValueBar = 255 * std::max(0.0f, barValue);
-		renderManager.SetLightColor({ 0,aValueBar,gValue });
-	}
-	else if (beatValue == 3)
-	{
-		float aValueBar = 100 * std::max(0.0f, barValue);
-		renderManager.SetLightColor({ aValueBar,aValueBar,gValue });
-	}
+
+	// Scale the light color by barColorIntensity
+	lightColor.x *= barColorIntensity;
+	lightColor.y *= barColorIntensity;
+	lightColor.z *= barColorIntensity;
+
+	renderManager.SetLightColor(lightColor);
 }
 
 void Game::MusicBeat() {
+	// This method is called by a Wwise callback at the start of every beat in the music.
 	beatValue += 1;
-	if (beatValue > 3)
+	if (beatValue > numberOfBeatsInBar - 1)
 	{
 		beatValue = 0;
 	}
 }
 
-void Game::MusicBar() {
-	barValue = 1;
+void Game::MusicBar(const float& in_barDuration) {
+	// This method is called by a Wwise callback at the start of every bar in the music.
+	timeLeftOnBar = in_barDuration;
+	barDuration = in_barDuration;
 }
 
 void Game::SetDiffractionPaths(const std::vector<DiffractionPath> in_diffractionPaths) {
