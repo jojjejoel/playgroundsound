@@ -220,9 +220,7 @@ void Game::UpdateBlinkingLight()
 	}
 
 	// Scale the light color by barColorIntensity
-	lightColor.x *= barColorIntensity;
-	lightColor.y *= barColorIntensity;
-	lightColor.z *= barColorIntensity;
+	lightColor = lightColor * barColorIntensity;
 
 	renderManager.SetLightColor(lightColor);
 }
