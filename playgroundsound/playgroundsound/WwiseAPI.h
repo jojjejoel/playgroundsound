@@ -20,7 +20,7 @@ public:
 	void DeInit();
 	AKRESULT LoadBank(const AkUniqueID& bankID);
 	void RenderAudio();
-	std::vector<DiffractionPath> GetDiffraction(const AkGameObjectID& gameObjectID);
+	std::vector<DiffractionPath> GetDiffractionPaths(const AkGameObjectID& gameObjectID);
 private:
 
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
