@@ -12,84 +12,74 @@ void WwiseRoomComponent::Init(GameObject* in_gameObject)
 void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 	AKRESULT result;
 
-	std::vector<GoVertex> vertices = in_gameObject->GetComponent<RenderComponent>().GetVertices();
-	std::vector<Triangle> triangles = in_gameObject->GetComponent<RenderComponent>().GetTriangles();
+	// Get render component and its data once
+	auto& renderComponent = in_gameObject->GetComponent<RenderComponent>();
+	const auto& vertices = renderComponent.GetVertices();
+	const auto& triangles = renderComponent.GetTriangles();
 
-	AkGeometryParams geomWallsInside;
-	geomWallsInside.NumVertices = static_cast<AkVertIdx>(vertices.size());
+	// Convert GoVertex to AkVertex
 	std::vector<AkVertex> akVertices;
-	for (size_t i = 0; i < geomWallsInside.NumVertices; i++)
-	{
-		AkVertex vertex;
-		vertex.X = vertices[i].x;
-		vertex.Y = vertices[i].y;
-		vertex.Z = vertices[i].z;
-		akVertices.emplace_back(vertex);
+	akVertices.reserve(vertices.size());
+	for (const auto& vertex : vertices) {
+		akVertices.push_back({ vertex.x, vertex.y, vertex.z });
 	}
 
-	geomWallsInside.Vertices = akVertices.data();
-
-	geomWallsInside.NumSurfaces = 2;
+	// Set up surfaces
 	AkAcousticSurface surfaces[2];
-	AkPlacementNew(&surfaces[0]) AkAcousticSurface();
 	surfaces[0].strName = "Outside";
 	surfaces[0].textureID = AK::SoundEngine::GetIDFromString("Brick");
 	surfaces[0].transmissionLoss = 0.8f;
-	AkPlacementNew(&surfaces[1]) AkAcousticSurface();
+
 	surfaces[1].strName = "Inside";
 	surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
 	surfaces[1].transmissionLoss = 0.8f;
-	geomWallsInside.Surfaces = surfaces;
-	geomWallsInside.NumTriangles = static_cast<AkTriIdx>(triangles.size());
-
+	
+	// Convert Triangles to AkTriangle
 	std::vector<AkTriangle> akTriangles;
-
-	for (size_t i = 0; i < geomWallsInside.NumTriangles; i++)
-	{
-		AkTriangle akTriangle;
-		akTriangle.point0 = triangles[i].point0;
-		akTriangle.point1 = triangles[i].point1;
-		akTriangle.point2 = triangles[i].point2;
-		akTriangle.surface = 0;
-		akTriangles.emplace_back(akTriangle);
+	akTriangles.reserve(triangles.size());
+	for (const auto& triangle : triangles) {
+		akTriangles.push_back({(AkVertIdx)triangle.point0, (AkVertIdx)triangle.point1, (AkVertIdx)triangle.point2, (AkSurfIdx)0 });
 	}
 
-	geomWallsInside.Triangles = akTriangles.data();
+	// Helper function to setup geometry params
+	auto setupGeometryParams = [&](AkGeometryParams& geomParams) {
+		geomParams.NumVertices = static_cast<AkVertIdx>(akVertices.size());
+		geomParams.Vertices = akVertices.data();
+		geomParams.NumSurfaces = 2;
+		geomParams.Surfaces = surfaces;
+		geomParams.NumTriangles = static_cast<AkTriIdx>(akTriangles.size());
+		geomParams.Triangles = akTriangles.data();
+		geomParams.EnableDiffraction = true;
+		geomParams.EnableDiffractionOnBoundaryEdges = true;
+		geomParams.EnableTriangles = true;
+		};
 
-	geomWallsInside.EnableDiffraction = true;
-	geomWallsInside.EnableDiffractionOnBoundaryEdges = true;
-	geomWallsInside.EnableTriangles = true;
-
+	// Setup geometry for walls inside
+	AkGeometryParams geomWallsInside;
+	setupGeometryParams(geomWallsInside);
 
 	result = AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_SIDES, geomWallsInside);
-	if (result != AK_Success)
-	{
+	if (result != AK_Success) {
 		// Log error/warning
 	}
 
+	// Setup geometry for floor and ceiling inside
 	AkGeometryParams geomFloorCeilingInside = geomWallsInside;
 	geomFloorCeilingInside.EnableDiffractionOnBoundaryEdges = false;
+
 	result = AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_CEILINGFLOOR, geomFloorCeilingInside);
-	if (result != AK_Success)
-	{
+	if (result != AK_Success) {
 		// Log error/warning
 	}
 
+	// Generate walls for different geometry sets
 	GenerateWalls(in_gameObject, ROOM, GEOMETRY_WALL_SIDES, GEOMETRY_WALL_CEILINGFLOOR,
-		GEOMETRY_WALL_INSTANCE_1,
-		GEOMETRY_WALL_INSTANCE_2,
-		GEOMETRY_WALL_INSTANCE_3,
-		GEOMETRY_WALL_INSTANCE_4,
-		GEOMETRY_WALL_INSTANCE_5,
-		GEOMETRY_WALL_INSTANCE_6);
+		GEOMETRY_WALL_INSTANCE_1, GEOMETRY_WALL_INSTANCE_2, GEOMETRY_WALL_INSTANCE_3,
+		GEOMETRY_WALL_INSTANCE_4, GEOMETRY_WALL_INSTANCE_5, GEOMETRY_WALL_INSTANCE_6);
 
 	GenerateWalls(in_gameObject, AK::SpatialAudio::kOutdoorRoomID, GEOMETRY_WALL_SIDES, GEOMETRY_WALL_CEILINGFLOOR,
-		GEOMETRY_WALL_INSTANCE_OUTSIDE_1,
-		GEOMETRY_WALL_INSTANCE_OUTSIDE_2,
-		GEOMETRY_WALL_INSTANCE_OUTSIDE_3,
-		GEOMETRY_WALL_INSTANCE_OUTSIDE_4,
-		GEOMETRY_WALL_INSTANCE_OUTSIDE_5,
-		GEOMETRY_WALL_INSTANCE_OUTSIDE_6);
+		GEOMETRY_WALL_INSTANCE_OUTSIDE_1, GEOMETRY_WALL_INSTANCE_OUTSIDE_2, GEOMETRY_WALL_INSTANCE_OUTSIDE_3,
+		GEOMETRY_WALL_INSTANCE_OUTSIDE_4, GEOMETRY_WALL_INSTANCE_OUTSIDE_5, GEOMETRY_WALL_INSTANCE_OUTSIDE_6);
 }
 
 void WwiseRoomComponent::Update(GameObject* in_gameObject)
