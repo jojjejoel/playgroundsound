@@ -1,6 +1,4 @@
-
-
-
+#pragma once
 #include "DiffractionPath.h"
 #include <memory>
 #include <vector>
@@ -23,6 +21,7 @@ public:
     ~Game();
 
     void Run();
+    void UpdateBouncingCube();
     void Init();
     void DeInit();
 

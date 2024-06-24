@@ -1,7 +1,5 @@
 #include "Game.h"
 
-
-
 #include <src/raylib.h>
 #include <src/rcamera.h>
 #include <string>
@@ -110,14 +108,15 @@ void Game::Run()
 	ControlPlaybackSpeed();
 	
 	UpdateBlinkingLight();
+
 	float carSpeed = truckObjPtr->GetComponent<ControllerComponent>().GetPercentageOfMaxSpeed();
 	truckObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
 
 	float carGas = truckObjPtr->GetComponent<ControllerComponent>().GetGas();
 	truckObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
 
-	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed);
-	musicEmitterObjPtr->m_transform.scale.y = 0.2f + 3 * musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().GetGameParamValueGlobal(AK::GAME_PARAMETERS::LIGHT_FLICKER);
+
+	UpdateBouncingCube();
 
 	gameObjectManager.Update();
 	renderManager.Render();
@@ -125,6 +124,14 @@ void Game::Run()
 	wwiseRoomManager.Update();
 
 	renderManager.EndRender();
+}
+
+void Game::UpdateBouncingCube()
+{
+	float startHeight = 0.2f;
+	float rhythmVolume = musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().GetGameParamValueGlobal(AK::GAME_PARAMETERS::RHYTHM_VOLUME);
+	float heightMultiplier = 3;
+	musicEmitterObjPtr->m_transform.scale.y = startHeight + rhythmVolume * heightMultiplier;
 }
 
 void Game::ControlPortalState()
@@ -152,6 +159,9 @@ void Game::ControlPlaybackSpeed()
 		playbackSpeed += GetFrameTime();
 	}
 
+	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed);
+
+	//Changes the value in the text on the screen representing the playback speed.
 	renderManager.SetPlaybackSpeed(playbackSpeed);
 }
 
@@ -195,8 +205,7 @@ void Game::DrawDiffractionPaths()
 
 void Game::UpdateBlinkingLight()
 {
-	// Callback from Wwise resets timeLeftOnBar to barDuration 
-	// at the beginning of each bar in the music track.
+	// Callback from Wwise resets timeLeftOnBar to barDuration at the beginning of each bar in the music track.
 	timeLeftOnBar -= GetFrameTime();
 
 	const float barColorIntensity = std::max(0.0f, timeLeftOnBar / barDuration);
@@ -209,7 +218,7 @@ void Game::UpdateBlinkingLight()
 		{ MIN_COLOR, MAX_COLOR, MIN_COLOR },  // beatValue == 0
 		{ MAX_COLOR, MIN_COLOR, MIN_COLOR },  // beatValue == 1
 		{ MIN_COLOR, MAX_COLOR, MAX_COLOR },  // beatValue == 2
-		{ MIN_COLOR, MAX_COLOR, MIN_COLOR }   // beatValue == 3
+		{ MAX_COLOR, MAX_COLOR, MIN_COLOR }   // beatValue == 3
 	};
 
 	GO_Vector3 lightColor = { 0, 0, 0 };

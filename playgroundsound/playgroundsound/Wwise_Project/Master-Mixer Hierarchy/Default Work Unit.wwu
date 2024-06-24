@@ -115,7 +115,7 @@
 												<Property Name="ReleaseTime" Type="Real32" Value="0.2"/>
 											</PropertyList>
 											<PluginData>
-	<GameParameter Name="Light_Flicker" ID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}"/>
+	<GameParameter Name="Rhythm_Volume" ID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}"/>
 </PluginData>
 										</Effect>
 									</Custom>

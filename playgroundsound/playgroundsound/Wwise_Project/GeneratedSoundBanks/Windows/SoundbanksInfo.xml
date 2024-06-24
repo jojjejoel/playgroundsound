@@ -9,7 +9,7 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{9200812F-E582-6458-CAB6-09474EC85448}">
+		<SoundBank Id="1355168291" Type="User" GUID="{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}" Language="SFX" Hash="{E518C851-D466-237D-744E-1F44B7C33048}">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>1355168291.bnk</Path>
@@ -68,8 +68,8 @@
 			</AuxBusses>
 			<GameParameters>
 				<GameParameter Id="78830142" Name="Playback_Speed" ObjectPath="\Game Parameters\Default Work Unit\Playback_Speed" GUID="{A2444579-D4BE-44C4-BC3F-1E524BB9644D}"/>
-				<GameParameter Id="411515110" Name="Light_Flicker" ObjectPath="\Game Parameters\Default Work Unit\Light_Flicker" GUID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}"/>
 				<GameParameter Id="1006694123" Name="Music_Volume" ObjectPath="\Game Parameters\Default Work Unit\Music_Volume" GUID="{0939589F-2F4E-41DA-A8F3-56608D57E1A8}"/>
+				<GameParameter Id="2709190798" Name="Rhythm_Volume" ObjectPath="\Game Parameters\Default Work Unit\Rhythm_Volume" GUID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}"/>
 				<GameParameter Id="3134688807" Name="Car_Gas" ObjectPath="\Game Parameters\Default Work Unit\Car_Gas" GUID="{AA4D7E60-7AFB-4D49-B3A0-ACCE35EF6400}"/>
 				<GameParameter Id="4164958897" Name="Car_Speed" ObjectPath="\Game Parameters\Default Work Unit\Car_Speed" GUID="{9DB601EB-465E-4DD1-BCCB-7C434BFFD3B9}"/>
 			</GameParameters>
@@ -381,5 +381,5 @@
 			</GameParameters>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{16636D44-F1AA-EDDB-E8F8-02F3A86640E9}</FileHash>
+	<FileHash>{E2059F34-89FD-706A-3DCC-1EBE224389FF}</FileHash>
 </SoundBanksInfo>

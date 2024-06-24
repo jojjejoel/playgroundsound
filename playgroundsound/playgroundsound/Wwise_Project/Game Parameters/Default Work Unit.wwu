@@ -10,7 +10,7 @@
 						<Property Name="Min" Type="Real64" Value="-20"/>
 					</PropertyList>
 				</GameParameter>
-				<GameParameter Name="Light_Flicker" ID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}">
+				<GameParameter Name="Rhythm_Volume" ID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}">
 					<PropertyList>
 						<Property Name="InitialValue" Type="Real64" Value="-36"/>
 						<Property Name="Max" Type="Real64" Value="-16"/>

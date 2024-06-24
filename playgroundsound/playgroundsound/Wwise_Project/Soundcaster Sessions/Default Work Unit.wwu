@@ -20,7 +20,7 @@
 							<Value>0.98874296435272</Value>
 						</RTPCValue>
 						<RTPCValue>
-							<GameParameterRef Name="Light_Flicker" ID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}"/>
+							<GameParameterRef Name="Rhythm_Volume" ID="{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}"/>
 							<Value>-36</Value>
 						</RTPCValue>
 						<RTPCValue>

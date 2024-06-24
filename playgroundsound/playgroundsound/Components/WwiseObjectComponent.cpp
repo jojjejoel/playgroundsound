@@ -46,14 +46,14 @@ static void MusicCallback(AkCallbackType in_eType,
 		float barDuration = akMusicSyncCallbackInfo->segmentInfo.fBarDuration;
 		switch (in_eType)
 		{
-		case AK_MusicSyncBeat:
-			wwiseObjectComponent->callbackFuntionBeat();
-			break;
-		case AK_MusicSyncBar:
-			wwiseObjectComponent->callbackFuntionBar(barDuration);
-			break;
-		default:
-			break;
+			case AK_MusicSyncBeat:
+				wwiseObjectComponent->callbackFuntionBeat();
+				break;
+			case AK_MusicSyncBar:
+				wwiseObjectComponent->callbackFuntionBar(barDuration);
+				break;
+			default:
+				break;
 		}
 	}
 }
