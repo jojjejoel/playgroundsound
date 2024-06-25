@@ -39,13 +39,5 @@ private:
 	const unsigned int GEOMETRY_WALL_INSTANCE_4 = 2003;
 	const unsigned int GEOMETRY_WALL_INSTANCE_5 = 2004;
 	const unsigned int GEOMETRY_WALL_INSTANCE_6 = 2005;
-	const unsigned int GEOMETRY_WALL_OUTSIDE_SIDES = 1002;
-	const unsigned int GEOMETRY_WALL_OUTSIDE_CEILINGFLOOR = 1003;
-	const unsigned int GEOMETRY_WALL_INSTANCE_OUTSIDE_1 = 2006;
-	const unsigned int GEOMETRY_WALL_INSTANCE_OUTSIDE_2 = 2007;
-	const unsigned int GEOMETRY_WALL_INSTANCE_OUTSIDE_3 = 2008;
-	const unsigned int GEOMETRY_WALL_INSTANCE_OUTSIDE_4 = 2009;
-	const unsigned int GEOMETRY_WALL_INSTANCE_OUTSIDE_5 = 2010;
-	const unsigned int GEOMETRY_WALL_INSTANCE_OUTSIDE_6 = 2011;
 };
 

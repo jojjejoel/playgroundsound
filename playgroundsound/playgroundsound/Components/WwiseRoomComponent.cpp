@@ -10,8 +10,6 @@ void WwiseRoomComponent::Init(GameObject* in_gameObject)
 }
 
 void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
-	AKRESULT result;
-
 	// Get render component and its data once
 	auto& renderComponent = in_gameObject->GetComponent<RenderComponent>();
 	const auto& vertices = renderComponent.GetVertices();
@@ -58,28 +56,18 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 	AkGeometryParams geomWallsInside;
 	setupGeometryParams(geomWallsInside);
 
-	result = AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_SIDES, geomWallsInside);
-	if (result != AK_Success) {
-		// Log error/warning
-	}
+	AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_SIDES, geomWallsInside);
 
 	// Setup geometry for floor and ceiling inside
 	AkGeometryParams geomFloorCeilingInside = geomWallsInside;
 	geomFloorCeilingInside.EnableDiffractionOnBoundaryEdges = false;
 
-	result = AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_CEILINGFLOOR, geomFloorCeilingInside);
-	if (result != AK_Success) {
-		// Log error/warning
-	}
+	AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_CEILINGFLOOR, geomFloorCeilingInside);
 
-	// Generate walls for different geometry sets
+	//// Generate walls for different geometry sets
 	GenerateWalls(in_gameObject, ROOM, GEOMETRY_WALL_SIDES, GEOMETRY_WALL_CEILINGFLOOR,
 		GEOMETRY_WALL_INSTANCE_1, GEOMETRY_WALL_INSTANCE_2, GEOMETRY_WALL_INSTANCE_3,
 		GEOMETRY_WALL_INSTANCE_4, GEOMETRY_WALL_INSTANCE_5, GEOMETRY_WALL_INSTANCE_6);
-
-	GenerateWalls(in_gameObject, AK::SpatialAudio::kOutdoorRoomID, GEOMETRY_WALL_SIDES, GEOMETRY_WALL_CEILINGFLOOR,
-		GEOMETRY_WALL_INSTANCE_OUTSIDE_1, GEOMETRY_WALL_INSTANCE_OUTSIDE_2, GEOMETRY_WALL_INSTANCE_OUTSIDE_3,
-		GEOMETRY_WALL_INSTANCE_OUTSIDE_4, GEOMETRY_WALL_INSTANCE_OUTSIDE_5, GEOMETRY_WALL_INSTANCE_OUTSIDE_6);
 }
 
 void WwiseRoomComponent::Update(GameObject* in_gameObject)
