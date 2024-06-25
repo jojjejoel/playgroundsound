@@ -10,36 +10,30 @@ void WwiseRoomComponent::Init(GameObject* in_gameObject)
 }
 
 void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
-	// Get render component and its data once
 	auto& renderComponent = in_gameObject->GetComponent<RenderComponent>();
 	const auto& vertices = renderComponent.GetVertices();
 	const auto& triangles = renderComponent.GetTriangles();
 
-	// Convert GoVertex to AkVertex
 	std::vector<AkVertex> akVertices;
 	akVertices.reserve(vertices.size());
 	for (const auto& vertex : vertices) {
 		akVertices.push_back({ vertex.x, vertex.y, vertex.z });
 	}
 
-	// Set up surfaces
 	AkAcousticSurface surfaces[2];
 	surfaces[0].strName = "Outside";
 	surfaces[0].textureID = AK::SoundEngine::GetIDFromString("Brick");
 	surfaces[0].transmissionLoss = 0.8f;
-
 	surfaces[1].strName = "Inside";
 	surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
 	surfaces[1].transmissionLoss = 0.8f;
 	
-	// Convert Triangles to AkTriangle
 	std::vector<AkTriangle> akTriangles;
 	akTriangles.reserve(triangles.size());
 	for (const auto& triangle : triangles) {
 		akTriangles.push_back({(AkVertIdx)triangle.point0, (AkVertIdx)triangle.point1, (AkVertIdx)triangle.point2, (AkSurfIdx)0 });
 	}
 
-	// Helper function to setup geometry params
 	auto setupGeometryParams = [&](AkGeometryParams& geomParams) {
 		geomParams.NumVertices = static_cast<AkVertIdx>(akVertices.size());
 		geomParams.Vertices = akVertices.data();
@@ -52,19 +46,16 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 		geomParams.EnableTriangles = true;
 		};
 
-	// Setup geometry for walls inside
 	AkGeometryParams geomWallsInside;
 	setupGeometryParams(geomWallsInside);
 
 	AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_SIDES, geomWallsInside);
 
-	// Setup geometry for floor and ceiling inside
 	AkGeometryParams geomFloorCeilingInside = geomWallsInside;
 	geomFloorCeilingInside.EnableDiffractionOnBoundaryEdges = false;
 
 	AK::SpatialAudio::SetGeometry(GEOMETRY_WALL_CEILINGFLOOR, geomFloorCeilingInside);
 
-	//// Generate walls for different geometry sets
 	GenerateWalls(in_gameObject, ROOM, GEOMETRY_WALL_SIDES, GEOMETRY_WALL_CEILINGFLOOR,
 		GEOMETRY_WALL_INSTANCE_1, GEOMETRY_WALL_INSTANCE_2, GEOMETRY_WALL_INSTANCE_3,
 		GEOMETRY_WALL_INSTANCE_4, GEOMETRY_WALL_INSTANCE_5, GEOMETRY_WALL_INSTANCE_6);
