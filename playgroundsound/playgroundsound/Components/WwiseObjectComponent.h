@@ -6,6 +6,7 @@
 class WwiseObjectComponent : public Component
 {
 public:
+	virtual ~WwiseObjectComponent() override;
 	virtual void Init(GameObject* in_gameObject) override;
 	virtual void Update(GameObject* in_gameObject) override;
 

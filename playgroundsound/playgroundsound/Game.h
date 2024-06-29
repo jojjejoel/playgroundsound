@@ -20,7 +20,7 @@ class Game {
 public:
     ~Game();
 
-    void Run();
+    void Run(bool& shouldExit);
     void ControlCarSfx();
     void UpdateBouncingCube();
     void Init();

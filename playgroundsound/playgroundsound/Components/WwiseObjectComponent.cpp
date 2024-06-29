@@ -6,6 +6,11 @@
 #include "..\GameObject\GameObject.h"
 #include <AK/SoundEngine/Common/AkCallback.h>
 
+WwiseObjectComponent::~WwiseObjectComponent()
+{
+	AK::SoundEngine::StopAll(akGameObjectID);
+}
+
 void WwiseObjectComponent::Init(GameObject* in_gameObject)
 {
 	akGameObjectID = in_gameObject->m_id;

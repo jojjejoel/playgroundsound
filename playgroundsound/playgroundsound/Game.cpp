@@ -39,14 +39,21 @@ void Game::Init()
 	portalObj->GetComponent<WwisePortalComponent>().InitPortal(portalObj, roomComponent.GetRoomID());
 
 	gameObjectManager.Init();
-	WwiseObjectComponent comp = cameraObjPtr->GetComponent<WwiseObjectComponent>();
-	comp.RegisterAsListener();
+	WwiseObjectComponent& cameraWwiseComponent = cameraObjPtr->GetComponent<WwiseObjectComponent>();
+	cameraWwiseComponent.RegisterAsListener();
 	truckObjPtr->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::CAR_ENGINE_LOOP);
 	truckObjPtr->GetComponent<WwiseObjectComponent>().RegisterAsDistanceProbe(cameraObjPtr->m_id);
 	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().PostMusicEvent(
 		AK::EVENTS::ENERGY,
 		std::bind(&Game::MusicBar, this, std::placeholders::_1),  // Bind MusicBar with a float parameter
 		std::bind(&Game::MusicBeat, this));  // Bind MusicBeat with no parameters
+}
+
+void Game::DeInit()
+{
+	CloseWindow();
+	exit(0);
+	abort();
 }
 
 void Game::AddGameObjects()
@@ -102,15 +109,15 @@ void Game::AddRoomWalls(GameObject* in_roomWallObjPtr, std::string_view modelNam
 	renderManager.AddRenderObject(in_roomWallObjPtr);
 }
 
-void Game::Run()
+void Game::Run(bool& shouldExit)
 {
 	ControlPortalState();
+
 	ControlPlaybackSpeed();
 
 	UpdateBlinkingLight();
 
 	ControlCarSfx();
-
 
 	UpdateBouncingCube();
 
@@ -118,8 +125,12 @@ void Game::Run()
 	renderManager.Render();
 	DrawDiffractionPaths();
 	wwiseRoomManager.Update();
-
 	renderManager.EndRender();
+
+	if (IsKeyPressed(KEY_ESCAPE) || WindowShouldClose())
+	{
+		shouldExit = true;
+	}
 }
 
 void Game::ControlCarSfx()
@@ -294,23 +305,7 @@ void Game::SetDiffractionPaths(const std::vector<DiffractionPath> in_diffraction
 	diffractionPaths = in_diffractionPaths;
 }
 
-void Game::DeInit()
-{
-	CloseWindow();
-}
-
 Game::~Game()
 {
-	delete truckObjPtr;
-	delete cameraObjPtr;
-	delete musicEmitterObjPtr;
-	delete portalCubeObjPtr;
-	delete roomCubeObjPtr;
-	delete lightBulbObjPtr;
-	delete roomWallObjPtr;
-	delete roomWallBackObjPtr;
-	delete roomWallRightObjPtr;
-	delete roomWallLeftObjPtr;
-	delete roomWallTopObjPtr;
-	delete roomWallBottomObjPtr;
+
 }

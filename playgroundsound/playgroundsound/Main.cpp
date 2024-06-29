@@ -15,18 +15,14 @@ int main()
 	Game game;
 	game.Init();
 
+	bool shouldExit = false;
 
-	int a = 0;
-	while (a >= 0)
+	while (!shouldExit)
 	{
-		game.Run();
 		wwiseAPI.RenderAudio();
+		game.Run(shouldExit);
 	}
 	game.DeInit();
-
-
-	std::cout << "Program terminated" << std::endl;
-	wwiseAPI.DeInit();
 	return 0;
 
 }
