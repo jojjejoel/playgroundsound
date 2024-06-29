@@ -52,7 +52,7 @@ void Game::Init()
 void Game::AddGameObjects()
 {
 	truckObjPtr = gameObjectManager.AddGameObject("Truck");
-	truckObjPtr->m_transform.position = { 0,0,-10 };
+	truckObjPtr->m_transform.position = { 0,0,10 };
 	truckObjPtr->AddComponent<ControllerComponent>().SetMovementSpeed(5);
 	truckObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("truck_green").get());
 	renderManager.AddRenderObject(truckObjPtr);
@@ -127,7 +127,7 @@ void Game::ControlCarSfx()
 	auto& controllerComponent = truckObjPtr->GetComponent<ControllerComponent>();
 	auto& wwiseObjectComponent = truckObjPtr->GetComponent<WwiseObjectComponent>();
 
-	float carSpeed = controllerComponent.GetSpeed();
+	float carSpeed = controllerComponent.GetPercentageOfMaxSpeed();
 	wwiseObjectComponent.SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
 
 	float carGas = controllerComponent.GetGas();
