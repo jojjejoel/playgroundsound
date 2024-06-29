@@ -31,7 +31,11 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 	std::vector<AkTriangle> akTriangles;
 	akTriangles.reserve(triangles.size());
 	for (const auto& triangle : triangles) {
-		akTriangles.push_back({(AkVertIdx)triangle.point0, (AkVertIdx)triangle.point1, (AkVertIdx)triangle.point2, (AkSurfIdx)0 });
+		akTriangles.push_back({
+			(AkVertIdx)triangle.point0, 
+			(AkVertIdx)triangle.point1, 
+			(AkVertIdx)triangle.point2, 
+			(AkSurfIdx)0 });
 	}
 
 	auto setupGeometryParams = [&](AkGeometryParams& geomParams) {
@@ -66,23 +70,19 @@ void WwiseRoomComponent::Update(GameObject* in_gameObject)
 }
 
 void WwiseRoomComponent::InitRoomGeometry(GameObject* roomObj) {
-
-	AKRESULT result;
-	
 	AkGeometryParams geom;
-	geom.NumVertices = static_cast<AkVertIdx>(roomObj->GetComponent<RenderComponent>().GetVertices().size());
-	std::vector<AkVertex> vertices;
-	for (size_t i = 0; i < geom.NumVertices; i++)
-	{
-		AkVertex vertex;
-		vertex.X = roomObj->GetComponent<RenderComponent>().GetVertices()[i].x;
-		vertex.Y = roomObj->GetComponent<RenderComponent>().GetVertices()[i].y;
-		vertex.Z = roomObj->GetComponent<RenderComponent>().GetVertices()[i].z;
-		vertices.emplace_back(vertex);
-	}
 
+	// Set vertices
+	auto& renderComponent = roomObj->GetComponent<RenderComponent>();
+	const auto& verticesData = renderComponent.GetVertices();
+	std::vector<AkVertex> vertices(verticesData.size());
+	for (size_t i = 0; i < verticesData.size(); ++i) {
+		vertices[i] = { verticesData[i].x, verticesData[i].y, verticesData[i].z };
+	}
+	geom.NumVertices = static_cast<AkVertIdx>(vertices.size());
 	geom.Vertices = vertices.data();
 
+	// Set surfaces
 	geom.NumSurfaces = 2;
 	AkAcousticSurface surfaces[2];
 	AkPlacementNew(&surfaces[0]) AkAcousticSurface();
@@ -94,66 +94,50 @@ void WwiseRoomComponent::InitRoomGeometry(GameObject* roomObj) {
 	surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
 	surfaces[1].transmissionLoss = 0.8f;
 	geom.Surfaces = surfaces;
-	geom.NumTriangles = static_cast<AkTriIdx>(roomObj->GetComponent<RenderComponent>().GetTriangles().size());
 
-	std::vector<AkTriangle> akTriangles;
-
-	for (size_t i = 0; i < geom.NumTriangles; i++)
-	{
-		AkTriangle akTriangle;
-		akTriangle.point0 = roomObj->GetComponent<RenderComponent>().GetTriangles()[i].point0;
-		akTriangle.point1 = roomObj->GetComponent<RenderComponent>().GetTriangles()[i].point1;
-		akTriangle.point2 = roomObj->GetComponent<RenderComponent>().GetTriangles()[i].point2;
-		akTriangle.surface = 0;
-		akTriangles.emplace_back(akTriangle);
+	// Set triangles
+	const auto& trianglesData = renderComponent.GetTriangles();
+	std::vector<AkTriangle> akTriangles(trianglesData.size());
+	for (size_t i = 0; i < trianglesData.size(); ++i) {
+		akTriangles[i] = { 
+			(AkVertIdx)trianglesData[i].point0, 
+			(AkVertIdx)trianglesData[i].point1, 
+			(AkVertIdx)trianglesData[i].point2, 
+			(AkSurfIdx)0 };
 	}
-
+	geom.NumTriangles = static_cast<AkTriIdx>(akTriangles.size());
 	geom.Triangles = akTriangles.data();
 
+	// Additional geometry parameters
 	geom.EnableDiffraction = true;
 	geom.EnableDiffractionOnBoundaryEdges = false;
 	geom.EnableTriangles = true;
 
-	result = AK::SpatialAudio::SetGeometry(GEOMETRY_ROOM, geom);
+	// Set geometry
+	AK::SpatialAudio::SetGeometry(GEOMETRY_ROOM, geom);
 
+	// Set geometry instance
 	AkGeometryInstanceParams instanceParams;
-
 	instanceParams.GeometrySetID = GEOMETRY_ROOM;
 	instanceParams.RoomID = ROOM;
+	AK::SpatialAudio::SetGeometryInstance(GEOMETRY_ROOM_INSTANCE, instanceParams);
 
-	result = AK::SpatialAudio::SetGeometryInstance(GEOMETRY_ROOM_INSTANCE, instanceParams);
-
-
-
+	// Set room parameters
 	AkRoomParams paramsRoom;
-
-	paramsRoom.Front.X = 0.f;
-	paramsRoom.Front.Y = 0.f;
-	paramsRoom.Front.Z = 1.f;
-	paramsRoom.Up.X = 0.f;
-	paramsRoom.Up.Y = 1.f;
-	paramsRoom.Up.Z = 0.f;
-
+	paramsRoom.Front = { 0.f, 0.0f, 1.0f };
+	paramsRoom.Up = { 0.f, 1.0f, 0.0f };
 	paramsRoom.TransmissionLoss = 0.f;
 	paramsRoom.RoomGameObj_KeepRegistered = true;
+
+	// Set outdoor room
 	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Outside");
 	paramsRoom.GeometryInstanceID = AkGeometryInstanceID();
-	result = AK::SpatialAudio::SetRoom(AK::SpatialAudio::kOutdoorRoomID, paramsRoom, "Outside");	
+	AK::SpatialAudio::SetRoom(AK::SpatialAudio::kOutdoorRoomID, paramsRoom, "Outside");
 
-
-	paramsRoom.Front.X = 0.f;
-	paramsRoom.Front.Y = 0.f;
-	paramsRoom.Front.Z = 1.f;
-	paramsRoom.Up.X = 0.f;
-	paramsRoom.Up.Y = 1.f;
-	paramsRoom.Up.Z = 0.f;
-	paramsRoom.TransmissionLoss = 0.f;
-	paramsRoom.RoomGameObj_KeepRegistered = true;
-	paramsRoom.RoomGameObj_AuxSendLevelToSelf = 0;
+	// Set indoor room
 	paramsRoom.ReverbAuxBus = AK::SoundEngine::GetIDFromString("Inside");
 	paramsRoom.GeometryInstanceID = GEOMETRY_ROOM_INSTANCE;
-
-	result = AK::SpatialAudio::SetRoom(ROOM, paramsRoom, "Inside");
+	AK::SpatialAudio::SetRoom(ROOM, paramsRoom, "Inside");
 }
 
 void WwiseRoomComponent::GenerateWalls(const GameObject* gameObject, const uint64_t& roomID,

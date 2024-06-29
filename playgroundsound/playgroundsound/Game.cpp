@@ -106,14 +106,10 @@ void Game::Run()
 {
 	ControlPortalState();
 	ControlPlaybackSpeed();
-	
+
 	UpdateBlinkingLight();
 
-	float carSpeed = truckObjPtr->GetComponent<ControllerComponent>().GetPercentageOfMaxSpeed();
-	truckObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
-
-	float carGas = truckObjPtr->GetComponent<ControllerComponent>().GetGas();
-	truckObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
+	ControlCarSfx();
 
 
 	UpdateBouncingCube();
@@ -126,10 +122,23 @@ void Game::Run()
 	renderManager.EndRender();
 }
 
+void Game::ControlCarSfx()
+{
+	auto& controllerComponent = truckObjPtr->GetComponent<ControllerComponent>();
+	auto& wwiseObjectComponent = truckObjPtr->GetComponent<WwiseObjectComponent>();
+
+	float carSpeed = controllerComponent.GetSpeed();
+	wwiseObjectComponent.SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
+
+	float carGas = controllerComponent.GetGas();
+	wwiseObjectComponent.SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
+}
+
 void Game::UpdateBouncingCube()
 {
 	float startHeight = 0.2f;
-	float rhythmVolume = musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().GetGameParamValueGlobal(AK::GAME_PARAMETERS::RHYTHM_VOLUME);
+	float rhythmVolume = musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().
+		GetGameParamValueGlobal(AK::GAME_PARAMETERS::RHYTHM_VOLUME);
 	float heightMultiplier = 3;
 	musicEmitterObjPtr->m_transform.scale.y = startHeight + rhythmVolume * heightMultiplier;
 }
@@ -167,37 +176,69 @@ void Game::ControlPlaybackSpeed()
 
 void Game::DrawDiffractionPaths()
 {
-	std::vector<DiffractionPath> diffractionPaths = diffractionManager.GetDiffractionPath(musicEmitterObjPtr->m_id);
-	GO_Vector3 listenerPosGo = truckObjPtr->m_transform.position;
+	auto diffractionPaths = diffractionManager.GetDiffractionPath(musicEmitterObjPtr->m_id);
+	auto listenerPos = Vector3{
+		truckObjPtr->m_transform.position.x,
+		truckObjPtr->m_transform.position.y,
+		truckObjPtr->m_transform.position.z
+	};
 
-	Vector3 listenerPos = { listenerPosGo.x, listenerPosGo.y, listenerPosGo.z };
-	float lowestDiffractionValue = 1;
-	for (int pathIndex = 0; pathIndex < diffractionPaths.size(); pathIndex++)
+	float lowestDiffractionValue = 1.0f;
+
+	for (const auto& diffractionPath : diffractionPaths)
 	{
-		DiffractionPath diffractionPath = diffractionPaths[pathIndex];
+		Color color = {
+			static_cast<unsigned char>(Lerp(0, 255, diffractionPath.diffraction)),
+			static_cast<unsigned char>(Lerp(255, 0, diffractionPath.diffraction)),
+			0, 255
+		};
 
-		Color color = { static_cast<unsigned char>(Lerp(0, 255, diffractionPath.diffraction)), static_cast<unsigned char>(Lerp(255, 0, diffractionPath.diffraction)), 0, 255 };
-		int numNodes = diffractionPath.nodeCount;
-		if (numNodes > 0)
+		if (diffractionPath.nodeCount > 0)
 		{
-			Vector3 firstNodePos = { diffractionPath.nodes[0].x, diffractionPath.nodes[0].y, diffractionPath.nodes[0].z };
+			auto firstNodePos = Vector3{
+				diffractionPath.nodes[0].x,
+				diffractionPath.nodes[0].y,
+				diffractionPath.nodes[0].z
+			};
+
 			DrawLine3D(firstNodePos, listenerPos, color);
 			DrawSphereWires(firstNodePos, 0.2f, 10, 10, color);
 
-			for (int nodeIndex = 1; nodeIndex < numNodes; nodeIndex++)
+			for (int nodeIndex = 1; nodeIndex < diffractionPath.nodeCount; ++nodeIndex)
 			{
-				Vector3 nodePos = { diffractionPath.nodes[nodeIndex].x, diffractionPath.nodes[nodeIndex].y, diffractionPath.nodes[nodeIndex].z };
-				Vector3 emitterPos = { diffractionPath.nodes[nodeIndex - 1].x, diffractionPath.nodes[nodeIndex - 1].y, diffractionPath.nodes[nodeIndex - 1].z };
+				auto nodePos = Vector3{
+					diffractionPath.nodes[nodeIndex].x,
+					diffractionPath.nodes[nodeIndex].y,
+					diffractionPath.nodes[nodeIndex].z
+				};
+
+				auto emitterPos = Vector3{
+					diffractionPath.nodes[nodeIndex - 1].x,
+					diffractionPath.nodes[nodeIndex - 1].y,
+					diffractionPath.nodes[nodeIndex - 1].z
+				};
 
 				DrawSphereWires(nodePos, 0.2f, 10, 10, color);
 				DrawLine3D(emitterPos, nodePos, color);
 			}
+
 			if (diffractionPath.diffraction < lowestDiffractionValue)
 			{
 				lowestDiffractionValue = diffractionPath.diffraction;
-				Vector3 emitterPos = { diffractionPath.emitterPos.x, diffractionPath.emitterPos.y, diffractionPath.emitterPos.z };
-				Vector3 nodePos = { diffractionPath.nodes[numNodes - 1].x, diffractionPath.nodes[numNodes - 1].y, diffractionPath.nodes[numNodes - 1].z };
-				DrawLine3D(emitterPos, nodePos, color);
+
+				auto emitterPos = Vector3{
+					diffractionPath.emitterPos.x,
+					diffractionPath.emitterPos.y,
+					diffractionPath.emitterPos.z
+				};
+
+				auto lastNodePos = Vector3{
+					diffractionPath.nodes[diffractionPath.nodeCount - 1].x,
+					diffractionPath.nodes[diffractionPath.nodeCount - 1].y,
+					diffractionPath.nodes[diffractionPath.nodeCount - 1].z
+				};
+
+				DrawLine3D(emitterPos, lastNodePos, color);
 			}
 		}
 	}

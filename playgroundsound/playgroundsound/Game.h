@@ -21,6 +21,7 @@ public:
     ~Game();
 
     void Run();
+    void ControlCarSfx();
     void UpdateBouncingCube();
     void Init();
     void DeInit();

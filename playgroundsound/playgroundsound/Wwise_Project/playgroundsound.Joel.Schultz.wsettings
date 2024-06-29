@@ -69,6 +69,7 @@
 				<Property Name="Music Transition List\{FAA91A55-3513-4627-B728-36CAB1DF0789}\Scroll Position" Type="int32" Value="0"/>
 				<Property Name="Music Transition List\{FAA91A55-3513-4627-B728-36CAB1DF0789}\x64_Expand States" Type="string" Value=""/>
 				<Property Name="ObjectTabPanel\x64_CurrentObjects_{031E1E2C-DC25-4332-80C3-FFCC371AC803}" Type="string" Value="ewA4ADUAMQBGADMANAA1ADAALQA0AEQANAAxAC0ANAA0ADIAMQAtADgAOQBGADEALQA3ADcAMQA4ADMANQBFAEEAQQAxADgAMgB9AAAAAAE="/>
+				<Property Name="ObjectTabPanel\x64_CurrentObjects_{7A9793A5-B08E-456A-AC33-A18C4BF6057C}" Type="string" Value="ewA3ADkAMQA0AEYARAAyADgALQBDADgARABGAC0ANAA0AEUANgAtAEEANQA4AEEALQAyADEARgBCAEUARABBADkANgBBADQAOAB9AAAAAQI="/>
 				<Property Name="ObjectTabPanel\x64_CurrentObjects_{8F6A4933-6A6A-4441-B873-3C0684786002}" Type="string" Value="ewBEAEYANQA4ADgARQA2ADMALQBCADkAOQAxAC0ANABDADEAQQAtAEEANAAwADEALQA2AEUARAAzAEMARQAxADgAMAA5ADEARgB9AAAAAQB7ADkAQwA0AEUAMABBAEQARAAtADIAOQBFAEYALQA0ADAAOAAzAC0AQQAwAEMAMgAtADcAQwBEADQAMwAxADgANAAyADYANQBCAH0AAAABAXsAMgBGADgAMgBFADUAQQAzAC0AQQA0ADAANAAtADQANAAxADMALQBCAEMAMwBEAC0ARABEADMAMwBFAEMAMwA0ADUAMgAxADcAfQAAAAAB"/>
 				<Property Name="ObjectTabPanel\x64_CurrentObjects_{BE4A86B2-EEC2-4DF0-9087-1676B338CABB}" Type="string" Value="ewBCADUAMgA2ADAAMAA3AEMALQBCAEEANAA3AC0ANAA0ADAAQgAtAEEAMQBEAEQALQAyAEUANgAyAEQAOQBBAEQARAAxADAARAB9AAAAAQJ7ADkAQwA0AEUAMABBAEQARAAtADIAOQBFAEYALQA0ADAAOAAzAC0AQQAwAEMAMgAtADcAQwBEADQAMwAxADgANAAyADYANQBCAH0AAAABAnsANgBEADEAQgA4ADkAMABDAC0AOQA4ADIANgAtADQAMwA4ADQALQBCAEYAMAA3AC0AQwAxADUAMgAyADMARQA5AEYAQgA1ADYAfQAAAAACewBFAEYARgAwAEUANgA1ADcALQAzAEQARgA2AC0ANAA5AEYANgAtADgAQQBEADEALQAzAEMAMQA2AEMAMQAyADAAOQA4ADcANwB9AAAAAQJ7ADEANwBDAEQANQA5AEUAQgAtADgARgA2ADEALQA0AEYANAA2AC0AOABEADQANAAtADMARQAzADIARgBEAEUAQQA4ADYARgA2AH0AAAABAnsAMwA0AEUARQA1ADcARAA2AC0ANgA4ADQARAAtADQARABBADEALQBCAEIANQAzAC0AQQAzADIAMgBDADAAQQAwADcAOQAxADUAfQAAAAEA"/>
 				<Property Name="OverrideCacheFolder\Active" Type="bool" Value="False"/>
@@ -94,7 +95,7 @@
 				<Property Name="ProjectExplorer\SelectionChannel1\CurrentSearch" Type="string" Value=""/>
 				<Property Name="ProjectExplorer\SelectionChannel1\CurrentTab" Type="int32" Value="0"/>
 				<Property Name="ProjectExplorer\SelectionChannel2\CurrentSearch" Type="string" Value=""/>
-				<Property Name="ProjectExplorer\SelectionChannel2\CurrentTab" Type="int32" Value="4"/>
+				<Property Name="ProjectExplorer\SelectionChannel2\CurrentTab" Type="int32" Value="0"/>
 				<Property Name="ProjectExplorer\SessionsSelectionChannel1\ProjectExplorer2LastScrollState" Type="int32" Value="0"/>
 				<Property Name="ProjectExplorer\SessionsSelectionChannel1\x64_ProjectExplorer2LastExpandedState" Type="string" Value="i7OWTLQ9x0CRyWZVEOOJk/eqd2Rl45BJo5Llm4JLZBjN5FEXGIAsTpqKx3dk0dZT"/>
 				<Property Name="ProjectExplorer\SessionsSelectionChannel2\ProjectExplorer2LastScrollState" Type="int32" Value="0"/>
@@ -109,9 +110,9 @@
 				<Property Name="ProjectExplorer\SoundBanksSelectionChannel2\x64_ProjectExplorer2LastExpandedState" Type="string" Value="P2eOyUyiqEiWDxBWX/5woBzfnqlWgMFHm3/FSeH9YFU="/>
 				<Property Name="RTPC\GameParameterSimValue\{0939589F-2F4E-41DA-A8F3-56608D57E1A8}" Type="Real64" Value="-20"/>
 				<Property Name="RTPC\GameParameterSimValue\{5E8B0BAD-B74D-4822-A682-2FDAC24CC057}" Type="Real64" Value="-16"/>
-				<Property Name="RTPC\GameParameterSimValue\{9DB601EB-465E-4DD1-BCCB-7C434BFFD3B9}" Type="Real64" Value="0"/>
+				<Property Name="RTPC\GameParameterSimValue\{9DB601EB-465E-4DD1-BCCB-7C434BFFD3B9}" Type="Real64" Value="0.408163265306122"/>
 				<Property Name="RTPC\GameParameterSimValue\{A2444579-D4BE-44C4-BC3F-1E524BB9644D}" Type="Real64" Value="0.98874296435272"/>
-				<Property Name="RTPC\GameParameterSimValue\{AA4D7E60-7AFB-4D49-B3A0-ACCE35EF6400}" Type="Real64" Value="1"/>
+				<Property Name="RTPC\GameParameterSimValue\{AA4D7E60-7AFB-4D49-B3A0-ACCE35EF6400}" Type="Real64" Value="0.122596153846154"/>
 				<Property Name="SchematicView\SearchText" Type="string" Value=""/>
 				<Property Name="SoundBank Manager\x64_Expand Folders Auto" Type="string" Value=""/>
 				<Property Name="SoundBank Manager\x64_Expand Folders User" Type="string" Value="BwAAAA=="/>
