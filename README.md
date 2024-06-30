@@ -7,8 +7,8 @@ To build the solution, open and build it with Visual Studio. It has only been te
 Controls for the game:
 - UP/DOWN to gas/break with the car.
 - LEFT/RIGHT to steer.
-- Press 1/2 to open/close the door (Wwise portal) that hides the music emitter.
-- Press 3/4 to decrease/increase the playback speed of the music.
+- Press 1 to toggle opening/closing the door (Wwise portal) that hides the music emitter.
+- Press 2/3 to decrease/increase the playback speed of the music.
 
 The music played in the game is made by me and I own all the rights for it.
 
