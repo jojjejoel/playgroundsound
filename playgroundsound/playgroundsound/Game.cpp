@@ -158,31 +158,30 @@ void Game::ControlPortalState()
 {
 	if (IsKeyPressed(KEY_ONE))
 	{
-		portalCubeObjPtr->GetComponent<WwisePortalComponent>().SetPortalEnabled(portalCubeObjPtr, true);
-		portalCubeObjPtr->GetComponent<RenderComponent>().SetShouldRender(false);
-	}
-	if (IsKeyPressed(KEY_TWO))
-	{
-		portalCubeObjPtr->GetComponent<WwisePortalComponent>().SetPortalEnabled(portalCubeObjPtr, false);
-		portalCubeObjPtr->GetComponent<RenderComponent>().SetShouldRender(true);
+		portalCubeObjPtr->GetComponent<WwisePortalComponent>().TogglePortalState(portalCubeObjPtr);
+		bool portalEnabled = portalCubeObjPtr->GetComponent<WwisePortalComponent>().GetIsEnabled();
+		portalCubeObjPtr->GetComponent<RenderComponent>().SetShouldRender(!portalEnabled);
+		std::string portalEnabledStr = portalEnabled ? "OPEN" : "CLOSED";
+		renderManager.SetPortalEnabled(portalEnabledStr);
 	}
 }
 
 void Game::ControlPlaybackSpeed()
 {
-	if (IsKeyDown(KEY_THREE))
+	if (IsKeyDown(KEY_TWO))
 	{
 		playbackSpeed -= GetFrameTime();
 	}
-	if (IsKeyDown(KEY_FOUR))
+	if (IsKeyDown(KEY_THREE))
 	{
 		playbackSpeed += GetFrameTime();
 	}
 
+	playbackSpeed = std::clamp(playbackSpeed, minPlaybackSpeed, maxPlaybackSpeed);
 	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed);
 
 	//Changes the value in the text on the screen representing the playback speed.
-	renderManager.SetPlaybackSpeed(playbackSpeed);
+	renderManager.SetPlaybackSpeed(std::to_string(playbackSpeed));
 }
 
 void Game::DrawDiffractionPaths()
@@ -293,6 +292,8 @@ void Game::MusicBeat() {
 	{
 		beatValue = 0;
 	}
+	std::string beatValueStr = "Beat: " + std::to_string(beatValue + 1) + "/" + std::to_string(numberOfBeatsInBar);
+	renderManager.SetBeatValue(beatValueStr);
 }
 
 void Game::MusicBar(const float& in_barDuration) {

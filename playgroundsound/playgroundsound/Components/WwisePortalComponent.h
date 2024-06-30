@@ -8,12 +8,15 @@ public:
 	virtual void Init(GameObject* in_gameObject) override;
 	virtual void Update(GameObject* in_gameObject) override;
 
-	void InitPortal(const GameObject* in_gameObject, const uint64_t& in_backRoomID, const uint64_t& in_frontRoomID, const bool& isEnabled = true);
+	void InitPortal(const GameObject* in_gameObject, const uint64_t& in_backRoomID, const uint64_t& in_frontRoomID);
 	void InitPortal(const GameObject* in_gameObject, const uint64_t& in_backRoomID);
 
-	void SetPortalEnabled(GameObject* in_gameObject, const bool& isEnabled);
+	void TogglePortalState(GameObject* in_gameObject);
+
+	const bool& GetIsEnabled() const;
 
 private:
+	bool isEnabled = true;
 	uint64_t frontRoomID;
 	uint64_t backRoomID;
 };

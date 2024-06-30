@@ -42,12 +42,14 @@ private:
 
     // Assumption is made that only time signature 4/4 will be used.
     static constexpr int numberOfBeatsInBar = 4;
-    int beatValue = 0;
+    int beatValue = -1;
     float timeLeftOnBar = 0;
     float barDuration = 0;
-    float playbackSpeed = 1;
     const float barDecreaseSpeedMultiplier = 0.37f;
-    std::function<void(const float&)> setRtpcFunction;
+
+    const float minPlaybackSpeed = 0;
+    const float maxPlaybackSpeed = 4;
+    float playbackSpeed = 1;
 
     std::vector<DiffractionPath> diffractionPaths;
 

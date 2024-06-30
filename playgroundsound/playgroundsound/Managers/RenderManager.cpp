@@ -93,7 +93,6 @@ void RenderManager::StartRender()
 {
 	BeginDrawing();
 
-	//ClearBackground(RAYWHITE);
 	BeginMode3D(*camera->camera3D);
 }
 
@@ -103,8 +102,6 @@ void RenderManager::Render()
 	SetShaderValue(*shaders["shadow"], shaders["shadow"]->locs[SHADER_LOC_VECTOR_VIEW], &cameraPos, SHADER_UNIFORM_VEC3);
 	Vector4 lightColorNormalized = ColorNormalize({ (unsigned char)lightColor.x, (unsigned char)lightColor.y, (unsigned char)lightColor.z, 255 });
 	SetShaderValue(*shaders["shadow"], lightColLoc, &lightColorNormalized, SHADER_UNIFORM_VEC4);
-	//UpdateCamera(camera->camera3D, CAMERA_ORBITAL);
-
 	
 	Vector3 lightDir = Vector3Normalize({ 0.35f, -1.0f, -0.35f });
 	lightCam->position = Vector3Scale(lightDir, -15.0f);
@@ -149,13 +146,24 @@ void RenderManager::EndRender()
 {
 	EndMode3D();
 
-	std::string playbackSpeedString = "Playback speed: " + std::to_string(playBackSpeed);
-	DrawText(playbackSpeedString.c_str(), 2, 2, 20, WHITE);
-	DrawText("Press 1 to open portal", 2, 22, 20, WHITE);
-	DrawText("Press 2 to close portal", 2, 42, 20, WHITE);
-	DrawText("Press 3 to decrease playback speed", 2, 62, 20, WHITE);
-	DrawText("Press 4 to increase playback speed", 2, 82, 20, WHITE);
+	DrawUI();
+
 	EndDrawing();
+}
+
+void RenderManager::DrawUI()
+{
+	DrawText("Use arrow keys to control car", 2, 2, 25, WHITE);
+
+	std::string portalOpenStatusStr = "Press 1 to toggle portal: " + portalIsEnabled;
+	DrawText(portalOpenStatusStr.c_str(), 2, 62, 25, WHITE);
+
+	DrawText("Press 2 to decrease playback speed", 2, 92, 25, WHITE);
+	DrawText("Press 3 to increase playback speed", 2, 122, 25, WHITE);
+	std::string playbackSpeedString = "Playback speed: " + (playBackSpeed);
+	DrawText(playbackSpeedString.c_str(), 2, 152, 25, WHITE);
+
+	DrawText(beatValue.c_str(), 2, 182, 25, WHITE);
 }
 
 std::shared_ptr<Model> RenderManager::GetModel(std::string_view modelName)
@@ -216,7 +224,17 @@ void RenderManager::AddRenderObject(GameObject* in_objectToRender)
 	objectsToRender.push_back(in_objectToRender);
 }
 
-void RenderManager::SetPlaybackSpeed(const float& speed)
+void RenderManager::SetPlaybackSpeed(std::string_view in_playbackSpeed)
 {
-	playBackSpeed = speed;
+	playBackSpeed = in_playbackSpeed;
+}
+
+void RenderManager::SetPortalEnabled(std::string_view in_portalIsEnabled)
+{
+	portalIsEnabled = in_portalIsEnabled;
+}
+
+void RenderManager::SetBeatValue(std::string_view in_beatValue)
+{
+	beatValue = in_beatValue;
 }

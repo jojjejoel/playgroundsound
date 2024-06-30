@@ -20,6 +20,8 @@ public:
 	void Render();
 	void EndRender();
 
+	void DrawUI();
+
 	std::shared_ptr<Model> GetModel(std::string_view modelName);
 
 	void SetLightColor(const GO_Vector3& in_color);
@@ -29,7 +31,9 @@ public:
 
 	void AddRenderObject(GameObject* in_objectToRender);
 
-	void SetPlaybackSpeed(const float& speed);
+	void SetPlaybackSpeed(std::string_view in_playbackSpeed);
+	void SetPortalEnabled(std::string_view in_portalIsEnabled);
+	void SetBeatValue(std::string_view in_beatValueStr);
 private:
 
 	std::vector<GameObject*> objectsToRender;
@@ -38,7 +42,6 @@ private:
 	std::map<std::string, std::shared_ptr<Model>> models;
 	RenderTexture2D* shadowMap;
 	Camera3D* lightCam;
-	//Shader* shadowShader;
 	int lightVPLoc;
 	int shadowMapLoc;
 
@@ -46,6 +49,8 @@ private:
 	int lightColLoc;
 	GO_Vector3 lightColor;
 
-	float playBackSpeed;
+	std::string playBackSpeed = "1.0";
+	std::string portalIsEnabled = "OPEN";
+	std::string beatValue = "1/4";
 };
 

@@ -13,8 +13,7 @@ void WwisePortalComponent::Update(GameObject* in_gameObject)
 
 void WwisePortalComponent::InitPortal(const GameObject* in_gameObject, 
 	const uint64_t& in_backRoomID, 
-	const uint64_t& in_frontRoomID, 
-	const bool& isEnabled)
+	const uint64_t& in_frontRoomID)
 {
 	frontRoomID = in_frontRoomID;
 	backRoomID = in_backRoomID;
@@ -45,7 +44,13 @@ void WwisePortalComponent::InitPortal(const GameObject* in_gameObject, const uin
 	InitPortal(in_gameObject, in_backRoomID, AK::SpatialAudio::kOutdoorRoomID);
 }
 
-void WwisePortalComponent::SetPortalEnabled(GameObject* in_gameObject, const bool& isEnabled)
+void WwisePortalComponent::TogglePortalState(GameObject* in_gameObject)
 {
-	InitPortal(in_gameObject, backRoomID, frontRoomID, isEnabled);
+	isEnabled = !isEnabled;
+	InitPortal(in_gameObject, backRoomID, frontRoomID);
+}
+
+const bool& WwisePortalComponent::GetIsEnabled() const 
+{
+	return isEnabled;
 }
