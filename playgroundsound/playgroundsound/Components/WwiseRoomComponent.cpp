@@ -4,9 +4,30 @@
 #include "RenderComponent.h"
 #include "..\GameObject\GoMesh.h"
 
+WwiseRoomComponent::~WwiseRoomComponent()
+{
+	AK::SpatialAudio::RemoveRoom(ROOM);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_ROOM_INSTANCE);
+
+	AK::SpatialAudio::RemoveGeometry(GEOMETRY_WALL_SIDES);
+	AK::SpatialAudio::RemoveGeometry(GEOMETRY_WALL_CEILINGFLOOR);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_1);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_2);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_3);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_4);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_5);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_6);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_OUTSIDE_1);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_OUTSIDE_2);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_OUTSIDE_3);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_OUTSIDE_4);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_OUTSIDE_5);
+	AK::SpatialAudio::RemoveGeometryInstance(GEOMETRY_WALL_INSTANCE_OUTSIDE_6);
+}
+
 void WwiseRoomComponent::Init(GameObject* in_gameObject)
 {
-	
+
 }
 
 void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
@@ -27,14 +48,14 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 	surfaces[1].strName = "Inside";
 	surfaces[1].textureID = AK::SoundEngine::GetIDFromString("Drywall");
 	surfaces[1].transmissionLoss = 0.8f;
-	
+
 	std::vector<AkTriangle> akTriangles;
 	akTriangles.reserve(triangles.size());
 	for (const auto& triangle : triangles) {
 		akTriangles.push_back({
-			(AkVertIdx)triangle.point0, 
-			(AkVertIdx)triangle.point1, 
-			(AkVertIdx)triangle.point2, 
+			(AkVertIdx)triangle.point0,
+			(AkVertIdx)triangle.point1,
+			(AkVertIdx)triangle.point2,
 			(AkSurfIdx)0 });
 	}
 
@@ -63,6 +84,10 @@ void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
 	GenerateWalls(in_gameObject, ROOM, GEOMETRY_WALL_SIDES, GEOMETRY_WALL_CEILINGFLOOR,
 		GEOMETRY_WALL_INSTANCE_1, GEOMETRY_WALL_INSTANCE_2, GEOMETRY_WALL_INSTANCE_3,
 		GEOMETRY_WALL_INSTANCE_4, GEOMETRY_WALL_INSTANCE_5, GEOMETRY_WALL_INSTANCE_6);
+
+	GenerateWalls(in_gameObject, AK::SpatialAudio::kOutdoorRoomID, GEOMETRY_WALL_SIDES, GEOMETRY_WALL_CEILINGFLOOR,
+		GEOMETRY_WALL_INSTANCE_OUTSIDE_1, GEOMETRY_WALL_INSTANCE_OUTSIDE_2, GEOMETRY_WALL_INSTANCE_OUTSIDE_3,
+		GEOMETRY_WALL_INSTANCE_OUTSIDE_4, GEOMETRY_WALL_INSTANCE_OUTSIDE_5, GEOMETRY_WALL_INSTANCE_OUTSIDE_6);
 }
 
 void WwiseRoomComponent::Update(GameObject* in_gameObject)
@@ -99,10 +124,10 @@ void WwiseRoomComponent::InitRoomGeometry(GameObject* roomObj) {
 	const auto& trianglesData = renderComponent.GetTriangles();
 	std::vector<AkTriangle> akTriangles(trianglesData.size());
 	for (size_t i = 0; i < trianglesData.size(); ++i) {
-		akTriangles[i] = { 
-			(AkVertIdx)trianglesData[i].point0, 
-			(AkVertIdx)trianglesData[i].point1, 
-			(AkVertIdx)trianglesData[i].point2, 
+		akTriangles[i] = {
+			(AkVertIdx)trianglesData[i].point0,
+			(AkVertIdx)trianglesData[i].point1,
+			(AkVertIdx)trianglesData[i].point2,
 			(AkSurfIdx)0 };
 	}
 	geom.NumTriangles = static_cast<AkTriIdx>(akTriangles.size());

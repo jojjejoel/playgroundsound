@@ -2,6 +2,12 @@
 #include "AK/SpatialAudio/Common/AkSpatialAudio.h"
 #include "AK/SpatialAudio/Common/AkSpatialAudioTypes.h"
 
+WwisePortalComponent::~WwisePortalComponent()
+{
+	AK::SpatialAudio::RemovePortal(frontRoomID);
+	AK::SpatialAudio::RemovePortal(backRoomID);
+}
+
 void WwisePortalComponent::Init(GameObject* in_gameObject)
 {
 	

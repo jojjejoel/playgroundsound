@@ -186,6 +186,7 @@ XCOPY $(SolutionDir)playgroundsound\Wwise_Project\GeneratedSoundBanks $(TargetDi
     <ClCompile Include="Managers\GameObjectManager.cpp" />
     <ClCompile Include="Managers\RenderManager.cpp" />
     <ClCompile Include="Managers\WwiseRoomManager.cpp" />
+    <ClCompile Include="Misc\ApplicationTerminator.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookBlocking.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultIOHookDeferred.cpp" />
     <ClCompile Include="WwiseSource\AkDefaultLowLevelIODispatcher.cpp" />
@@ -225,6 +226,7 @@ XCOPY $(SolutionDir)playgroundsound\Wwise_Project\GeneratedSoundBanks $(TargetDi
     <ClInclude Include="Managers\GameObjectManager.h" />
     <ClInclude Include="Managers\RenderManager.h" />
     <ClInclude Include="Managers\WwiseRoomManager.h" />
+    <ClInclude Include="Misc\ApplicationTerminator.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h" />

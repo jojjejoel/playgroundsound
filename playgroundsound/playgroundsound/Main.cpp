@@ -3,6 +3,7 @@
 #include "WwiseAPI.h"
 #include "Wwise_Project/GeneratedSoundBanks/Wwise_IDs.h"
 #include <functional>
+#include "Misc/ApplicationTerminator.h"
 
 int main()
 {
@@ -22,7 +23,13 @@ int main()
 		wwiseAPI.RenderAudio();
 		game.Run(shouldExit);
 	}
+	
+	ApplicationTerminator terminator;
+	// Temporary workaround for Wwise DeInit. Proper graceful exit needs to be fixed in WwiseAPI. 
+	terminator.Kill();
+
 	game.DeInit();
+	wwiseAPI.DeInit();
 	return 0;
 
 }

@@ -16,7 +16,7 @@
 
 #include <algorithm>
 #include <iostream>
-#include "..\Components\Components.h"
+#include "Components\Components.h"
 #include "Wwise_Project/GeneratedSoundBanks/Wwise_IDs.h"
 
 

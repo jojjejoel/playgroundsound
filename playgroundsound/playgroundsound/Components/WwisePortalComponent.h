@@ -5,6 +5,8 @@
 class WwisePortalComponent : public Component
 {
 public:
+	~WwisePortalComponent() override;
+
 	virtual void Init(GameObject* in_gameObject) override;
 	virtual void Update(GameObject* in_gameObject) override;
 

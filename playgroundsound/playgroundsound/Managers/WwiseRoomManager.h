@@ -8,6 +8,7 @@ class WwiseRoomManager
 {
 
 public:
+
 	bool IsPointInBoundingBox(const GO_Vector3& point, const GO_BoundingBox& boundingBox);
 
 	void Update();

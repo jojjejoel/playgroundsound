@@ -102,6 +102,9 @@
     <ClCompile Include="GameObject\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Misc\ApplicationTerminator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WwiseAPI.h">
@@ -234,6 +237,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject\GoVertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\ApplicationTerminator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
