@@ -6,8 +6,8 @@
 #include <AK/SoundEngine/Common/AkModule.h>
 #include <AK/SoundEngine/Common/IAkStreamMgr.h>
 #include <AK/Tools/Common/AkPlatformFuncs.h>
-#include <SoundEngine/Common/AkFilePackage.h>
-#include "SoundEngine/Common/AkFilePackageLUT.h"
+#include "AkFilePackage.h"
+#include "AkFilePackageLUT.h"
 #include "AK/Comm/AkCommunication.h"
 #include "AK/SpatialAudio/Common/AkSpatialAudio.h"
 #include "AK/Plugin/AkRoomVerbFXFactory.h"

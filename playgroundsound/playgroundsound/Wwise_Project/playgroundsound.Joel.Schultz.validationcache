@@ -1,32 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ValidationCache Version="1" SchemaVersion="119">
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Virtual Acoustics\Factory Acoustic Textures.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Virtual Acoustics\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Triggers\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Switches\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\States\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\SoundBanks\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Queries\Factory Queries.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Queries\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Presets\Factory Spatial Audio.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Presets\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\playgroundsound.wproj" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\playgroundsound.Joel.Schultz.wsettings" DateLow="1719928221" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Modulators\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Mixing Sessions\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Metadata\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Game Parameters\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Events\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Effects\Factory Effects.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Effects\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Conversion Settings\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Control Surface Sessions\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Audio Devices\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Attenuations\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
-	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1719928223" DateHigh="0"/>
+<ValidationCache Version="1" SchemaVersion="110">
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Virtual Acoustics\Factory Acoustic Textures.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Virtual Acoustics\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Triggers\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Switches\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\States\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\SoundBanks\Default Work Unit.wwu" DateLow="1707847269" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Queries\Factory Queries.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Queries\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Presets\Factory Spatial Audio.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Presets\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\playgroundsound.wproj" DateLow="1707847269" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Modulators\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Mixing Sessions\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Metadata\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Game Parameters\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Events\Default Work Unit.wwu" DateLow="1707847269" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Effects\Factory Effects.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Effects\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Conversion Settings\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Control Surface Sessions\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Audio Devices\Default Work Unit.wwu" DateLow="1707847269" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Attenuations\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Actor-Mixer Hierarchy\Factory Synth One.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\WwiseProjects\playgroundsound\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Virtual Acoustics\Factory Acoustic Textures.wwu" DateLow="1715528407" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Virtual Acoustics\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Triggers\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Switches\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\States\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1715528407" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\SoundBanks\Default Work Unit.wwu" DateLow="1709311014" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Queries\Factory Queries.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Queries\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Presets\Factory Spatial Audio.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Presets\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\playgroundsound.wproj" DateLow="1708177989" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\playgroundsound.Joel.Schultz.wsettings" DateLow="1718800141" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Modulators\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Mixing Sessions\Default Work Unit.wwu" DateLow="1716557383" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Metadata\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1716578323" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1716557383" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Game Parameters\Default Work Unit.wwu" DateLow="1715528407" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Events\Default Work Unit.wwu" DateLow="1716719283" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Effects\Factory Effects.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Effects\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Conversion Settings\Default Work Unit.wwu" DateLow="1709294664" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Control Surface Sessions\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Audio Devices\Default Work Unit.wwu" DateLow="1709294664" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Attenuations\Default Work Unit.wwu" DateLow="1708431123" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Actor-Mixer Hierarchy\Factory Synth One.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\Wwise\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1716893948" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Virtual Acoustics\Factory Acoustic Textures.wwu" DateLow="1715528407" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Virtual Acoustics\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Triggers\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Switches\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\States\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Soundcaster Sessions\Default Work Unit.wwu" DateLow="1719163703" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\SoundBanks\Default Work Unit.wwu" DateLow="1709311014" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Queries\Factory Queries.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Queries\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Presets\Factory Spatial Audio.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Presets\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\playgroundsound.wproj" DateLow="1708177989" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\playgroundsound.Joel.Schultz.wsettings" DateLow="1719319505" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Modulators\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Mixing Sessions\Default Work Unit.wwu" DateLow="1716557383" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Metadata\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Master-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1719163703" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Interactive Music Hierarchy\Default Work Unit.wwu" DateLow="1716557383" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Game Parameters\Default Work Unit.wwu" DateLow="1719163703" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Events\Default Work Unit.wwu" DateLow="1716719283" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Effects\Factory Effects.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Effects\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Dynamic Dialogue\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Conversion Settings\Factory Conversion Settings.wwu" DateLow="1701098095" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Conversion Settings\Default Work Unit.wwu" DateLow="1709294664" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Control Surface Sessions\Default Work Unit.wwu" DateLow="1707847270" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Audio Devices\Default Work Unit.wwu" DateLow="1709294664" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Attenuations\Default Work Unit.wwu" DateLow="1708431123" DateHigh="0"/>
+	<ValidationCacheItem File="C:\Users\Joel.Schultz\Documents\GitHub\playgroundsound\playgroundsound\playgroundsound\Wwise_Project\Actor-Mixer Hierarchy\Default Work Unit.wwu" DateLow="1716893948" DateHigh="0"/>
 </ValidationCache>

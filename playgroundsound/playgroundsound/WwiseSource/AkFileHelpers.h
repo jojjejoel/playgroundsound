@@ -22,7 +22,7 @@ written agreement between you and Audiokinetic Inc.
 #ifndef _AK_FILE_HELPERS_H_
 #define _AK_FILE_HELPERS_H_
 
-#include "AkFileHelpersBase.h"
+#include "../Common/AkFileHelpersBase.h"
 
 #include <AK/Tools/Common/AkAssert.h>
 #include <AK/SoundEngine/Common/AkStreamMgrModule.h>
