@@ -1,6 +1,6 @@
 #pragma once
 #include <AK/SoundEngine/Common/AkTypes.h>
-#include <AkFilePackageLowLevelIOBlocking.h>
+#include <SoundEngine/Win32/AkFilePackageLowLevelIOBlocking.h>
 #include <AK/SoundEngine/Common/AkCallback.h>
 #include <AK/SpatialAudio/Common/AkSpatialAudioTypes.h>
 #include <AK/SoundEngine/Common/AkQueryParameters.h>
