@@ -25,11 +25,10 @@ int main()
 	}
 	
 	ApplicationTerminator terminator;
-	// Temporary workaround for Wwise DeInit. Proper graceful exit needs to be fixed in WwiseAPI. 
 	terminator.Kill();
 
-	game.DeInit();
 	wwiseAPI.DeInit();
+	game.DeInit();
 	return 0;
 
 }

@@ -52,8 +52,6 @@ void Game::Init()
 void Game::DeInit()
 {
 	CloseWindow();
-	exit(0);
-	abort();
 }
 
 void Game::AddGameObjects()
