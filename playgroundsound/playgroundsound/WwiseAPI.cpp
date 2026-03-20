@@ -91,6 +91,37 @@ void WwiseAPI::RenderAudio()
 	AK::SoundEngine::RenderAudio();
 }
 
+GO_Vector3 WwiseAPI::ConvertAkVectorToGO(const AkVector64& akVec) const
+{
+	return GO_Vector3{ static_cast<float>(akVec.X), static_cast<float>(akVec.Y), static_cast<float>(akVec.Z) };
+}
+
+GO_Vector3 WwiseAPI::ConvertAkVectorToGOWithZFlip(const AkVector64& akVec) const
+{
+	return GO_Vector3{ static_cast<float>(akVec.X), static_cast<float>(akVec.Y), static_cast<float>(-akVec.Z) };
+}
+
+void WwiseAPI::ConvertPathNodes(const AkDiffractionPathInfo& akPath, DiffractionPath& path) const
+{
+	for (size_t i = 0; i < akPath.nodeCount; i++) {
+		path.nodes[i] = ConvertAkVectorToGOWithZFlip(akPath.nodes[i]);
+		path.angles[i] = akPath.angles[i];
+		path.portals[i] = static_cast<int>(akPath.portals[i]);
+		path.rooms[i] = static_cast<int>(akPath.rooms[i]);
+	}
+}
+
+void WwiseAPI::ConvertVirtualPosition(const AkDiffractionPathInfo& akPath, DiffractionPath& path) const
+{
+	const AkVector& akOrientationFront = akPath.virtualPos.OrientationFront();
+	path.virtualPos.forward = GO_Vector3{ -akOrientationFront.X, -akOrientationFront.Y, akOrientationFront.Z };
+
+	const AkVector& akOrientationTop = akPath.virtualPos.OrientationTop();
+	path.virtualPos.up = GO_Vector3{ akOrientationTop.X, akOrientationTop.Y, -akOrientationTop.Z };
+
+	path.virtualPos.position = ConvertAkVectorToGOWithZFlip(akPath.virtualPos.Position());
+}
+
 std::vector<DiffractionPath> WwiseAPI::GetDiffractionPaths(const AkGameObjectID& gameObjectID) {
     AkVector64 emitterPos;
     AkVector64 listenerPos;
@@ -99,52 +130,20 @@ std::vector<DiffractionPath> WwiseAPI::GetDiffractionPaths(const AkGameObjectID&
     AK::SpatialAudio::QueryDiffractionPaths(gameObjectID, 0, listenerPos, emitterPos, akDiffractionPaths, numberOfPaths);
 
     std::vector<DiffractionPath> diffractionPaths;
-    diffractionPaths.reserve(numberOfPaths); 
+    diffractionPaths.reserve(numberOfPaths);
 
     for (AkUInt32 path = 0; path < numberOfPaths; path++) {
         const AkDiffractionPathInfo& akDiffractionPath = akDiffractionPaths[path];
         DiffractionPath diffractionPath;
 
-        for (size_t i = 0; i < akDiffractionPath.nodeCount; i++) {
-			const AkVector64& akNode = akDiffractionPath.nodes[i];
-			GO_Vector3& convertedNode = diffractionPath.nodes[i];
+        ConvertPathNodes(akDiffractionPath, diffractionPath);
+        ConvertVirtualPosition(akDiffractionPath, diffractionPath);
 
-            convertedNode.x = static_cast<float>(akNode.X);
-            convertedNode.y = static_cast<float>(akNode.Y);
-            convertedNode.z = static_cast<float>(-akNode.Z);
-
-            diffractionPath.angles[i] = akDiffractionPath.angles[i];
-            diffractionPath.portals[i] = static_cast<int>(akDiffractionPath.portals[i]);
-            diffractionPath.rooms[i] = static_cast<int>(akDiffractionPath.rooms[i]);
-        }
-
-        diffractionPath.emitterPos.x = static_cast<float>(emitterPos.X);
-        diffractionPath.emitterPos.y = static_cast<float>(emitterPos.Y);
-        diffractionPath.emitterPos.z = static_cast<float>(emitterPos.Z);
-
-		const AkVector& akOrientationFront = akDiffractionPath.virtualPos.OrientationFront();
-        diffractionPath.virtualPos.forward.x = -akOrientationFront.X;
-        diffractionPath.virtualPos.forward.y = -akOrientationFront.Y;
-        diffractionPath.virtualPos.forward.z = akOrientationFront.Z;
-
-		const AkVector& akOrientationTop = akDiffractionPath.virtualPos.OrientationTop();
-        diffractionPath.virtualPos.up.x = akOrientationTop.X;
-        diffractionPath.virtualPos.up.y = akOrientationTop.Y;
-        diffractionPath.virtualPos.up.z = -akOrientationTop.Z;
-
-		const AkVector64 akPosition = akDiffractionPath.virtualPos.Position();
-        diffractionPath.virtualPos.position.x = static_cast<float>(akPosition.X);
-        diffractionPath.virtualPos.position.y = static_cast<float>(akPosition.Y);
-        diffractionPath.virtualPos.position.z = static_cast<float>(-akPosition.Z);
-
+        diffractionPath.emitterPos = ConvertAkVectorToGO(emitterPos);
         diffractionPath.nodeCount = akDiffractionPath.nodeCount;
-
         diffractionPath.diffraction = akDiffractionPath.diffraction;
-
         diffractionPath.totLength = akDiffractionPath.totLength;
-
         diffractionPath.obstructionValue = akDiffractionPath.obstructionValue;
-
 
         diffractionPaths.emplace_back(std::move(diffractionPath));
     }

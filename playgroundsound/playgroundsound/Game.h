@@ -16,6 +16,15 @@
 
 struct BoundingBox;
 
+// Room wall configuration for organized wall management
+struct RoomWalls {
+    GameObject* back = nullptr;
+    GameObject* right = nullptr;
+    GameObject* left = nullptr;
+    GameObject* top = nullptr;
+    GameObject* bottom = nullptr;
+};
+
 class Game {
 public:
     ~Game();
@@ -35,39 +44,49 @@ private:
     void MusicBar(const float& barDuration);
     void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
     void AddGameObjects();
-    void AddRoomWalls(GameObject* in_roomWallObjPtr, std::string_view modelName, std::string_view gameObjectName, const GO_Vector3& position);
+    GameObject* AddRoomWall(std::string_view modelName, std::string_view gameObjectName, const GO_Vector3& position);
+
+    // Helper methods for DrawDiffractionPaths
+    Vector3 ConvertToVector3(const GO_Vector3& goVec) const;
+    Color GetDiffractionColor(float diffractionValue) const;
+    void DrawPathNodes(const DiffractionPath& path, const Vector3& listenerPos, const Color& color);
+
+    // Music timing and playback constants
+    static constexpr int numberOfBeatsInBar = 4;
+    static constexpr float bouncingCubeBaseHeight = 0.2f;
+    static constexpr float bouncingCubeHeightMultiplier = 3.0f;
+    static constexpr float minPlaybackSpeed = 0.0f;
+    static constexpr float maxPlaybackSpeed = 4.0f;
+    static constexpr float diffracationSphereRadius = 0.2f;
+    static constexpr int diffracationSphereSegments = 10;
+
+    // Light color constants for beat visualization
+    static constexpr uint8_t colorMax = 255;
+    static constexpr uint8_t colorMin = 0;
 
     std::vector<std::shared_ptr<BoundingBox>> boundingBoxes;
-
-
-    // Assumption is made that only time signature 4/4 will be used.
-    static constexpr int numberOfBeatsInBar = 4;
-    int beatValue = -1;
-    float timeLeftOnBar = 0;
-    float barDuration = 0;
-    const float barDecreaseSpeedMultiplier = 0.37f;
-
-    const float minPlaybackSpeed = 0;
-    const float maxPlaybackSpeed = 4;
-    float playbackSpeed = 1;
-
     std::vector<DiffractionPath> diffractionPaths;
 
+    // Music state
+    int beatValue = -1;
+    float timeLeftOnBar = 0.0f;
+    float barDuration = 0.0f;
+    float playbackSpeed = 1.0f;
+
+    // Managers
     GameObjectManager gameObjectManager;
     RenderManager renderManager;
     WwiseRoomManager wwiseRoomManager;
     DiffractionManager diffractionManager;
 
-    GameObject* truckObjPtr;
-    GameObject* cameraObjPtr;
-    GameObject* musicEmitterObjPtr;
-    GameObject* portalCubeObjPtr;
-    GameObject* roomCubeObjPtr;
-    GameObject* lightBulbObjPtr;
-    GameObject* roomWallBackObjPtr;
-    GameObject* roomWallRightObjPtr;
-    GameObject* roomWallLeftObjPtr;
-    GameObject* roomWallTopObjPtr;
-    GameObject* roomWallBottomObjPtr;
-    GameObject* roomWallObjPtr;
+    // Primary game objects
+    GameObject* truckObjPtr = nullptr;
+    GameObject* cameraObjPtr = nullptr;
+    GameObject* musicEmitterObjPtr = nullptr;
+    GameObject* portalCubeObjPtr = nullptr;
+    GameObject* roomCubeObjPtr = nullptr;
+    GameObject* roomWallObjPtr = nullptr;
+
+    // Room walls organized in struct
+    RoomWalls roomWalls;
 };

@@ -73,12 +73,11 @@ void Game::AddGameObjects()
 	roomWallObjPtr = gameObjectManager.AddGameObject("RoomWall");
 	roomWallObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("RoomWall").get(), true, true);
 
-
-	AddRoomWalls(roomWallLeftObjPtr, "RoomWallSide", "RoomWallLeft", { 5,0,0 });
-	AddRoomWalls(roomWallRightObjPtr, "RoomWallSide", "RoomWallRight", { -5,0,0 });
-	AddRoomWalls(roomWallBackObjPtr, "RoomWallFront", "RoomWallBack", { 0,0,-5 });
-	AddRoomWalls(roomWallTopObjPtr, "RoomWallTop", "RoomWallTop", { 0,5,0 });
-	AddRoomWalls(roomWallBottomObjPtr, "RoomWallTop", "RoomWallFloor", { 0,-5,0 });
+	roomWalls.left = AddRoomWall("RoomWallSide", "RoomWallLeft", { 5,0,0 });
+	roomWalls.right = AddRoomWall("RoomWallSide", "RoomWallRight", { -5,0,0 });
+	roomWalls.back = AddRoomWall("RoomWallFront", "RoomWallBack", { 0,0,-5 });
+	roomWalls.top = AddRoomWall("RoomWallTop", "RoomWallTop", { 0,5,0 });
+	roomWalls.bottom = AddRoomWall("RoomWallTop", "RoomWallFloor", { 0,-5,0 });
 
 	musicEmitterObjPtr = gameObjectManager.AddGameObject("Music");
 	musicEmitterObjPtr->AddComponent<WwiseObjectComponent>();
@@ -99,12 +98,13 @@ void Game::AddGameObjects()
 	wallBottomObj->m_transform.position = { 0,-1.5,0 };
 }
 
-void Game::AddRoomWalls(GameObject* in_roomWallObjPtr, std::string_view modelName, std::string_view gameObjectName, const GO_Vector3& position)
+GameObject* Game::AddRoomWall(std::string_view modelName, std::string_view gameObjectName, const GO_Vector3& position)
 {
-	in_roomWallObjPtr = gameObjectManager.AddGameObject(gameObjectName.data());
-	in_roomWallObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel(modelName.data()).get(), true, false);
-	in_roomWallObjPtr->m_transform.position = position;
-	renderManager.AddRenderObject(in_roomWallObjPtr);
+	GameObject* roomWall = gameObjectManager.AddGameObject(gameObjectName.data());
+	roomWall->AddComponent<RenderComponent>().SetModel(renderManager.GetModel(modelName.data()).get(), true, false);
+	roomWall->m_transform.position = position;
+	renderManager.AddRenderObject(roomWall);
+	return roomWall;
 }
 
 void Game::Run(bool& shouldExit)
@@ -145,11 +145,9 @@ void Game::ControlCarSfx()
 
 void Game::UpdateBouncingCube()
 {
-	float startHeight = 0.2f;
 	float rhythmVolume = musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().
 		GetGameParamValueGlobal(AK::GAME_PARAMETERS::RHYTHM_VOLUME);
-	float heightMultiplier = 3;
-	musicEmitterObjPtr->m_transform.scale.y = startHeight + rhythmVolume * heightMultiplier;
+	musicEmitterObjPtr->m_transform.scale.y = bouncingCubeBaseHeight + rhythmVolume * bouncingCubeHeightMultiplier;
 }
 
 void Game::ControlPortalState()
@@ -182,72 +180,59 @@ void Game::ControlPlaybackSpeed()
 	renderManager.SetPlaybackSpeed(std::to_string(playbackSpeed));
 }
 
+Vector3 Game::ConvertToVector3(const GO_Vector3& goVec) const
+{
+	return Vector3{ goVec.x, goVec.y, goVec.z };
+}
+
+Color Game::GetDiffractionColor(float diffractionValue) const
+{
+	return Color{
+		static_cast<unsigned char>(Lerp(0, 255, diffractionValue)),
+		static_cast<unsigned char>(Lerp(255, 0, diffractionValue)),
+		0, 255
+	};
+}
+
+void Game::DrawPathNodes(const DiffractionPath& path, const Vector3& listenerPos, const Color& color)
+{
+	if (path.nodeCount <= 0)
+		return;
+
+	auto firstNodePos = ConvertToVector3(path.nodes[0]);
+	DrawLine3D(firstNodePos, listenerPos, color);
+	DrawSphereWires(firstNodePos, diffracationSphereRadius, diffracationSphereSegments, diffracationSphereSegments, color);
+
+	for (int nodeIndex = 1; nodeIndex < path.nodeCount; ++nodeIndex)
+	{
+		auto nodePos = ConvertToVector3(path.nodes[nodeIndex]);
+		auto prevNodePos = ConvertToVector3(path.nodes[nodeIndex - 1]);
+
+		DrawSphereWires(nodePos, diffracationSphereRadius, diffracationSphereSegments, diffracationSphereSegments, color);
+		DrawLine3D(prevNodePos, nodePos, color);
+	}
+}
+
 void Game::DrawDiffractionPaths()
 {
 	auto diffractionPaths = diffractionManager.GetDiffractionPath(musicEmitterObjPtr->m_id);
-	auto listenerPos = Vector3{
-		truckObjPtr->m_transform.position.x,
-		truckObjPtr->m_transform.position.y,
-		truckObjPtr->m_transform.position.z
-	};
+	Vector3 listenerPos = ConvertToVector3(truckObjPtr->m_transform.position);
 
 	float lowestDiffractionValue = 1.0f;
 
 	for (const auto& diffractionPath : diffractionPaths)
 	{
-		Color color = {
-			static_cast<unsigned char>(Lerp(0, 255, diffractionPath.diffraction)),
-			static_cast<unsigned char>(Lerp(255, 0, diffractionPath.diffraction)),
-			0, 255
-		};
+		Color color = GetDiffractionColor(diffractionPath.diffraction);
+		DrawPathNodes(diffractionPath, listenerPos, color);
 
-		if (diffractionPath.nodeCount > 0)
+		if (diffractionPath.diffraction < lowestDiffractionValue && diffractionPath.nodeCount > 0)
 		{
-			auto firstNodePos = Vector3{
-				diffractionPath.nodes[0].x,
-				diffractionPath.nodes[0].y,
-				diffractionPath.nodes[0].z
-			};
+			lowestDiffractionValue = diffractionPath.diffraction;
 
-			DrawLine3D(firstNodePos, listenerPos, color);
-			DrawSphereWires(firstNodePos, 0.2f, 10, 10, color);
+			Vector3 emitterPos = ConvertToVector3(diffractionPath.emitterPos);
+			Vector3 lastNodePos = ConvertToVector3(diffractionPath.nodes[diffractionPath.nodeCount - 1]);
 
-			for (int nodeIndex = 1; nodeIndex < diffractionPath.nodeCount; ++nodeIndex)
-			{
-				auto nodePos = Vector3{
-					diffractionPath.nodes[nodeIndex].x,
-					diffractionPath.nodes[nodeIndex].y,
-					diffractionPath.nodes[nodeIndex].z
-				};
-
-				auto emitterPos = Vector3{
-					diffractionPath.nodes[nodeIndex - 1].x,
-					diffractionPath.nodes[nodeIndex - 1].y,
-					diffractionPath.nodes[nodeIndex - 1].z
-				};
-
-				DrawSphereWires(nodePos, 0.2f, 10, 10, color);
-				DrawLine3D(emitterPos, nodePos, color);
-			}
-
-			if (diffractionPath.diffraction < lowestDiffractionValue)
-			{
-				lowestDiffractionValue = diffractionPath.diffraction;
-
-				auto emitterPos = Vector3{
-					diffractionPath.emitterPos.x,
-					diffractionPath.emitterPos.y,
-					diffractionPath.emitterPos.z
-				};
-
-				auto lastNodePos = Vector3{
-					diffractionPath.nodes[diffractionPath.nodeCount - 1].x,
-					diffractionPath.nodes[diffractionPath.nodeCount - 1].y,
-					diffractionPath.nodes[diffractionPath.nodeCount - 1].z
-				};
-
-				DrawLine3D(emitterPos, lastNodePos, color);
-			}
+			DrawLine3D(emitterPos, lastNodePos, color);
 		}
 	}
 }
@@ -259,15 +244,12 @@ void Game::UpdateBlinkingLight()
 
 	const float barColorIntensity = std::max(0.0f, timeLeftOnBar / barDuration);
 
-	const uint8_t MAX_COLOR = 255;
-	const uint8_t MIN_COLOR = 0;
-
 	// Define beat color configurations
 	const GO_Vector3 beatColors[numberOfBeatsInBar] = {
-		{ MIN_COLOR, MAX_COLOR, MIN_COLOR },  // beatValue == 0
-		{ MAX_COLOR, MIN_COLOR, MIN_COLOR },  // beatValue == 1
-		{ MIN_COLOR, MAX_COLOR, MAX_COLOR },  // beatValue == 2
-		{ MAX_COLOR, MAX_COLOR, MIN_COLOR }   // beatValue == 3
+		{ colorMin, colorMax, colorMin },  // beatValue == 0 (green)
+		{ colorMax, colorMin, colorMin },  // beatValue == 1 (red)
+		{ colorMin, colorMax, colorMax },  // beatValue == 2 (cyan)
+		{ colorMax, colorMax, colorMin }   // beatValue == 3 (yellow)
 	};
 
 	GO_Vector3 lightColor = { 0, 0, 0 };
