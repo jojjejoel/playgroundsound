@@ -2,6 +2,7 @@
 #define NOMINMAX
 #define NOGDI
 #define NOUSER
+#define MMNOSOUND  // Prevent multimedia sound function conflicts with raylib
 
 #include <iostream>
 #include "Game.h"

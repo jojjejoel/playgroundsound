@@ -29,13 +29,11 @@ struct RoomWalls {
 
 class Game {
 public:
-    ~Game();
-
     void Run(bool& shouldExit);
-    void ControlCarSfx();
-    void UpdateBouncingCube();
+    void ControlCarSfx() const;
+    void UpdateBouncingCube() const;
     void Init();
-    void DeInit();
+    static void DeInit();
 
 private:
     void ControlPortalState();
@@ -44,14 +42,13 @@ private:
     void UpdateBlinkingLight();
     void MusicBeat();
     void MusicBar(const float& barDuration);
-    void SetDiffractionPaths(const std::vector<DiffractionPath> diffractionPaths);
+    void SetDiffractionPaths(const std::vector<DiffractionPath>& diffractionPaths);
     void AddGameObjects();
     GameObject* AddRoomWall(std::string_view modelName, std::string_view gameObjectName, const GO_Vector3& position);
 
     // Helper methods for DrawDiffractionPaths
-    Vector3 ConvertToVector3(const GO_Vector3& goVec) const;
-    Color GetDiffractionColor(float diffractionValue) const;
-    void DrawPathNodes(const DiffractionPath& path, const Vector3& listenerPos, const Color& color);
+    static Color GetDiffractionColor(float diffractionValue);
+    static void DrawPathNodes(const DiffractionPath& path, const Vector3& listenerPos, const Color& color);
 
     // Music timing and playback constants
     static constexpr int numberOfBeatsInBar = 4;
@@ -76,8 +73,8 @@ private:
     float playbackSpeed = 1.0f;
 
     // Managers
-    GameObjectManager gameObjectManager;
-    RenderManager renderManager;
+    GameObjectManager gameObjectManager = {};
+    RenderManager renderManager = {};
     WwiseRoomManager wwiseRoomManager;
     DiffractionManager diffractionManager;
 

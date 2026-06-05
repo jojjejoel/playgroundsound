@@ -4,6 +4,7 @@
 #define NOMINMAX
 #define NOGDI
 #define NOUSER
+#define MMNOSOUND  // Prevent multimedia sound function conflicts with raylib
 
 #include <AK/SoundEngine/Common/AkTypes.h>
 #include <AkFilePackageLowLevelIOBlocking.h>
@@ -33,9 +34,6 @@ private:
 	CAkFilePackageLowLevelIOBlocking g_lowLevelIO;
 	void Log(std::string_view logMsg);
 
-	// Helper methods for vector conversion
-	GO_Vector3 ConvertAkVectorToGO(const AkVector64& akVec) const;
-	GO_Vector3 ConvertAkVectorToGOWithZFlip(const AkVector64& akVec) const;
 	void ConvertPathNodes(const AkDiffractionPathInfo& akPath, DiffractionPath& path) const;
 	void ConvertVirtualPosition(const AkDiffractionPathInfo& akPath, DiffractionPath& path) const;
 };

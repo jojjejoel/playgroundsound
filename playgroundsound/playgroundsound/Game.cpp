@@ -3,6 +3,8 @@
 #include <src/raylib.h>
 #include <string>
 #include <src/raymath.h>
+
+#include "Utilities/VectorConversions.h"
 #define RLIGHTS_IMPLEMENTATION
 
 #if defined(PLATFORM_DESKTOP)
@@ -24,8 +26,8 @@ void Game::Init()
 	renderManager.SetCamera(cameraObjPtr->GetComponent<CameraComponent>());
 
 	WwiseRoomComponent& roomComponent = roomCubeObjPtr->AddComponent<WwiseRoomComponent>();
-	roomComponent.InitRoomGeometry(roomCubeObjPtr);
-	roomComponent.InitRoom(roomWallObjPtr);
+	WwiseRoomComponent::InitRoomGeometry(roomCubeObjPtr);
+	WwiseRoomComponent::InitRoom(roomWallObjPtr);
 	roomComponent.SetBoundingBox({ 0,0,0 }, 10, 10, 10);
 	wwiseRoomManager.AddRoom(&roomComponent);
 	wwiseRoomManager.AddObject(truckObjPtr->GetComponent<WwiseObjectComponent>());
@@ -33,10 +35,10 @@ void Game::Init()
 	wwiseRoomManager.AddObject(musicEmitterObjPtr->GetComponent<WwiseObjectComponent>());
 	SetTargetFPS(30);
 	GameObject* portalObj = portalCubeObjPtr;
-	portalObj->GetComponent<WwisePortalComponent>()->InitPortal(portalObj, roomComponent.GetRoomID());
+	portalObj->GetComponent<WwisePortalComponent>()->InitPortal(portalObj, WwiseRoomComponent::GetRoomID());
 
 	gameObjectManager.Init();
-	WwiseObjectComponent* cameraWwiseComponent = cameraObjPtr->GetComponent<WwiseObjectComponent>();
+	const WwiseObjectComponent* cameraWwiseComponent = cameraObjPtr->GetComponent<WwiseObjectComponent>();
 	cameraWwiseComponent->RegisterAsListener();
 	truckObjPtr->GetComponent<WwiseObjectComponent>()->PostEvent(AK::EVENTS::CAR_ENGINE_LOOP);
 	truckObjPtr->GetComponent<WwiseObjectComponent>()->RegisterAsDistanceProbe(cameraObjPtr->m_id);
@@ -128,21 +130,19 @@ void Game::Run(bool& shouldExit)
 	}
 }
 
-void Game::ControlCarSfx()
-{
-	ControllerComponent* controllerComponent = truckObjPtr->GetComponent<ControllerComponent>();
-	WwiseObjectComponent* wwiseObjectComponent = truckObjPtr->GetComponent<WwiseObjectComponent>();
+void Game::ControlCarSfx() const {
+	const ControllerComponent* controllerComponent = truckObjPtr->GetComponent<ControllerComponent>();
+	const WwiseObjectComponent* wwiseObjectComponent = truckObjPtr->GetComponent<WwiseObjectComponent>();
 
-	float carSpeed = controllerComponent->GetPercentageOfMaxSpeed();
+	const float carSpeed = controllerComponent->GetPercentageOfMaxSpeed();
 	wwiseObjectComponent->SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
 
-	float carGas = controllerComponent->GetGas();
+	const float carGas = controllerComponent->GetGas();
 	wwiseObjectComponent->SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
 }
 
-void Game::UpdateBouncingCube()
-{
-	float rhythmVolume = musicEmitterObjPtr->GetComponent<WwiseObjectComponent>()->
+void Game::UpdateBouncingCube() const {
+	const float rhythmVolume = musicEmitterObjPtr->GetComponent<WwiseObjectComponent>()->
 		GetGameParamValueGlobal(AK::GAME_PARAMETERS::RHYTHM_VOLUME);
 	musicEmitterObjPtr->m_transform.scale.y = bouncingCubeBaseHeight + rhythmVolume * bouncingCubeHeightMultiplier;
 }
@@ -152,9 +152,9 @@ void Game::ControlPortalState()
 	if (IsKeyPressed(KEY_ONE))
 	{
 		portalCubeObjPtr->GetComponent<WwisePortalComponent>()->TogglePortalState(portalCubeObjPtr);
-		bool portalEnabled = portalCubeObjPtr->GetComponent<WwisePortalComponent>()->GetIsEnabled();
+		const bool portalEnabled = portalCubeObjPtr->GetComponent<WwisePortalComponent>()->GetIsEnabled();
 		portalCubeObjPtr->GetComponent<RenderComponent>()->SetShouldRender(!portalEnabled);
-		std::string portalEnabledStr = portalEnabled ? "OPEN" : "CLOSED";
+		const std::string portalEnabledStr = portalEnabled ? "OPEN" : "CLOSED";
 		renderManager.SetPortalEnabled(portalEnabledStr);
 	}
 }
@@ -177,13 +177,7 @@ void Game::ControlPlaybackSpeed()
 	renderManager.SetPlaybackSpeed(std::to_string(playbackSpeed));
 }
 
-Vector3 Game::ConvertToVector3(const GO_Vector3& goVec) const
-{
-	return Vector3{ goVec.x, goVec.y, goVec.z };
-}
-
-Color Game::GetDiffractionColor(float diffractionValue) const
-{
+Color Game::GetDiffractionColor(float diffractionValue) {
 	return Color{
 		static_cast<unsigned char>(Lerp(0, 255, diffractionValue)),
 		static_cast<unsigned char>(Lerp(255, 0, diffractionValue)),
@@ -196,14 +190,14 @@ void Game::DrawPathNodes(const DiffractionPath& path, const Vector3& listenerPos
 	if (path.nodeCount <= 0)
 		return;
 
-	auto firstNodePos = ConvertToVector3(path.nodes[0]);
+	const auto firstNodePos = VectorConversions::GOToRaylib(path.nodes[0]);
 	DrawLine3D(firstNodePos, listenerPos, color);
 	DrawSphereWires(firstNodePos, diffracationSphereRadius, diffracationSphereSegments, diffracationSphereSegments, color);
 
 	for (int nodeIndex = 1; nodeIndex < path.nodeCount; ++nodeIndex)
 	{
-		auto nodePos = ConvertToVector3(path.nodes[nodeIndex]);
-		auto prevNodePos = ConvertToVector3(path.nodes[nodeIndex - 1]);
+		const auto nodePos = VectorConversions::GOToRaylib(path.nodes[nodeIndex]);
+		const auto prevNodePos = VectorConversions::GOToRaylib(path.nodes[nodeIndex - 1]);
 
 		DrawSphereWires(nodePos, diffracationSphereRadius, diffracationSphereSegments, diffracationSphereSegments, color);
 		DrawLine3D(prevNodePos, nodePos, color);
@@ -213,7 +207,7 @@ void Game::DrawPathNodes(const DiffractionPath& path, const Vector3& listenerPos
 void Game::DrawDiffractionPaths()
 {
 	diffractionPaths = diffractionManager.GetDiffractionPath(musicEmitterObjPtr->m_id);
-	const Vector3 listenerPos = ConvertToVector3(truckObjPtr->m_transform.position);
+	const Vector3 listenerPos = VectorConversions::GOToRaylib(truckObjPtr->m_transform.position);
 
 	float lowestDiffractionValue = 1.0f;
 
@@ -226,8 +220,8 @@ void Game::DrawDiffractionPaths()
 		{
 			lowestDiffractionValue = diffractionPath.diffraction;
 
-			Vector3 emitterPos = ConvertToVector3(diffractionPath.emitterPos);
-			Vector3 lastNodePos = ConvertToVector3(diffractionPath.nodes[diffractionPath.nodeCount - 1]);
+			const Vector3 emitterPos = VectorConversions::GOToRaylib(diffractionPath.emitterPos);
+			const Vector3 lastNodePos = VectorConversions::GOToRaylib(diffractionPath.nodes[diffractionPath.nodeCount - 1]);
 
 			DrawLine3D(emitterPos, lastNodePos, color);
 		}
@@ -242,7 +236,7 @@ void Game::UpdateBlinkingLight()
 	const float barColorIntensity = std::max(0.0f, timeLeftOnBar / barDuration);
 
 	// Define beat color configurations
-	const GO_Vector3 beatColors[numberOfBeatsInBar] = {
+	constexpr GO_Vector3 beatColors[numberOfBeatsInBar] = {
 		{ colorMin, colorMax, colorMin },  // beatValue == 0 (green)
 		{ colorMax, colorMin, colorMin },  // beatValue == 1 (red)
 		{ colorMin, colorMax, colorMax },  // beatValue == 2 (cyan)
@@ -269,7 +263,7 @@ void Game::MusicBeat() {
 	{
 		beatValue = 0;
 	}
-	std::string beatValueStr = "Beat: " + std::to_string(beatValue + 1) + "/" + std::to_string(numberOfBeatsInBar);
+	const std::string beatValueStr = "Beat: " + std::to_string(beatValue + 1) + "/" + std::to_string(numberOfBeatsInBar);
 	renderManager.SetBeatValue(beatValueStr);
 }
 
@@ -279,11 +273,6 @@ void Game::MusicBar(const float& in_barDuration) {
 	barDuration = in_barDuration;
 }
 
-void Game::SetDiffractionPaths(const std::vector<DiffractionPath> in_diffractionPaths) {
+void Game::SetDiffractionPaths(const std::vector<DiffractionPath>& in_diffractionPaths) {
 	diffractionPaths = in_diffractionPaths;
-}
-
-Game::~Game()
-{
-
 }

@@ -34,14 +34,10 @@ struct GO_Vector3 {
 
 
     GO_Vector3 Normalized() const {
-        float magnitude = std::sqrt(x * x + y * y + z * z);
-
         // Check if magnitude is non-zero to avoid division by zero
-        if (magnitude != 0.0f) {
+        if (const float magnitude = std::sqrt(x * x + y * y + z * z); magnitude != 0.0f) {
             return {x / magnitude, y / magnitude, z / magnitude};
         }
-        else {
-            return {0.0f, 0.0f, 0.0f}; // Returning a default value
-        }
+        return {0.0f, 0.0f, 0.0f}; // Returning a default value
     }
 };

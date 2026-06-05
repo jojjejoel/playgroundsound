@@ -37,17 +37,17 @@ public:
 private:
 
 	std::vector<GameObject*> objectsToRender;
-	CameraComponent* camera;
+	CameraComponent* camera = nullptr;
 	std::map<std::string, std::shared_ptr<Shader>> shaders;
 	std::map<std::string, std::shared_ptr<Model>> models;
-	RenderTexture2D* shadowMap;
-	Camera3D* lightCam;
-	int lightVPLoc;
-	int shadowMapLoc;
+	RenderTexture2D* shadowMap = nullptr;
+	Camera3D* lightCam = nullptr;
+	int lightVPLoc = 0;
+	int shadowMapLoc = 0;
 
-	int lightDirLoc;
-	int lightColLoc;
-	GO_Vector3 lightColor;
+	int lightDirLoc = 0;
+	int lightColLoc = 0;
+	GO_Vector3 lightColor = {255,255,255};
 
 	std::string playBackSpeed = "1.0";
 	std::string portalIsEnabled = "OPEN";

@@ -228,6 +228,7 @@ XCOPY $(SolutionDir)playgroundsound\Wwise_Project\GeneratedSoundBanks $(TargetDi
     <ClInclude Include="Managers\WwiseRoomManager.h" />
     <ClInclude Include="Misc\ApplicationTerminator.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="Utilities\VectorConversions.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookBlocking.h" />
     <ClInclude Include="WwiseSource\AkDefaultIOHookDeferred.h" />
     <ClInclude Include="WwiseSource\AkDefaultLowLevelIODispatcher.h" />
