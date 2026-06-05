@@ -15,9 +15,14 @@ int main()
 	WwiseAPI wwiseAPI;
 	wwiseAPI.Init();
 
-	wwiseAPI.LoadBank(AK::BANKS::INIT);
+	if (const AKRESULT result = wwiseAPI.LoadBank(AK::BANKS::INIT); result != AK_Success) {
+		std::cerr << "Failed to load INIT bank: " << result << '\n';
+	}
+	
+	if (const AKRESULT result = wwiseAPI.LoadBank(AK::BANKS::MAIN); result != AK_Success) {
+		std::cerr << "Failed to load MAIN bank: " << result << '\n';
+	}
 
-	wwiseAPI.LoadBank(AK::BANKS::MAIN);
 	Game game;
 	game.Init();
 

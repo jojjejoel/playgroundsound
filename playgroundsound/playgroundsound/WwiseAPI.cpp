@@ -19,7 +19,7 @@
 
 #include "Wwise_Project/GeneratedSoundBanks/Wwise_IDs.h"
 
-bool WwiseAPI::Init()
+void WwiseAPI::Init()
 {
 	AkMemSettings memSettings;
 	AK::MemoryMgr::GetDefaultSettings(memSettings);
@@ -57,8 +57,6 @@ bool WwiseAPI::Init()
 	AK::Comm::Init(commSettings);
 
 #endif // !AK_OPTIMIZED
-
-	return true;
 }
 
 void WwiseAPI::DeInit()

@@ -23,7 +23,7 @@
 class WwiseAPI
 {
 public:
-	bool Init();
+	void Init();
 	void DeInit();
 	AKRESULT LoadBank(const AkUniqueID& bankID);
 	void RenderAudio();
