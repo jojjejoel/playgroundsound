@@ -1,3 +1,8 @@
+// Must define these BEFORE any includes that bring in Windows.h
+#define NOMINMAX
+#define NOGDI
+#define NOUSER
+
 #include <iostream>
 #include "Game.h"
 #include "WwiseAPI.h"

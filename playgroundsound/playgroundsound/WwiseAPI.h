@@ -1,4 +1,10 @@
 #pragma once
+
+// Must define these BEFORE including Wwise SDK headers that pull in Windows.h
+#define NOMINMAX
+#define NOGDI
+#define NOUSER
+
 #include <AK/SoundEngine/Common/AkTypes.h>
 #include <AkFilePackageLowLevelIOBlocking.h>
 #include <AK/SoundEngine/Common/AkCallback.h>
@@ -12,6 +18,7 @@
 #include <vector>
 #include <functional>
 #include <map>
+#include <AK/SpatialAudio/Common/AkSpatialAudio.h>
 
 class WwiseAPI
 {

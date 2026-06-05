@@ -1,9 +1,11 @@
 #pragma once
+
+// Include raylib first to establish function declarations before Windows.h
+#include "src/raylib.h"
+
 #include "DiffractionPath.h"
 #include <memory>
 #include <vector>
-#include <functional>
-#include <map>
 #include <string>
 
 #include "Managers/GameObjectManager.h"
