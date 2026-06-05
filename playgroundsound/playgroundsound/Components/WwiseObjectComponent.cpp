@@ -1,10 +1,11 @@
 #include "WwiseObjectComponent.h"
 #include <AK/SoundEngine/Common/AkQueryParameters.h>
-#include <AK/Tools/Common/AkPlatformFuncs.h>
 #include "AK/Comm/AkCommunication.h"
 #include "AK/SpatialAudio/Common/AkSpatialAudio.h"
 #include "..\GameObject\GameObject.h"
 #include <AK/SoundEngine/Common/AkCallback.h>
+
+#include <utility>
 
 WwiseObjectComponent::~WwiseObjectComponent()
 {
@@ -23,32 +24,31 @@ void WwiseObjectComponent::Update(GameObject* in_gameObject)
 {
 	m_position = in_gameObject->m_transform.position;
 	AkListenerPosition soundPosition;
-	AkVector positionVector = { in_gameObject->m_transform.position.x, in_gameObject->m_transform.position.y ,-in_gameObject->m_transform.position.z };
-	GO_Vector3 forwardNormalized = in_gameObject->m_transform.forward.Normalized();
-	GO_Vector3 upNormalized = in_gameObject->m_transform.up.Normalized();
-	AkVector orientationFront = { -forwardNormalized.x, -forwardNormalized.y, forwardNormalized.z };
-	AkVector orientationTop = { upNormalized.x, upNormalized.y, -upNormalized.z };
+	const AkVector positionVector = { in_gameObject->m_transform.position.x, in_gameObject->m_transform.position.y ,-in_gameObject->m_transform.position.z };
+	const GO_Vector3 forwardNormalized = in_gameObject->m_transform.forward.Normalized();
+	const GO_Vector3 upNormalized = in_gameObject->m_transform.up.Normalized();
+	const AkVector orientationFront = { -forwardNormalized.x, -forwardNormalized.y, forwardNormalized.z };
+	const AkVector orientationTop = { upNormalized.x, upNormalized.y, -upNormalized.z };
 	AkTransform transform;
 	transform.Set(positionVector, orientationFront, orientationTop);
 	soundPosition.Set(positionVector, orientationFront, orientationTop);
 
-	AKRESULT result = AK::SoundEngine::SetPosition(akGameObjectID, soundPosition);
+	AK::SoundEngine::SetPosition(akGameObjectID, soundPosition);
 }
 
-void WwiseObjectComponent::PostEvent(const unsigned int& eventID)
-{
+void WwiseObjectComponent::PostEvent(const unsigned int& eventID) const {
 	AK::SoundEngine::PostEvent(eventID, akGameObjectID);
 }
 
 
-static void MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo)
+static void MusicCallback(const AkCallbackType in_eType, AkCallbackInfo* in_pCallbackInfo)
 {
 	if (in_eType & AK_MusicSyncAll)
 	{
-		WwiseObjectComponent* wwiseObjectComponent = (WwiseObjectComponent*)in_pCallbackInfo->pCookie;
-		AkMusicSyncCallbackInfo* akMusicSyncCallbackInfo = static_cast<AkMusicSyncCallbackInfo*>(in_pCallbackInfo);
-		float barDuration = akMusicSyncCallbackInfo->segmentInfo.fBarDuration;
-		switch (in_eType)
+		const WwiseObjectComponent* wwiseObjectComponent = static_cast<WwiseObjectComponent*>(in_pCallbackInfo->pCookie);
+		const AkMusicSyncCallbackInfo* akMusicSyncCallbackInfo = static_cast<AkMusicSyncCallbackInfo*>(in_pCallbackInfo);  // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
+		const float barDuration = akMusicSyncCallbackInfo->segmentInfo.fBarDuration;
+		switch (in_eType)  // NOLINT(clang-diagnostic-switch-enum)
 		{
 			case AK_MusicSyncBeat:
 				wwiseObjectComponent->callbackFuntionBeat();
@@ -64,25 +64,22 @@ static void MusicCallback(AkCallbackType in_eType, AkCallbackInfo* in_pCallbackI
 
 void WwiseObjectComponent::PostMusicEvent(const unsigned int& eventID, std::function<void(float)> in_callbackFuncBar, std::function<void()> in_callbackFuncBeat)
 {
-	callbackFuntionBar = in_callbackFuncBar;
-	callbackFuntionBeat = in_callbackFuncBeat;
+	callbackFuntionBar = std::move(in_callbackFuncBar);
+	callbackFuntionBeat = std::move(in_callbackFuncBeat);
 	AK::SoundEngine::PostEvent(eventID, akGameObjectID, AK_MusicSyncAll, &MusicCallback, this);
 }
 
-void WwiseObjectComponent::RegisterAsListener()
-{
+void WwiseObjectComponent::RegisterAsListener() const {
 	AK::SoundEngine::AddDefaultListener(akGameObjectID);
 	AK::SpatialAudio::RegisterListener(akGameObjectID);
 }
 
-void WwiseObjectComponent::RegisterAsDistanceProbe(const unsigned int& listenerID)
-{
+void WwiseObjectComponent::RegisterAsDistanceProbe(const unsigned int& listenerID) const {
 	AK::SoundEngine::SetDistanceProbe(listenerID, akGameObjectID);
 }
 
-void WwiseObjectComponent::SetRTPC(const unsigned int& rtpcID, const float& rtpcValue)
-{
-	AKRESULT result = AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, akGameObjectID);
+void WwiseObjectComponent::SetRTPC(const unsigned int& rtpcID, const float& rtpcValue) const {
+	AK::SoundEngine::SetRTPCValue(rtpcID, rtpcValue, akGameObjectID);
 }
 
 void WwiseObjectComponent::SetRoomID(const unsigned int& in_akRoomID)
@@ -93,21 +90,19 @@ void WwiseObjectComponent::SetRoomID(const unsigned int& in_akRoomID)
 		AK::SpatialAudio::SetGameObjectInRoom(akGameObjectID, currentRoomID);
 	}
 }
-const GO_Vector3& WwiseObjectComponent::GetPosition()
-{
+const GO_Vector3& WwiseObjectComponent::GetPosition() const {
 	return m_position;
 }
 
-float WwiseObjectComponent::GetGameParamValueGlobal(const unsigned int& rtpcID)
-{
+float WwiseObjectComponent::GetGameParamValueGlobal(const unsigned int& rtpcID) const {
 	AkRtpcValue rtpcValue;
 	AK::SoundEngine::Query::RTPCValue_type valueType = AK::SoundEngine::Query::RTPCValue_Global;
-	AKRESULT result = AK::SoundEngine::Query::GetRTPCValue(rtpcID, akGameObjectID, AK_INVALID_PLAYING_ID, rtpcValue, valueType);
+	AK::SoundEngine::Query::GetRTPCValue(rtpcID, akGameObjectID, AK_INVALID_PLAYING_ID, rtpcValue, valueType);
 
-	float minRTPCValue = -20;
-	float maxRTPCValue = -4;
+	constexpr float minRTPCValue = -20;
+	constexpr float maxRTPCValue = -4;
 
-	float normalizedValue = (rtpcValue - (minRTPCValue)) / (maxRTPCValue - (minRTPCValue));
+	const float normalizedValue = (rtpcValue - (minRTPCValue)) / (maxRTPCValue - (minRTPCValue));
 
 	return normalizedValue;
 }

@@ -13,7 +13,7 @@ public:
     virtual void Init(GameObject* in_gameObject) override;
 
     virtual void Update(GameObject* in_gameObject) override;
-    void Draw(GameObject* in_gameObject);
+    void Draw(const GameObject* in_gameObject) const;
 
 
     void SetModel(Model* in_model, const bool& in_shouldRender = true, const bool& initRoom = false, const GO_Vector3& in_color = {255,255,255});
@@ -26,11 +26,11 @@ public:
 
 private:
     void InitRoomGeometry();
-    Model* model;
+    Model* model = nullptr;
 
     std::vector<Triangle> m_triangles;
     std::vector<GoVertex> m_vertices;
-    bool shouldRender;
-    GO_Vector3 color;
+    GO_Vector3 color = {255,255,255};
+    bool shouldRender = false;
 };
 

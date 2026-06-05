@@ -1,12 +1,9 @@
 #include "Game.h"
 
 #include <src/raylib.h>
-#include <src/rcamera.h>
 #include <string>
 #include <src/raymath.h>
-#include <math.h>
 #define RLIGHTS_IMPLEMENTATION
-#include <examples/shaders/rlights.h>
 
 #if defined(PLATFORM_DESKTOP)
 #define GLSL_VERSION            330
@@ -98,10 +95,10 @@ void Game::AddGameObjects()
 	wallBottomObj->m_transform.position = { 0,-1.5,0 };
 }
 
-GameObject* Game::AddRoomWall(std::string_view modelName, std::string_view gameObjectName, const GO_Vector3& position)
+GameObject* Game::AddRoomWall(const std::string_view modelName, const std::string_view gameObjectName, const GO_Vector3& position)
 {
-	GameObject* roomWall = gameObjectManager.AddGameObject(gameObjectName.data());
-	roomWall->AddComponent<RenderComponent>().SetModel(renderManager.GetModel(modelName.data()).get(), true, false);
+	GameObject* roomWall = gameObjectManager.AddGameObject(std::string(gameObjectName));
+	roomWall->AddComponent<RenderComponent>().SetModel(renderManager.GetModel(std::string(modelName)).get(), true, false);
 	roomWall->m_transform.position = position;
 	renderManager.AddRenderObject(roomWall);
 	return roomWall;
@@ -215,8 +212,8 @@ void Game::DrawPathNodes(const DiffractionPath& path, const Vector3& listenerPos
 
 void Game::DrawDiffractionPaths()
 {
-	auto diffractionPaths = diffractionManager.GetDiffractionPath(musicEmitterObjPtr->m_id);
-	Vector3 listenerPos = ConvertToVector3(truckObjPtr->m_transform.position);
+	diffractionPaths = diffractionManager.GetDiffractionPath(musicEmitterObjPtr->m_id);
+	const Vector3 listenerPos = ConvertToVector3(truckObjPtr->m_transform.position);
 
 	float lowestDiffractionValue = 1.0f;
 

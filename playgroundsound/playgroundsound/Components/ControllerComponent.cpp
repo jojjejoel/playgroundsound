@@ -1,7 +1,8 @@
 #include "ControllerComponent.h"
 #include <src/raylib.h>
 #include <src/raymath.h>
-#include <iostream>
+
+#include <algorithm>
 #include "..\GameObject\GameObject.h"
 void ControllerComponent::Init(GameObject* in_gameObject)
 {
@@ -17,10 +18,7 @@ void ControllerComponent::Update(GameObject* in_gameObject)
 	if (IsKeyDown(KEY_UP))
 	{
 		currentSpeed += acceleration * GetFrameTime();
-		if (currentSpeed > maxSpeed)
-		{
-			currentSpeed = maxSpeed;
-		}
+		currentSpeed = std::min(currentSpeed, maxSpeed);
 		gas += gasAcceleration * GetFrameTime();
 		if (gas > 1)
 		{
@@ -30,10 +28,7 @@ void ControllerComponent::Update(GameObject* in_gameObject)
 	if (IsKeyDown(KEY_DOWN))
 	{
 		currentSpeed -= acceleration * GetFrameTime();
-		if (currentSpeed < -maxSpeed)
-		{
-			currentSpeed = -maxSpeed;
-		}
+		currentSpeed = std::max(currentSpeed, -maxSpeed);
 		gas += gasAcceleration * GetFrameTime();
 		if (gas > 1)
 		{
@@ -54,30 +49,21 @@ void ControllerComponent::Update(GameObject* in_gameObject)
 	if (currentSpeed > 0)
 	{
 		currentSpeed -= deAcceleration * GetFrameTime();
-		if (currentSpeed <= 0)
-		{
-			currentSpeed = 0;
-		}
+		currentSpeed = std::max<float>(currentSpeed, 0);
 	}
 	else if (currentSpeed < 0)
 	{
 		currentSpeed += deAcceleration * GetFrameTime();
-		if (currentSpeed >= 0)
-		{
-			currentSpeed = 0;
-		}
+		currentSpeed = std::min<float>(currentSpeed, 0);
 	}
 	gas -= gasDeAcceleration * GetFrameTime();
-	if (gas <0)
-	{
-		gas = 0;
-	}
+	gas = std::max<float>(gas, 0);
 }
 
 void ControllerComponent::Rotate(GameObject* in_gameObject, const float& in_rotateSpeed)
 {
 	GO_Transform& goTransform = in_gameObject->m_transform;
-	Matrix currentMatrix;
+	Matrix currentMatrix = MatrixIdentity();
 	currentMatrix.m0 = goTransform.right.x;
 	currentMatrix.m4 = goTransform.right.y;
 	currentMatrix.m8 = goTransform.right.z;
@@ -90,7 +76,7 @@ void ControllerComponent::Rotate(GameObject* in_gameObject, const float& in_rota
 	currentMatrix.m6 = goTransform.forward.y;
 	currentMatrix.m10 = goTransform.forward.z;
 
-	Matrix rot = MatrixRotateY(in_rotateSpeed);
+	const Matrix rot = MatrixRotateY(in_rotateSpeed);
 
 	currentMatrix = MatrixMultiply(currentMatrix, rot);
 
@@ -107,8 +93,7 @@ void ControllerComponent::Rotate(GameObject* in_gameObject, const float& in_rota
 	goTransform.forward.z = currentMatrix.m10;
 }
 
-const float ControllerComponent::GetPercentageOfMaxSpeed() const
-{
+float ControllerComponent::GetPercentageOfMaxSpeed() const {
 	return currentSpeed / maxSpeed;
 }
 

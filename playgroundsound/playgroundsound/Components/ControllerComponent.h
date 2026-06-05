@@ -9,14 +9,13 @@ public:
 
     virtual void Update(GameObject* in_gameObject) override;
 
-    void Rotate(GameObject* in_gameObject, const float& in_rotateSpeed);
+    static void Rotate(GameObject* in_gameObject, const float& in_rotateSpeed);
 
-    const float GetPercentageOfMaxSpeed() const;
+    float GetPercentageOfMaxSpeed() const;
 
     const float& GetGas() const;
 
 private:
-    float angle = 0;
     float rotateSpeed = 1.0f;
 
     float acceleration = 0.5f;

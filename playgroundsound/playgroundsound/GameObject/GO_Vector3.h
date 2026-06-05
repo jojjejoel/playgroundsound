@@ -1,18 +1,19 @@
 #pragma once
 #include <cmath>
-struct GO_Vector3 {
-	float x, y, z;
 
-	GO_Vector3 operator*(float scalar) const {
-		return GO_Vector3(x * scalar, y * scalar, z * scalar);
-	}
+struct GO_Vector3 {
+    float x, y, z;
+
+    GO_Vector3 operator*(const float scalar) const {
+        return {x * scalar, y * scalar, z * scalar};
+    }
 
     GO_Vector3 operator+(const GO_Vector3& other) const {
-        return GO_Vector3(x + other.x, y + other.y, z + other.z);
+        return {x + other.x, y + other.y, z + other.z};
     }
 
     GO_Vector3 operator-(const GO_Vector3& other) const {
-        return GO_Vector3(x - other.x, y - other.y, z - other.z);
+        return {x - other.x, y - other.y, z - other.z};
     }
 
     // Overloading the += operator for vector addition and assignment
@@ -32,16 +33,15 @@ struct GO_Vector3 {
     }
 
 
-    GO_Vector3 Normalized() const
-    {
+    GO_Vector3 Normalized() const {
         float magnitude = std::sqrt(x * x + y * y + z * z);
 
         // Check if magnitude is non-zero to avoid division by zero
         if (magnitude != 0.0f) {
-            return { x / magnitude, y / magnitude, z / magnitude };
+            return {x / magnitude, y / magnitude, z / magnitude};
         }
         else {
-            return { 0.0f, 0.0f, 0.0f };  // Returning a default value
+            return {0.0f, 0.0f, 0.0f}; // Returning a default value
         }
     }
 };
