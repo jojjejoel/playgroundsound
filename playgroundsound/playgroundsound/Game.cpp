@@ -206,12 +206,11 @@ void Game::DrawPathNodes(const DiffractionPath& path, const Vector3& listenerPos
 
 void Game::DrawDiffractionPaths()
 {
-	diffractionPaths = diffractionManager.GetDiffractionPath(musicEmitterObjPtr->m_id);
 	const Vector3 listenerPos = VectorConversions::GOToRaylib(truckObjPtr->m_transform.position);
 
 	float lowestDiffractionValue = 1.0f;
 
-	for (const auto& diffractionPath : diffractionPaths)
+	for (const auto& diffractionPath : diffractionManager.GetDiffractionPath(musicEmitterObjPtr->m_id))
 	{
 		Color color = GetDiffractionColor(diffractionPath.diffraction);
 		DrawPathNodes(diffractionPath, listenerPos, color);
@@ -271,8 +270,4 @@ void Game::MusicBar(const float& in_barDuration) {
 	// This method is called by a Wwise callback at the start of every bar in the music.
 	timeLeftOnBar = in_barDuration;
 	barDuration = in_barDuration;
-}
-
-void Game::SetDiffractionPaths(const std::vector<DiffractionPath>& in_diffractionPaths) {
-	diffractionPaths = in_diffractionPaths;
 }

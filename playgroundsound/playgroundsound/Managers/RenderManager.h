@@ -16,18 +16,17 @@ public:
 	void SetCamera(CameraComponent* in_camera);
 	void Init();
 	void LoadModels();
-	void StartRender();
+	void StartRender() const;
 	void Render();
-	void EndRender();
+	void EndRender() const;
 
-	void DrawUI();
+	void DrawUI() const;
 
 	std::shared_ptr<Model> GetModel(std::string_view modelName);
 
 	void SetLightColor(const GO_Vector3& in_color);
 
-	RenderTexture2D* LoadShadowmapRenderTexture(int width, int height);
-	void UnloadShadowmapRenderTexture(RenderTexture2D* target);
+	static std::shared_ptr<RenderTexture2D> LoadShadowmapRenderTexture(int width, int height);
 
 	void AddRenderObject(GameObject* in_objectToRender);
 
@@ -40,8 +39,8 @@ private:
 	CameraComponent* camera = nullptr;
 	std::map<std::string, std::shared_ptr<Shader>> shaders;
 	std::map<std::string, std::shared_ptr<Model>> models;
-	RenderTexture2D* shadowMap = nullptr;
-	Camera3D* lightCam = nullptr;
+	std::shared_ptr<RenderTexture2D> shadowMap;
+	std::shared_ptr<Camera3D> lightCam;
 	int lightVPLoc = 0;
 	int shadowMapLoc = 0;
 

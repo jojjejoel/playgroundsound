@@ -42,7 +42,6 @@ private:
     void UpdateBlinkingLight();
     void MusicBeat();
     void MusicBar(const float& barDuration);
-    void SetDiffractionPaths(const std::vector<DiffractionPath>& diffractionPaths);
     void AddGameObjects();
     GameObject* AddRoomWall(std::string_view modelName, std::string_view gameObjectName, const GO_Vector3& position);
 
@@ -64,7 +63,6 @@ private:
     static constexpr uint8_t colorMin = 0;
 
     std::vector<std::shared_ptr<BoundingBox>> boundingBoxes;
-    std::vector<DiffractionPath> diffractionPaths;
 
     // Music state
     int beatValue = -1;
