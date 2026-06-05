@@ -118,7 +118,7 @@ void RenderManager::Render()
 	lightProj = rlGetMatrixProjection();
 	
 	for (auto& renderObject : objectsToRender) {
-		renderObject->GetComponent<RenderComponent>().Draw(renderObject);
+		renderObject->GetComponent<RenderComponent>()->Draw(renderObject);
 	}
 
 	EndMode3D();
@@ -138,7 +138,7 @@ void RenderManager::Render()
 	BeginMode3D(*camera->camera3D);
 
 	for (auto& renderObject : objectsToRender) {
-		renderObject->GetComponent<RenderComponent>().Draw(renderObject);
+		renderObject->GetComponent<RenderComponent>()->Draw(renderObject);
 	}
 }
 

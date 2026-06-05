@@ -24,26 +24,26 @@ void Game::Init()
 {
 	renderManager.Init();
 	AddGameObjects();
-	renderManager.SetCamera(&cameraObjPtr->GetComponent<CameraComponent>());
+	renderManager.SetCamera(cameraObjPtr->GetComponent<CameraComponent>());
 
 	WwiseRoomComponent& roomComponent = roomCubeObjPtr->AddComponent<WwiseRoomComponent>();
 	roomComponent.InitRoomGeometry(roomCubeObjPtr);
 	roomComponent.InitRoom(roomWallObjPtr);
 	roomComponent.SetBoundingBox({ 0,0,0 }, 10, 10, 10);
 	wwiseRoomManager.AddRoom(&roomComponent);
-	wwiseRoomManager.AddObject(&truckObjPtr->GetComponent<WwiseObjectComponent>());
-	wwiseRoomManager.AddObject(&cameraObjPtr->GetComponent<WwiseObjectComponent>());
-	wwiseRoomManager.AddObject(&musicEmitterObjPtr->GetComponent<WwiseObjectComponent>());
+	wwiseRoomManager.AddObject(truckObjPtr->GetComponent<WwiseObjectComponent>());
+	wwiseRoomManager.AddObject(cameraObjPtr->GetComponent<WwiseObjectComponent>());
+	wwiseRoomManager.AddObject(musicEmitterObjPtr->GetComponent<WwiseObjectComponent>());
 	SetTargetFPS(30);
 	GameObject* portalObj = portalCubeObjPtr;
-	portalObj->GetComponent<WwisePortalComponent>().InitPortal(portalObj, roomComponent.GetRoomID());
+	portalObj->GetComponent<WwisePortalComponent>()->InitPortal(portalObj, roomComponent.GetRoomID());
 
 	gameObjectManager.Init();
-	WwiseObjectComponent& cameraWwiseComponent = cameraObjPtr->GetComponent<WwiseObjectComponent>();
-	cameraWwiseComponent.RegisterAsListener();
-	truckObjPtr->GetComponent<WwiseObjectComponent>().PostEvent(AK::EVENTS::CAR_ENGINE_LOOP);
-	truckObjPtr->GetComponent<WwiseObjectComponent>().RegisterAsDistanceProbe(cameraObjPtr->m_id);
-	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().PostMusicEvent(
+	WwiseObjectComponent* cameraWwiseComponent = cameraObjPtr->GetComponent<WwiseObjectComponent>();
+	cameraWwiseComponent->RegisterAsListener();
+	truckObjPtr->GetComponent<WwiseObjectComponent>()->PostEvent(AK::EVENTS::CAR_ENGINE_LOOP);
+	truckObjPtr->GetComponent<WwiseObjectComponent>()->RegisterAsDistanceProbe(cameraObjPtr->m_id);
+	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>()->PostMusicEvent(
 		AK::EVENTS::ENERGY,
 		std::bind(&Game::MusicBar, this, std::placeholders::_1),  // Bind MusicBar with a float parameter
 		std::bind(&Game::MusicBeat, this));  // Bind MusicBeat with no parameters
@@ -133,19 +133,19 @@ void Game::Run(bool& shouldExit)
 
 void Game::ControlCarSfx()
 {
-	auto& controllerComponent = truckObjPtr->GetComponent<ControllerComponent>();
-	auto& wwiseObjectComponent = truckObjPtr->GetComponent<WwiseObjectComponent>();
+	ControllerComponent* controllerComponent = truckObjPtr->GetComponent<ControllerComponent>();
+	WwiseObjectComponent* wwiseObjectComponent = truckObjPtr->GetComponent<WwiseObjectComponent>();
 
-	float carSpeed = controllerComponent.GetPercentageOfMaxSpeed();
-	wwiseObjectComponent.SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
+	float carSpeed = controllerComponent->GetPercentageOfMaxSpeed();
+	wwiseObjectComponent->SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
 
-	float carGas = controllerComponent.GetGas();
-	wwiseObjectComponent.SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
+	float carGas = controllerComponent->GetGas();
+	wwiseObjectComponent->SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
 }
 
 void Game::UpdateBouncingCube()
 {
-	float rhythmVolume = musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().
+	float rhythmVolume = musicEmitterObjPtr->GetComponent<WwiseObjectComponent>()->
 		GetGameParamValueGlobal(AK::GAME_PARAMETERS::RHYTHM_VOLUME);
 	musicEmitterObjPtr->m_transform.scale.y = bouncingCubeBaseHeight + rhythmVolume * bouncingCubeHeightMultiplier;
 }
@@ -154,9 +154,9 @@ void Game::ControlPortalState()
 {
 	if (IsKeyPressed(KEY_ONE))
 	{
-		portalCubeObjPtr->GetComponent<WwisePortalComponent>().TogglePortalState(portalCubeObjPtr);
-		bool portalEnabled = portalCubeObjPtr->GetComponent<WwisePortalComponent>().GetIsEnabled();
-		portalCubeObjPtr->GetComponent<RenderComponent>().SetShouldRender(!portalEnabled);
+		portalCubeObjPtr->GetComponent<WwisePortalComponent>()->TogglePortalState(portalCubeObjPtr);
+		bool portalEnabled = portalCubeObjPtr->GetComponent<WwisePortalComponent>()->GetIsEnabled();
+		portalCubeObjPtr->GetComponent<RenderComponent>()->SetShouldRender(!portalEnabled);
 		std::string portalEnabledStr = portalEnabled ? "OPEN" : "CLOSED";
 		renderManager.SetPortalEnabled(portalEnabledStr);
 	}
@@ -174,7 +174,7 @@ void Game::ControlPlaybackSpeed()
 	}
 
 	playbackSpeed = std::clamp(playbackSpeed, minPlaybackSpeed, maxPlaybackSpeed);
-	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>().SetRTPC(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed);
+	musicEmitterObjPtr->GetComponent<WwiseObjectComponent>()->SetRTPC(AK::GAME_PARAMETERS::PLAYBACK_SPEED, playbackSpeed);
 
 	//Changes the value in the text on the screen representing the playback speed.
 	renderManager.SetPlaybackSpeed(std::to_string(playbackSpeed));

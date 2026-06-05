@@ -31,9 +31,9 @@ void WwiseRoomComponent::Init(GameObject* in_gameObject)
 }
 
 void WwiseRoomComponent::InitRoom(GameObject* in_gameObject) {
-	auto& renderComponent = in_gameObject->GetComponent<RenderComponent>();
-	const auto& vertices = renderComponent.GetVertices();
-	const auto& triangles = renderComponent.GetTriangles();
+	const RenderComponent* renderComponent = in_gameObject->GetComponent<RenderComponent>();
+	const auto& vertices = renderComponent->GetVertices();
+	const auto& triangles = renderComponent->GetTriangles();
 
 	std::vector<AkVertex> akVertices;
 	akVertices.reserve(vertices.size());
@@ -98,8 +98,8 @@ void WwiseRoomComponent::InitRoomGeometry(GameObject* roomObj) {
 	AkGeometryParams geom;
 
 	// Set vertices
-	auto& renderComponent = roomObj->GetComponent<RenderComponent>();
-	const auto& verticesData = renderComponent.GetVertices();
+	RenderComponent* renderComponent = roomObj->GetComponent<RenderComponent>();
+	const auto& verticesData = renderComponent->GetVertices();
 	std::vector<AkVertex> vertices(verticesData.size());
 	for (size_t i = 0; i < verticesData.size(); ++i) {
 		vertices[i] = { verticesData[i].x, verticesData[i].y, verticesData[i].z };
@@ -121,7 +121,7 @@ void WwiseRoomComponent::InitRoomGeometry(GameObject* roomObj) {
 	geom.Surfaces = surfaces;
 
 	// Set triangles
-	const auto& trianglesData = renderComponent.GetTriangles();
+	const auto& trianglesData = renderComponent->GetTriangles();
 	std::vector<AkTriangle> akTriangles(trianglesData.size());
 	for (size_t i = 0; i < trianglesData.size(); ++i) {
 		akTriangles[i] = {

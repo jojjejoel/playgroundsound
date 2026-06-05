@@ -1,8 +1,10 @@
 #include "GameObject.h"
 
+#include <ranges>
+
 void GameObject::Init()
 {
-    for (auto& [id, component] : m_components)
+    for (const auto& component : m_components | std::views::values)
     {
         component->Init(this);
     }
@@ -10,7 +12,7 @@ void GameObject::Init()
 
 void GameObject::Update()
 {
-    for (auto& [id, component] : m_components)
+    for (const auto& component : m_components | std::views::values)
     {
         component->Update(this);
     }
