@@ -60,7 +60,7 @@ private:
 
     // Light color constants for beat visualization
     static constexpr uint8_t colorMax = 255;
-    static constexpr uint8_t colorMin = 0;
+    static constexpr uint8_t colorMin = 255;
 
     std::vector<std::shared_ptr<BoundingBox>> boundingBoxes;
 

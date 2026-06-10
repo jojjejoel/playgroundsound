@@ -57,7 +57,7 @@ void Game::AddGameObjects()
 {
 	truckObjPtr = gameObjectManager.AddGameObject("Truck");
 	truckObjPtr->m_transform.position = { 0,0,10 };
-	truckObjPtr->AddComponent<ControllerComponent>().SetMovementSpeed(5);
+	truckObjPtr->AddComponent<ControllerComponent>();
 	truckObjPtr->AddComponent<RenderComponent>().SetModel(renderManager.GetModel("truck_green").get());
 	renderManager.AddRenderObject(truckObjPtr);
 	truckObjPtr->AddComponent<WwiseObjectComponent>();
@@ -133,12 +133,6 @@ void Game::Run(bool& shouldExit)
 void Game::ControlCarSfx() const {
 	const ControllerComponent* controllerComponent = truckObjPtr->GetComponent<ControllerComponent>();
 	const WwiseObjectComponent* wwiseObjectComponent = truckObjPtr->GetComponent<WwiseObjectComponent>();
-
-	const float carSpeed = controllerComponent->GetPercentageOfMaxSpeed();
-	wwiseObjectComponent->SetRTPC(AK::GAME_PARAMETERS::CAR_SPEED, carSpeed);
-
-	const float carGas = controllerComponent->GetGas();
-	wwiseObjectComponent->SetRTPC(AK::GAME_PARAMETERS::CAR_GAS, carGas);
 }
 
 void Game::UpdateBouncingCube() const {
@@ -250,7 +244,7 @@ void Game::UpdateBlinkingLight()
 	}
 
 	// Scale the light color by barColorIntensity
-	lightColor = lightColor * barColorIntensity;
+	// lightColor = lightColor * barColorIntensity;
 
 	renderManager.SetLightColor(lightColor);
 }
